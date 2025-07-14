@@ -29,3 +29,7 @@ export const StickyPanel = styled.div`
 export const PaginationSC = styled(Pagination)`
   margin-left: 605px;
 `;
+
+export const ListWrapper = styled.div`
+  margin-bottom: 60px;
+`;
