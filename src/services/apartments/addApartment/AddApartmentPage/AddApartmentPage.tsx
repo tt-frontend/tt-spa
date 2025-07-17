@@ -3,6 +3,7 @@ import {
   ButtonsGroup,
   ButtonsWrapper,
   Content,
+  FormLine,
   FormWrapper,
   StepsTitle,
   StepsWrapper,
@@ -44,6 +45,27 @@ export const AddApartmentPage: FC<Props> = ({ building }) => {
               <FormItem label="Комментарий">
                 <TextAreaSC placeholder="Введите комментарий" />
               </FormItem>
+            </>
+          )}
+          {step === 1 && (
+            <>
+              <Title>Дополнительная информация</Title>
+              <FormLine>
+                <FormItem label="Этаж">
+                  <Input placeholder="Введите" style={{ width: 142 }} />
+                </FormItem>
+                <FormItem label="Площадь квартиры">
+                  <Input placeholder="Введите" style={{ width: 142 }} />
+                </FormItem>
+              </FormLine>
+              <FormLine>
+                <FormItem label="Число жильцов">
+                  <Input placeholder="Введите" style={{ width: '100%' }} />
+                </FormItem>
+                <FormItem label="Число жильцов по нормативу">
+                  <Input placeholder="Введите" style={{ width: '100%' }} />
+                </FormItem>
+              </FormLine>
             </>
           )}
         </FormWrapper>

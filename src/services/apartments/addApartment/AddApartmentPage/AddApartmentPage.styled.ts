@@ -60,3 +60,8 @@ export const Title = styled.div`
   vertical-align: middle;
   color: #272f5a;
 `;
+
+export const FormLine = styled.div`
+  display: flex;
+  gap: 16px;
+`;
