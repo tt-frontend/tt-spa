@@ -3,8 +3,10 @@ import { FC } from 'react';
 import { ContextMenuButton } from '../../ContextMenuButton/ContextMenuButton';
 import {
   ContentWrapper,
+  Description,
   PageHeaderStyled,
   PageTitle,
+  TitleWrapper,
 } from './PageHeader.styled';
 import { PageHeaderProps } from './PageHeader.types';
 
@@ -14,10 +16,14 @@ export const PageHeader: FC<PageHeaderProps> = ({
   isGhost,
   children,
   className,
+  description,
 }) => {
   return (
     <PageHeaderStyled className={className}>
-      <PageTitle isGhost={isGhost}>{title}</PageTitle>
+      <TitleWrapper>
+        <PageTitle isGhost={isGhost}>{title}</PageTitle>
+        {description && <Description>{description}</Description>}
+      </TitleWrapper>
       <ContentWrapper>
         {children && <div>{children}</div>}
         {contextMenu && (

@@ -95,4 +95,5 @@ export const housingStockProfileService = {
     ObjectProfileIdGate,
     FetchObjectGate,
   },
+  fx: { getHousingStockFx },
 };

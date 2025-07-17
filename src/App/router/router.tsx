@@ -77,6 +77,7 @@ import { CurrentAnalyticsContainer } from 'services/supervisor/currentAnalytics'
 import { CommonAnalyticsContainer } from 'services/supervisor/commonAnalytics';
 import { usePermission } from 'hooks/usePermission';
 import { ReadingReportsArchiveContainer } from 'services/workWithReadings/readingReportsArchive';
+import { AddApartmentContainer } from 'services/apartments/addApartment';
 
 const {
   gates: { CurrentUserGate },
@@ -309,6 +310,14 @@ export const useRoutes = (
             ) : (
               <AccessDeniedPage />
             ),
+        },
+        {
+          path: '/buildings/:houseCategory/:buildingId/addApartment',
+          element: isSeniorOperator ? (
+            <AddApartmentContainer />
+          ) : (
+            <AccessDeniedPage />
+          ),
         },
         {
           path: '/districtBordersSettings',

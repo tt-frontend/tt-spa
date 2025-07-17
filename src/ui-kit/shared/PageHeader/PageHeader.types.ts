@@ -7,4 +7,5 @@ export type PageHeaderProps = {
   isGhost?: boolean;
   children?: ReactNode;
   className?: string;
+  description?: ReactNode;
 };

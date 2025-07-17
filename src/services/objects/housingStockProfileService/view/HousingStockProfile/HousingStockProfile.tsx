@@ -76,6 +76,14 @@ export const HousingStockProfile: FC<HousingStockProfileProps> = ({
               hidden: !isPermitionToAddNode,
             },
             {
+              title: 'Добавить квартиру',
+              onClick: () =>
+                navigate(
+                  `/buildings/livingProfile/${housingStock.id}/addApartment`,
+                ),
+              hidden: !isPermissionToEditHousingStock,
+            },
+            {
               title: 'Выгрузка сводного отчёта',
               onClick: () => openCommonReport(),
               hidden: !isPermitionToDownloadConsolidatedReport,
