@@ -4,9 +4,9 @@ import { displayObjectsListService } from './displayObjectsListService.model';
 import { ObjectsList } from './view/ObjectsList';
 import { SearchObjects } from './view/SearchObjects';
 import { HeaderInject } from '../objectsProfileService/view/ObjectsProfile/ObjectsProfile.types';
-import { SizeWrapper } from '../objectsProfileService/view/ObjectsProfile/ObjectsProfile.styled';
 import { getBuildingsQuery } from './displayObjectsListService.api';
 import {
+  ListWrapper,
   PaginationSC,
   StickyPanel,
 } from './view/ObjectsList/ObjectsList.styled';
@@ -42,13 +42,13 @@ export const ObjectsListContainer: FC<HeaderInject> = ({ Header }) => {
         />
       </Header>
 
-      <SizeWrapper>
+      <ListWrapper>
         <ObjectsList
           isLoading={isLoading}
           housingStocks={housingStocks}
           isBuildingFetched={isBuildingFetched}
         />
-      </SizeWrapper>
+      </ListWrapper>
       {isNotEmpty && !isLoading && (
         <StickyPanel>
           <PaginationSC
