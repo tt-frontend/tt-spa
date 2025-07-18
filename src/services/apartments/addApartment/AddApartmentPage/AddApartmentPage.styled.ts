@@ -62,6 +62,8 @@ export const Title = styled.div`
 `;
 
 export const FormLine = styled.div`
+  width: 100%;
   display: flex;
+  flex: 1 1 50%;
   gap: 16px;
 `;

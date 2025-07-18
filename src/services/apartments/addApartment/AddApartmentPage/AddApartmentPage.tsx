@@ -20,6 +20,7 @@ import { Title } from 'ui-kit/Title';
 import { FormItem } from 'ui-kit/FormItem';
 import { Input } from 'ui-kit/Input';
 import { TextAreaSC } from 'services/tasks/taskProfileService/view/TaskProfile/TaskActionsPanel/emailNotifyService/view/EmailTextInput/EmailTextInput.styled';
+import { SpaceLine } from 'ui-kit/SpaceLine';
 
 const STEPS_AMOUNT = 2;
 
@@ -59,11 +60,24 @@ export const AddApartmentPage: FC<Props> = ({ building }) => {
                 </FormItem>
               </FormLine>
               <FormLine>
-                <FormItem label="Число жильцов">
-                  <Input placeholder="Введите" style={{ width: '100%' }} />
+                <FormItem block label="Число жильцов">
+                  <Input placeholder="Введите" />
                 </FormItem>
-                <FormItem label="Число жильцов по нормативу">
-                  <Input placeholder="Введите" style={{ width: '100%' }} />
+                <FormItem block label="Число жильцов по нормативу">
+                  <Input placeholder="Введите" />
+                </FormItem>
+              </FormLine>
+              <SpaceLine />
+              <FormItem label="Основной лицевой счет">
+                <Input placeholder="Введите" />
+              </FormItem>
+              <SpaceLine />
+              <FormLine>
+                <FormItem block label="Количество холодных стояков">
+                  <Input placeholder="Введите" />
+                </FormItem>
+                <FormItem block label="Количество горячих стояков">
+                  <Input placeholder="Введите" />
                 </FormItem>
               </FormLine>
             </>
