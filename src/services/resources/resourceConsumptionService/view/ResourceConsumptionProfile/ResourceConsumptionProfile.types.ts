@@ -35,6 +35,7 @@ export type ResourceConsumptionProfileProps = {
   isOnlyHousingDataEmpty: boolean;
   isAllDataLoading: boolean;
   isDataLoading: boolean;
+  isHousingMeteringDevices: boolean | null;
 };
 
 export type BooleanTypesOfResourceConsumptionGraphForTwoMonth = {
