@@ -15,7 +15,7 @@ export const ExitButtonWrapper = styled.div`
 
 export const MenuItemWrapper = styled.div`
   overflow-y: auto;
-  height: calc(100vh - 180px);
+  height: calc(100vh - 210px);
 
   &::-webkit-scrollbar {
     display: none;
