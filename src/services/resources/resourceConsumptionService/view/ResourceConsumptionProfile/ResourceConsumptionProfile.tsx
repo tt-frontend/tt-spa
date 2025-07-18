@@ -11,6 +11,7 @@ import {
 } from './ResourceConsumptionProfile.types';
 import { getDisabledGraphTypes } from './ResourceConsumptionProfile.utils';
 import { ResourceConsumptionFilterContainer } from '../../resourceConsumptionFilterService';
+import { EmptyHousingMeteringDevices } from './EmptyHousingMeteringDevices';
 
 export const ResourceConsumptionProfile: FC<
   ResourceConsumptionProfileProps
@@ -34,6 +35,7 @@ export const ResourceConsumptionProfile: FC<
   isOnlyHousingDataEmpty,
   isAllDataLoading,
   isDataLoading,
+  isHousingMeteringDevices,
 }) => {
   const [selectedAddresses, setSelectedAddresses] = useState<SelectedAddresses>(
     initialSelectedAddresses,
@@ -41,6 +43,8 @@ export const ResourceConsumptionProfile: FC<
   useEffect(() => {
     setSelectedAddresses(initialSelectedAddresses);
   }, [housingConsumptionData?.additionalAddress]);
+
+  console.log(isHousingMeteringDevices);
 
   return (
     <Wrapper>
@@ -53,19 +57,23 @@ export const ResourceConsumptionProfile: FC<
         />
 
         <WithLoader isLoading={isLoading}>
-          <ResourceConsumptionGraph
-            consumptionData={housingConsumptionData}
-            resource={resource}
-            resourceForColor={resourceForColor}
-            startOfMonth={resourceConsumptionFilter?.From || ''}
-            checked={selectedGraphTypes}
-            selectedAddresses={selectedAddresses}
-            isAdditionalAddressSelected={isAdditionalAddressSelected}
-            dynamicMinMax={dynamicMinMax}
-            isAllDataLoading={isAllDataLoading}
-            isDataLoading={isDataLoading}
-            isOnlyHousingDataEmpty={isOnlyHousingDataEmpty}
-          />
+          {isHousingMeteringDevices ? (
+            <ResourceConsumptionGraph
+              consumptionData={housingConsumptionData}
+              resource={resource}
+              resourceForColor={resourceForColor}
+              startOfMonth={resourceConsumptionFilter?.From || ''}
+              checked={selectedGraphTypes}
+              selectedAddresses={selectedAddresses}
+              isAdditionalAddressSelected={isAdditionalAddressSelected}
+              dynamicMinMax={dynamicMinMax}
+              isAllDataLoading={isAllDataLoading}
+              isDataLoading={isDataLoading}
+              isOnlyHousingDataEmpty={isOnlyHousingDataEmpty}
+            />
+          ) : (
+            <EmptyHousingMeteringDevices />
+          )}
 
           <SelectResourceConsumptionType
             disabled={getDisabledGraphTypes(housingConsumptionData)}
