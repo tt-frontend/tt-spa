@@ -51,7 +51,7 @@ export const EditDistrictInfoModal: FC<Props> = ({
       loading={isLoading}
       form={
         <Wrapper>
-          <FormItemSC label="Наазвание района">
+          <FormItemSC label="Название района">
             <Input
               value={values.districtName}
               onChange={handleChange}

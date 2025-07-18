@@ -214,8 +214,11 @@ export const ManageDistrictsList: FC<Props> = ({
                             <AddressNumbersList>
                               {sortBy(value, (elem) => elem.address).map(
                                 (elem) => {
-                                  const arr = elem.address?.split(' ');
-                                  const number = arr && arr[arr?.length - 2];
+                                  const arr = elem.address
+                                    ?.split(' ')
+                                    .filter((item) => item !== '');
+
+                                  const number = arr && arr[arr?.length - 1];
 
                                   const buildingId = elem.id;
 

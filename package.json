@@ -1,6 +1,6 @@
 {
   "name": "tt",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -11,7 +11,9 @@
     "@types/react-virtualized": "^9.22.2",
     "antd": "^5.24.8",
     "axios": "^1.8.4",
+    "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
+    "dotenv": "^16.6.0",
     "effector": "^23.3.0",
     "effector-react": "^23.3.0",
     "effector-storage": "^7.1.0",
@@ -27,7 +29,7 @@
     "react-dom": "^18.3.1",
     "react-error-boundary": "^5.0.0",
     "react-router-dom": "^7.5.1",
-    "react-to-print": "^3.0.6",
+    "react-to-print": "^3.1.0",
     "react-virtualized": "^9.22.6",
     "string-to-color": "^2.2.2",
     "styled-components": "^6.1.17",
@@ -41,7 +43,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "updateTypes": "npx swagger-typescript-api -p https://stage.k8s.transparent-technology.ru/openapi/site/ttm_api.json -o ./src/api -n types.ts && npx swagger-typescript-api -p https://stage.k8s.transparent-technology.ru/openapi/mvitu/ttm_api.json -o ./src/api -n mvitu.types.ts",
+    "updateTypes": "yarn dlx swagger-typescript-api -p https://stage.k8s.transparent-technology.ru/openapi/site/ttm_api.json -o ./src/api -n types.ts && yarn dlx swagger-typescript-api -p https://stage.k8s.transparent-technology.ru/openapi/mvitu/ttm_api.json -o ./src/api -n mvitu.types.ts",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

@@ -8,6 +8,7 @@ import {
   GetDataForHousingConsumptionPlotResponse,
   GetDataForIndividualDevicesConsumptionPlotResponse,
   GetSummaryHousingConsumptionsByResourcesResponse,
+  HousingMeteringDeviceIncludingReadingsResponsePagedList,
 } from 'api/types';
 import { prepareDataForConsumptionGraph } from './resourceConsumptionService.utils';
 
@@ -81,3 +82,7 @@ export const fetchNormativeAndSubscriberConsumptionData = async ({
 
   return { normative, subscriber };
 };
+
+export const fetchHousingMeteringDevices =
+  (): Promise<HousingMeteringDeviceIncludingReadingsResponsePagedList> =>
+    axios.get('Calculators');

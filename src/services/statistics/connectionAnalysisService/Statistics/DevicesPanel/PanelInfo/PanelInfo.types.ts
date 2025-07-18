@@ -1,4 +1,5 @@
-import React, { JSX } from 'react';
+import React from 'react';
+import type { JSX } from 'react';
 import { ECalculatorConnectionGroupType } from 'api/types';
 import { DownloadParams } from 'services/statistics/connectionAnalysisService/connectionAnalysisService.types';
 
