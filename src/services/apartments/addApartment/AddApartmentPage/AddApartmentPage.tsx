@@ -5,8 +5,10 @@ import {
   Content,
   FormLine,
   FormWrapper,
+  GridContainer,
   StepsTitle,
   StepsWrapper,
+  TextAreaSC,
   Wrapper,
 } from './AddApartmentPage.styled';
 import { Props } from './AddApartmentPage.types';
@@ -19,10 +21,9 @@ import { Button } from 'ui-kit/Button';
 import { Title } from 'ui-kit/Title';
 import { FormItem } from 'ui-kit/FormItem';
 import { Input } from 'ui-kit/Input';
-import { TextAreaSC } from 'services/tasks/taskProfileService/view/TaskProfile/TaskActionsPanel/emailNotifyService/view/EmailTextInput/EmailTextInput.styled';
 import { SpaceLine } from 'ui-kit/SpaceLine';
 
-const STEPS_AMOUNT = 2;
+const STEPS_AMOUNT = 3;
 
 export const AddApartmentPage: FC<Props> = ({ building }) => {
   const { step, nextStep, prevStep } = useSteps(STEPS_AMOUNT);
@@ -50,6 +51,26 @@ export const AddApartmentPage: FC<Props> = ({ building }) => {
           )}
           {step === 1 && (
             <>
+              <Title>Лицевой счет </Title>
+              <FormItem label="Основной лицевой счет">
+                <Input placeholder="Введите" />
+              </FormItem>
+              <FormItem label="ФИО">
+                <Input placeholder="Введите" />
+              </FormItem>
+
+              <GridContainer>
+                <FormItem label="Дата открытия">
+                  <Input placeholder="Введите" />
+                </FormItem>
+                <FormItem label="Платежный код">
+                  <Input placeholder="Введите" />
+                </FormItem>
+              </GridContainer>
+            </>
+          )}
+          {step === 2 && (
+            <>
               <Title>Дополнительная информация</Title>
               <FormLine>
                 <FormItem label="Этаж">
@@ -67,10 +88,7 @@ export const AddApartmentPage: FC<Props> = ({ building }) => {
                   <Input placeholder="Введите" />
                 </FormItem>
               </FormLine>
-              <SpaceLine />
-              <FormItem label="Основной лицевой счет">
-                <Input placeholder="Введите" />
-              </FormItem>
+
               <SpaceLine />
               <FormLine>
                 <FormItem block label="Количество холодных стояков">
@@ -90,6 +108,7 @@ export const AddApartmentPage: FC<Props> = ({ building }) => {
             current={step}
             items={[
               { title: 'Основная информация' },
+              { title: 'Лицевоц счет' },
               { title: 'Дополнительная информация' },
             ]}
           />

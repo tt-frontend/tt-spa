@@ -313,11 +313,12 @@ export const useRoutes = (
         },
         {
           path: '/buildings/:houseCategory/:buildingId/addApartment',
-          element: isSeniorOperator ? (
-            <AddApartmentContainer />
-          ) : (
-            <AccessDeniedPage />
-          ),
+          element:
+            isAdministrator || isSeniorOperator ? (
+              <AddApartmentContainer />
+            ) : (
+              <AccessDeniedPage />
+            ),
         },
         {
           path: '/districtBordersSettings',

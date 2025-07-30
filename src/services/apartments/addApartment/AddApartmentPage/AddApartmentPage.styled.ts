@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { TextareaSC } from 'ui-kit/shared/CommentPanel/CommentPanel.styled';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -65,5 +66,15 @@ export const FormLine = styled.div`
   width: 100%;
   display: flex;
   flex: 1 1 50%;
+  gap: 16px;
+`;
+
+export const TextAreaSC = styled(TextareaSC)`
+  border-radius: 4px;
+`;
+
+export const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
 `;
