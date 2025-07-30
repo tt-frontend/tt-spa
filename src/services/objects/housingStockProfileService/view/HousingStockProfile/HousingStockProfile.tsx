@@ -26,6 +26,7 @@ export const HousingStockProfile: FC<HousingStockProfileProps> = ({
   isPermitionToDownloadConsolidatedReport,
   isPermissionToEditHousingStock,
   resourceDisconnections,
+  isPermissionToAddHousingStock,
 }) => {
   const navigate = useNavigate();
 
@@ -81,7 +82,7 @@ export const HousingStockProfile: FC<HousingStockProfileProps> = ({
                 navigate(
                   `/buildings/livingProfile/${housingStock.id}/addApartment`,
                 ),
-              hidden: !isPermissionToEditHousingStock,
+              hidden: !isPermissionToAddHousingStock,
             },
             {
               title: 'Выгрузка сводного отчёта',

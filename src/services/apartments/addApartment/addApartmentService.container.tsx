@@ -24,6 +24,7 @@ export const AddApartmentContainer = () => {
     <>
       <AddApartmentGate buildingId={Number(buildingId)} />
       <AddApartmentPage
+        buildingId={Number(buildingId)}
         building={building}
         handleCreateApartment={handleCreateApartment}
       />

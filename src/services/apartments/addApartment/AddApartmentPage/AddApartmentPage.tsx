@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import {
   ButtonsGroup,
   ButtonsWrapper,
@@ -26,18 +26,24 @@ import { useFormik } from 'formik';
 import { ApartmentCreateRequest } from 'api/types';
 import { DatePicker } from 'ui-kit/DatePicker';
 import dayjs from 'dayjs';
+import * as yup from 'yup';
+import { ErrorMessage } from 'ui-kit/ErrorMessage';
+import { useNavigate } from 'react-router-dom';
 
 const STEPS_AMOUNT = 3;
 
 export const AddApartmentPage: FC<Props> = ({
+  buildingId,
   building,
   handleCreateApartment,
 }) => {
   const { step, nextStep, prevStep } = useSteps(STEPS_AMOUNT);
 
-  const { values, setFieldValue } = useFormik<ApartmentCreateRequest>({
+  const navigate = useNavigate();
+
+  const { values, setFieldValue, errors } = useFormik<ApartmentCreateRequest>({
     initialValues: {
-      housingStockId: 9999,
+      housingStockId: buildingId,
       number: '',
       floor: null,
       square: null,
@@ -55,12 +61,30 @@ export const AddApartmentPage: FC<Props> = ({
         paymentCode: null,
       },
     },
+    validationSchema: yup.object().shape({
+      number: yup.string().required('Это поле обязательно'),
+      homeownerAccount: yup.object().shape({
+        personalAccountNumber: yup.string().required('Это поле обязательно'),
+        name: yup.string().required('Это поле обязательно'),
+        openAt: yup.string().required('Это поле обязательно'),
+      }),
+    }),
+    validateOnMount: true,
+
     onSubmit: (data) => {
-      handleCreateApartment(data as ApartmentCreateRequest);
+      handleCreateApartment(data);
     },
   });
 
-  console.log(values);
+  const isValidationErrorOnStep = useMemo(() => {
+    if (step === 0) {
+      return Boolean(errors.number);
+    }
+    if (step === 1) {
+      return Boolean(errors.homeownerAccount);
+    }
+    return false;
+  }, [step, errors]);
 
   return (
     <Wrapper>
@@ -84,6 +108,7 @@ export const AddApartmentPage: FC<Props> = ({
                     setFieldValue('number', value.target.value)
                   }
                 />
+                <ErrorMessage>{errors.number}</ErrorMessage>
               </FormItem>
               <FormItem label="Комментарий">
                 <TextAreaSC
@@ -110,6 +135,9 @@ export const AddApartmentPage: FC<Props> = ({
                     )
                   }
                 />
+                <ErrorMessage>
+                  {errors.homeownerAccount?.personalAccountNumber}
+                </ErrorMessage>
               </FormItem>
               <FormItem label="ФИО">
                 <Input
@@ -119,6 +147,7 @@ export const AddApartmentPage: FC<Props> = ({
                     setFieldValue('homeownerAccount.name', value.target.value)
                   }
                 />
+                <ErrorMessage>{errors.homeownerAccount?.name}</ErrorMessage>
               </FormItem>
 
               <GridContainer>
@@ -135,6 +164,7 @@ export const AddApartmentPage: FC<Props> = ({
                       setFieldValue('homeownerAccount.openAt', value.format())
                     }
                   />
+                  <ErrorMessage>{errors.homeownerAccount?.openAt}</ErrorMessage>
                 </FormItem>
                 <FormItem label="Платежный код">
                   <Input
@@ -147,6 +177,9 @@ export const AddApartmentPage: FC<Props> = ({
                       )
                     }
                   />
+                  <ErrorMessage>
+                    {errors.homeownerAccount?.paymentCode}
+                  </ErrorMessage>
                 </FormItem>
               </GridContainer>
             </>
@@ -246,13 +279,26 @@ export const AddApartmentPage: FC<Props> = ({
           )}
         </div>
         <ButtonsGroup>
-          <Button type="ghost">Отмена</Button>
+          <Button
+            type="ghost"
+            onClick={() => navigate(`/buildings/livingProfile/${buildingId}`)}
+          >
+            Отмена
+          </Button>
           {step < STEPS_AMOUNT - 1 && (
-            <Button type="primary" onClick={nextStep}>
+            <Button
+              type="primary"
+              onClick={() => {
+                nextStep();
+              }}
+              disabled={isValidationErrorOnStep}
+            >
               Далее
             </Button>
           )}
-          {step === STEPS_AMOUNT - 1 && <Button>Создать квартиру</Button>}
+          {step === STEPS_AMOUNT - 1 && (
+            <Button disabled={isValidationErrorOnStep}>Создать квартиру</Button>
+          )}
         </ButtonsGroup>
       </ButtonsWrapper>
     </Wrapper>
