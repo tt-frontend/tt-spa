@@ -6,9 +6,14 @@ import { housingStockProfileService } from 'services/objects/housingStockProfile
 
 const {
   gates: { AddApartmentGate },
+  inputs,
 } = addApartmentService;
 
 export const AddApartmentContainer = () => {
+  const { handleCreateApartment } = useUnit({
+    handleCreateApartment: inputs.handleCreateApartment,
+  });
+
   const { buildingId } = useParams<{ buildingId: string }>();
 
   const { building } = useUnit({
@@ -18,7 +23,10 @@ export const AddApartmentContainer = () => {
   return (
     <>
       <AddApartmentGate buildingId={Number(buildingId)} />
-      <AddApartmentPage building={building} />
+      <AddApartmentPage
+        building={building}
+        handleCreateApartment={handleCreateApartment}
+      />
     </>
   );
 };

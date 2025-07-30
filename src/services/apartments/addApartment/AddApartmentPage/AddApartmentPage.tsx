@@ -22,11 +22,45 @@ import { Title } from 'ui-kit/Title';
 import { FormItem } from 'ui-kit/FormItem';
 import { Input } from 'ui-kit/Input';
 import { SpaceLine } from 'ui-kit/SpaceLine';
+import { useFormik } from 'formik';
+import { ApartmentCreateRequest } from 'api/types';
+import { DatePicker } from 'ui-kit/DatePicker';
+import dayjs from 'dayjs';
 
 const STEPS_AMOUNT = 3;
 
-export const AddApartmentPage: FC<Props> = ({ building }) => {
+export const AddApartmentPage: FC<Props> = ({
+  building,
+  handleCreateApartment,
+}) => {
   const { step, nextStep, prevStep } = useSteps(STEPS_AMOUNT);
+
+  const { values, setFieldValue } = useFormik<ApartmentCreateRequest>({
+    initialValues: {
+      housingStockId: 9999,
+      number: '',
+      floor: null,
+      square: null,
+      numberOfLiving: null,
+      normativeNumberOfLiving: null,
+      comment: null,
+      coldWaterRiserCount: null,
+      hotWaterRiserCount: null,
+      homeownerAccount: {
+        personalAccountNumber: '',
+        name: '',
+        phoneNumbers: null,
+        ownershipArea: null,
+        openAt: '',
+        paymentCode: null,
+      },
+    },
+    onSubmit: (data) => {
+      handleCreateApartment(data as ApartmentCreateRequest);
+    },
+  });
+
+  console.log(values);
 
   return (
     <Wrapper>
@@ -42,10 +76,23 @@ export const AddApartmentPage: FC<Props> = ({ building }) => {
             <>
               <Title>Основная информация</Title>
               <FormItem label="Номер квартиры">
-                <Input placeholder="Введите" style={{ width: 142 }} />
+                <Input
+                  placeholder="Введите"
+                  style={{ width: 142 }}
+                  value={values.number}
+                  onChange={(value) =>
+                    setFieldValue('number', value.target.value)
+                  }
+                />
               </FormItem>
               <FormItem label="Комментарий">
-                <TextAreaSC placeholder="Введите комментарий" />
+                <TextAreaSC
+                  placeholder="Введите комментарий"
+                  value={values.comment || undefined}
+                  onChange={(value) =>
+                    setFieldValue('comment', value.target.value)
+                  }
+                />
               </FormItem>
             </>
           )}
@@ -53,18 +100,53 @@ export const AddApartmentPage: FC<Props> = ({ building }) => {
             <>
               <Title>Лицевой счет </Title>
               <FormItem label="Основной лицевой счет">
-                <Input placeholder="Введите" />
+                <Input
+                  placeholder="Введите"
+                  value={values.homeownerAccount.personalAccountNumber}
+                  onChange={(value) =>
+                    setFieldValue(
+                      'homeownerAccount.personalAccountNumber',
+                      value.target.value,
+                    )
+                  }
+                />
               </FormItem>
               <FormItem label="ФИО">
-                <Input placeholder="Введите" />
+                <Input
+                  placeholder="Введите"
+                  value={values.homeownerAccount.name}
+                  onChange={(value) =>
+                    setFieldValue('homeownerAccount.name', value.target.value)
+                  }
+                />
               </FormItem>
 
               <GridContainer>
                 <FormItem label="Дата открытия">
-                  <Input placeholder="Введите" />
+                  <DatePicker
+                    format={{ format: 'DD.MM.YYYY', type: 'mask' }}
+                    placeholder="Введите"
+                    value={
+                      values.homeownerAccount.openAt
+                        ? dayjs(values.homeownerAccount.openAt)
+                        : null
+                    }
+                    onChange={(value) =>
+                      setFieldValue('homeownerAccount.openAt', value.format())
+                    }
+                  />
                 </FormItem>
                 <FormItem label="Платежный код">
-                  <Input placeholder="Введите" />
+                  <Input
+                    placeholder="Введите"
+                    value={values.homeownerAccount.paymentCode || undefined}
+                    onChange={(value) =>
+                      setFieldValue(
+                        'homeownerAccount.paymentCode',
+                        value.target.value,
+                      )
+                    }
+                  />
                 </FormItem>
               </GridContainer>
             </>
@@ -74,28 +156,69 @@ export const AddApartmentPage: FC<Props> = ({ building }) => {
               <Title>Дополнительная информация</Title>
               <FormLine>
                 <FormItem label="Этаж">
-                  <Input placeholder="Введите" style={{ width: 142 }} />
+                  <Input
+                    placeholder="Введите"
+                    style={{ width: 142 }}
+                    value={values.floor || undefined}
+                    onChange={(value) =>
+                      setFieldValue('floor', value.target.value)
+                    }
+                  />
                 </FormItem>
                 <FormItem label="Площадь квартиры">
-                  <Input placeholder="Введите" style={{ width: 142 }} />
+                  <Input
+                    placeholder="Введите"
+                    style={{ width: 142 }}
+                    value={values.square || undefined}
+                    onChange={(value) =>
+                      setFieldValue('square', value.target.value)
+                    }
+                  />
                 </FormItem>
               </FormLine>
               <FormLine>
                 <FormItem block label="Число жильцов">
-                  <Input placeholder="Введите" />
+                  <Input
+                    placeholder="Введите"
+                    value={values.numberOfLiving || undefined}
+                    onChange={(value) =>
+                      setFieldValue('numberOfLiving', value.target.value)
+                    }
+                  />
                 </FormItem>
                 <FormItem block label="Число жильцов по нормативу">
-                  <Input placeholder="Введите" />
+                  <Input
+                    placeholder="Введите"
+                    value={values.normativeNumberOfLiving || undefined}
+                    onChange={(value) =>
+                      setFieldValue(
+                        'normativeNumberOfLiving',
+                        value.target.value,
+                      )
+                    }
+                  />
                 </FormItem>
               </FormLine>
 
               <SpaceLine />
               <FormLine>
                 <FormItem block label="Количество холодных стояков">
-                  <Input placeholder="Введите" />
+                  <Input
+                    placeholder="Введите"
+                    value={values.coldWaterRiserCount || undefined}
+                    onChange={(value) =>
+                      setFieldValue('coldWaterRiserCount', value.target.value)
+                    }
+                  />
                 </FormItem>
                 <FormItem block label="Количество горячих стояков">
-                  <Input placeholder="Введите" />
+                  <Input
+                    placeholder="Введите"
+                    value={values.hotWaterRiserCount || undefined}
+                    onChange={(value) =>
+                      setFieldValue('hotWaterRiserCount', value.target.value)
+                    }
+                  />
                 </FormItem>
               </FormLine>
             </>
