@@ -1,11 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useUnit } from 'effector-react';
 import { useParams } from 'react-router-dom';
-import {
-  ESecuredIdentityRoleName,
-  ETaskEngineeringElement,
-  TaskGroupingFilter,
-} from 'api/types';
+import { ESecuredIdentityRoleName, TaskGroupingFilter } from 'api/types';
 import { tasksProfileService } from './tasksProfileService.model';
 import { getAddressObject, prepareData } from './tasksProfileService.utils';
 import { TaskType } from './view/TasksListItem/TasksListItem.types';
@@ -169,7 +165,6 @@ export const TasksProfileContainer = () => {
         ...apartmentAddress,
         ApartmentNumber: apartment.apartmentNumber || '',
         GroupType: grouptype,
-        EngineeringElement: ETaskEngineeringElement.IndividualDevice,
       });
       return;
     }

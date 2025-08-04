@@ -44,8 +44,6 @@ export const ResourceConsumptionProfile: FC<
     setSelectedAddresses(initialSelectedAddresses);
   }, [housingConsumptionData?.additionalAddress]);
 
-  console.log(isHousingMeteringDevices);
-
   return (
     <Wrapper>
       <GraphWrapper>

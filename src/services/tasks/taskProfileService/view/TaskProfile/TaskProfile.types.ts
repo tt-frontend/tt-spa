@@ -1,4 +1,4 @@
-import { StagePushRequest } from 'api/types';
+import { OrganizationUserResponse, StagePushRequest } from 'api/types';
 import { DocumentResponse, PipeNodeResponse, TaskResponse } from 'api/types';
 
 export type TaskProfileProps = {
@@ -24,4 +24,5 @@ export type TaskProfileProps = {
   closeDeleteDocumentModal: () => void;
   pushStageRequestPayload: StagePushRequest;
   isApplication: boolean;
+  currentUser: OrganizationUserResponse | null;
 };
