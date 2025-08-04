@@ -1,8 +1,8 @@
-import { ApartmentCreateRequest, HousingStockResponse } from 'api/types';
+import { ApartmentCreateRequest } from 'api/types';
 
 export type Props = {
   buildingId: number;
-  building: HousingStockResponse | null;
+  prevStep: () => void;
   handleCreateApartment: (payload: Partial<ApartmentCreateRequest>) => void;
   openPreviewModal: () => void;
 };

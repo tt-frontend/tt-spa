@@ -8,7 +8,7 @@ import { message } from 'antd';
 
 const AddApartmentGate = createGate<{ buildingId: number }>();
 
-const handleCreateApartment = createEvent<ApartmentCreateRequest>();
+const handleCreateApartment = createEvent<Partial<ApartmentCreateRequest>>();
 
 const handlePostCreateApartment = createEvent();
 
@@ -25,7 +25,12 @@ const $isPreviewModalOpen = createStore<boolean>(false)
   .on(openPreviewModal, () => true)
   .reset(closePreviewModal, createApartmentFx.doneData);
 
-const $createApartmentData = createStore<ApartmentCreateRequest | null>(null)
+const $createApartmentData = createStore<ApartmentCreateRequest>({
+  housingStockId: 0,
+  number: '',
+  coldWaterRiserCount: null,
+  homeownerAccount: { name: '', openAt: '', personalAccountNumber: '' },
+})
   .on(handleCreateApartment, (oldData, newData) => ({
     ...oldData,
     ...newData,
