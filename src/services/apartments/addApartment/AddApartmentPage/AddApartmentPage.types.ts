@@ -5,4 +5,5 @@ export type Props = {
   building: HousingStockResponse | null;
   handleCreateApartment: (payload: Partial<ApartmentCreateRequest>) => void;
   openPreviewModal: () => void;
+  createApartmentData: ApartmentCreateRequest;
 };

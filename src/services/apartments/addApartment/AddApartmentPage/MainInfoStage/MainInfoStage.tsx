@@ -20,6 +20,7 @@ export const MainInfoStage: FC<Props> = ({
   prevStep,
   nextStep,
   handleCreateApartment,
+  createApartmentData,
 }) => {
   const navigate = useNavigate();
 
@@ -28,8 +29,8 @@ export const MainInfoStage: FC<Props> = ({
   >({
     initialValues: {
       housingStockId: buildingId,
-      number: '',
-      comment: null,
+      number: createApartmentData.number,
+      comment: createApartmentData.comment,
     },
     validationSchema: yup.object().shape({
       number: yup.string().required('Это поле обязательно'),

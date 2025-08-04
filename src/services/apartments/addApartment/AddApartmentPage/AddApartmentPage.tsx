@@ -23,6 +23,7 @@ export const AddApartmentPage: FC<Props> = ({
   building,
   handleCreateApartment,
   openPreviewModal,
+  createApartmentData,
 }) => {
   const { step, nextStep, prevStep } = useSteps(STEPS_AMOUNT);
 
@@ -42,6 +43,7 @@ export const AddApartmentPage: FC<Props> = ({
               prevStep={prevStep}
               nextStep={nextStep}
               handleCreateApartment={handleCreateApartment}
+              createApartmentData={createApartmentData}
             />
           )}
           {step === 1 && (
@@ -50,6 +52,7 @@ export const AddApartmentPage: FC<Props> = ({
               prevStep={prevStep}
               nextStep={nextStep}
               handleCreateApartment={handleCreateApartment}
+              createApartmentData={createApartmentData}
             />
           )}
           {step === 2 && (
@@ -58,6 +61,7 @@ export const AddApartmentPage: FC<Props> = ({
               prevStep={prevStep}
               handleCreateApartment={handleCreateApartment}
               openPreviewModal={openPreviewModal}
+              createApartmentData={createApartmentData}
             />
           )}
         </FormWrapper>

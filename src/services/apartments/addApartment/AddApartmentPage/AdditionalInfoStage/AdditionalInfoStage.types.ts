@@ -5,4 +5,5 @@ export type Props = {
   prevStep: () => void;
   handleCreateApartment: (payload: Partial<ApartmentCreateRequest>) => void;
   openPreviewModal: () => void;
+  createApartmentData: ApartmentCreateRequest;
 };

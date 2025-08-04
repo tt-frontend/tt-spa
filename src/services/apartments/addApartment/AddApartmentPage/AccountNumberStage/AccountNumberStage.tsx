@@ -21,22 +21,24 @@ export const AccountNumberStage: FC<Props> = ({
   handleCreateApartment,
   nextStep,
   prevStep,
+  createApartmentData,
 }) => {
   const navigate = useNavigate();
 
   const { values, setFieldValue, errors, handleSubmit } = useFormik({
     initialValues: {
-      name: '',
-      openAt: '',
-      personalAccountNumber: '',
-      paymentCode: null,
+      name: createApartmentData.homeownerAccount.name,
+      openAt: createApartmentData.homeownerAccount.openAt,
+      personalAccountNumber:
+        createApartmentData.homeownerAccount.personalAccountNumber,
+      paymentCode: createApartmentData.homeownerAccount.paymentCode,
     },
     validationSchema: yup.object().shape({
       personalAccountNumber: yup.string().required('Это поле обязательно'),
       name: yup.string().required('Это поле обязательно'),
       openAt: yup.string().required('Это поле обязательно'),
     }),
-
+    validateOnChange: false,
     onSubmit: (data) => {
       handleCreateApartment({ homeownerAccount: { ...data } });
       nextStep();

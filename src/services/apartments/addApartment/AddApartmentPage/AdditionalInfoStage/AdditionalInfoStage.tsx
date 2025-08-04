@@ -18,17 +18,18 @@ export const AdditionalInfoStage: FC<Props> = ({
   handleCreateApartment,
   prevStep,
   openPreviewModal,
+  createApartmentData,
 }) => {
   const navigate = useNavigate();
 
   const { values, setFieldValue, handleSubmit } = useFormik({
     initialValues: {
-      floor: null,
-      square: null,
-      numberOfLiving: null,
-      normativeNumberOfLiving: null,
-      coldWaterRiserCount: null,
-      hotWaterRiserCount: null,
+      floor: createApartmentData.floor,
+      square: createApartmentData.square,
+      numberOfLiving: createApartmentData.numberOfLiving,
+      normativeNumberOfLiving: createApartmentData.normativeNumberOfLiving,
+      coldWaterRiserCount: createApartmentData.coldWaterRiserCount,
+      hotWaterRiserCount: createApartmentData.hotWaterRiserCount,
     },
 
     onSubmit: (data) => {

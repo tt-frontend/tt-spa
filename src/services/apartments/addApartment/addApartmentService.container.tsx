@@ -54,6 +54,7 @@ export const AddApartmentContainer = () => {
         building={building}
         handleCreateApartment={handleCreateApartment}
         openPreviewModal={openPreviewModal}
+        createApartmentData={createApartmentData}
       />
       <FinalStageModal
         createApartmentData={createApartmentData}
