@@ -77,6 +77,7 @@ import { CurrentAnalyticsContainer } from 'services/supervisor/currentAnalytics'
 import { CommonAnalyticsContainer } from 'services/supervisor/commonAnalytics';
 import { usePermission } from 'hooks/usePermission';
 import { ReadingReportsArchiveContainer } from 'services/workWithReadings/readingReportsArchive';
+import { AddApartmentContainer } from 'services/apartments/addApartment';
 import { resourceConsumptionService } from 'services/resources/resourceConsumptionService';
 
 const {
@@ -311,6 +312,15 @@ export const useRoutes = (
           element:
             isAdministrator || isExecutor ? (
               <CreateNodeContainer />
+            ) : (
+              <AccessDeniedPage />
+            ),
+        },
+        {
+          path: '/buildings/:houseCategory/:buildingId/addApartment',
+          element:
+            isAdministrator || isSeniorOperator ? (
+              <AddApartmentContainer />
             ) : (
               <AccessDeniedPage />
             ),

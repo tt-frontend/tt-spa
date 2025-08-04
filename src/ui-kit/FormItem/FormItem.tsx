@@ -3,7 +3,7 @@ import { FormItemProps } from 'antd/lib';
 import { FormItemSC } from './FormItem.styled';
 
 export const FormItem: React.FC<
-  { children: React.ReactNode } & FormItemProps
+  { children: React.ReactNode; block?: boolean } & FormItemProps
 > = ({ children, ...attrs }) => {
   return (
     <FormItemSC colon={false} {...attrs}>

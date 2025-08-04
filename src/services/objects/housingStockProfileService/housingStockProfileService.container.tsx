@@ -46,6 +46,10 @@ export const HousingStockProfileContainer = () => {
   const isPermissionToEditHousingStock = usePermission([
     ESecuredIdentityRoleName.Administrator,
   ]);
+  const isPermissionToAddHousingStock = usePermission([
+    ESecuredIdentityRoleName.Administrator,
+    ESecuredIdentityRoleName.SeniorOperator,
+  ]);
 
   const setGrouptype = useCallback(
     (section: HousingStockProfileGrouptype) =>
@@ -72,6 +76,7 @@ export const HousingStockProfileContainer = () => {
           }
           isPermissionToEditHousingStock={isPermissionToEditHousingStock}
           resourceDisconnections={resourceDisconnections}
+          isPermissionToAddHousingStock={isPermissionToAddHousingStock}
         />
       )}
     </>
