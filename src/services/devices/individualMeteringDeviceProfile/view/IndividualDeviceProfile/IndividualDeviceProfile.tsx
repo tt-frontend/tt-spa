@@ -23,6 +23,7 @@ import dayjs from 'api/dayjs';
 import { DeviceStatus } from 'ui-kit/shared/IndividualDeviceInfo/DeviceStatus';
 import { ReadingsHistoryContainer } from 'services/meters/readingsHistoryService/readingsHistoryService.container';
 import { useNavigate } from 'react-router-dom';
+import { ConnectionInfo } from './ConnectionInfo';
 
 export const IndividualDeviceProfile: FC<Props> = ({ device }) => {
   const [currentTab, setCurrentTab] = useState<IndividualDeviceProfileTab>(
@@ -30,6 +31,8 @@ export const IndividualDeviceProfile: FC<Props> = ({ device }) => {
   );
 
   const isActive = device.closingDate === null;
+
+  const isConnected = Boolean(device.connection?.ipV4);
 
   const navigate = useNavigate();
 
@@ -40,6 +43,15 @@ export const IndividualDeviceProfile: FC<Props> = ({ device }) => {
         label: 'История показаний',
         key: IndividualDeviceProfileTab.ReadingsHistory,
       },
+
+      ...(isConnected
+        ? [
+            {
+              label: 'Настройки соединения',
+              key: IndividualDeviceProfileTab.Connection,
+            },
+          ]
+        : []),
     ],
     [],
   );
@@ -101,7 +113,9 @@ export const IndividualDeviceProfile: FC<Props> = ({ device }) => {
         />
       </ReadingsHistoryWrapper>
     ),
-    [IndividualDeviceProfileTab.Documents]: null,
+    [IndividualDeviceProfileTab.Connection]: (
+      <ConnectionInfo connection={device.connection} />
+    ),
   };
 
   return (
