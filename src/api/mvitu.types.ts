@@ -1,5 +1,6 @@
 /* eslint-disable */
 /* tslint:disable */
+// @ts-nocheck
 /*
  * ---------------------------------------------------------------
  * ## THIS FILE WAS GENERATED VIA SWAGGER-TYPESCRIPT-API        ##
@@ -8,6 +9,36 @@
  * ## SOURCE: https://github.com/acacode/swagger-typescript-api ##
  * ---------------------------------------------------------------
  */
+
+/** Статус интеграции */
+export enum StatusType {
+  Unconfigured = 'Unconfigured',
+  Paused = 'Paused',
+  Active = 'Active',
+}
+
+/** Статус интеграции для узла */
+export enum NodeStatusType {
+  Paused = 'Paused',
+  Active = 'Active',
+}
+
+export enum EResourceType {
+  Heat = 'Heat',
+  HotWaterSupply = 'HotWaterSupply',
+  ColdWaterSupply = 'ColdWaterSupply',
+  Electricity = 'Electricity',
+}
+
+export enum EOrderByRule {
+  Ascending = 'Ascending',
+  Descending = 'Descending',
+}
+
+export enum ChangeStatusType {
+  Active = 'Active',
+  Pause = 'Pause',
+}
 
 export interface AddNodeRequest {
   /** @format int32 */
@@ -60,23 +91,6 @@ export interface Calculator {
 
 export interface ChangeStatusRequest {
   expectedStatus?: ChangeStatusType;
-}
-
-export enum ChangeStatusType {
-  Active = 'Active',
-  Pause = 'Pause',
-}
-
-export enum EOrderByRule {
-  Ascending = 'Ascending',
-  Descending = 'Descending',
-}
-
-export enum EResourceType {
-  Heat = 'Heat',
-  HotWaterSupply = 'HotWaterSupply',
-  ColdWaterSupply = 'ColdWaterSupply',
-  Electricity = 'Electricity',
 }
 
 export interface ErrorApiResponse {
@@ -204,12 +218,6 @@ export interface NodeServiceZoneResponse {
   name: string | null;
 }
 
-/** Статус интеграции для узла */
-export enum NodeStatusType {
-  Paused = 'Paused',
-  Active = 'Active',
-}
-
 export interface OrganizationInfo {
   /** ИНН */
   inn?: string | null;
@@ -228,13 +236,6 @@ export interface StatusResponse {
   /** Статус интеграции */
   status: StatusType;
   organizationInfo: OrganizationInfo | null;
-}
-
-/** Статус интеграции */
-export enum StatusType {
-  Unconfigured = 'Unconfigured',
-  Paused = 'Paused',
-  Active = 'Active',
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -283,6 +284,7 @@ type CancelToken = Symbol | string | number;
 
 export enum ContentType {
   Json = 'application/json',
+  JsonApi = 'application/vnd.api+json',
   FormData = 'multipart/form-data',
   UrlEncoded = 'application/x-www-form-urlencoded',
   Text = 'text/plain',
@@ -313,9 +315,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected encodeQueryParam(key: string, value: any) {
     const encodedKey = encodeURIComponent(key);
-    return `${encodedKey}=${encodeURIComponent(
-      typeof value === 'number' ? value : `${value}`,
-    )}`;
+    return `${encodedKey}=${encodeURIComponent(typeof value === 'number' ? value : `${value}`)}`;
   }
 
   protected addQueryParam(query: QueryParamsType, key: string) {
@@ -351,23 +351,32 @@ export class HttpClient<SecurityDataType = unknown> {
       input !== null && (typeof input === 'object' || typeof input === 'string')
         ? JSON.stringify(input)
         : input,
+    [ContentType.JsonApi]: (input: any) =>
+      input !== null && (typeof input === 'object' || typeof input === 'string')
+        ? JSON.stringify(input)
+        : input,
     [ContentType.Text]: (input: any) =>
       input !== null && typeof input !== 'string'
         ? JSON.stringify(input)
         : input,
-    [ContentType.FormData]: (input: any) =>
-      Object.keys(input || {}).reduce((formData, key) => {
+    [ContentType.FormData]: (input: any) => {
+      if (input instanceof FormData) {
+        return input;
+      }
+
+      return Object.keys(input || {}).reduce((formData, key) => {
         const property = input[key];
         formData.append(
           key,
           property instanceof Blob
             ? property
             : typeof property === 'object' && property !== null
-            ? JSON.stringify(property)
-            : `${property}`,
+              ? JSON.stringify(property)
+              : `${property}`,
         );
         return formData;
-      }, new FormData()),
+      }, new FormData());
+    },
     [ContentType.UrlEncoded]: (input: any) => this.toQueryString(input),
   };
 
@@ -434,9 +443,7 @@ export class HttpClient<SecurityDataType = unknown> {
     const responseFormat = format || requestParams.format;
 
     return this.customFetch(
-      `${baseUrl || this.baseUrl || ''}${path}${
-        queryString ? `?${queryString}` : ''
-      }`,
+      `${baseUrl || this.baseUrl || ''}${path}${queryString ? `?${queryString}` : ''}`,
       {
         ...requestParams,
         headers: {
