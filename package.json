@@ -33,7 +33,7 @@
     "react-virtualized": "^9.22.6",
     "string-to-color": "^2.2.2",
     "styled-components": "^6.1.17",
-    "swagger-typescript-api": "^13.1.1",
+    "swagger-typescript-api": "^13.2.8",
     "typescript": "^5.8.3",
     "use-debounce": "^10.0.4",
     "victory": "^37.3.6",
@@ -43,7 +43,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "updateTypes": "yarn dlx swagger-typescript-api -p https://stage.k8s.transparent-technology.ru/openapi/site/ttm_api.json -o ./src/api -n types.ts && yarn dlx swagger-typescript-api -p https://stage.k8s.transparent-technology.ru/openapi/mvitu/ttm_api.json -o ./src/api -n mvitu.types.ts",
+    "updateTypes": "yarn swagger-typescript-api generate -p https://stage.k8s.transparent-technology.ru/openapi/site/ttm_api.json -o ./src/api -n types.ts && yarn swagger-typescript-api generate -p https://stage.k8s.transparent-technology.ru/openapi/mvitu/ttm_api.json -o ./src/api -n mvitu.types.ts",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

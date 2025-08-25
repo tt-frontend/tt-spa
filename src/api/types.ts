@@ -1,5 +1,6 @@
 /* eslint-disable */
 /* tslint:disable */
+// @ts-nocheck
 /*
  * ---------------------------------------------------------------
  * ## THIS FILE WAS GENERATED VIA SWAGGER-TYPESCRIPT-API        ##
@@ -8,6 +9,754 @@
  * ## SOURCE: https://github.com/acacode/swagger-typescript-api ##
  * ---------------------------------------------------------------
  */
+
+export enum YearRangeType {
+  FirstHalf = 'FirstHalf',
+  SecondHalf = 'SecondHalf',
+}
+
+export enum TaskPaginationOrderRule {
+  CreationTime = 'CreationTime',
+  ConfirmationTime = 'ConfirmationTime',
+  TimeStatus = 'TimeStatus',
+}
+
+export enum TaskGroupingFilter {
+  Executing = 'Executing',
+  Observing = 'Observing',
+  NotArchived = 'NotArchived',
+  Archived = 'Archived',
+  Revertable = 'Revertable',
+}
+
+export enum StatusType {
+  All = 'All',
+  Closed = 'Closed',
+  NotClosed = 'NotClosed',
+}
+
+export enum ResourceType {
+  None = 'None',
+  Heat = 'Heat',
+  HotWaterSupply = 'HotWaterSupply',
+  ColdWaterSupply = 'ColdWaterSupply',
+  Electricity = 'Electricity',
+}
+
+export enum ReportType {
+  None = 'None',
+  Hourly = 'Hourly',
+  Daily = 'Daily',
+  Monthly = 'Monthly',
+  Total = 'Total',
+  Current = 'Current',
+  TotalCurrent = 'TotalCurrent',
+  Events = 'Events',
+  Settings = 'Settings',
+  Other = 'Other',
+}
+
+export enum ReportFormat {
+  Consumption = 'Consumption',
+  Rso = 'Rso',
+  Undersupply = 'Undersupply',
+  RsoWithUndersupply = 'RsoWithUndersupply',
+}
+
+export enum PollCommand {
+  GetById = 'GetById',
+  GetLast = 'GetLast',
+  Create = 'Create',
+}
+
+export enum PollActionType {
+  DuplicateReadings = 'DuplicateReadings',
+  IndividualCreateTasksWithoutReadings = 'IndividualCreateTasksWithoutReadings',
+  IndividualCloseWithoutReadings = 'IndividualCloseWithoutReadings',
+  IndividualCloseByCheckDate = 'IndividualCloseByCheckDate',
+  HousingCloseByCheckDate = 'HousingCloseByCheckDate',
+  IndividualExport = 'IndividualExport',
+  HousingExport = 'HousingExport',
+  MilurExport = 'MilurExport',
+  OpenIndividualDevicesReport = 'OpenIndividualDevicesReport',
+  RunnersReports = 'RunnersReports',
+  IndividualExportDispatcher24 = 'IndividualExportDispatcher24',
+}
+
+export enum OrganizationType {
+  ManagementFirm = 'ManagementFirm',
+  CallCenter = 'CallCenter',
+  ControllerFirm = 'ControllerFirm',
+  HeadManagement = 'HeadManagement',
+}
+
+export enum OrderByRule {
+  Ascending = 'Ascending',
+  Descending = 'Descending',
+}
+
+export enum NodeCommercialAccountStatus {
+  NotRegistered = 'NotRegistered',
+  Registered = 'Registered',
+  OnReview = 'OnReview',
+  Prepared = 'Prepared',
+}
+
+export enum ManagingFirmTaskType {
+  CalculatorMalfunction = 'CalculatorMalfunction',
+  CalculatorMalfunctionNonCommercial = 'CalculatorMalfunctionNonCommercial',
+  HousingDeviceMalfunction = 'HousingDeviceMalfunction',
+  HousingDeviceMalfunctionNonCommercial = 'HousingDeviceMalfunctionNonCommercial',
+  CalculatorLackOfConnection = 'CalculatorLackOfConnection',
+  IndividualDeviceCheck = 'IndividualDeviceCheck',
+  PipeRupture = 'PipeRupture',
+  CurrentApplication = 'CurrentApplication',
+  EmergencyApplication = 'EmergencyApplication',
+  IndividualDeviceReadingsCheck = 'IndividualDeviceReadingsCheck',
+  MeasurementErrorCommercial = 'MeasurementErrorCommercial',
+  MeasurementErrorNonCommercial = 'MeasurementErrorNonCommercial',
+  IndividualDeviceCheckNoReadings = 'IndividualDeviceCheckNoReadings',
+  RiserNoReadings = 'RiserNoReadings',
+  ResourceDisconnecting = 'ResourceDisconnecting',
+  CurrentApplicationUnassigned = 'CurrentApplicationUnassigned',
+  EmergencyApplicationUnassigned = 'EmergencyApplicationUnassigned',
+  TemperatureNormativeDeviation = 'TemperatureNormativeDeviation',
+}
+
+export enum IPStatus {
+  Success = 'Success',
+  DestinationNetworkUnreachable = 'DestinationNetworkUnreachable',
+  DestinationHostUnreachable = 'DestinationHostUnreachable',
+  DestinationProtocolUnreachable = 'DestinationProtocolUnreachable',
+  DestinationPortUnreachable = 'DestinationPortUnreachable',
+  NoResources = 'NoResources',
+  BadOption = 'BadOption',
+  HardwareError = 'HardwareError',
+  PacketTooBig = 'PacketTooBig',
+  TimedOut = 'TimedOut',
+  BadRoute = 'BadRoute',
+  TtlExpired = 'TtlExpired',
+  TtlReassemblyTimeExceeded = 'TtlReassemblyTimeExceeded',
+  ParameterProblem = 'ParameterProblem',
+  SourceQuench = 'SourceQuench',
+  BadDestination = 'BadDestination',
+  DestinationUnreachable = 'DestinationUnreachable',
+  TimeExceeded = 'TimeExceeded',
+  BadHeader = 'BadHeader',
+  UnrecognizedNextHeader = 'UnrecognizedNextHeader',
+  IcmpError = 'IcmpError',
+  DestinationScopeMismatch = 'DestinationScopeMismatch',
+  Unknown = 'Unknown',
+}
+
+export enum HomeownerAccountOrderRule {
+  Street = 'Street',
+  HomeownerName = 'HomeownerName',
+  PaymentCode = 'PaymentCode',
+}
+
+export enum GroupReportConfigurationSendingPeriodType {
+  EveryTwoWeeks = 'EveryTwoWeeks',
+  EveryMonth = 'EveryMonth',
+  EveryQuarter = 'EveryQuarter',
+}
+
+export enum GroupReportConfigurationReportPeriodType {
+  StartMonth = 'StartMonth',
+  LastMonth = 'LastMonth',
+}
+
+export enum EisTaskType {
+  Current = 'Current',
+  Emergency = 'Emergency',
+}
+
+export enum EisTaskReasonType {
+  Heat = 'Heat',
+  HotWaterSupply = 'HotWaterSupply',
+  ColdWaterSupply = 'ColdWaterSupply',
+  Electricity = 'Electricity',
+}
+
+export enum EYearQuarter {
+  First = 'First',
+  Second = 'Second',
+  Third = 'Third',
+  Forth = 'Forth',
+}
+
+export enum EValueNodeWorkingRangeRelation {
+  Self = 'Self',
+  ManagementFirm = 'ManagementFirm',
+  HouseManagement = 'HouseManagement',
+  Building = 'Building',
+}
+
+export enum ETemperatureNormativeDeviationType {
+  Overheating = 'Overheating',
+  Underheating = 'Underheating',
+}
+
+export enum ETasksState {
+  NoTasks = 'NoTasks',
+  OnTime = 'OnTime',
+  MissedDeadline = 'MissedDeadline',
+}
+
+export enum ETaskTargetType {
+  Apartment = 'Apartment',
+  Calculator = 'Calculator',
+  Housing = 'Housing',
+  Node = 'Node',
+  Application = 'Application',
+}
+
+export enum ETaskTargetObjectType {
+  IndividualDevice = 'IndividualDevice',
+  PipeHousingDevice = 'PipeHousingDevice',
+  Calculator = 'Calculator',
+  PipeNode = 'PipeNode',
+  Application = 'Application',
+}
+
+export enum ETaskTargetObjectRequestType {
+  Apartment = 'Apartment',
+  MeteringDevice = 'MeteringDevice',
+  Node = 'Node',
+  Building = 'Building',
+  Reading = 'Reading',
+  IndividualDevice = 'IndividualDevice',
+}
+
+export enum ETaskTargetObjectInfo {
+  ColdWaterSupply = 'ColdWaterSupply',
+  HotWaterSupply = 'HotWaterSupply',
+  Electricity = 'Electricity',
+  Heat = 'Heat',
+  MultipleResources = 'MultipleResources',
+  Calculator = 'Calculator',
+}
+
+export enum ETaskEngineeringElement {
+  Node = 'Node',
+  IndividualDevice = 'IndividualDevice',
+  HouseNetwork = 'HouseNetwork',
+}
+
+export enum ETaskCreateType {
+  CalculatorMalfunction = 'CalculatorMalfunction',
+  HousingDeviceMalfunction = 'HousingDeviceMalfunction',
+  CalculatorLackOfConnection = 'CalculatorLackOfConnection',
+  PipeRupture = 'PipeRupture',
+  IndividualDeviceCheck = 'IndividualDeviceCheck',
+  IndividualDeviceReadingsCheck = 'IndividualDeviceReadingsCheck',
+  MeasurementError = 'MeasurementError',
+  IndividualDeviceCheckNoReadings = 'IndividualDeviceCheckNoReadings',
+  RiserNoReadings = 'RiserNoReadings',
+  EmergencyApplication = 'EmergencyApplication',
+  CurrentApplication = 'CurrentApplication',
+  ResourceDisconnecting = 'ResourceDisconnecting',
+  TemperatureNormativeDeviation = 'TemperatureNormativeDeviation',
+}
+
+export enum ETaskConfirmationType {
+  Confirm = 'Confirm',
+  PipeRuptureNotConfirmAnomaly = 'PipeRuptureNotConfirm_Anomaly',
+  PipeRuptureNotConfirmCalculatorMalfunction = 'PipeRuptureNotConfirm_CalculatorMalfunction',
+  PipeRuptureNotConfirmPowerMalfunction = 'PipeRuptureNotConfirm_PowerMalfunction',
+  ResourceDisconnectingNotConfirm = 'ResourceDisconnectingNotConfirm',
+  FeedBackFlowTemperatureErrorNoted = 'FeedBackFlowTemperatureErrorNoted',
+}
+
+export enum ETaskClosingStatus {
+  Properly = 'Properly',
+  Interrupted = 'Interrupted',
+  Forced = 'Forced',
+}
+
+export enum ESwitchingReason {
+  Manually = 'Manually',
+  NoReadings = 'NoReadings',
+  DeviceBroken = 'DeviceBroken',
+  CheckingDate = 'CheckingDate',
+  CertificateIssued = 'CertificateIssued',
+  MaintainingStopped = 'MaintainingStopped',
+}
+
+export enum EStageType {
+  Common = 'Common',
+  Switch = 'Switch',
+  Final = 'Final',
+}
+
+export enum EStageTimeStatus {
+  Normal = 'Normal',
+  RunningOut = 'RunningOut',
+  Expired = 'Expired',
+}
+
+export enum EStageStatus {
+  Waiting = 'Waiting',
+  InProgress = 'InProgress',
+  Done = 'Done',
+}
+
+export enum EStageActionType {
+  AddDocuments = 'AddDocuments',
+  AddPerpetrator = 'AddPerpetrator',
+  EmailNotify = 'EmailNotify',
+  UploadReadings = 'UploadReadings',
+  CheckDevice = 'CheckDevice',
+  SwitchDevices = 'SwitchDevices',
+  SetNextStageDeadline = 'SetNextStageDeadline',
+  Completion = 'Completion',
+  Switch = 'Switch',
+  ChangeApartmentCoefficient = 'ChangeApartmentCoefficient',
+  AddEmailTemplate = 'AddEmailTemplate',
+  AddPhotos = 'AddPhotos',
+  SetApplicationCompletionDate = 'SetApplicationCompletionDate',
+  AddComment = 'AddComment',
+  AddApartmentCheck = 'AddApartmentCheck',
+  FixReading = 'FixReading',
+  CompletionOrSwitch = 'CompletionOrSwitch',
+  ClearManuallyAttachedParticipants = 'ClearManuallyAttachedParticipants',
+  CloseIndividualDevices = 'CloseIndividualDevices',
+  CreateResourceDisconnecting = 'CreateResourceDisconnecting',
+  SetApplicationPostponeDate = 'SetApplicationPostponeDate',
+  SelectApplicationWorker = 'SelectApplicationWorker',
+}
+
+export enum ESoiReportPeriod {
+  Month = 'Month',
+  Year = 'Year',
+}
+
+export enum ESecuredIdentityRoleName {
+  Administrator = 'Administrator',
+  ManagingFirmExecutor = 'ManagingFirmExecutor',
+  Operator = 'Operator',
+  ManagingFirmSpectator = 'ManagingFirmSpectator',
+  ManagingFirmDispatcher = 'ManagingFirmDispatcher',
+  Controller = 'Controller',
+  SeniorOperator = 'SeniorOperator',
+  ManagingFirmSpectatorRestricted = 'ManagingFirmSpectatorRestricted',
+  ManagingFirmSpectatingAdministrator = 'ManagingFirmSpectatingAdministrator',
+  Supervisor = 'Supervisor',
+}
+
+export enum EResourceType {
+  Heat = 'Heat',
+  HotWaterSupply = 'HotWaterSupply',
+  ColdWaterSupply = 'ColdWaterSupply',
+  Electricity = 'Electricity',
+}
+
+export enum EResourceDisconnectingType {
+  Other = 'Other',
+  Planned = 'Planned',
+  Emergency = 'Emergency',
+  Preventive = 'Preventive',
+  Repair = 'Repair',
+  InterHeatingSeason = 'InterHeatingSeason',
+}
+
+export enum EResourceDisconnectingStatus {
+  Future = 'Future',
+  Active = 'Active',
+  Past = 'Past',
+}
+
+export enum EResourceDisconnectingOrderRule {
+  StartDate = 'StartDate',
+  EndDate = 'EndDate',
+}
+
+export enum EReportType {
+  None = 'None',
+  Hourly = 'Hourly',
+  Daily = 'Daily',
+  Monthly = 'Monthly',
+  Total = 'Total',
+  Current = 'Current',
+  TotalCurrent = 'TotalCurrent',
+  Events = 'Events',
+  Settings = 'Settings',
+  Other = 'Other',
+}
+
+export enum EReportName {
+  OperatorsWorkingReport = 'OperatorsWorkingReport',
+  InspectorsWorkingReport = 'InspectorsWorkingReport',
+  CallCenterWorkingReport = 'CallCenterWorkingReport',
+  HouseManagementsReport = 'HouseManagementsReport',
+}
+
+export enum EReportFormat {
+  Consumption = 'Consumption',
+  Rso = 'Rso',
+  Undersupply = 'Undersupply',
+  RsoWithUndersupply = 'RsoWithUndersupply',
+}
+
+export enum EPollState {
+  Pending = 'Pending',
+  Running = 'Running',
+  Error = 'Error',
+  Done = 'Done',
+}
+
+export enum EPipeNodeValidationMessage {
+  ExtraFeed = 'ExtraFeed',
+  ExtraBack = 'ExtraBack',
+  ExtraRecharge = 'ExtraRecharge',
+  NoPipes = 'NoPipes',
+  NoFeed = 'NoFeed',
+  NoBack = 'NoBack',
+  NoRecharge = 'NoRecharge',
+  NoDevices = 'NoDevices',
+  ExtraFeedFlowMeter = 'ExtraFeedFlowMeter',
+  ExtraBackFlowMeter = 'ExtraBackFlowMeter',
+  ExtraRechargeFlowMeter = 'ExtraRechargeFlowMeter',
+  LackFeedFlowMeter = 'LackFeedFlowMeter',
+  LackBackFlowMeter = 'LackBackFlowMeter',
+  LackRechargeFlowMeter = 'LackRechargeFlowMeter',
+  ExtraFeedTemperatureSensor = 'ExtraFeedTemperatureSensor',
+  ExtraBackTemperatureSensor = 'ExtraBackTemperatureSensor',
+  ExtraRechargeTemperatureSensor = 'ExtraRechargeTemperatureSensor',
+  LackNodeTemperatureSensor = 'LackNodeTemperatureSensor',
+}
+
+export enum EPipeNodeConfig {
+  HeatNoRecharge = 'HeatNoRecharge',
+  HotWaterSupplyNoBackflow = 'HotWaterSupplyNoBackflow',
+  ColdWaterSupply = 'ColdWaterSupply',
+  HeatWithRecharge = 'HeatWithRecharge',
+  HotWaterSupplyWithBackflow = 'HotWaterSupplyWithBackflow',
+  HeatNoHousingMeteringDevice = 'HeatNoHousingMeteringDevice',
+  HotWaterNoDevice = 'HotWaterNoDevice',
+  ColdWaterNoDevice = 'ColdWaterNoDevice',
+}
+
+export enum EPhaseNumberType {
+  SinglePhase = 'SinglePhase',
+  ThreePhase = 'ThreePhase',
+}
+
+export enum EPersonType {
+  Natural = 'Natural',
+  Juristic = 'Juristic',
+}
+
+export enum EOrganizationUserWorkingStatusType {
+  Working = 'Working',
+  OnVacation = 'OnVacation',
+  Sick = 'Sick',
+  OnDuty = 'OnDuty',
+}
+
+export enum EOrderByRule {
+  Ascending = 'Ascending',
+  Descending = 'Descending',
+}
+
+export enum ENonResidentialHouseType {
+  None = 'None',
+  Social = 'Social',
+  Commercial = 'Commercial',
+}
+
+export enum ENodeWorkingRangeType {
+  AllowableError = 'AllowableError',
+  CriticalError = 'CriticalError',
+  MassOfFeedFlowMagistral = 'MassOfFeedFlowMagistral',
+  MassOfFeedBackFlowMagistral = 'MassOfFeedBackFlowMagistral',
+  DeltaMassOfMagistral = 'DeltaMassOfMagistral',
+}
+
+export enum ENodeWorkingRangeSeason {
+  HeatingSeason = 'HeatingSeason',
+  InterHeating = 'InterHeating',
+}
+
+export enum ENodeType {
+  PipeNode = 'PipeNode',
+  ElectricNode = 'ElectricNode',
+}
+
+export enum ENodeRegistrationType {
+  Commercial = 'Commercial',
+  Technical = 'Technical',
+}
+
+export enum ENodeNetworkDeviceType {
+  Calculator = 'Calculator',
+  Counter = 'Counter',
+}
+
+export enum ENodeCommercialAccountStatus {
+  NotRegistered = 'NotRegistered',
+  Registered = 'Registered',
+  OnReview = 'OnReview',
+  Prepared = 'Prepared',
+}
+
+export enum ENodeCheckType {
+  PlannedCheck = 'PlannedCheck',
+  UnplannedCheck = 'UnplannedCheck',
+  AdmissionCheck = 'AdmissionCheck',
+}
+
+export enum EMeteringDeviceType {
+  Calculator = 'Calculator',
+  HousingPipe = 'HousingPipe',
+  Individual = 'Individual',
+  HousingElectric = 'HousingElectric',
+}
+
+export enum EManagingFirmTaskType {
+  CalculatorMalfunction = 'CalculatorMalfunction',
+  CalculatorMalfunctionNonCommercial = 'CalculatorMalfunctionNonCommercial',
+  HousingDeviceMalfunction = 'HousingDeviceMalfunction',
+  HousingDeviceMalfunctionNonCommercial = 'HousingDeviceMalfunctionNonCommercial',
+  CalculatorLackOfConnection = 'CalculatorLackOfConnection',
+  IndividualDeviceCheck = 'IndividualDeviceCheck',
+  PipeRupture = 'PipeRupture',
+  CurrentApplication = 'CurrentApplication',
+  EmergencyApplication = 'EmergencyApplication',
+  IndividualDeviceReadingsCheck = 'IndividualDeviceReadingsCheck',
+  MeasurementErrorCommercial = 'MeasurementErrorCommercial',
+  MeasurementErrorNonCommercial = 'MeasurementErrorNonCommercial',
+  IndividualDeviceCheckNoReadings = 'IndividualDeviceCheckNoReadings',
+  RiserNoReadings = 'RiserNoReadings',
+  ResourceDisconnecting = 'ResourceDisconnecting',
+  CurrentApplicationUnassigned = 'CurrentApplicationUnassigned',
+  EmergencyApplicationUnassigned = 'EmergencyApplicationUnassigned',
+  TemperatureNormativeDeviation = 'TemperatureNormativeDeviation',
+}
+
+export enum EManagingFirmTaskFilterType {
+  CalculatorMalfunctionAny = 'CalculatorMalfunctionAny',
+  HousingDeviceMalfunctionAny = 'HousingDeviceMalfunctionAny',
+  CalculatorLackOfConnection = 'CalculatorLackOfConnection',
+  IndividualDeviceCheck = 'IndividualDeviceCheck',
+  PipeRupture = 'PipeRupture',
+  IndividualDeviceReadingsCheck = 'IndividualDeviceReadingsCheck',
+  MeasurementErrorAny = 'MeasurementErrorAny',
+  IndividualDeviceCheckNoReadings = 'IndividualDeviceCheckNoReadings',
+  RiserNoReadings = 'RiserNoReadings',
+  EmergencyApplication = 'EmergencyApplication',
+  CurrentApplication = 'CurrentApplication',
+  ResourceDisconnecting = 'ResourceDisconnecting',
+  TemperatureNormativeDeviation = 'TemperatureNormativeDeviation',
+}
+
+export enum EManagementFirmEventType {
+  Add = 'Add',
+  Update = 'Update',
+  Delete = 'Delete',
+  IndividualDeviceClose = 'IndividualDeviceClose',
+  HousingMeteringDeviceClose = 'HousingMeteringDeviceClose',
+  MeteringDeviceCheck = 'MeteringDeviceCheck',
+  TaskClose = 'TaskClose',
+  TaskStagePush = 'TaskStagePush',
+  TaskStageRevert = 'TaskStageRevert',
+  ApartmentSetStatus = 'ApartmentSetStatus',
+  CalculatorSwitch = 'CalculatorSwitch',
+  HousingMeterignDeviceSwitch = 'HousingMeterignDeviceSwitch',
+  IndividualDeviceSwitchMagneticSeal = 'IndividualDeviceSwitchMagneticSeal',
+  CalculatorClose = 'CalculatorClose',
+  IndividualDeviceSwitch = 'IndividualDeviceSwitch',
+  IndividualDeviceReopen = 'IndividualDeviceReopen',
+  TaskReturn = 'TaskReturn',
+  HousingMeteringDeviceReadingsRemove = 'HousingMeteringDeviceReadingsRemove',
+}
+
+export enum EMagistralType {
+  FeedFlow = 'FeedFlow',
+  FeedBackFlow = 'FeedBackFlow',
+  Recharge = 'Recharge',
+}
+
+export enum ELivingHouseType {
+  ApartmentHouse = 'ApartmentHouse',
+  Townhouse = 'Townhouse',
+  Private = 'Private',
+}
+
+export enum EIndividualDeviceReportOption {
+  InvalidCheckingDates = 'InvalidCheckingDates',
+  ClosedDeviceOnOneOfRisers = 'ClosedDeviceOnOneOfRisers',
+  DeviceCheckingDateExpiration = 'DeviceCheckingDateExpiration',
+  ClosedDevices = 'ClosedDevices',
+  InvalidBitDepth = 'InvalidBitDepth',
+}
+
+export enum EIndividualDeviceReadingsSource {
+  Archive = 'Archive',
+  Ttm = 'Ttm',
+  GosUslugi = 'GosUslugi',
+  Bank = 'Bank',
+  Duplicated = 'Duplicated',
+  Erc = 'Erc',
+  TtmFromErc = 'TtmFromErc',
+  TelegramBot = 'TelegramBot',
+  DeviceTelemetry = 'DeviceTelemetry',
+  TtmFromGis = 'TtmFromGis',
+}
+
+export enum EIndividualDeviceRateType {
+  OneZone = 'OneZone',
+  TwoZone = 'TwoZone',
+  ThreeZone = 'ThreeZone',
+}
+
+export enum EIndividualDeviceOrderRule {
+  Resource = 'Resource',
+  ApartmentNumber = 'ApartmentNumber',
+  SerialNumber = 'SerialNumber',
+  Address = 'Address',
+  BitDepth = 'BitDepth',
+  CheckingDate = 'CheckingDate',
+}
+
+export enum EHousingStockOrderRule {
+  Street = 'Street',
+  TaskCount = 'TaskCount',
+}
+
+export enum EHousingMeteringDeviceType {
+  FlowMeter = 'FlowMeter',
+  TemperatureSensor = 'TemperatureSensor',
+  WeatherController = 'WeatherController',
+  PressureMeter = 'PressureMeter',
+  Counter = 'Counter',
+}
+
+export enum EHouseCategory {
+  Living = 'Living',
+  NonResidential = 'NonResidential',
+}
+
+export enum EExpiresDateAt {
+  CurrentMonth = 'CurrentMonth',
+  NextMonth = 'NextMonth',
+  NextTwoMonth = 'NextTwoMonth',
+  Past = 'Past',
+}
+
+export enum EDocumentType {
+  Common = 'Common',
+  DeviceCommissionCheckAct = 'DeviceCommissionCheckAct',
+  DeviceCheckAct = 'DeviceCheckAct',
+  DeviceCommercialAccountingAct = 'DeviceCommercialAccountingAct',
+  DeviceAcceptanceAct = 'DeviceAcceptanceAct',
+  DeviceDeploymentAct = 'DeviceDeploymentAct',
+  DeviceClosingAct = 'DeviceClosingAct',
+  DevicePassport = 'DevicePassport',
+  DeviceTestCertificates = 'DeviceTestCertificates',
+  ApartmentCheckingAct = 'ApartmentCheckingAct',
+  ApartmentAccessDeniedAct = 'ApartmentAccessDeniedAct',
+  ApartmentUnauthorizedInterferenceAct = 'ApartmentUnauthorizedInterferenceAct',
+  AdditionalMaterials = 'AdditionalMaterials',
+  HeatingSeasonStartingOrder = 'HeatingSeasonStartingOrder',
+  HeatingSeasonEndingOrder = 'HeatingSeasonEndingOrder',
+  HeatingSeasonChangingStatement = 'HeatingSeasonChangingStatement',
+  Photo = 'Photo',
+  NodeAdmissionAct = 'NodeAdmissionAct',
+  ImportedFile = 'ImportedFile',
+  ProfilePhoto = 'ProfilePhoto',
+  ApartmentStoppingStatement = 'ApartmentStoppingStatement',
+}
+
+export enum EConstructedReportDeviceStatus {
+  Closed = 'Closed',
+  Open = 'Open',
+}
+
+export enum EConnectionStatusType {
+  Unknown = 'Unknown',
+  Success = 'Success',
+  NoConnection = 'NoConnection',
+  UnstableConnection = 'UnstableConnection',
+  DeviceMalfunction = 'DeviceMalfunction',
+}
+
+export enum EClosingReason {
+  None = 'None',
+  Manually = 'Manually',
+  NoReadings = 'NoReadings',
+  DeviceBroken = 'DeviceBroken',
+  CheckingDate = 'CheckingDate',
+  CertificateIssued = 'CertificateIssued',
+  MaintainingStopped = 'MaintainingStopped',
+  ByLetter = 'ByLetter',
+  NoMagneticSeal = 'NoMagneticSeal',
+}
+
+export enum ECheckType {
+  Planned = 'Planned',
+  Unplanned = 'Unplanned',
+  Admission = 'Admission',
+}
+
+export enum ECalculatorOrderRule {
+  Street = 'Street',
+  FutureCheckingDate = 'FutureCheckingDate',
+}
+
+export enum ECalculatorConnectionGroupType {
+  Success = 'Success',
+  NotPolling = 'NotPolling',
+  Error = 'Error',
+  NoArchives = 'NoArchives',
+}
+
+/** Источники записей об опломбировке */
+export enum EAppointmentSource {
+  Ttm = 'Ttm',
+  TelegramBot = 'TelegramBot',
+}
+
+export enum EApartmentStatus {
+  Ok = 'Ok',
+  Debtor = 'Debtor',
+  Pause = 'Pause',
+}
+
+export enum EActType {
+  PlannedCheck = 'PlannedCheck',
+  UnplannedCheck = 'UnplannedCheck',
+  ResourceDisconnect = 'ResourceDisconnect',
+  ResourceConnect = 'ResourceConnect',
+  HomeownerAccountCertificate = 'HomeownerAccountCertificate',
+  Admission = 'Admission',
+  NonAdmission = 'NonAdmission',
+}
+
+export enum EActResourceType {
+  All = 'All',
+  ColdWaterSupply = 'ColdWaterSupply',
+  HotWaterSupply = 'HotWaterSupply',
+  Electricity = 'Electricity',
+  Heat = 'Heat',
+}
+
+export enum DeviceResource {
+  Electricity = 'Electricity',
+  Heat = 'Heat',
+}
+
+export enum ChannelType {
+  Telegram = 'Telegram',
+}
+
+export enum ArchivesDataGroupType {
+  Undefined = 'Undefined',
+  Volume = 'Volume',
+  TemperatureOut = 'TemperatureOut',
+  Energy = 'Energy',
+  TemperatureIn = 'TemperatureIn',
+}
 
 export interface AddApartmentActRequest {
   /** @format date-time */
@@ -421,6 +1170,8 @@ export interface AppointmentResponse {
   createDateTimeUtc: string;
   /** @format date-time */
   modifiedDateTimeUtc: string | null;
+  /** Источники записей об опломбировке */
+  sourceType: EAppointmentSource;
 }
 
 export interface AppointmentUpdateRequest {
@@ -453,14 +1204,6 @@ export interface ArchivesDataGroup {
   measure?: string | null;
   groupType?: ArchivesDataGroupType;
   data?: ArchivesDataGroupValue[] | null;
-}
-
-export enum ArchivesDataGroupType {
-  Undefined = 'Undefined',
-  Volume = 'Volume',
-  TemperatureOut = 'TemperatureOut',
-  Energy = 'Energy',
-  TemperatureIn = 'TemperatureIn',
 }
 
 export interface ArchivesDataGroupValue {
@@ -891,10 +1634,6 @@ export interface ChannelResponse {
   confirmedAt: string;
 }
 
-export enum ChannelType {
-  Telegram = 'Telegram',
-}
-
 export interface CheckDeviceRequest {
   /** @format int32 */
   deviceId: number;
@@ -912,6 +1651,29 @@ export interface CheckIndividualDeviceRequest {
   futureCheckingDate: string;
   readingsBeforeCheck?: SwitchIndividualDeviceReadingsCreateRequest[] | null;
   readingsAfterCheck?: SwitchIndividualDeviceReadingsCreateRequest[] | null;
+}
+
+export interface CitiesWithCoordinatesResponse {
+  city: string | null;
+  coordinates: PointResponse | null;
+}
+
+export interface CitiesWithCoordinatesResponsePagedList {
+  /** @format int32 */
+  totalItems: number;
+  /** @format int32 */
+  pageNumber: number;
+  /** @format int32 */
+  pageSize: number;
+  /** @format int32 */
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  /** @format int32 */
+  nextPageNumber: number;
+  /** @format int32 */
+  previousPageNumber: number;
+  items: CitiesWithCoordinatesResponse[] | null;
 }
 
 export interface CloseDeviceRequest {
@@ -1627,11 +2389,6 @@ export interface DeviceCheckingDateExpirationConstructedReportResponse {
   homeownerPhoneNumber: string | null;
 }
 
-export enum DeviceResource {
-  Electricity = 'Electricity',
-  Heat = 'Heat',
-}
-
 export interface DisableNodeWorkingRangeRequest {
   season: ENodeWorkingRangeSeason;
   nodeResourceType: EResourceType;
@@ -1684,27 +2441,9 @@ export interface DocumentResponse {
   type: EDocumentType;
 }
 
-export enum EActResourceType {
-  All = 'All',
-  ColdWaterSupply = 'ColdWaterSupply',
-  HotWaterSupply = 'HotWaterSupply',
-  Electricity = 'Electricity',
-  Heat = 'Heat',
-}
-
 export interface EActResourceTypeStringDictionaryItem {
   key?: EActResourceType;
   value?: string | null;
-}
-
-export enum EActType {
-  PlannedCheck = 'PlannedCheck',
-  UnplannedCheck = 'UnplannedCheck',
-  ResourceDisconnect = 'ResourceDisconnect',
-  ResourceConnect = 'ResourceConnect',
-  HomeownerAccountCertificate = 'HomeownerAccountCertificate',
-  Admission = 'Admission',
-  NonAdmission = 'NonAdmission',
 }
 
 export interface EActTypeStringDictionaryItem {
@@ -1712,82 +2451,9 @@ export interface EActTypeStringDictionaryItem {
   value?: string | null;
 }
 
-export enum EApartmentStatus {
-  Ok = 'Ok',
-  Debtor = 'Debtor',
-  Pause = 'Pause',
-}
-
-export enum ECalculatorConnectionGroupType {
-  Success = 'Success',
-  NotPolling = 'NotPolling',
-  Error = 'Error',
-  NoArchives = 'NoArchives',
-}
-
-export enum ECalculatorOrderRule {
-  Street = 'Street',
-  FutureCheckingDate = 'FutureCheckingDate',
-}
-
-export enum ECheckType {
-  Planned = 'Planned',
-  Unplanned = 'Unplanned',
-  Admission = 'Admission',
-}
-
 export interface ECheckTypeStringDictionaryItem {
   key?: ECheckType;
   value?: string | null;
-}
-
-export enum EClosingReason {
-  None = 'None',
-  Manually = 'Manually',
-  NoReadings = 'NoReadings',
-  DeviceBroken = 'DeviceBroken',
-  CheckingDate = 'CheckingDate',
-  CertificateIssued = 'CertificateIssued',
-  MaintainingStopped = 'MaintainingStopped',
-  ByLetter = 'ByLetter',
-  NoMagneticSeal = 'NoMagneticSeal',
-}
-
-export enum EConnectionStatusType {
-  Unknown = 'Unknown',
-  Success = 'Success',
-  NoConnection = 'NoConnection',
-  UnstableConnection = 'UnstableConnection',
-  DeviceMalfunction = 'DeviceMalfunction',
-}
-
-export enum EConstructedReportDeviceStatus {
-  Closed = 'Closed',
-  Open = 'Open',
-}
-
-export enum EDocumentType {
-  Common = 'Common',
-  DeviceCommissionCheckAct = 'DeviceCommissionCheckAct',
-  DeviceCheckAct = 'DeviceCheckAct',
-  DeviceCommercialAccountingAct = 'DeviceCommercialAccountingAct',
-  DeviceAcceptanceAct = 'DeviceAcceptanceAct',
-  DeviceDeploymentAct = 'DeviceDeploymentAct',
-  DeviceClosingAct = 'DeviceClosingAct',
-  DevicePassport = 'DevicePassport',
-  DeviceTestCertificates = 'DeviceTestCertificates',
-  ApartmentCheckingAct = 'ApartmentCheckingAct',
-  ApartmentAccessDeniedAct = 'ApartmentAccessDeniedAct',
-  ApartmentUnauthorizedInterferenceAct = 'ApartmentUnauthorizedInterferenceAct',
-  AdditionalMaterials = 'AdditionalMaterials',
-  HeatingSeasonStartingOrder = 'HeatingSeasonStartingOrder',
-  HeatingSeasonEndingOrder = 'HeatingSeasonEndingOrder',
-  HeatingSeasonChangingStatement = 'HeatingSeasonChangingStatement',
-  Photo = 'Photo',
-  NodeAdmissionAct = 'NodeAdmissionAct',
-  ImportedFile = 'ImportedFile',
-  ProfilePhoto = 'ProfilePhoto',
-  ApartmentStoppingStatement = 'ApartmentStoppingStatement',
 }
 
 export interface EDocumentTypeStringDictionaryItem {
@@ -1795,76 +2461,9 @@ export interface EDocumentTypeStringDictionaryItem {
   value?: string | null;
 }
 
-export enum EExpiresDateAt {
-  CurrentMonth = 'CurrentMonth',
-  NextMonth = 'NextMonth',
-  NextTwoMonth = 'NextTwoMonth',
-  Past = 'Past',
-}
-
-export enum EHouseCategory {
-  Living = 'Living',
-  NonResidential = 'NonResidential',
-}
-
 export interface EHouseCategoryStringDictionaryItem {
   key?: EHouseCategory;
   value?: string | null;
-}
-
-export enum EHousingMeteringDeviceType {
-  FlowMeter = 'FlowMeter',
-  TemperatureSensor = 'TemperatureSensor',
-  WeatherController = 'WeatherController',
-  PressureMeter = 'PressureMeter',
-  Counter = 'Counter',
-}
-
-export enum EHousingStockOrderRule {
-  Street = 'Street',
-  TaskCount = 'TaskCount',
-}
-
-export enum EIndividualDeviceOrderRule {
-  Resource = 'Resource',
-  ApartmentNumber = 'ApartmentNumber',
-  SerialNumber = 'SerialNumber',
-  Address = 'Address',
-  BitDepth = 'BitDepth',
-  CheckingDate = 'CheckingDate',
-}
-
-export enum EIndividualDeviceRateType {
-  OneZone = 'OneZone',
-  TwoZone = 'TwoZone',
-  ThreeZone = 'ThreeZone',
-}
-
-export enum EIndividualDeviceReadingsSource {
-  Archive = 'Archive',
-  Ttm = 'Ttm',
-  GosUslugi = 'GosUslugi',
-  Bank = 'Bank',
-  Duplicated = 'Duplicated',
-  Erc = 'Erc',
-  TtmFromErc = 'TtmFromErc',
-  TelegramBot = 'TelegramBot',
-  DeviceTelemetry = 'DeviceTelemetry',
-  TtmFromGis = 'TtmFromGis',
-}
-
-export enum EIndividualDeviceReportOption {
-  InvalidCheckingDates = 'InvalidCheckingDates',
-  ClosedDeviceOnOneOfRisers = 'ClosedDeviceOnOneOfRisers',
-  DeviceCheckingDateExpiration = 'DeviceCheckingDateExpiration',
-  ClosedDevices = 'ClosedDevices',
-  InvalidBitDepth = 'InvalidBitDepth',
-}
-
-export enum ELivingHouseType {
-  ApartmentHouse = 'ApartmentHouse',
-  Townhouse = 'Townhouse',
-  Private = 'Private',
 }
 
 export interface ELivingHouseTypeStringDictionaryItem {
@@ -1872,52 +2471,9 @@ export interface ELivingHouseTypeStringDictionaryItem {
   value?: string | null;
 }
 
-export enum EMagistralType {
-  FeedFlow = 'FeedFlow',
-  FeedBackFlow = 'FeedBackFlow',
-  Recharge = 'Recharge',
-}
-
 export interface EMagistralTypeStringDictionaryItem {
   key?: EMagistralType;
   value?: string | null;
-}
-
-export enum EManagementFirmEventType {
-  Add = 'Add',
-  Update = 'Update',
-  Delete = 'Delete',
-  IndividualDeviceClose = 'IndividualDeviceClose',
-  HousingMeteringDeviceClose = 'HousingMeteringDeviceClose',
-  MeteringDeviceCheck = 'MeteringDeviceCheck',
-  TaskClose = 'TaskClose',
-  TaskStagePush = 'TaskStagePush',
-  TaskStageRevert = 'TaskStageRevert',
-  ApartmentSetStatus = 'ApartmentSetStatus',
-  CalculatorSwitch = 'CalculatorSwitch',
-  HousingMeterignDeviceSwitch = 'HousingMeterignDeviceSwitch',
-  IndividualDeviceSwitchMagneticSeal = 'IndividualDeviceSwitchMagneticSeal',
-  CalculatorClose = 'CalculatorClose',
-  IndividualDeviceSwitch = 'IndividualDeviceSwitch',
-  IndividualDeviceReopen = 'IndividualDeviceReopen',
-  TaskReturn = 'TaskReturn',
-  HousingMeteringDeviceReadingsRemove = 'HousingMeteringDeviceReadingsRemove',
-}
-
-export enum EManagingFirmTaskFilterType {
-  CalculatorMalfunctionAny = 'CalculatorMalfunctionAny',
-  HousingDeviceMalfunctionAny = 'HousingDeviceMalfunctionAny',
-  CalculatorLackOfConnection = 'CalculatorLackOfConnection',
-  IndividualDeviceCheck = 'IndividualDeviceCheck',
-  PipeRupture = 'PipeRupture',
-  IndividualDeviceReadingsCheck = 'IndividualDeviceReadingsCheck',
-  MeasurementErrorAny = 'MeasurementErrorAny',
-  IndividualDeviceCheckNoReadings = 'IndividualDeviceCheckNoReadings',
-  RiserNoReadings = 'RiserNoReadings',
-  EmergencyApplication = 'EmergencyApplication',
-  CurrentApplication = 'CurrentApplication',
-  ResourceDisconnecting = 'ResourceDisconnecting',
-  TemperatureNormativeDeviation = 'TemperatureNormativeDeviation',
 }
 
 export interface EManagingFirmTaskFilterTypeNullableStringDictionaryItem {
@@ -1925,78 +2481,9 @@ export interface EManagingFirmTaskFilterTypeNullableStringDictionaryItem {
   value?: string | null;
 }
 
-export enum EManagingFirmTaskType {
-  CalculatorMalfunction = 'CalculatorMalfunction',
-  CalculatorMalfunctionNonCommercial = 'CalculatorMalfunctionNonCommercial',
-  HousingDeviceMalfunction = 'HousingDeviceMalfunction',
-  HousingDeviceMalfunctionNonCommercial = 'HousingDeviceMalfunctionNonCommercial',
-  CalculatorLackOfConnection = 'CalculatorLackOfConnection',
-  IndividualDeviceCheck = 'IndividualDeviceCheck',
-  PipeRupture = 'PipeRupture',
-  CurrentApplication = 'CurrentApplication',
-  EmergencyApplication = 'EmergencyApplication',
-  IndividualDeviceReadingsCheck = 'IndividualDeviceReadingsCheck',
-  MeasurementErrorCommercial = 'MeasurementErrorCommercial',
-  MeasurementErrorNonCommercial = 'MeasurementErrorNonCommercial',
-  IndividualDeviceCheckNoReadings = 'IndividualDeviceCheckNoReadings',
-  RiserNoReadings = 'RiserNoReadings',
-  ResourceDisconnecting = 'ResourceDisconnecting',
-  CurrentApplicationUnassigned = 'CurrentApplicationUnassigned',
-  EmergencyApplicationUnassigned = 'EmergencyApplicationUnassigned',
-  TemperatureNormativeDeviation = 'TemperatureNormativeDeviation',
-}
-
-export enum EMeteringDeviceType {
-  Calculator = 'Calculator',
-  HousingPipe = 'HousingPipe',
-  Individual = 'Individual',
-  HousingElectric = 'HousingElectric',
-}
-
-export enum ENodeCheckType {
-  PlannedCheck = 'PlannedCheck',
-  UnplannedCheck = 'UnplannedCheck',
-  AdmissionCheck = 'AdmissionCheck',
-}
-
-export enum ENodeCommercialAccountStatus {
-  NotRegistered = 'NotRegistered',
-  Registered = 'Registered',
-  OnReview = 'OnReview',
-  Prepared = 'Prepared',
-}
-
 export interface ENodeCommercialAccountStatusNullableStringDictionaryItem {
   key?: ENodeCommercialAccountStatus | null;
   value?: string | null;
-}
-
-export enum ENodeNetworkDeviceType {
-  Calculator = 'Calculator',
-  Counter = 'Counter',
-}
-
-export enum ENodeRegistrationType {
-  Commercial = 'Commercial',
-  Technical = 'Technical',
-}
-
-export enum ENodeType {
-  PipeNode = 'PipeNode',
-  ElectricNode = 'ElectricNode',
-}
-
-export enum ENodeWorkingRangeSeason {
-  HeatingSeason = 'HeatingSeason',
-  InterHeating = 'InterHeating',
-}
-
-export enum ENodeWorkingRangeType {
-  AllowableError = 'AllowableError',
-  CriticalError = 'CriticalError',
-  MassOfFeedFlowMagistral = 'MassOfFeedFlowMagistral',
-  MassOfFeedBackFlowMagistral = 'MassOfFeedBackFlowMagistral',
-  DeltaMassOfMagistral = 'DeltaMassOfMagistral',
 }
 
 export interface ENodeWorkingRangeTypeStringDictionaryItem {
@@ -2004,27 +2491,9 @@ export interface ENodeWorkingRangeTypeStringDictionaryItem {
   value?: string | null;
 }
 
-export enum ENonResidentialHouseType {
-  None = 'None',
-  Social = 'Social',
-  Commercial = 'Commercial',
-}
-
 export interface ENonResidentialHouseTypeStringDictionaryItem {
   key?: ENonResidentialHouseType;
   value?: string | null;
-}
-
-export enum EOrderByRule {
-  Ascending = 'Ascending',
-  Descending = 'Descending',
-}
-
-export enum EOrganizationUserWorkingStatusType {
-  Working = 'Working',
-  OnVacation = 'OnVacation',
-  Sick = 'Sick',
-  OnDuty = 'OnDuty',
 }
 
 export interface EOrganizationUserWorkingStatusTypeStringDictionaryItem {
@@ -2032,117 +2501,14 @@ export interface EOrganizationUserWorkingStatusTypeStringDictionaryItem {
   value?: string | null;
 }
 
-export enum EPersonType {
-  Natural = 'Natural',
-  Juristic = 'Juristic',
-}
-
-export enum EPhaseNumberType {
-  SinglePhase = 'SinglePhase',
-  ThreePhase = 'ThreePhase',
-}
-
-export enum EPipeNodeConfig {
-  HeatNoRecharge = 'HeatNoRecharge',
-  HotWaterSupplyNoBackflow = 'HotWaterSupplyNoBackflow',
-  ColdWaterSupply = 'ColdWaterSupply',
-  HeatWithRecharge = 'HeatWithRecharge',
-  HotWaterSupplyWithBackflow = 'HotWaterSupplyWithBackflow',
-  HeatNoHousingMeteringDevice = 'HeatNoHousingMeteringDevice',
-  HotWaterNoDevice = 'HotWaterNoDevice',
-  ColdWaterNoDevice = 'ColdWaterNoDevice',
-}
-
-export enum EPipeNodeValidationMessage {
-  ExtraFeed = 'ExtraFeed',
-  ExtraBack = 'ExtraBack',
-  ExtraRecharge = 'ExtraRecharge',
-  NoPipes = 'NoPipes',
-  NoFeed = 'NoFeed',
-  NoBack = 'NoBack',
-  NoRecharge = 'NoRecharge',
-  NoDevices = 'NoDevices',
-  ExtraFeedFlowMeter = 'ExtraFeedFlowMeter',
-  ExtraBackFlowMeter = 'ExtraBackFlowMeter',
-  ExtraRechargeFlowMeter = 'ExtraRechargeFlowMeter',
-  LackFeedFlowMeter = 'LackFeedFlowMeter',
-  LackBackFlowMeter = 'LackBackFlowMeter',
-  LackRechargeFlowMeter = 'LackRechargeFlowMeter',
-  ExtraFeedTemperatureSensor = 'ExtraFeedTemperatureSensor',
-  ExtraBackTemperatureSensor = 'ExtraBackTemperatureSensor',
-  ExtraRechargeTemperatureSensor = 'ExtraRechargeTemperatureSensor',
-  LackNodeTemperatureSensor = 'LackNodeTemperatureSensor',
-}
-
 export interface EPipeNodeValidationMessageStringDictionaryItem {
   key?: EPipeNodeValidationMessage;
   value?: string | null;
 }
 
-export enum EPollState {
-  Pending = 'Pending',
-  Running = 'Running',
-  Error = 'Error',
-  Done = 'Done',
-}
-
-export enum EReportFormat {
-  Consumption = 'Consumption',
-  Rso = 'Rso',
-  Undersupply = 'Undersupply',
-  RsoWithUndersupply = 'RsoWithUndersupply',
-}
-
-export enum EReportName {
-  OperatorsWorkingReport = 'OperatorsWorkingReport',
-  InspectorsWorkingReport = 'InspectorsWorkingReport',
-  CallCenterWorkingReport = 'CallCenterWorkingReport',
-  HouseManagementsReport = 'HouseManagementsReport',
-}
-
-export enum EReportType {
-  None = 'None',
-  Hourly = 'Hourly',
-  Daily = 'Daily',
-  Monthly = 'Monthly',
-  Total = 'Total',
-  Current = 'Current',
-  TotalCurrent = 'TotalCurrent',
-  Events = 'Events',
-  Settings = 'Settings',
-  Other = 'Other',
-}
-
-export enum EResourceDisconnectingOrderRule {
-  StartDate = 'StartDate',
-  EndDate = 'EndDate',
-}
-
-export enum EResourceDisconnectingStatus {
-  Future = 'Future',
-  Active = 'Active',
-  Past = 'Past',
-}
-
-export enum EResourceDisconnectingType {
-  Other = 'Other',
-  Planned = 'Planned',
-  Emergency = 'Emergency',
-  Preventive = 'Preventive',
-  Repair = 'Repair',
-  InterHeatingSeason = 'InterHeatingSeason',
-}
-
 export interface EResourceDisconnectingTypeNullableStringDictionaryItem {
   key?: EResourceDisconnectingType | null;
   value?: string | null;
-}
-
-export enum EResourceType {
-  Heat = 'Heat',
-  HotWaterSupply = 'HotWaterSupply',
-  ColdWaterSupply = 'ColdWaterSupply',
-  Electricity = 'Electricity',
 }
 
 export interface EResourceTypeConsumptionRateResponseDictionaryItem {
@@ -2166,85 +2532,9 @@ export interface EResourceTypeStringDictionaryItem {
   value?: string | null;
 }
 
-export enum ESecuredIdentityRoleName {
-  Administrator = 'Administrator',
-  ManagingFirmExecutor = 'ManagingFirmExecutor',
-  Operator = 'Operator',
-  ManagingFirmSpectator = 'ManagingFirmSpectator',
-  ManagingFirmDispatcher = 'ManagingFirmDispatcher',
-  Controller = 'Controller',
-  SeniorOperator = 'SeniorOperator',
-  ManagingFirmSpectatorRestricted = 'ManagingFirmSpectatorRestricted',
-  ManagingFirmSpectatingAdministrator = 'ManagingFirmSpectatingAdministrator',
-  Supervisor = 'Supervisor',
-}
-
 export interface ESecuredIdentityRoleNameStringDictionaryItem {
   key?: ESecuredIdentityRoleName;
   value?: string | null;
-}
-
-export enum ESoiReportPeriod {
-  Month = 'Month',
-  Year = 'Year',
-}
-
-export enum EStageActionType {
-  AddDocuments = 'AddDocuments',
-  AddPerpetrator = 'AddPerpetrator',
-  EmailNotify = 'EmailNotify',
-  UploadReadings = 'UploadReadings',
-  CheckDevice = 'CheckDevice',
-  SwitchDevices = 'SwitchDevices',
-  SetNextStageDeadline = 'SetNextStageDeadline',
-  Completion = 'Completion',
-  Switch = 'Switch',
-  ChangeApartmentCoefficient = 'ChangeApartmentCoefficient',
-  AddEmailTemplate = 'AddEmailTemplate',
-  AddPhotos = 'AddPhotos',
-  SetApplicationCompletionDate = 'SetApplicationCompletionDate',
-  AddComment = 'AddComment',
-  AddApartmentCheck = 'AddApartmentCheck',
-  FixReading = 'FixReading',
-  CompletionOrSwitch = 'CompletionOrSwitch',
-  ClearManuallyAttachedParticipants = 'ClearManuallyAttachedParticipants',
-  CloseIndividualDevices = 'CloseIndividualDevices',
-  CreateResourceDisconnecting = 'CreateResourceDisconnecting',
-  SetApplicationPostponeDate = 'SetApplicationPostponeDate',
-  SelectApplicationWorker = 'SelectApplicationWorker',
-}
-
-export enum EStageStatus {
-  Waiting = 'Waiting',
-  InProgress = 'InProgress',
-  Done = 'Done',
-}
-
-export enum EStageTimeStatus {
-  Normal = 'Normal',
-  RunningOut = 'RunningOut',
-  Expired = 'Expired',
-}
-
-export enum EStageType {
-  Common = 'Common',
-  Switch = 'Switch',
-  Final = 'Final',
-}
-
-export enum ESwitchingReason {
-  Manually = 'Manually',
-  NoReadings = 'NoReadings',
-  DeviceBroken = 'DeviceBroken',
-  CheckingDate = 'CheckingDate',
-  CertificateIssued = 'CertificateIssued',
-  MaintainingStopped = 'MaintainingStopped',
-}
-
-export enum ETaskClosingStatus {
-  Properly = 'Properly',
-  Interrupted = 'Interrupted',
-  Forced = 'Forced',
 }
 
 export interface ETaskClosingStatusNullableStringDictionaryItem {
@@ -2252,99 +2542,9 @@ export interface ETaskClosingStatusNullableStringDictionaryItem {
   value?: string | null;
 }
 
-export enum ETaskConfirmationType {
-  Confirm = 'Confirm',
-  PipeRuptureNotConfirmAnomaly = 'PipeRuptureNotConfirm_Anomaly',
-  PipeRuptureNotConfirmCalculatorMalfunction = 'PipeRuptureNotConfirm_CalculatorMalfunction',
-  PipeRuptureNotConfirmPowerMalfunction = 'PipeRuptureNotConfirm_PowerMalfunction',
-  ResourceDisconnectingNotConfirm = 'ResourceDisconnectingNotConfirm',
-  FeedBackFlowTemperatureErrorNoted = 'FeedBackFlowTemperatureErrorNoted',
-}
-
 export interface ETaskConfirmationTypeStringDictionaryItem {
   key?: ETaskConfirmationType;
   value?: string | null;
-}
-
-export enum ETaskCreateType {
-  CalculatorMalfunction = 'CalculatorMalfunction',
-  HousingDeviceMalfunction = 'HousingDeviceMalfunction',
-  CalculatorLackOfConnection = 'CalculatorLackOfConnection',
-  PipeRupture = 'PipeRupture',
-  IndividualDeviceCheck = 'IndividualDeviceCheck',
-  IndividualDeviceReadingsCheck = 'IndividualDeviceReadingsCheck',
-  MeasurementError = 'MeasurementError',
-  IndividualDeviceCheckNoReadings = 'IndividualDeviceCheckNoReadings',
-  RiserNoReadings = 'RiserNoReadings',
-  EmergencyApplication = 'EmergencyApplication',
-  CurrentApplication = 'CurrentApplication',
-  ResourceDisconnecting = 'ResourceDisconnecting',
-  TemperatureNormativeDeviation = 'TemperatureNormativeDeviation',
-}
-
-export enum ETaskEngineeringElement {
-  Node = 'Node',
-  IndividualDevice = 'IndividualDevice',
-  HouseNetwork = 'HouseNetwork',
-}
-
-export enum ETaskTargetObjectInfo {
-  ColdWaterSupply = 'ColdWaterSupply',
-  HotWaterSupply = 'HotWaterSupply',
-  Electricity = 'Electricity',
-  Heat = 'Heat',
-  MultipleResources = 'MultipleResources',
-  Calculator = 'Calculator',
-}
-
-export enum ETaskTargetObjectRequestType {
-  Apartment = 'Apartment',
-  MeteringDevice = 'MeteringDevice',
-  Node = 'Node',
-  Building = 'Building',
-  Reading = 'Reading',
-  IndividualDevice = 'IndividualDevice',
-}
-
-export enum ETaskTargetObjectType {
-  IndividualDevice = 'IndividualDevice',
-  PipeHousingDevice = 'PipeHousingDevice',
-  Calculator = 'Calculator',
-  PipeNode = 'PipeNode',
-  Application = 'Application',
-}
-
-export enum ETaskTargetType {
-  Apartment = 'Apartment',
-  Calculator = 'Calculator',
-  Housing = 'Housing',
-  Node = 'Node',
-  Application = 'Application',
-}
-
-export enum ETasksState {
-  NoTasks = 'NoTasks',
-  OnTime = 'OnTime',
-  MissedDeadline = 'MissedDeadline',
-}
-
-export enum ETemperatureNormativeDeviationType {
-  Overheating = 'Overheating',
-  Underheating = 'Underheating',
-}
-
-export enum EValueNodeWorkingRangeRelation {
-  Self = 'Self',
-  ManagementFirm = 'ManagementFirm',
-  HouseManagement = 'HouseManagement',
-  Building = 'Building',
-}
-
-export enum EYearQuarter {
-  First = 'First',
-  Second = 'Second',
-  Third = 'Third',
-  Forth = 'Forth',
 }
 
 export interface EditApartmentCheckRequest {
@@ -2360,18 +2560,6 @@ export interface EditApartmentCheckRequest {
 
 export interface EditIndividualDeviceReadingsHistoryRequest {
   newReadings?: SwitchIndividualDeviceReadingsCreateRequest[] | null;
-}
-
-export enum EisTaskReasonType {
-  Heat = 'Heat',
-  HotWaterSupply = 'HotWaterSupply',
-  ColdWaterSupply = 'ColdWaterSupply',
-  Electricity = 'Electricity',
-}
-
-export enum EisTaskType {
-  Current = 'Current',
-  Emergency = 'Emergency',
 }
 
 export interface ElectricHousingMeteringDeviceResponse {
@@ -2577,17 +2765,6 @@ export interface GroupReportConfigurationDetailsRequest {
   initialDate: string;
   isActive?: boolean;
   sendingPeriodType: GroupReportConfigurationSendingPeriodType;
-}
-
-export enum GroupReportConfigurationReportPeriodType {
-  StartMonth = 'StartMonth',
-  LastMonth = 'LastMonth',
-}
-
-export enum GroupReportConfigurationSendingPeriodType {
-  EveryTwoWeeks = 'EveryTwoWeeks',
-  EveryMonth = 'EveryMonth',
-  EveryQuarter = 'EveryQuarter',
 }
 
 export interface GroupReportConfigurationServiceModel {
@@ -2827,12 +3004,6 @@ export interface HomeownerAccountNameResponse {
   /** @format uuid */
   id: string;
   name: string | null;
-}
-
-export enum HomeownerAccountOrderRule {
-  Street = 'Street',
-  HomeownerName = 'HomeownerName',
-  PaymentCode = 'PaymentCode',
 }
 
 export interface HomeownerAccountRemovePhoneNumberRequest {
@@ -3303,32 +3474,6 @@ export interface HousingStockWithCoordinatesResponse {
 export interface HousingStockWithTasksResponse {
   housingStock: HousingStockWithCoordinatesResponse | null;
   tasks: TaskShortResponse[] | null;
-}
-
-export enum IPStatus {
-  Success = 'Success',
-  DestinationNetworkUnreachable = 'DestinationNetworkUnreachable',
-  DestinationHostUnreachable = 'DestinationHostUnreachable',
-  DestinationProtocolUnreachable = 'DestinationProtocolUnreachable',
-  DestinationPortUnreachable = 'DestinationPortUnreachable',
-  NoResources = 'NoResources',
-  BadOption = 'BadOption',
-  HardwareError = 'HardwareError',
-  PacketTooBig = 'PacketTooBig',
-  TimedOut = 'TimedOut',
-  BadRoute = 'BadRoute',
-  TtlExpired = 'TtlExpired',
-  TtlReassemblyTimeExceeded = 'TtlReassemblyTimeExceeded',
-  ParameterProblem = 'ParameterProblem',
-  SourceQuench = 'SourceQuench',
-  BadDestination = 'BadDestination',
-  DestinationUnreachable = 'DestinationUnreachable',
-  TimeExceeded = 'TimeExceeded',
-  BadHeader = 'BadHeader',
-  UnrecognizedNextHeader = 'UnrecognizedNextHeader',
-  IcmpError = 'IcmpError',
-  DestinationScopeMismatch = 'DestinationScopeMismatch',
-  Unknown = 'Unknown',
 }
 
 export interface IndividualDeviceConsumption {
@@ -3952,27 +4097,6 @@ export interface ManagementFirmLiteResponse {
   workingTime: string | null;
 }
 
-export enum ManagingFirmTaskType {
-  CalculatorMalfunction = 'CalculatorMalfunction',
-  CalculatorMalfunctionNonCommercial = 'CalculatorMalfunctionNonCommercial',
-  HousingDeviceMalfunction = 'HousingDeviceMalfunction',
-  HousingDeviceMalfunctionNonCommercial = 'HousingDeviceMalfunctionNonCommercial',
-  CalculatorLackOfConnection = 'CalculatorLackOfConnection',
-  IndividualDeviceCheck = 'IndividualDeviceCheck',
-  PipeRupture = 'PipeRupture',
-  CurrentApplication = 'CurrentApplication',
-  EmergencyApplication = 'EmergencyApplication',
-  IndividualDeviceReadingsCheck = 'IndividualDeviceReadingsCheck',
-  MeasurementErrorCommercial = 'MeasurementErrorCommercial',
-  MeasurementErrorNonCommercial = 'MeasurementErrorNonCommercial',
-  IndividualDeviceCheckNoReadings = 'IndividualDeviceCheckNoReadings',
-  RiserNoReadings = 'RiserNoReadings',
-  ResourceDisconnecting = 'ResourceDisconnecting',
-  CurrentApplicationUnassigned = 'CurrentApplicationUnassigned',
-  EmergencyApplicationUnassigned = 'EmergencyApplicationUnassigned',
-  TemperatureNormativeDeviation = 'TemperatureNormativeDeviation',
-}
-
 export interface MeasurableIntervalResponse {
   /** @format double */
   maxValue: number | null;
@@ -4109,13 +4233,6 @@ export interface NodeCheckResponsePagedList {
   /** @format int32 */
   previousPageNumber: number;
   items: NodeCheckResponse[] | null;
-}
-
-export enum NodeCommercialAccountStatus {
-  NotRegistered = 'NotRegistered',
-  Registered = 'Registered',
-  OnReview = 'OnReview',
-  Prepared = 'Prepared',
 }
 
 export interface NodeCommercialStatusResponse {
@@ -4341,11 +4458,6 @@ export interface OperatorsConstructedReportResponse {
   heatCount: number;
 }
 
-export enum OrderByRule {
-  Ascending = 'Ascending',
-  Descending = 'Descending',
-}
-
 export interface OrganizationAddressResponse {
   city: string | null;
   street: string | null;
@@ -4389,13 +4501,6 @@ export interface OrganizationResponsePagedList {
   /** @format int32 */
   previousPageNumber: number;
   items: OrganizationResponse[] | null;
-}
-
-export enum OrganizationType {
-  ManagementFirm = 'ManagementFirm',
-  CallCenter = 'CallCenter',
-  ControllerFirm = 'ControllerFirm',
-  HeadManagement = 'HeadManagement',
 }
 
 export interface OrganizationUpdateRequest {
@@ -4735,25 +4840,6 @@ export interface PointResponse {
   longitude: number;
 }
 
-export enum PollActionType {
-  DuplicateReadings = 'DuplicateReadings',
-  IndividualCreateTasksWithoutReadings = 'IndividualCreateTasksWithoutReadings',
-  IndividualCloseWithoutReadings = 'IndividualCloseWithoutReadings',
-  IndividualCloseByCheckDate = 'IndividualCloseByCheckDate',
-  HousingCloseByCheckDate = 'HousingCloseByCheckDate',
-  IndividualExport = 'IndividualExport',
-  HousingExport = 'HousingExport',
-  MilurExport = 'MilurExport',
-  OpenIndividualDevicesReport = 'OpenIndividualDevicesReport',
-  RunnersReports = 'RunnersReports',
-}
-
-export enum PollCommand {
-  GetById = 'GetById',
-  GetLast = 'GetLast',
-  Create = 'Create',
-}
-
 export interface PollResponse {
   /** @format int32 */
   id: number;
@@ -4849,13 +4935,6 @@ export interface ReportEntryValue {
   doubleValue?: number | null;
 }
 
-export enum ReportFormat {
-  Consumption = 'Consumption',
-  Rso = 'Rso',
-  Undersupply = 'Undersupply',
-  RsoWithUndersupply = 'RsoWithUndersupply',
-}
-
 export interface ReportHeader {
   text?: string | null;
   group?: string | null;
@@ -4896,19 +4975,6 @@ export interface ReportRequestHistoryResponse {
   reportNameText: string | null;
   parameters: Record<string, string>;
   isActual: boolean;
-}
-
-export enum ReportType {
-  None = 'None',
-  Hourly = 'Hourly',
-  Daily = 'Daily',
-  Monthly = 'Monthly',
-  Total = 'Total',
-  Current = 'Current',
-  TotalCurrent = 'TotalCurrent',
-  Events = 'Events',
-  Settings = 'Settings',
-  Other = 'Other',
 }
 
 export interface ResourceDisconnectingCreateRequest {
@@ -4985,14 +5051,6 @@ export interface ResourceDisconnectingUpdateRequest {
   sender?: string | null;
   /** @format int32 */
   documentId?: number | null;
-}
-
-export enum ResourceType {
-  None = 'None',
-  Heat = 'Heat',
-  HotWaterSupply = 'HotWaterSupply',
-  ColdWaterSupply = 'ColdWaterSupply',
-  Electricity = 'Electricity',
 }
 
 export interface SendGroupReportRequest {
@@ -5087,12 +5145,6 @@ export interface StageResponse {
 export interface StageRevertRequest {
   /** @maxLength 1024 */
   comment?: string | null;
-}
-
-export enum StatusType {
-  All = 'All',
-  Closed = 'Closed',
-  NotClosed = 'NotClosed',
 }
 
 export interface StreetWithBuildingNumbersResponse {
@@ -5389,14 +5441,6 @@ export interface TaskFilterResponse {
   closingStatuses: ETaskClosingStatusNullableStringDictionaryItem[] | null;
 }
 
-export enum TaskGroupingFilter {
-  Executing = 'Executing',
-  Observing = 'Observing',
-  NotArchived = 'NotArchived',
-  Archived = 'Archived',
-  Revertable = 'Revertable',
-}
-
 export interface TaskListAddress {
   buildingNumber?: string | null;
   corpus?: string | null;
@@ -5422,12 +5466,6 @@ export interface TaskListResponse {
   address: TaskListAddress | null;
   targetObject: TaskTargetObjectResponse | null;
   taskConfirmation: TaskConfirmationResponse | null;
-}
-
-export enum TaskPaginationOrderRule {
-  CreationTime = 'CreationTime',
-  ConfirmationTime = 'ConfirmationTime',
-  TimeStatus = 'TimeStatus',
 }
 
 export interface TaskResponse {
@@ -5820,11 +5858,6 @@ export interface ValueNodeWorkingRangeResponse {
   max: number | null;
 }
 
-export enum YearRangeType {
-  FirstHalf = 'FirstHalf',
-  SecondHalf = 'SecondHalf',
-}
-
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, 'body' | 'bodyUsed'>;
 
@@ -5871,6 +5904,7 @@ type CancelToken = Symbol | string | number;
 
 export enum ContentType {
   Json = 'application/json',
+  JsonApi = 'application/vnd.api+json',
   FormData = 'multipart/form-data',
   UrlEncoded = 'application/x-www-form-urlencoded',
   Text = 'text/plain',
@@ -5901,9 +5935,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected encodeQueryParam(key: string, value: any) {
     const encodedKey = encodeURIComponent(key);
-    return `${encodedKey}=${encodeURIComponent(
-      typeof value === 'number' ? value : `${value}`,
-    )}`;
+    return `${encodedKey}=${encodeURIComponent(typeof value === 'number' ? value : `${value}`)}`;
   }
 
   protected addQueryParam(query: QueryParamsType, key: string) {
@@ -5939,23 +5971,32 @@ export class HttpClient<SecurityDataType = unknown> {
       input !== null && (typeof input === 'object' || typeof input === 'string')
         ? JSON.stringify(input)
         : input,
+    [ContentType.JsonApi]: (input: any) =>
+      input !== null && (typeof input === 'object' || typeof input === 'string')
+        ? JSON.stringify(input)
+        : input,
     [ContentType.Text]: (input: any) =>
       input !== null && typeof input !== 'string'
         ? JSON.stringify(input)
         : input,
-    [ContentType.FormData]: (input: any) =>
-      Object.keys(input || {}).reduce((formData, key) => {
+    [ContentType.FormData]: (input: any) => {
+      if (input instanceof FormData) {
+        return input;
+      }
+
+      return Object.keys(input || {}).reduce((formData, key) => {
         const property = input[key];
         formData.append(
           key,
           property instanceof Blob
             ? property
             : typeof property === 'object' && property !== null
-            ? JSON.stringify(property)
-            : `${property}`,
+              ? JSON.stringify(property)
+              : `${property}`,
         );
         return formData;
-      }, new FormData()),
+      }, new FormData());
+    },
     [ContentType.UrlEncoded]: (input: any) => this.toQueryString(input),
   };
 
@@ -6022,9 +6063,7 @@ export class HttpClient<SecurityDataType = unknown> {
     const responseFormat = format || requestParams.format;
 
     return this.customFetch(
-      `${baseUrl || this.baseUrl || ''}${path}${
-        queryString ? `?${queryString}` : ''
-      }`,
+      `${baseUrl || this.baseUrl || ''}${path}${queryString ? `?${queryString}` : ''}`,
       {
         ...requestParams,
         headers: {
@@ -6182,6 +6221,28 @@ export class Api<
       this.request<ApartmentActResponse, ErrorApiResponse>({
         path: `/api/ApartmentActs/${actId}`,
         method: 'DELETE',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Администратор УК без назначений задач</li>
+     *
+     * @tags ApartmentActs
+     * @name ApartmentActsAdddocumentCreate
+     * @summary ApartmentActEdit
+     * @request POST:/api/ApartmentActs/{actId}/adddocument/{documentId}
+     * @secure
+     */
+    apartmentActsAdddocumentCreate: (
+      actId: number,
+      documentId: number,
+      params: RequestParams = {},
+    ) =>
+      this.request<ApartmentActResponse, ErrorApiResponse>({
+        path: `/api/ApartmentActs/${actId}/adddocument/${documentId}`,
+        method: 'POST',
         secure: true,
         format: 'json',
         ...params,
@@ -6367,12 +6428,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li>
      *
      * @tags Apartments
-     * @name ApartmentsHomeownerAccountsDetail
+     * @name ApartmentsHomeownerAccountsList
      * @summary HomeownersRead
      * @request GET:/api/Apartments/{apartmentId}/HomeownerAccounts
      * @secure
      */
-    apartmentsHomeownerAccountsDetail: (
+    apartmentsHomeownerAccountsList: (
       apartmentId: number,
       query?: {
         IsClosed?: boolean;
@@ -6392,12 +6453,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li>
      *
      * @tags Apartments
-     * @name ApartmentsHomeownerAccountNamesDetail
+     * @name ApartmentsHomeownerAccountNamesList
      * @summary HomeownersRead
      * @request GET:/api/Apartments/{apartmentId}/HomeownerAccountNames
      * @secure
      */
-    apartmentsHomeownerAccountNamesDetail: (
+    apartmentsHomeownerAccountNamesList: (
       apartmentId: number,
       query?: {
         /** @default false */
@@ -6418,12 +6479,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li>
      *
      * @tags Apartments
-     * @name ApartmentsApartmentChecksDetail
+     * @name ApartmentsApartmentChecksList
      * @summary ApartmentsRead
      * @request GET:/api/Apartments/{apartmentId}/ApartmentChecks
      * @secure
      */
-    apartmentsApartmentChecksDetail: (
+    apartmentsApartmentChecksList: (
       apartmentId: number,
       query?: {
         /** @format int32 */
@@ -6447,12 +6508,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li>
      *
      * @tags Apartments
-     * @name ApartmentsActsDetail
+     * @name ApartmentsActsList
      * @summary ApartmentsRead
      * @request GET:/api/Apartments/{apartmentId}/Acts
      * @secure
      */
-    apartmentsActsDetail: (apartmentId: number, params: RequestParams = {}) =>
+    apartmentsActsList: (apartmentId: number, params: RequestParams = {}) =>
       this.request<ApartmentCheckResponse[], ErrorApiResponse>({
         path: `/api/Apartments/${apartmentId}/Acts`,
         method: 'GET',
@@ -6465,12 +6526,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Администратор УК без назначений задач</li>
      *
      * @tags Apartments
-     * @name ApartmentsSetStatusProblemDevicesDetail
+     * @name ApartmentsSetStatusProblemDevicesList
      * @summary ApartmentsStatusPatch
      * @request GET:/api/Apartments/{apartmentId}/SetStatusProblemDevices
      * @secure
      */
-    apartmentsSetStatusProblemDevicesDetail: (
+    apartmentsSetStatusProblemDevicesList: (
       apartmentId: number,
       query: {
         Status: EApartmentStatus;
@@ -6596,12 +6657,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags Apartments
-     * @name ApartmentsDocumentsDetail
+     * @name ApartmentsDocumentsList
      * @summary DocumentsRead
      * @request GET:/api/Apartments/{apartmentId}/Documents
      * @secure
      */
-    apartmentsDocumentsDetail: (
+    apartmentsDocumentsList: (
       apartmentId: number,
       params: RequestParams = {},
     ) =>
@@ -6699,9 +6760,9 @@ export class Api<
         /** @format int32 */
         ApartmentId?: number;
         /** @format uuid */
-        districtFilterDistrictId: string;
+        'DistrictFilter.DistrictId': string;
         /** @format date-time */
-        districtFilterDate: string;
+        'DistrictFilter.Date': string;
       },
       params: RequestParams = {},
     ) =>
@@ -6976,12 +7037,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Администратор УК без назначений задач</li>
      *
      * @tags Assignments
-     * @name IndividualSealAssignmentsFileDetail
+     * @name IndividualSealAssignmentsFileList
      * @summary IndividualSealRead
      * @request GET:/api/IndividualSeal/Assignments/{assignmentId}/File
      * @secure
      */
-    individualSealAssignmentsFileDetail: (
+    individualSealAssignmentsFileList: (
       assignmentId: string,
       params: RequestParams = {},
     ) =>
@@ -7159,6 +7220,35 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags Buildings
+     * @name BuildingsExistingCitiesWithCoordinatesList
+     * @summary HousingStocksRead
+     * @request GET:/api/Buildings/ExistingCitiesWithCoordinates
+     * @secure
+     */
+    buildingsExistingCitiesWithCoordinatesList: (
+      query?: {
+        City?: string;
+        /** @format int32 */
+        PageNumber?: number;
+        /** @format int32 */
+        PageSize?: number;
+        OrderBy?: EOrderByRule;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<CitiesWithCoordinatesResponsePagedList, ErrorApiResponse>({
+        path: `/api/Buildings/ExistingCitiesWithCoordinates`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
+     *
+     * @tags Buildings
      * @name BuildingsExistingStreetsList
      * @summary HousingStocksRead
      * @request GET:/api/Buildings/ExistingStreets
@@ -7306,10 +7396,10 @@ export class Api<
         /** @format uuid */
         HeatingStationId?: string;
         /** @format double */
-        totalAreaMaxValue?: number;
+        'TotalArea.MaxValue'?: number;
         /** @format double */
-        totalAreaMinValue?: number;
-        totalAreaMeasurableUnit?: string;
+        'TotalArea.MinValue'?: number;
+        'TotalArea.MeasurableUnit'?: string;
         /** @format uuid */
         HouseManagementId?: string;
         HouseCategory?: EHouseCategory;
@@ -7351,10 +7441,10 @@ export class Api<
         /** @format uuid */
         HeatingStationId?: string;
         /** @format double */
-        totalAreaMaxValue?: number;
+        'TotalArea.MaxValue'?: number;
         /** @format double */
-        totalAreaMinValue?: number;
-        totalAreaMeasurableUnit?: string;
+        'TotalArea.MinValue'?: number;
+        'TotalArea.MeasurableUnit'?: string;
         /** @format uuid */
         HouseManagementId?: string;
         HouseCategory?: EHouseCategory;
@@ -7471,15 +7561,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags Buildings
-     * @name BuildingsControllerDetail
+     * @name BuildingsControllerList
      * @summary HousingStocksRead
      * @request GET:/api/Buildings/{buildingId}/Controller
      * @secure
      */
-    buildingsControllerDetail: (
-      buildingId: number,
-      params: RequestParams = {},
-    ) =>
+    buildingsControllerList: (buildingId: number, params: RequestParams = {}) =>
       this.request<OrganizationUserShortResponse, ErrorApiResponse>({
         path: `/api/Buildings/${buildingId}/Controller`,
         method: 'GET',
@@ -7582,12 +7669,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags Buildings
-     * @name BuildingsNodesDetail
+     * @name BuildingsNodesList
      * @summary HousingStocksRead
      * @request GET:/api/Buildings/{buildingId}/Nodes
      * @secure
      */
-    buildingsNodesDetail: (buildingId: number, params: RequestParams = {}) =>
+    buildingsNodesList: (buildingId: number, params: RequestParams = {}) =>
       this.request<NodeOnHousingStockResponse[], ErrorApiResponse>({
         path: `/api/Buildings/${buildingId}/Nodes`,
         method: 'GET',
@@ -7600,12 +7687,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags Buildings
-     * @name BuildingsCalculatorsDetail
+     * @name BuildingsCalculatorsList
      * @summary MeteringDevicesRead
      * @request GET:/api/Buildings/{buildingId}/Calculators
      * @secure
      */
-    buildingsCalculatorsDetail: (
+    buildingsCalculatorsList: (
       buildingId: number,
       params: RequestParams = {},
     ) =>
@@ -7720,29 +7807,29 @@ export class Api<
      */
     calculatorsExportList: (
       query?: {
-        filterPipeDiameters?: number[];
-        filterExpiresCheckingDateAt?: EExpiresDateAt;
-        filterExpiresAdmissionActDateAt?: EExpiresDateAt;
-        filterResource?: EResourceType;
-        filterModel?: string;
+        'Filter.PipeDiameters'?: number[];
+        'Filter.ExpiresCheckingDateAt'?: EExpiresDateAt;
+        'Filter.ExpiresAdmissionActDateAt'?: EExpiresDateAt;
+        'Filter.Resource'?: EResourceType;
+        'Filter.Model'?: string;
         /** @format date-time */
-        filterCommercialDateRangeFrom?: string;
+        'Filter.CommercialDateRange.From'?: string;
         /** @format date-time */
-        filterCommercialDateRangeTo?: string;
-        filterAddressCity?: string;
-        filterAddressStreet?: string;
-        filterAddressHousingStockNumber?: string;
-        filterAddressCorpus?: string;
-        filterAddressHouseCategory?: EHouseCategory;
+        'Filter.CommercialDateRange.To'?: string;
+        'Filter.Address.City'?: string;
+        'Filter.Address.Street'?: string;
+        'Filter.Address.HousingStockNumber'?: string;
+        'Filter.Address.Corpus'?: string;
+        'Filter.Address.HouseCategory'?: EHouseCategory;
         /**
          * @deprecated
          * @format int32
          */
-        filterHousingStockId?: number;
-        filterNodeStatus?: ENodeCommercialAccountStatus;
-        filterNodeRegistrationType?: ENodeRegistrationType;
-        filterConnectionStatus?: EConnectionStatusType;
-        filterConnectionGroupType?: ECalculatorConnectionGroupType;
+        'Filter.HousingStockId'?: number;
+        'Filter.NodeStatus'?: ENodeCommercialAccountStatus;
+        'Filter.NodeRegistrationType'?: ENodeRegistrationType;
+        'Filter.ConnectionStatus'?: EConnectionStatusType;
+        'Filter.ConnectionGroupType'?: ECalculatorConnectionGroupType;
         Question?: string;
         OrderRule?: ECalculatorOrderRule;
         IsConnected?: boolean;
@@ -7777,29 +7864,29 @@ export class Api<
      */
     calculatorsList: (
       query?: {
-        filterPipeDiameters?: number[];
-        filterExpiresCheckingDateAt?: EExpiresDateAt;
-        filterExpiresAdmissionActDateAt?: EExpiresDateAt;
-        filterResource?: EResourceType;
-        filterModel?: string;
+        'Filter.PipeDiameters'?: number[];
+        'Filter.ExpiresCheckingDateAt'?: EExpiresDateAt;
+        'Filter.ExpiresAdmissionActDateAt'?: EExpiresDateAt;
+        'Filter.Resource'?: EResourceType;
+        'Filter.Model'?: string;
         /** @format date-time */
-        filterCommercialDateRangeFrom?: string;
+        'Filter.CommercialDateRange.From'?: string;
         /** @format date-time */
-        filterCommercialDateRangeTo?: string;
-        filterAddressCity?: string;
-        filterAddressStreet?: string;
-        filterAddressHousingStockNumber?: string;
-        filterAddressCorpus?: string;
-        filterAddressHouseCategory?: EHouseCategory;
+        'Filter.CommercialDateRange.To'?: string;
+        'Filter.Address.City'?: string;
+        'Filter.Address.Street'?: string;
+        'Filter.Address.HousingStockNumber'?: string;
+        'Filter.Address.Corpus'?: string;
+        'Filter.Address.HouseCategory'?: EHouseCategory;
         /**
          * @deprecated
          * @format int32
          */
-        filterHousingStockId?: number;
-        filterNodeStatus?: ENodeCommercialAccountStatus;
-        filterNodeRegistrationType?: ENodeRegistrationType;
-        filterConnectionStatus?: EConnectionStatusType;
-        filterConnectionGroupType?: ECalculatorConnectionGroupType;
+        'Filter.HousingStockId'?: number;
+        'Filter.NodeStatus'?: ENodeCommercialAccountStatus;
+        'Filter.NodeRegistrationType'?: ENodeRegistrationType;
+        'Filter.ConnectionStatus'?: EConnectionStatusType;
+        'Filter.ConnectionGroupType'?: ECalculatorConnectionGroupType;
         Question?: string;
         OrderRule?: ECalculatorOrderRule;
         IsConnected?: boolean;
@@ -8035,29 +8122,29 @@ export class Api<
      */
     calculatorsStatisticsList: (
       query?: {
-        filterPipeDiameters?: number[];
-        filterExpiresCheckingDateAt?: EExpiresDateAt;
-        filterExpiresAdmissionActDateAt?: EExpiresDateAt;
-        filterResource?: EResourceType;
-        filterModel?: string;
+        'Filter.PipeDiameters'?: number[];
+        'Filter.ExpiresCheckingDateAt'?: EExpiresDateAt;
+        'Filter.ExpiresAdmissionActDateAt'?: EExpiresDateAt;
+        'Filter.Resource'?: EResourceType;
+        'Filter.Model'?: string;
         /** @format date-time */
-        filterCommercialDateRangeFrom?: string;
+        'Filter.CommercialDateRange.From'?: string;
         /** @format date-time */
-        filterCommercialDateRangeTo?: string;
-        filterAddressCity?: string;
-        filterAddressStreet?: string;
-        filterAddressHousingStockNumber?: string;
-        filterAddressCorpus?: string;
-        filterAddressHouseCategory?: EHouseCategory;
+        'Filter.CommercialDateRange.To'?: string;
+        'Filter.Address.City'?: string;
+        'Filter.Address.Street'?: string;
+        'Filter.Address.HousingStockNumber'?: string;
+        'Filter.Address.Corpus'?: string;
+        'Filter.Address.HouseCategory'?: EHouseCategory;
         /**
          * @deprecated
          * @format int32
          */
-        filterHousingStockId?: number;
-        filterNodeStatus?: ENodeCommercialAccountStatus;
-        filterNodeRegistrationType?: ENodeRegistrationType;
-        filterConnectionStatus?: EConnectionStatusType;
-        filterConnectionGroupType?: ECalculatorConnectionGroupType;
+        'Filter.HousingStockId'?: number;
+        'Filter.NodeStatus'?: ENodeCommercialAccountStatus;
+        'Filter.NodeRegistrationType'?: ENodeRegistrationType;
+        'Filter.ConnectionStatus'?: EConnectionStatusType;
+        'Filter.ConnectionGroupType'?: ECalculatorConnectionGroupType;
         Question?: string;
         OrderRule?: ECalculatorOrderRule;
         IsConnected?: boolean;
@@ -8092,29 +8179,29 @@ export class Api<
      */
     calculatorsStatisticsExportList: (
       query?: {
-        filterPipeDiameters?: number[];
-        filterExpiresCheckingDateAt?: EExpiresDateAt;
-        filterExpiresAdmissionActDateAt?: EExpiresDateAt;
-        filterResource?: EResourceType;
-        filterModel?: string;
+        'Filter.PipeDiameters'?: number[];
+        'Filter.ExpiresCheckingDateAt'?: EExpiresDateAt;
+        'Filter.ExpiresAdmissionActDateAt'?: EExpiresDateAt;
+        'Filter.Resource'?: EResourceType;
+        'Filter.Model'?: string;
         /** @format date-time */
-        filterCommercialDateRangeFrom?: string;
+        'Filter.CommercialDateRange.From'?: string;
         /** @format date-time */
-        filterCommercialDateRangeTo?: string;
-        filterAddressCity?: string;
-        filterAddressStreet?: string;
-        filterAddressHousingStockNumber?: string;
-        filterAddressCorpus?: string;
-        filterAddressHouseCategory?: EHouseCategory;
+        'Filter.CommercialDateRange.To'?: string;
+        'Filter.Address.City'?: string;
+        'Filter.Address.Street'?: string;
+        'Filter.Address.HousingStockNumber'?: string;
+        'Filter.Address.Corpus'?: string;
+        'Filter.Address.HouseCategory'?: EHouseCategory;
         /**
          * @deprecated
          * @format int32
          */
-        filterHousingStockId?: number;
-        filterNodeStatus?: ENodeCommercialAccountStatus;
-        filterNodeRegistrationType?: ENodeRegistrationType;
-        filterConnectionStatus?: EConnectionStatusType;
-        filterConnectionGroupType?: ECalculatorConnectionGroupType;
+        'Filter.HousingStockId'?: number;
+        'Filter.NodeStatus'?: ENodeCommercialAccountStatus;
+        'Filter.NodeRegistrationType'?: ENodeRegistrationType;
+        'Filter.ConnectionStatus'?: EConnectionStatusType;
+        'Filter.ConnectionGroupType'?: ECalculatorConnectionGroupType;
         Question?: string;
         OrderRule?: ECalculatorOrderRule;
         IsConnected?: boolean;
@@ -8383,12 +8470,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Администратор УК без назначений задач</li>
      *
      * @tags Controllers
-     * @name IndividualSealControllersWorkDetail
+     * @name IndividualSealControllersWorkList
      * @summary IndividualSealRead
      * @request GET:/api/IndividualSeal/Controllers/{controllerId}/Work
      * @secure
      */
-    individualSealControllersWorkDetail: (
+    individualSealControllersWorkList: (
       controllerId: string,
       query: {
         /** @format date-time */
@@ -8409,12 +8496,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Администратор УК без назначений задач</li>
      *
      * @tags Controllers
-     * @name IndividualSealControllersWorkFileDetail
+     * @name IndividualSealControllersWorkFileList
      * @summary IndividualSealRead
      * @request GET:/api/IndividualSeal/Controllers/{controllerId}/WorkFile
      * @secure
      */
-    individualSealControllersWorkFileDetail: (
+    individualSealControllersWorkFileList: (
       controllerId: string,
       query: {
         /** @format date-time */
@@ -9500,12 +9587,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags Documents
-     * @name DocumentsPollArtifactDetail
+     * @name DocumentsPollArtifactList
      * @summary IndividualDeviceReadingsRead
      * @request GET:/api/Documents/poll/{id}/artifact
      * @secure
      */
-    documentsPollArtifactDetail: (id: number, params: RequestParams = {}) =>
+    documentsPollArtifactList: (id: number, params: RequestParams = {}) =>
       this.request<void, ErrorApiResponse>({
         path: `/api/Documents/poll/${id}/artifact`,
         method: 'GET',
@@ -9801,6 +9888,34 @@ export class Api<
     ) =>
       this.request<PollResponse, ErrorApiResponse>({
         path: `/api/Exports/HousingDeviceReadings`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Старший оператор</li>
+     *
+     * @tags Exports
+     * @name ExportsIndividualDeviceReadingsDispatcher24List
+     * @summary ErcExport
+     * @request GET:/api/Exports/IndividualDeviceReadingsDispatcher24
+     * @secure
+     */
+    exportsIndividualDeviceReadingsDispatcher24List: (
+      query: {
+        /** @format int32 */
+        ManagementFirmId: number;
+        Command?: PollCommand;
+        /** @format int32 */
+        PollId?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<PollResponse, ErrorApiResponse>({
+        path: `/api/Exports/IndividualDeviceReadingsDispatcher24`,
         method: 'GET',
         query: query,
         secure: true,
@@ -10260,12 +10375,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li>
      *
      * @tags HomeownerAccounts
-     * @name HomeownerAccountsCertificateDetail
+     * @name HomeownerAccountsCertificateList
      * @summary HomeownersRead
      * @request GET:/api/HomeownerAccounts/{id}/Certificate
      * @secure
      */
-    homeownerAccountsCertificateDetail: (
+    homeownerAccountsCertificateList: (
       id: string,
       params: RequestParams = {},
     ) =>
@@ -10544,12 +10659,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags HousingMeteringDevices
-     * @name HousingMeteringDevicesCommentDetail
+     * @name HousingMeteringDevicesCommentList
      * @summary MeteringDevicesRead
      * @request GET:/api/HousingMeteringDevices/{deviceId}/comment
      * @secure
      */
-    housingMeteringDevicesCommentDetail: (
+    housingMeteringDevicesCommentList: (
       deviceId: number,
       params: RequestParams = {},
     ) =>
@@ -10633,12 +10748,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Администратор УК без назначений задач</li><li>Супервайзер</li>
      *
      * @tags HousingMeteringDevices
-     * @name HousingMeteringDevicesReadingsHistoryDetail
+     * @name HousingMeteringDevicesReadingsHistoryList
      * @summary HousingMeteringDeviceReadingsRead
      * @request GET:/api/HousingMeteringDevices/{deviceId}/readingsHistory
      * @secure
      */
-    housingMeteringDevicesReadingsHistoryDetail: (
+    housingMeteringDevicesReadingsHistoryList: (
       deviceId: number,
       params: RequestParams = {},
     ) =>
@@ -10836,13 +10951,13 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags HousingStocks
-     * @name HousingStocksNodesDetail
+     * @name HousingStocksNodesList
      * @summary HousingStocksRead
      * @request GET:/api/HousingStocks/{housingStockId}/Nodes
      * @deprecated
      * @secure
      */
-    housingStocksNodesDetail: (
+    housingStocksNodesList: (
       housingStockId: number,
       params: RequestParams = {},
     ) =>
@@ -10858,13 +10973,13 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags HousingStocks
-     * @name HousingStocksCalculatorsDetail
+     * @name HousingStocksCalculatorsList
      * @summary MeteringDevicesRead
      * @request GET:/api/HousingStocks/{housingStockId}/Calculators
      * @deprecated
      * @secure
      */
-    housingStocksCalculatorsDetail: (
+    housingStocksCalculatorsList: (
       housingStockId: number,
       params: RequestParams = {},
     ) =>
@@ -10880,12 +10995,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li>
      *
      * @tags HousingStocks
-     * @name HousingStocksExistingApartmentNumberDetail
+     * @name HousingStocksExistingApartmentNumberList
      * @summary ApartmentsRead
      * @request GET:/api/HousingStocks/{housingStockId}/ExistingApartmentNumber
      * @secure
      */
-    housingStocksExistingApartmentNumberDetail: (
+    housingStocksExistingApartmentNumberList: (
       housingStockId: number,
       params: RequestParams = {},
     ) =>
@@ -10990,13 +11105,13 @@ export class Api<
         /** @format int32 */
         HousingStockId: number;
         ApartmentNumber?: string;
-        deviceFilterResource?: EResourceType;
-        deviceFilterModel?: string;
-        deviceFilterClosingReason?: EClosingReason;
-        deviceFilterMountPlace?: string;
-        deviceFilterApartmentStatus?: EApartmentStatus;
-        deviceFilterExpiresCheckingDateAt?: EExpiresDateAt;
-        deviceFilterIsAlsoClosing?: boolean;
+        'DeviceFilter.Resource'?: EResourceType;
+        'DeviceFilter.Model'?: string;
+        'DeviceFilter.ClosingReason'?: EClosingReason;
+        'DeviceFilter.MountPlace'?: string;
+        'DeviceFilter.ApartmentStatus'?: EApartmentStatus;
+        'DeviceFilter.ExpiresCheckingDateAt'?: EExpiresDateAt;
+        'DeviceFilter.IsAlsoClosing'?: boolean;
         /** @format int32 */
         PageNumber?: number;
         /** @format int32 */
@@ -11020,12 +11135,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags Individual
-     * @name DevicesIndividualApartmentsDevicesDetail
+     * @name DevicesIndividualApartmentsDevicesList
      * @summary MeteringDevicesRead
      * @request GET:/api/Devices/Individual/Apartments/{apartmentId}/Devices
      * @secure
      */
-    devicesIndividualApartmentsDevicesDetail: (
+    devicesIndividualApartmentsDevicesList: (
       apartmentId: number,
       params: RequestParams = {},
     ) =>
@@ -11548,12 +11663,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags IndividualDevices
-     * @name IndividualDevicesReadingsHistoryDetail
+     * @name IndividualDevicesReadingsHistoryList
      * @summary IndividualDeviceReadingsRead
      * @request GET:/api/IndividualDevices/{deviceId}/readingsHistory
      * @secure
      */
-    individualDevicesReadingsHistoryDetail: (
+    individualDevicesReadingsHistoryList: (
       deviceId: number,
       params: RequestParams = {},
     ) =>
@@ -11702,12 +11817,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags IndividualDevices
-     * @name IndividualDevicesConsumptionDetail
+     * @name IndividualDevicesConsumptionList
      * @summary IndividualDeviceReadingsRead
      * @request GET:/api/IndividualDevices/{deviceId}/Consumption
      * @secure
      */
-    individualDevicesConsumptionDetail: (
+    individualDevicesConsumptionList: (
       deviceId: number,
       params: RequestParams = {},
     ) =>
@@ -11723,12 +11838,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags IndividualDevices
-     * @name IndividualDevicesLastReadingDetail
+     * @name IndividualDevicesLastReadingList
      * @summary IndividualDeviceReadingsRead
      * @request GET:/api/IndividualDevices/{deviceId}/LastReading
      * @secure
      */
-    individualDevicesLastReadingDetail: (
+    individualDevicesLastReadingList: (
       deviceId: number,
       params: RequestParams = {},
     ) =>
@@ -11889,12 +12004,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags ManagingFirms
-     * @name ManagingFirmsConsumptionRatesDetail
+     * @name ManagingFirmsConsumptionRatesList
      * @summary OrganizationsRead
      * @request GET:/api/ManagingFirms/{managingFirmId}/ConsumptionRates
      * @secure
      */
-    managingFirmsConsumptionRatesDetail: (
+    managingFirmsConsumptionRatesList: (
       managingFirmId: number,
       params: RequestParams = {},
     ) =>
@@ -12224,23 +12339,23 @@ export class Api<
         HasInvalidConfiguration?: boolean;
         /** @format int32 */
         BuildingId?: number;
-        addressCity?: string;
-        addressStreet?: string;
-        addressHousingStockNumber?: string;
-        addressCorpus?: string;
-        addressHouseCategory?: EHouseCategory;
+        'Address.City'?: string;
+        'Address.Street'?: string;
+        'Address.HousingStockNumber'?: string;
+        'Address.Corpus'?: string;
+        'Address.HouseCategory'?: EHouseCategory;
         Type?: ENodeType;
         Resource?: EResourceType;
         RegistrationType?: ENodeRegistrationType;
         CommercialStatus?: ENodeCommercialAccountStatus;
-        devicesFilterExpiresCheckingDateAt?: EExpiresDateAt;
-        devicesFilterModel?: string;
-        devicesFilterQuestion?: string;
-        devicesFilterPipeDiameters?: number[];
+        'DevicesFilter.ExpiresCheckingDateAt'?: EExpiresDateAt;
+        'DevicesFilter.Model'?: string;
+        'DevicesFilter.Question'?: string;
+        'DevicesFilter.PipeDiameters'?: number[];
         /** @format date-time */
-        commercialDateRangeFrom?: string;
+        'CommercialDateRange.From'?: string;
         /** @format date-time */
-        commercialDateRangeTo?: string;
+        'CommercialDateRange.To'?: string;
         ExpiresAdmissionActDateAt?: EExpiresDateAt;
         /** @format int32 */
         PageNumber?: number;
@@ -12286,12 +12401,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Супервайзер</li>
      *
      * @tags Nodes
-     * @name NodesChecksDetail
+     * @name NodesChecksList
      * @summary NodeCheckRead
      * @request GET:/api/Nodes/{nodeId}/Checks
      * @secure
      */
-    nodesChecksDetail: (
+    nodesChecksList: (
       nodeId: number,
       query?: {
         /** @format int32 */
@@ -12386,12 +12501,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Администратор УК без назначений задач</li><li>Супервайзер</li>
      *
      * @tags Nodes
-     * @name NodesStatisticsDetail
+     * @name NodesStatisticsList
      * @summary ReportRead
      * @request GET:/api/Nodes/{nodeId}/Statistics
      * @secure
      */
-    nodesStatisticsDetail: (
+    nodesStatisticsList: (
       nodeId: number,
       query?: {
         ReportType?: EReportType;
@@ -12416,12 +12531,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Администратор УК без назначений задач</li><li>Супервайзер</li>
      *
      * @tags Nodes
-     * @name NodesTaskStatisticsDetail
+     * @name NodesTaskStatisticsList
      * @summary ReportRead
      * @request GET:/api/Nodes/{nodeId}/TaskStatistics
      * @secure
      */
-    nodesTaskStatisticsDetail: (
+    nodesTaskStatisticsList: (
       nodeId: number,
       query?: {
         ReportType?: EReportType;
@@ -13070,12 +13185,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags OrganizationUsers
-     * @name OrganizationUsersTasksDetail
+     * @name OrganizationUsersTasksList
      * @summary OrganizationUsersRead
      * @request GET:/api/OrganizationUsers/{userId}/Tasks
      * @secure
      */
-    organizationUsersTasksDetail: (
+    organizationUsersTasksList: (
       userId: number,
       query?: {
         CurrentStageRequiredUserRole?: ESecuredIdentityRoleName;
@@ -13197,12 +13312,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags OrganizationUsers
-     * @name OrganizationUsersStatisticsDetail
+     * @name OrganizationUsersStatisticsList
      * @summary OrganizationUsersRead
      * @request GET:/api/OrganizationUsers/{userId}/statistics
      * @secure
      */
-    organizationUsersStatisticsDetail: (
+    organizationUsersStatisticsList: (
       userId: number,
       query?: {
         /** @format date-time */
@@ -13491,12 +13606,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Супервайзер</li>
      *
      * @tags PipeNodes
-     * @name PipeNodesPipesForAddingDeviceDetail
+     * @name PipeNodesPipesForAddingDeviceList
      * @summary NodeRead
      * @request GET:/api/PipeNodes/{pipeNodeId}/PipesForAddingDevice
      * @secure
      */
-    pipeNodesPipesForAddingDeviceDetail: (
+    pipeNodesPipesForAddingDeviceList: (
       pipeNodeId: number,
       query: {
         /** @format int32 */
@@ -13546,12 +13661,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Супервайзер</li>
      *
      * @tags PipeNodes
-     * @name PipeNodesMeteringDevicesDetail
+     * @name PipeNodesMeteringDevicesList
      * @summary NodeRead
      * @request GET:/api/PipeNodes/{pipeNodeId}/MeteringDevices
      * @secure
      */
-    pipeNodesMeteringDevicesDetail: (
+    pipeNodesMeteringDevicesList: (
       pipeNodeId: number,
       params: RequestParams = {},
     ) =>
@@ -13567,12 +13682,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Супервайзер</li>
      *
      * @tags PipeNodes
-     * @name PipeNodesPipesDetail
+     * @name PipeNodesPipesList
      * @summary NodeRead
      * @request GET:/api/PipeNodes/{pipeNodeId}/Pipes
      * @secure
      */
-    pipeNodesPipesDetail: (pipeNodeId: number, params: RequestParams = {}) =>
+    pipeNodesPipesList: (pipeNodeId: number, params: RequestParams = {}) =>
       this.request<CommunicationPipeLiteResponse[], ErrorApiResponse>({
         path: `/api/PipeNodes/${pipeNodeId}/Pipes`,
         method: 'GET',
@@ -14124,14 +14239,15 @@ export class Api<
       }),
 
     /**
-     * No description
-     *
-     * @tags Reports
-     * @name ReportsDevicesWithLastReadingReportList
-     * @summary Выгрузка показаний ИПУ в формате отчета для Вахитова 14
-     * @request GET:/api/Reports/DevicesWithLastReadingReport
-     * @secure
-     */
+ * No description
+ *
+ * @tags Reports
+ * @name ReportsDevicesWithLastReadingReportList
+ * @summary Выгрузка показаний ИПУ в формате отчета для ДУ Вахитова 14
+по запросу ДУ
+ * @request GET:/api/Reports/DevicesWithLastReadingReport
+ * @secure
+ */
     reportsDevicesWithLastReadingReportList: (
       query?: {
         /** @format uuid */
@@ -14715,10 +14831,10 @@ export class Api<
      */
     resourceDisconnectingList: (
       query?: {
-        addressCity?: string;
-        addressStreet?: string;
-        addressHousingStockNumber?: string;
-        addressCorpus?: string;
+        'Address.City'?: string;
+        'Address.Street'?: string;
+        'Address.HousingStockNumber'?: string;
+        'Address.Corpus'?: string;
         Resource?: EResourceType;
         /** @format uuid */
         HouseManagementId?: string;
@@ -14783,10 +14899,10 @@ export class Api<
      */
     resourceDisconnectingExportList: (
       query?: {
-        addressCity?: string;
-        addressStreet?: string;
-        addressHousingStockNumber?: string;
-        addressCorpus?: string;
+        'Address.City'?: string;
+        'Address.Street'?: string;
+        'Address.HousingStockNumber'?: string;
+        'Address.Corpus'?: string;
         Resource?: EResourceType;
         /** @format uuid */
         HouseManagementId?: string;
@@ -15009,21 +15125,21 @@ export class Api<
          */
         ElectricitySupplyConsumptionTo?: number;
         /** @format double */
-        hotWaterSupplyFilterFrom?: number;
+        'HotWaterSupplyFilter.From'?: number;
         /** @format double */
-        hotWaterSupplyFilterTo?: number;
+        'HotWaterSupplyFilter.To'?: number;
         /** @format double */
-        coldWaterSupplyFilterFrom?: number;
+        'ColdWaterSupplyFilter.From'?: number;
         /** @format double */
-        coldWaterSupplyFilterTo?: number;
+        'ColdWaterSupplyFilter.To'?: number;
         /** @format double */
-        electricityFilterFrom?: number;
+        'ElectricityFilter.From'?: number;
         /** @format double */
-        electricityFilterTo?: number;
+        'ElectricityFilter.To'?: number;
         /** @format double */
-        heatFilterFrom?: number;
+        'HeatFilter.From'?: number;
         /** @format double */
-        heatFilterTo?: number;
+        'HeatFilter.To'?: number;
       },
       params: RequestParams = {},
     ) =>
@@ -15090,21 +15206,21 @@ export class Api<
          */
         ElectricitySupplyConsumptionTo?: number;
         /** @format double */
-        hotWaterSupplyFilterFrom?: number;
+        'HotWaterSupplyFilter.From'?: number;
         /** @format double */
-        hotWaterSupplyFilterTo?: number;
+        'HotWaterSupplyFilter.To'?: number;
         /** @format double */
-        coldWaterSupplyFilterFrom?: number;
+        'ColdWaterSupplyFilter.From'?: number;
         /** @format double */
-        coldWaterSupplyFilterTo?: number;
+        'ColdWaterSupplyFilter.To'?: number;
         /** @format double */
-        electricityFilterFrom?: number;
+        'ElectricityFilter.From'?: number;
         /** @format double */
-        electricityFilterTo?: number;
+        'ElectricityFilter.To'?: number;
         /** @format double */
-        heatFilterFrom?: number;
+        'HeatFilter.From'?: number;
         /** @format double */
-        heatFilterTo?: number;
+        'HeatFilter.To'?: number;
       },
       params: RequestParams = {},
     ) =>
@@ -15302,12 +15418,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags Tasks
-     * @name TasksNextStagesDetail
+     * @name TasksNextStagesList
      * @summary TasksRead
      * @request GET:/api/Tasks/{taskId}/NextStages
      * @secure
      */
-    tasksNextStagesDetail: (taskId: number, params: RequestParams = {}) =>
+    tasksNextStagesList: (taskId: number, params: RequestParams = {}) =>
       this.request<StageListResponseWrappedListResponse, ErrorApiResponse>({
         path: `/api/Tasks/${taskId}/NextStages`,
         method: 'GET',
@@ -15521,12 +15637,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags Tasks
-     * @name TasksApplicationDetail
+     * @name TasksApplicationList
      * @summary TasksRead
      * @request GET:/api/Tasks/{taskId}/application
      * @secure
      */
-    tasksApplicationDetail: (taskId: number, params: RequestParams = {}) =>
+    tasksApplicationList: (taskId: number, params: RequestParams = {}) =>
       this.request<ErpApplicationResponse, ErrorApiResponse>({
         path: `/api/Tasks/${taskId}/application`,
         method: 'GET',
@@ -15539,15 +15655,12 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags Tasks
-     * @name TasksApplicationBrigadeDetail
+     * @name TasksApplicationBrigadeList
      * @summary TasksRead
      * @request GET:/api/Tasks/{taskId}/application/brigade
      * @secure
      */
-    tasksApplicationBrigadeDetail: (
-      taskId: number,
-      params: RequestParams = {},
-    ) =>
+    tasksApplicationBrigadeList: (taskId: number, params: RequestParams = {}) =>
       this.request<ErpExecutorResponse[], ErrorApiResponse>({
         path: `/api/Tasks/${taskId}/application/brigade`,
         method: 'GET',
