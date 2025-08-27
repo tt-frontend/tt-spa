@@ -21,7 +21,7 @@ const {
 } = currentAnalyticsService;
 
 const {
-  gates: { ExistingCitiesGate },
+  gates: { ExistingCitiesGateWithCoordinates },
 } = addressSearchService;
 
 export const CurrentAnalyticsContainer = () => {
@@ -40,6 +40,8 @@ export const CurrentAnalyticsContainer = () => {
     setDashboardFilters,
     resetDashboardFilters,
     organizationsList,
+    pageSegment,
+    setSegment,
   } = useUnit({
     dashboardSummary: dashboardSummaryQuery.$data,
     isLoadingSummary: dashboardSummaryQuery.$pending,
@@ -55,11 +57,13 @@ export const CurrentAnalyticsContainer = () => {
     setDashboardFilters: inputs.setDashboardFilters,
     resetDashboardFilters: inputs.resetDashboardFilters,
     organizationsList: dashboardOrganizationsQuery.$data,
+    pageSegment: outputs.$pageSegment,
+    setSegment: inputs.setSegment,
   });
 
   return (
     <>
-      <ExistingCitiesGate />
+      <ExistingCitiesGateWithCoordinates />
       <TaskTypesGate />
       <CurrentAnalyticsGate />
       <CurrentAnalyticsPage
@@ -79,6 +83,8 @@ export const CurrentAnalyticsContainer = () => {
         setDashboardFilters={setDashboardFilters}
         resetDashboardFilters={resetDashboardFilters}
         organizationsList={organizationsList}
+        pageSegment={pageSegment}
+        setSegment={setSegment}
       />
     </>
   );

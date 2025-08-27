@@ -38,6 +38,11 @@ const $housingStocksWithTasks = createStore<BuildingWithTasksResponse[]>([]).on(
   (_, data = []) => [...data],
 );
 
+const $coordinates = createStore<[number, number] | null>(null).on(
+  handleSetCoordinates,
+  (_, coordinates) => coordinates,
+);
+
 const fetchTaskFx = createEffect<number, TaskResponse>(getTask);
 
 const $filtrationValues = createStore<HousingStocksWithTasksFiltrationValues>({
@@ -105,5 +110,6 @@ export const tasksMapService = {
     $isLoadingTask,
     $organizationUsers: tasksProfileService.outputs.$organizationUsers,
     $organizationCoordinates,
+    $coordinates,
   },
 };

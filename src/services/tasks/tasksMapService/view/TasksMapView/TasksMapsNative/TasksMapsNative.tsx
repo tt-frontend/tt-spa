@@ -14,6 +14,7 @@ import {
 } from './TasksMapsNative.utils';
 import { EXTENDED_PLACEMARK_ZOOM_LIMIT } from './TasksMapsNative.constants';
 import { tasksMapService } from 'services/tasks/tasksMapService/tasksMapService.model';
+import { useUnit } from 'effector-react';
 
 export const TasksMapsNative: FC<TasksMapsNativeProps> = ({
   buildingsWithTasks,
@@ -30,13 +31,34 @@ export const TasksMapsNative: FC<TasksMapsNativeProps> = ({
     useState<boolean>(false);
   const [isCentered, setIsCentered] = useState(false);
 
-  useEffect(() => {
-    if (!map) return;
+  const { coordinates } = useUnit({
+    coordinates: tasksMapService.outputs.$coordinates,
+  });
 
-    return tasksMapService.inputs.handleSetCoordinates.watch((coords) => {
-      map.setCenter(coords, 18, { duration: 200 });
-    }).unsubscribe;
-  }, [map]);
+  useEffect(() => {
+    if (isCentered || !map) return;
+
+    if (coordinates) {
+      map.setCenter(coordinates, map.getZoom());
+      setIsCentered(true);
+      return;
+    }
+
+    const buildingWithCoordinates = buildingsWithTasks?.find((elem) =>
+      Boolean(elem.building?.coordinates),
+    );
+
+    const { latitude, longitude } =
+      buildingWithCoordinates?.building?.coordinates || {};
+
+    if (!latitude || !longitude) return;
+
+    const center = [latitude, longitude];
+
+    map.setCenter(center, map.getZoom());
+
+    setIsCentered(true);
+  }, [buildingsWithTasks, map, isCentered, coordinates]);
 
   useEffect(() => {
     if (!ymaps || !mapRef.current) {
@@ -147,25 +169,6 @@ export const TasksMapsNative: FC<TasksMapsNativeProps> = ({
     isExtendedPlacemark,
     selectedHousingStockId,
   ]);
-
-  useEffect(() => {
-    if (isCentered || !map) return;
-
-    const buildingWithCoordinates = buildingsWithTasks?.find((elem) =>
-      Boolean(elem.building?.coordinates),
-    );
-
-    const { latitude, longitude } =
-      buildingWithCoordinates?.building?.coordinates || {};
-
-    if (!latitude || !longitude) return;
-
-    const center = [latitude, longitude];
-
-    map.setCenter(center, map.getZoom());
-
-    setIsCentered(true);
-  }, [buildingsWithTasks, map, isCentered]);
 
   const [clickStart, setClickStart] = useState<{
     x: number;
