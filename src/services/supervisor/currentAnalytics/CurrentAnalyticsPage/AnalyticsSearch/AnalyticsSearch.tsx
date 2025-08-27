@@ -3,7 +3,6 @@ import { Wrapper } from './AnalyticsSearch.styled';
 import { EDateRange, Props } from './AnalyticsSearch.types';
 import { RangePicker } from 'ui-kit/RangePicker';
 import { Select } from 'ui-kit/Select';
-
 import { StyledMenuButton } from 'ui-kit/ContextMenuButton/ContextMenuButton.styled';
 import { ResetIcon } from 'ui-kit/icons';
 import { Tooltip } from 'antd';
@@ -13,6 +12,7 @@ import { useUnit } from 'effector-react';
 import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
 import { Segmented } from 'ui-kit/Segmented';
 import { currentAnalyticsService } from '../../currentAnalyticsService.models';
+import { tasksMapService } from 'services/tasks/tasksMapService';
 
 export const AnalyticsSearch: FC<Props> = ({
   dashboardFilters,
@@ -23,10 +23,17 @@ export const AnalyticsSearch: FC<Props> = ({
   setValue,
   organizationsList,
 }) => {
-  const { existingCities, periodType, setPeriodType } = useUnit({
-    existingCities: addressSearchService.outputs.$existingCities,
+  const {
+    existingCitiesWithCoordinates,
+    periodType,
+    setPeriodType,
+    handleSetCoordinates,
+  } = useUnit({
+    existingCitiesWithCoordinates:
+      addressSearchService.outputs.$existingCitiesWithCoordinates,
     periodType: currentAnalyticsService.outputs.$periodType,
     setPeriodType: currentAnalyticsService.inputs.setPeriodType,
+    handleSetCoordinates: tasksMapService.inputs.handleSetCoordinates,
   });
 
   return (
@@ -130,16 +137,33 @@ export const AnalyticsSearch: FC<Props> = ({
         small
         value={dashboardFilters.City}
         allowClear
-        onChange={(city) =>
-          setDashboardFilters({ City: city as string, ManagementFirmId: null })
-        }
+        onChange={(value: unknown) => {
+          setDashboardFilters({
+            City: value as string,
+            ManagementFirmId: null,
+          });
+
+          const coordinates = existingCitiesWithCoordinates?.find(
+            (cities) => cities.city === value,
+          )?.coordinates;
+
+          console.log(coordinates);
+
+          if (coordinates) {
+            handleSetCoordinates([coordinates.latitude, coordinates.longitude]);
+          }
+        }}
       >
-        {existingCities?.map((city) => (
-          <Select.Option key={city} value={city}>
-            {city}
+        {existingCitiesWithCoordinates?.map((cityResponse, index) => (
+          <Select.Option
+            key={`${cityResponse.city}${index}`}
+            value={cityResponse.city}
+          >
+            {cityResponse.city}
           </Select.Option>
         ))}
       </Select>
+
       <Select
         placeholder="УК"
         small

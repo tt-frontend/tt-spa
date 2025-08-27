@@ -21,7 +21,7 @@ const {
 } = currentAnalyticsService;
 
 const {
-  gates: { ExistingCitiesGate },
+  gates: { ExistingCitiesGateWithCoordinates },
 } = addressSearchService;
 
 export const CurrentAnalyticsContainer = () => {
@@ -63,7 +63,7 @@ export const CurrentAnalyticsContainer = () => {
 
   return (
     <>
-      <ExistingCitiesGate />
+      <ExistingCitiesGateWithCoordinates />
       <TaskTypesGate />
       <CurrentAnalyticsGate />
       <CurrentAnalyticsPage
