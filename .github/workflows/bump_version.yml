@@ -41,11 +41,11 @@ jobs:
       - name: Bump version in package.json
         run: |
           if [[ "${{ inputs.revision }}" == "major" ]]; then
-            npm version major --no-git-tag-version
+            yarn version --major --no-git-tag-version
           elif [[ "${{ inputs.revision }}" == "minor" ]]; then
-            npm version minor --no-git-tag-version
+            yarn version --minor --no-git-tag-version
           else
-            npm version patch --no-git-tag-version
+            yarn version --patch --no-git-tag-version
           fi
           NEW_VERSION=$(node -p "require('./package.json').version")
           echo "PROJECT_VERSION=$NEW_VERSION" >> $GITHUB_ENV

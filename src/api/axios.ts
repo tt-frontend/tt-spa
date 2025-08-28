@@ -8,7 +8,7 @@ import { cancellableUrl } from 'services/cancelRequestService/cancelRequestServi
 import { cancelRequestService } from 'services/cancelRequestService';
 import { isUndefined } from 'lodash/fp';
 
-export const isDevMode = false;
+export const isDevMode = true;
 
 let refreshPromise: null | Promise<unknown> = null;
 const clearPromise = () => (refreshPromise = null);
