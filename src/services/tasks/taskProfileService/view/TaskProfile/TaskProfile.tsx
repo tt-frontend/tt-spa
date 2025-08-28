@@ -41,6 +41,7 @@ export const TaskProfile: FC<TaskProfileProps> = ({
   openDeleteDocumentModal,
   pushStageRequestPayload,
   isApplication,
+  currentUser,
 }) => {
   const {
     individualDevices,
@@ -74,6 +75,13 @@ export const TaskProfile: FC<TaskProfileProps> = ({
   );
 
   const isEmergency = task.type === EManagingFirmTaskType.EmergencyApplication;
+
+  const isUserPerpetrator = useMemo(() => {
+    const perpetratorsId =
+      stages?.map((stage) => stage.perpetrator?.id || null) || [];
+
+    return currentUser?.id ? perpetratorsId.includes(currentUser.id) : false;
+  }, [stages, currentUser]);
 
   return (
     <Wrapper>
@@ -119,13 +127,15 @@ export const TaskProfile: FC<TaskProfileProps> = ({
                 documents={documents || []}
                 openDeleteDocumentModal={openDeleteDocumentModal}
               />
-              <TaskComments
-                comments={comments || []}
-                handleAddComment={handleAddComment}
-                isPerpetrator={isPerpetrator}
-                handleSetComment={handleSetComment}
-                commentText={commentText}
-              />
+              {isUserPerpetrator && (
+                <TaskComments
+                  comments={comments || []}
+                  handleAddComment={handleAddComment}
+                  isPerpetrator={isPerpetrator}
+                  handleSetComment={handleSetComment}
+                  commentText={commentText}
+                />
+              )}
               {!isApplication && (
                 <>
                   <TaskBaseInfo task={task} />

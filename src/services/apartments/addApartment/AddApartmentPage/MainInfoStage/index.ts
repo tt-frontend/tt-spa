@@ -1,0 +1,1 @@
+export { MainInfoStage } from './MainInfoStage';

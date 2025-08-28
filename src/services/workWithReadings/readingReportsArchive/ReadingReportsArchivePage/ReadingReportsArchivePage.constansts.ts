@@ -11,4 +11,5 @@ export const PollActionTypeLookup: { [key in PollActionType]: string } = {
   [PollActionType.MilurExport]: 'Нестандартный отчет (Милуры)',
   [PollActionType.OpenIndividualDevicesReport]: '-',
   [PollActionType.RunnersReports]: '-',
+  [PollActionType.IndividualExportDispatcher24]: '-',
 };

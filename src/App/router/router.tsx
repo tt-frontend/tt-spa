@@ -77,6 +77,8 @@ import { CurrentAnalyticsContainer } from 'services/supervisor/currentAnalytics'
 import { CommonAnalyticsContainer } from 'services/supervisor/commonAnalytics';
 import { usePermission } from 'hooks/usePermission';
 import { ReadingReportsArchiveContainer } from 'services/workWithReadings/readingReportsArchive';
+import { AddApartmentContainer } from 'services/apartments/addApartment';
+import { resourceConsumptionService } from 'services/resources/resourceConsumptionService';
 
 const {
   gates: { CurrentUserGate },
@@ -87,6 +89,9 @@ const {
 const {
   gates: { GetLastPollGate },
 } = createRunnerService;
+const {
+  gates: { GetHousingMeteringDevicesGate },
+} = resourceConsumptionService;
 
 const { TasksIsOpen } = tasksProfileService.gates;
 const { DistrictBordersGroupPageGate } = districtBordersByAddressService.gates;
@@ -104,6 +109,7 @@ function RouterWrapper() {
       <CurrentUserGate />
       <CurrentManagingFirmGate />
       <GetLastPollGate />
+      <GetHousingMeteringDevicesGate />
       <DrawerSC
         open={isDrawerOpen}
         title={<></>}
@@ -306,6 +312,15 @@ export const useRoutes = (
           element:
             isAdministrator || isExecutor ? (
               <CreateNodeContainer />
+            ) : (
+              <AccessDeniedPage />
+            ),
+        },
+        {
+          path: '/buildings/:houseCategory/:buildingId/addApartment',
+          element:
+            isAdministrator || isSeniorOperator ? (
+              <AddApartmentContainer />
             ) : (
               <AccessDeniedPage />
             ),

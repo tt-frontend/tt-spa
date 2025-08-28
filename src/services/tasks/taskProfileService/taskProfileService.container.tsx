@@ -104,6 +104,7 @@ export const TaskProfileContainer = () => {
           closeDeleteDocumentModal={() => closeDeleteDocumentModal()}
           pushStageRequestPayload={pushStageRequestPayload}
           isApplication={isApplication}
+          currentUser={currentUser}
         />
       )}
     </>
