@@ -36,6 +36,7 @@ export const ResourceConsumptionContainer = () => {
     isAllDataLoading,
     selectedResourceForColor,
     isDataLoading,
+    isHousingMeteringDevices,
   } = useUnit({
     setSelectedGraphTypes: inputs.setSelectedGraphTypes,
     setResource: resourceConsumptionFilterService.inputs.setResource,
@@ -59,6 +60,7 @@ export const ResourceConsumptionContainer = () => {
     isOnlyHousingDataEmpty: outputs.$isOnlyHousingDataEmpty,
     isAllDataLoading: outputs.$isAllDataLoading,
     isDataLoading: outputs.$isDataLoading,
+    isHousingMeteringDevices: outputs.$isHousingMeteringDevices,
   });
 
   const preparedHousingConsumptionData: AllConsumptionDataWithNullableAdditionalAddress =
@@ -100,6 +102,7 @@ export const ResourceConsumptionContainer = () => {
         isOnlyHousingDataEmpty={isOnlyHousingDataEmpty}
         isAllDataLoading={isAllDataLoading}
         isDataLoading={isDataLoading}
+        isHousingMeteringDevices={isHousingMeteringDevices}
       />
     </>
   );

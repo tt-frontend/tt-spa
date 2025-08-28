@@ -34,7 +34,6 @@ import {
 } from 'services/nodes/displayNodesStatisticsService/view/StatisticsGraph/StatisticsGraph.styled';
 import { CustomTooltip } from 'ui-kit/shared/GraphComponents/CustomTooltip';
 import { Alert } from 'ui-kit/Alert';
-import { AlertIconType, AlertType } from 'ui-kit/Alert/Alert.types';
 
 const height = 360;
 
@@ -49,6 +48,7 @@ export const ResourceConsumptionGraph: FC<ResourceConsumptionGraphProps> = ({
   isAllDataLoading,
   isDataLoading,
   isOnlyHousingDataEmpty,
+  isHousingMeteringDevices,
 }) => {
   const [width, setWidth] = useState(0);
 
@@ -72,8 +72,8 @@ export const ResourceConsumptionGraph: FC<ResourceConsumptionGraphProps> = ({
       const isLineChecked = !isAdditionalAddress
         ? checked[typeOfChecked]
         : selectedAddresses.currentAddress
-        ? checked[typeOfChecked]
-        : checked[typeOfChecked];
+          ? checked[typeOfChecked]
+          : checked[typeOfChecked];
 
       if (!monthData) {
         return null;
@@ -158,13 +158,18 @@ export const ResourceConsumptionGraph: FC<ResourceConsumptionGraphProps> = ({
       <>
         <Wrapper id="graphWrapper">
           <AlertWrapper>
-            <Alert
-              centered
-              type={AlertType.danger}
-              icon={AlertIconType.warning}
-            >
-              <AlertTitle>Нет данных за выбранный период</AlertTitle>
-            </Alert>
+            {isHousingMeteringDevices && (
+              <Alert centered type="danger" icon="warning">
+                <AlertTitle>Нет данных за выбранный период</AlertTitle>
+              </Alert>
+            )}
+            {!isHousingMeteringDevices && (
+              <Alert centered type="default" icon="info">
+                <AlertTitle>
+                  Опрос домовых приборов учета еще не подключен
+                </AlertTitle>
+              </Alert>
+            )}
           </AlertWrapper>
           <VictoryChart
             padding={{ top: 0, bottom: 0, left: 26, right: 0 }}
@@ -201,7 +206,7 @@ export const ResourceConsumptionGraph: FC<ResourceConsumptionGraphProps> = ({
     <Wrapper id="graphWrapper" isLoading={isAllDataLoading}>
       {isOnlyHousingDataEmpty && (
         <AlertWrapper>
-          <Alert centered type={AlertType.default} icon={AlertIconType.warning}>
+          <Alert centered type="default" icon="warning">
             <AlertTitle>Нет данных по общедомовому потреблению.</AlertTitle>
           </Alert>
         </AlertWrapper>

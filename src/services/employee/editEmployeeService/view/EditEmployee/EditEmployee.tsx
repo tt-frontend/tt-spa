@@ -116,11 +116,7 @@ export const EditEmployee: FC<EditEmployeeProps> = ({
             name="cellphone"
             type="tel"
             placeholder="Введите"
-            value={
-              values.cellphone && values.cellphone?.length > 8
-                ? phoneMask.maskValue(values.cellphone || '') || undefined
-                : values.cellphone || undefined
-            }
+            value={phoneMask.maskValue(values.cellphone || '')}
             onChange={(value) =>
               setFieldValue(
                 'cellphone',

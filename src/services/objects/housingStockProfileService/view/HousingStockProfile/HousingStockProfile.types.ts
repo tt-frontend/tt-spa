@@ -10,4 +10,5 @@ export type HousingStockProfileProps = {
   isPermitionToDownloadConsolidatedReport: boolean;
   isPermissionToEditHousingStock: boolean;
   resourceDisconnections: ResourceDisconnectingResponse[];
+  isPermissionToAddHousingStock: boolean;
 };
