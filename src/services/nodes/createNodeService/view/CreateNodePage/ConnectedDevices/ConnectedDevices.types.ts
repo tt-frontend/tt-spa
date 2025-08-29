@@ -1,3 +1,4 @@
+import { EPipeNodeConfig } from 'api/types';
 import {
   CreateNodeFormPayload,
   UpdateNodeFormPayloadCallback,
@@ -9,4 +10,6 @@ export type ConnectedDevicesProps = {
   updateRequestPayload: UpdateNodeFormPayloadCallback;
   validateNode: () => void;
   isValidationLoading: boolean;
+  setConfigurationConstructorOpen: (payload: boolean) => void;
+  configurationType: EPipeNodeConfig | null;
 };

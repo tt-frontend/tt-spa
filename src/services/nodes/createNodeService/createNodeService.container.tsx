@@ -9,6 +9,7 @@ import { CreateCalculatorModalContainer } from 'services/calculators/createCalcu
 import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
 import { EHouseCategory } from 'api/types';
 import { mountAddressService } from './view/CreateNodePage/MountAddress/MountAddress.models';
+import { ConfigurationConstructor } from './view/CreateNodePage/ConfigurationConstructor';
 
 const { inputs, outputs, gates } = createNodeService;
 const { CreateNodeGate } = gates;
@@ -60,6 +61,10 @@ export const CreateNodeContainer = () => {
     deletingServiceZone,
     handleFinallyDeleteServiceZone,
     deletingServiceZoneCount,
+    isConfigurationConstructorOpen,
+    setConfigurationConstructorOpen,
+    configurationType,
+    setConfigurationType,
   } = useUnit({
     isBuildingLoading: outputs.$isLoadingBuilding,
     building: outputs.$building,
@@ -88,6 +93,10 @@ export const CreateNodeContainer = () => {
     deletingServiceZone: outputs.$deletingServiceZone,
     handleFinallyDeleteServiceZone: inputs.handleFinallyDeleteServiceZone,
     deletingServiceZoneCount: outputs.$deletingServiceZoneCount,
+    isConfigurationConstructorOpen: outputs.$isConfigurationConstructorOpen,
+    setConfigurationConstructorOpen: inputs.setConfigurationConstructorOpen,
+    configurationType: outputs.$configurationType,
+    setConfigurationType: inputs.setConfigurationType,
   });
 
   useEffect(() => {
@@ -120,32 +129,45 @@ export const CreateNodeContainer = () => {
           validationResult={validationResult}
         />
       )}
-      <CreateNodePage
-        building={building}
-        existingCities={existingCities}
-        existingStreets={existingStreets}
-        isBuildingLoading={isBuildingLoading}
-        updateRequestPayload={updateRequestPayload}
-        goPrevStep={() => goPrevStep()}
-        stepNumber={stepNumber}
-        calculatorsList={calculatorsList}
-        openCreateCalculatorModal={() =>
-          requestPayload.buildingId &&
-          openCreateCalculatorModal(requestPayload.buildingId)
-        }
-        isDisabledAddress={Boolean(buildingId)}
-        isValidationLoading={isValidationLoading}
-        requestPayload={requestPayload}
-        nodeServiceZones={nodeServiceZones}
-        openCreateNodeServiceZoneModal={() => openCreateNodeServiceZoneModal()}
-        validateNode={() => validateNode()}
-        handleDeleteServiceZone={handleDeleteServiceZone}
-        isDialogOpen={isDialogOpen}
-        deletingServiceZone={deletingServiceZone}
-        handleFinallyDeleteServiceZone={handleFinallyDeleteServiceZone}
-        successDeleteServiceZone={inputs.successDeleteServiceZone}
-        deletingServiceZoneCount={deletingServiceZoneCount}
-      />
+      {isConfigurationConstructorOpen && (
+        <ConfigurationConstructor
+          setConfigurationConstructorOpen={setConfigurationConstructorOpen}
+          configurationType={configurationType}
+        />
+      )}
+      {!isConfigurationConstructorOpen && (
+        <CreateNodePage
+          building={building}
+          existingCities={existingCities}
+          existingStreets={existingStreets}
+          isBuildingLoading={isBuildingLoading}
+          updateRequestPayload={updateRequestPayload}
+          goPrevStep={() => goPrevStep()}
+          stepNumber={stepNumber}
+          calculatorsList={calculatorsList}
+          openCreateCalculatorModal={() =>
+            requestPayload.buildingId &&
+            openCreateCalculatorModal(requestPayload.buildingId)
+          }
+          isDisabledAddress={Boolean(buildingId)}
+          isValidationLoading={isValidationLoading}
+          requestPayload={requestPayload}
+          nodeServiceZones={nodeServiceZones}
+          openCreateNodeServiceZoneModal={() =>
+            openCreateNodeServiceZoneModal()
+          }
+          validateNode={() => validateNode()}
+          handleDeleteServiceZone={handleDeleteServiceZone}
+          isDialogOpen={isDialogOpen}
+          deletingServiceZone={deletingServiceZone}
+          handleFinallyDeleteServiceZone={handleFinallyDeleteServiceZone}
+          successDeleteServiceZone={inputs.successDeleteServiceZone}
+          deletingServiceZoneCount={deletingServiceZoneCount}
+          setConfigurationConstructorOpen={setConfigurationConstructorOpen}
+          configurationType={configurationType}
+          setConfigurationType={setConfigurationType}
+        />
+      )}
     </>
   );
 };
