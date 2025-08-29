@@ -16,12 +16,13 @@ import {
   Divider,
   ButtonSC,
   ZoneOption,
+  SchemeWrapper,
 } from './CommonData.styled';
 import { CommonDataProps } from './CommonData.types';
 import { useFormik } from 'formik';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
 import { configNamesLookup } from 'utils/configNamesLookup';
-import { ENodeRegistrationType } from 'api/types';
+import { ENodeRegistrationType, EPipeNodeConfig } from 'api/types';
 import { ChangeNodeStatusForm } from 'services/nodes/changeNodeStatusService/view/ChangeNodeStatusForm';
 import { getChangeNodeStatusPayload } from 'services/nodes/changeNodeStatusService/changeNodeStatusService.utils';
 import { ChangeNodeStatusFormPayload } from 'services/nodes/changeNodeStatusService/changeNodeStatusService.types';
@@ -33,6 +34,16 @@ import {
 import { ConfiguratePipe } from './ConfiguratePipe';
 import { CreateNodeFormPayload } from 'services/nodes/createNodeService/createNodeService.types';
 import { TrashIconGrey } from 'ui-kit/icons';
+import {
+  ColdWaterNoDeviceScheme,
+  ColdWaterSupplyScheme,
+  HeatNoHousingMeteringDeviceScheme,
+  HeatNoRechargeScheme,
+  HeatWithRechargeScheme,
+  HotWaterNoDeviceScheme,
+  HotWaterSupplyNoBackflowScheme,
+  HotWaterSupplyWithBackflowScheme,
+} from '../Assets';
 
 const { inputs } = createNodeServiceZoneService;
 
@@ -245,6 +256,40 @@ export const CommonData: FC<CommonDataProps> = ({
           </LinkButton>
         </CreateNewZoneButtonWrapper>
       </SecondLineWrapper>
+
+      {values.configuration && (
+        <SchemeWrapper>
+          {values.configuration === EPipeNodeConfig.ColdWaterSupply && (
+            <ColdWaterSupplyScheme />
+          )}
+          {values.configuration === EPipeNodeConfig.HeatNoRecharge && (
+            <HeatNoRechargeScheme />
+          )}
+          {values.configuration === EPipeNodeConfig.HeatWithRecharge && (
+            <HeatWithRechargeScheme />
+          )}
+          {values.configuration === EPipeNodeConfig.ColdWaterNoDevice && (
+            <ColdWaterNoDeviceScheme />
+          )}
+          {values.configuration ===
+            EPipeNodeConfig.HeatNoHousingMeteringDevice && (
+            <HeatNoHousingMeteringDeviceScheme />
+          )}
+          {values.configuration === EPipeNodeConfig.HotWaterNoDevice && (
+            <HotWaterNoDeviceScheme />
+          )}
+          {values.configuration ===
+            EPipeNodeConfig.HotWaterSupplyNoBackflow && (
+            <HotWaterSupplyNoBackflowScheme />
+          )}
+          {values.configuration ===
+            EPipeNodeConfig.HotWaterSupplyWithBackflow && (
+            <HotWaterSupplyWithBackflowScheme />
+          )}
+          Предпросмотр конфигурации. Вы сможете настроить приборы на следующем
+          шаге.
+        </SchemeWrapper>
+      )}
 
       {Boolean(values.communicationPipes.length) && <Divider />}
 
