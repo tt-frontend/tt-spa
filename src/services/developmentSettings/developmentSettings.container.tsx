@@ -4,6 +4,7 @@ import { developmentSettingsService } from './developmentSettings.models';
 import { DevelopmentSettingsModal } from './view/DevelopmentSettingsModal';
 import { DevelopmentSettingsContainerProps } from './developmentSettings.types';
 import { currentOrganizationService } from 'services/currentOrganizationService';
+import { loginService } from 'services/authorizations/loginService';
 
 const { inputs, outputs } = developmentSettingsService;
 
@@ -18,6 +19,9 @@ export const DevelopmentSettingsContainer: FC<
     featureToggles,
     toggleFeature,
     resetFeatureToggles,
+    credsList,
+    resetCreds,
+    handleLogin,
   } = useUnit({
     visible: outputs.$isDevSettingsModalOpen,
     devUrl: currentOrganizationService.outputs.$devUrl,
@@ -26,6 +30,9 @@ export const DevelopmentSettingsContainer: FC<
     setDevUrl: currentOrganizationService.inputs.setDevUrl,
     toggleFeature: inputs.toggleFeature,
     resetFeatureToggles: inputs.resetFeatureToggles,
+    credsList: outputs.$credsList,
+    resetCreds: inputs.resetCreds,
+    handleLogin: loginService.inputs.handlePostLogin,
   });
 
   return (
@@ -38,6 +45,9 @@ export const DevelopmentSettingsContainer: FC<
       toggleFeature={toggleFeature}
       resetFeatureToggles={resetFeatureToggles}
       isAuth={isAuth}
+      credsList={credsList}
+      resetCreds={resetCreds}
+      handleLogin={handleLogin}
     />
   );
 };

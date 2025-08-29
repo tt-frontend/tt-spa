@@ -9,6 +9,8 @@ import { FormItem } from 'ui-kit/FormItem';
 import { Select } from 'ui-kit/Select';
 import {
   Badge,
+  CredItem,
+  CredsWrapper,
   DevUrlInputWrapper,
   FeatureToggle,
   FeatureTogglesWrapper,
@@ -28,6 +30,9 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
   toggleFeature,
   resetFeatureToggles,
   isAuth,
+  credsList,
+  resetCreds,
+  handleLogin,
 }) => {
   const featuresArray = useMemo(
     () => Object.entries(featureToggles),
@@ -73,6 +78,25 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
               </Button>
             </DevUrlInputWrapper>
           </FormItem>
+          {Boolean(credsList.length) && (
+            <FormItem label="Credentials">
+              <CredsWrapper>
+                {credsList.map((elem) => (
+                  <CredItem
+                    disabled={isAuth}
+                    key={elem.email}
+                    onClick={() => !isAuth && handleLogin(elem)}
+                  >
+                    {elem.email}
+                  </CredItem>
+                ))}
+                <FeatureToggle onClick={resetCreds} isActive color="#000000">
+                  <SettingsIcon />
+                  reset
+                </FeatureToggle>
+              </CredsWrapper>
+            </FormItem>
+          )}
           {Boolean(featuresArray.length) && (
             <FormItem label="Feature toggles">
               <FeatureTogglesWrapper>
@@ -101,7 +125,7 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
               </FeatureTogglesWrapper>
             </FormItem>
           )}
-          <Badge>TT frontend team {dayjs().format('YYYY')} [ver: 1.1.2]</Badge>
+          <Badge>TT frontend team {dayjs().format('YYYY')} [ver: 2.0.0]</Badge>
         </>
       }
       centered

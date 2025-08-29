@@ -9,3 +9,8 @@ export type FeatureToggles = typeof featureToggles;
 export type FeatureTogglesSet = {
   [key: string]: boolean;
 };
+
+export interface CreadItem {
+  email: string;
+  password: string;
+}

@@ -1,6 +1,10 @@
 import { createEvent, createStore } from 'effector';
 import { featureToggles } from 'featureToggles';
-import { FeatureToggles, FeatureTogglesSet } from './developmentSettings.types';
+import {
+  CreadItem,
+  FeatureToggles,
+  FeatureTogglesSet,
+} from './developmentSettings.types';
 import { persist } from 'effector-storage/local';
 
 const $isDevSettingsModalOpen = createStore(false);
@@ -11,6 +15,8 @@ const closeDevSettingsModal = createEvent();
 const setFeatureToggles = createEvent<FeatureTogglesSet | null>();
 const toggleFeature = createEvent<string>();
 const resetFeatureToggles = createEvent();
+
+const resetCreds = createEvent();
 
 const $featureToggles = createStore<FeatureToggles>(featureToggles)
   .on(toggleFeature, (prev, feature) => ({
@@ -26,6 +32,13 @@ const $featureToggles = createStore<FeatureToggles>(featureToggles)
         }
       : prev,
   );
+
+const $credsList = createStore<CreadItem[]>([]).reset(resetCreds);
+
+persist({
+  store: $credsList,
+  key: 'credsList',
+});
 
 persist<FeatureToggles>({
   store: $featureToggles,
@@ -79,9 +92,11 @@ export const developmentSettingsService = {
     toggleFeature,
     resetFeatureToggles,
     setFeatureToggles,
+    resetCreds,
   },
   outputs: {
     $isDevSettingsModalOpen,
     $featureToggles,
+    $credsList,
   },
 };
