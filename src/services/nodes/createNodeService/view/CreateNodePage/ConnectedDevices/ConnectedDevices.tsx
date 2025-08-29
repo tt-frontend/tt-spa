@@ -1,28 +1,26 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Button } from 'ui-kit/Button';
-import { LinkButton } from 'ui-kit/shared/LinkButton';
 import { Title } from 'ui-kit/Title';
 import { Footer } from '../CreateNodePage.styled';
 import { ConnectedDevicesProps } from './ConnectedDevices.types';
-import { SpaceLine } from 'ui-kit/SpaceLine';
-import { Empty } from 'antd';
 import { addConnectedCommonDevicesService } from './ConnectedDevices.models';
-import { useUnit } from 'effector-react';
 import { AddPipeNodeCommonDeviceContainer } from 'services/nodes/addPipeNodeCommonDeviceService';
 import {
   CommunicationPipePayload,
   CreateCommonDevicePartitial,
 } from 'services/nodes/addPipeNodeCommonDeviceService/addPipeNodeCommonDeviceService.types';
 import { omit } from 'lodash';
+import { CreatePipeHousingMeteringDeviceInNodeRequest } from 'api/types';
 import {
-  CreatePipeHousingMeteringDeviceInNodeRequest,
-  EPipeNodeConfig,
-} from 'api/types';
-import {
+  Background,
   ButtonSC,
-  CommunicationPipesListWrapper,
+  ConstructorWrapper,
+  Overlay,
+  Subtitle,
+  TitleText,
 } from './ConnectedDevices.styled';
-import { CommunicationPipeListItem } from './CommunicationPipeListItem';
+import { configurationSchemes } from '../CommonData/CommonData';
+import { DeviceGreyIcon } from 'ui-kit/icons';
 
 const { inputs } = addConnectedCommonDevicesService;
 
@@ -32,19 +30,36 @@ export const ConnectedDevices: FC<ConnectedDevicesProps> = ({
   updateRequestPayload,
   validateNode,
   isValidationLoading,
+  setConfigurationConstructorOpen,
+  configurationType,
 }) => {
-  const { openAddCommonDeviceModal } = useUnit({
-    openAddCommonDeviceModal: inputs.openAddCommonDeviceModal,
-  });
+  // const { openAddCommonDeviceModal } = useUnit({
+  //   openAddCommonDeviceModal: inputs.openAddCommonDeviceModal,
+  // });
+
+  //   const handleDeleteDevice = (pipeId: string, deviceIndex: number) => {
+  //   setCommunicationPipes((prev) =>
+  //     prev.map((pipe) => {
+  //       if (pipe.id !== pipeId) return pipe;
+
+  //       return {
+  //         ...pipe,
+  //         devices: pipe.devices?.filter((_, index) => index !== deviceIndex),
+  //       };
+  //     }),
+  //   );
+  // };
+
+  // const isNodeConfigWithoutODPU =
+  //   configuration === EPipeNodeConfig.HeatNoHousingMeteringDevice;
 
   const [communicationPipes, setCommunicationPipes] = useState<
     CommunicationPipePayload[]
   >(requestPayload?.communicationPipes || []);
 
-  const { configuration } = requestPayload;
+  console.log(communicationPipes);
 
-  const isNodeConfigWithoutODPU =
-    configuration === EPipeNodeConfig.HeatNoHousingMeteringDevice;
+  const { configuration } = requestPayload;
 
   const handleAddCommunicationPipe = (
     communicationPipe: CommunicationPipePayload,
@@ -83,19 +98,6 @@ export const ConnectedDevices: FC<ConnectedDevicesProps> = ({
     updateRequestPayload({ communicationPipes });
   }, [communicationPipes, updateRequestPayload]);
 
-  const handleDeleteDevice = (pipeId: string, deviceIndex: number) => {
-    setCommunicationPipes((prev) =>
-      prev.map((pipe) => {
-        if (pipe.id !== pipeId) return pipe;
-
-        return {
-          ...pipe,
-          devices: pipe.devices?.filter((_, index) => index !== deviceIndex),
-        };
-      }),
-    );
-  };
-
   return (
     <>
       {configuration && (
@@ -105,44 +107,43 @@ export const ConnectedDevices: FC<ConnectedDevicesProps> = ({
           communicationPipes={communicationPipes}
         />
       )}
-      <div>
-        <Title>Подключенные приборы</Title>
-        {!communicationPipes.length && (
-          <>
-            <Empty
-              description="Нет подключённых приборов"
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-            />
-            <SpaceLine noTop />
-          </>
-        )}
-        {Boolean(communicationPipes.length) && configuration && (
-          <CommunicationPipesListWrapper>
-            {communicationPipes.map((pipe) => (
-              <CommunicationPipeListItem
-                configuration={configuration}
-                key={pipe.id}
-                pipe={pipe}
-                handleDeleteDevice={handleDeleteDevice}
-                isNodeConfigWithoutODPU={isNodeConfigWithoutODPU}
-              />
-            ))}
-          </CommunicationPipesListWrapper>
-        )}
-        {!isNodeConfigWithoutODPU && (
-          <LinkButton onClick={() => openAddCommonDeviceModal()}>
-            + Добавить прибор
-          </LinkButton>
-        )}
-        <Footer>
-          <Button type="ghost" onClick={goPrevStep}>
-            Назад
+      <Title>Подключенные приборы</Title>
+      {/* {!communicationPipes.length && (
+        <>
+          <Empty
+            description="Нет подключённых приборов"
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+          />
+          <SpaceLine noTop />
+        </>
+      )} */}
+
+      <ConstructorWrapper>
+        <Background>
+          {configurationType && configurationSchemes[configurationType]}
+        </Background>
+
+        <Overlay>
+          <DeviceGreyIcon />
+          <TitleText>Подключить приборы</TitleText>
+          <Subtitle>
+            Перейдите в конструктор, чтобы настроить конфигурацию и добавить
+            приборы
+          </Subtitle>
+          <Button onClick={() => setConfigurationConstructorOpen(true)}>
+            Перейти в конструктор
           </Button>
-          <ButtonSC onClick={validateNode} isLoading={isValidationLoading}>
-            Создать узел
-          </ButtonSC>
-        </Footer>
-      </div>
+        </Overlay>
+      </ConstructorWrapper>
+
+      <Footer>
+        <Button type="ghost" onClick={goPrevStep}>
+          Назад
+        </Button>
+        <ButtonSC onClick={validateNode} isLoading={isValidationLoading}>
+          Создать узел
+        </ButtonSC>
+      </Footer>
     </>
   );
 };

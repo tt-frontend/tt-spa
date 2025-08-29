@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo } from 'react';
+import React, { FC, ReactNode, useCallback, useEffect, useMemo } from 'react';
 import { Button } from 'ui-kit/Button';
 import { FormItem } from 'ui-kit/FormItem';
 import { Input } from 'ui-kit/Input';
@@ -47,6 +47,25 @@ import {
 
 const { inputs } = createNodeServiceZoneService;
 
+export const configurationSchemes: {
+  [key in keyof typeof EPipeNodeConfig]: ReactNode;
+} = {
+  [EPipeNodeConfig.ColdWaterNoDevice]: <ColdWaterNoDeviceScheme />,
+  [EPipeNodeConfig.ColdWaterSupply]: <ColdWaterSupplyScheme />,
+  [EPipeNodeConfig.HeatNoHousingMeteringDevice]: (
+    <HeatNoHousingMeteringDeviceScheme />
+  ),
+  [EPipeNodeConfig.HeatNoRecharge]: <HeatNoRechargeScheme />,
+  [EPipeNodeConfig.HeatWithRecharge]: <HeatWithRechargeScheme />,
+  [EPipeNodeConfig.HotWaterNoDevice]: <HotWaterNoDeviceScheme />,
+  [EPipeNodeConfig.HotWaterSupplyNoBackflow]: (
+    <HotWaterSupplyNoBackflowScheme />
+  ),
+  [EPipeNodeConfig.HotWaterSupplyWithBackflow]: (
+    <HotWaterSupplyWithBackflowScheme />
+  ),
+};
+
 export const CommonData: FC<CommonDataProps> = ({
   goPrevStep,
   nodeServiceZones,
@@ -55,6 +74,7 @@ export const CommonData: FC<CommonDataProps> = ({
   updateRequestPayload,
   handleDeleteServiceZone,
   successDeleteServiceZone,
+  setConfigurationType,
 }) => {
   const { values, handleChange, setFieldValue, errors, handleSubmit } =
     useFormik({
@@ -190,7 +210,10 @@ export const CommonData: FC<CommonDataProps> = ({
           <Select
             placeholder="Выберите"
             value={values.configuration || undefined}
-            onChange={(value) => setFieldValue('configuration', value)}
+            onChange={(value) => {
+              setFieldValue('configuration', value);
+              setConfigurationType(value as EPipeNodeConfig);
+            }}
           >
             {Object.entries(configNamesLookup).map(([configuration, text]) => (
               <Select.Option key={configuration} value={configuration}>
@@ -259,33 +282,7 @@ export const CommonData: FC<CommonDataProps> = ({
 
       {values.configuration && (
         <SchemeWrapper>
-          {values.configuration === EPipeNodeConfig.ColdWaterSupply && (
-            <ColdWaterSupplyScheme />
-          )}
-          {values.configuration === EPipeNodeConfig.HeatNoRecharge && (
-            <HeatNoRechargeScheme />
-          )}
-          {values.configuration === EPipeNodeConfig.HeatWithRecharge && (
-            <HeatWithRechargeScheme />
-          )}
-          {values.configuration === EPipeNodeConfig.ColdWaterNoDevice && (
-            <ColdWaterNoDeviceScheme />
-          )}
-          {values.configuration ===
-            EPipeNodeConfig.HeatNoHousingMeteringDevice && (
-            <HeatNoHousingMeteringDeviceScheme />
-          )}
-          {values.configuration === EPipeNodeConfig.HotWaterNoDevice && (
-            <HotWaterNoDeviceScheme />
-          )}
-          {values.configuration ===
-            EPipeNodeConfig.HotWaterSupplyNoBackflow && (
-            <HotWaterSupplyNoBackflowScheme />
-          )}
-          {values.configuration ===
-            EPipeNodeConfig.HotWaterSupplyWithBackflow && (
-            <HotWaterSupplyWithBackflowScheme />
-          )}
+          {configurationSchemes[values.configuration]}
           Предпросмотр конфигурации. Вы сможете настроить приборы на следующем
           шаге.
         </SchemeWrapper>

@@ -49,17 +49,15 @@ export const AddPipeNodeCommonDeviceContainer: FC<Props> = ({
         title="Добавление нового ОДПУ"
         formId={formId}
         form={
-          <>
-            <AddCommonDeviceForm
-              updateRequestPayload={updateRequestPayload}
-              formId={formId}
-              configuration={configuration}
-              currentFormStep={currentFormStep}
-              requestPayload={requestPayload}
-              communicationPipes={communicationPipes}
-              handleFormComplete={() => handleFormComplete()}
-            />
-          </>
+          <AddCommonDeviceForm
+            updateRequestPayload={updateRequestPayload}
+            formId={formId}
+            configuration={configuration}
+            currentFormStep={currentFormStep}
+            requestPayload={requestPayload}
+            communicationPipes={communicationPipes}
+            handleFormComplete={() => handleFormComplete()}
+          />
         }
       />
     </>
