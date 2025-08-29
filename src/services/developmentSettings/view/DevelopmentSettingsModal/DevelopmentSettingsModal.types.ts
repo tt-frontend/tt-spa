@@ -1,4 +1,8 @@
-import { FeatureToggles } from 'services/developmentSettings/developmentSettings.types';
+import { LoginRequest } from 'api/types';
+import {
+  CreadItem,
+  FeatureToggles,
+} from 'services/developmentSettings/developmentSettings.types';
 
 export type DevelopmentSettingsModalProps = {
   visible: boolean;
@@ -9,4 +13,7 @@ export type DevelopmentSettingsModalProps = {
   toggleFeature: (feature: string) => void;
   resetFeatureToggles: () => void;
   isAuth: boolean;
+  credsList: CreadItem[];
+  resetCreds: () => void;
+  handleLogin: (payload: LoginRequest) => void;
 };

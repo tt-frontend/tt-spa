@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Switch } from 'antd';
 import { useFormik } from 'formik';
 import { BaseInfoStageProps } from './BaseInfoStage.types';
@@ -32,6 +32,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from 'ui-kit/Button';
 import { validationSchema } from './BaseInfoStage.constants';
 import { languageDetect } from 'utils/languageDetect';
+import { useEnterToTab } from 'hooks/useEnterAsTab';
 
 const {
   gates: { ContractorsGate, IndividualDeviceMountPlacesGate },
@@ -213,61 +214,7 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
     </>
   );
 
-  // 1) хэндлер — вешаем на <form> как onKeyDownCapture
-  const focusableSelector = `
-  input:not([disabled]):not([type="hidden"]),
-  select:not([disabled]),
-  textarea:not([disabled]),
-  button:not([disabled]),
-  [tabindex]:not([tabindex="-1"])
-`;
-
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const handleFormEnter = (e: React.KeyboardEvent<HTMLFormElement>) => {
-    if (e.key !== 'Enter' || e.shiftKey) return;
-    // Не ломаем IME
-    if (e.nativeEvent?.isComposing) return;
-
-    const form = formRef.current;
-    if (!form) return;
-
-    const target = e.target as HTMLElement;
-
-    // 2) Не перехватываем Enter в textarea/кнопках
-    const tag = target.tagName.toLowerCase();
-    if (tag === 'textarea' || tag === 'button') return;
-
-    // 3) Не мешаем открытым выпадающим контролам (antd Select/Picker и т.п.)
-    const popupOpen =
-      target.closest(
-        '.ant-select-open, .ant-picker-open, .ant-cascader-open, .ant-dropdown-open, .ant-select-dropdown',
-      ) ||
-      target.getAttribute('aria-expanded') === 'true' ||
-      target.getAttribute('role') === 'combobox';
-
-    if (popupOpen) return;
-
-    e.preventDefault();
-
-    // 4) Ищем ближайший фокусируемый контейнер текущего таргета
-    const current =
-      (target.closest(
-        'input,select,textarea,button,[tabindex]',
-      ) as HTMLElement) || target;
-
-    const focusables = Array.from(
-      form.querySelectorAll<HTMLElement>(focusableSelector),
-    ).filter((el) => !el.hasAttribute('disabled') && el.offsetParent !== null);
-
-    const index = focusables.indexOf(current);
-    if (index > -1 && index < focusables.length - 1) {
-      focusables[index + 1].focus();
-    } else {
-      // последний элемент — сабмит
-      handleSubmit();
-    }
-  };
+  useEnterToTab();
 
   return (
     <Wrap>
@@ -276,227 +223,216 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
 
       <FormHeader>Общие данные о приборе</FormHeader>
 
-      <form
-        ref={formRef}
-        onKeyDownCapture={handleFormEnter}
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
-        }}
-      >
-        <FormWrap>
-          <FormItem label="Тип ресурса">
-            <ResourceSelect
-              onChange={(value) => {
-                setFieldValue('resource', value);
+      <FormWrap>
+        <FormItem label="Тип ресурса">
+          <ResourceSelect
+            onChange={(value) => {
+              setFieldValue('resource', value);
 
-                if (!value) return;
+              if (!value) return;
 
-                const { bitDepth, scaleFactor } =
-                  getBitDepthAndScaleFactor(value);
+              const { bitDepth, scaleFactor } =
+                getBitDepthAndScaleFactor(value);
 
-                setFieldValue('bitDepth', bitDepth);
-                setFieldValue('scaleFactor', scaleFactor);
-              }}
-              resource={values.resource}
-            />
+              setFieldValue('bitDepth', bitDepth);
+              setFieldValue('scaleFactor', scaleFactor);
+            }}
+            resource={values.resource}
+          />
 
-            <ErrorMessage>{errors.resource}</ErrorMessage>
-          </FormItem>
-
-          <FormItem label="Модель прибора">
-            <AutoComplete
-              prefix={language !== 'unknown' && <Language>{language}</Language>}
-              size="large"
-              value={values.model}
-              placeholder="Введите модель прибора"
-              onChange={(value) => {
-                setFieldValue('model', value);
-                handleFetchModels(String(value));
-                setLanguage(languageDetect(value as string));
-              }}
-              options={modelNames?.map((elem) => ({ value: elem })) || []}
-            />
-            <ErrorMessage>{errors.model}</ErrorMessage>
-          </FormItem>
-
-          <FormItem label="Серийный номер">
-            <Input
-              small={false}
-              placeholder="Введите серийный номер прибора"
-              onChange={(value) =>
-                setFieldValue('serialNumber', value.target.value)
-              }
-              name="serialNumber"
-              value={values.serialNumber}
-              onBlur={(value) =>
-                value.target.value &&
-                handleFetchSerialNumberForCheck(value.target.value)
-              }
-              suffix={<Loader show={isFetchSerialNumberLoading} />}
-            />
-            <ErrorMessage>{errors.serialNumber}</ErrorMessage>
-            {isSerialNumberAllreadyExist && (
-              <ErrorMessage>
-                Данный серийный номер уже существует в базе
-              </ErrorMessage>
-            )}
-          </FormItem>
-
-          <FormItem label="Место установки">
-            <Select
-              placeholder="Выберите место установки"
-              value={values.mountPlaceId || undefined}
-              onChange={(value) => setFieldValue('mountPlaceId', value)}
-            >
-              {mountPlaces?.map((elem) => (
-                <Select.Option value={elem.id} key={elem.id}>
-                  {elem.description}
-                </Select.Option>
-              ))}
-            </Select>
-            <ErrorMessage>{errors.mountPlaceId}</ErrorMessage>
-          </FormItem>
-
-          <FormItem label="Разрядность">
-            <Input
-              type="number"
-              placeholder="Введите разрядность прибора"
-              name="bitDepth"
-              onChange={(value) =>
-                setFieldValue('bitDepth', value.target.value)
-              }
-              value={values.bitDepth || undefined}
-            />
-            <ErrorMessage>{errors.bitDepth}</ErrorMessage>
-          </FormItem>
-        </FormWrap>
-
-        <FormItem label="Тариф прибора">
-          <Select
-            placeholder="Выберите тариф прибора"
-            value={values.rateType}
-            onChange={(value) => setFieldValue('rateType', value)}
-          >
-            <Select.Option value={EIndividualDeviceRateType.OneZone}>
-              Одна зона
-            </Select.Option>
-            <Select.Option value={EIndividualDeviceRateType.TwoZone}>
-              Две зоны
-            </Select.Option>
-            <Select.Option value={EIndividualDeviceRateType.ThreeZone}>
-              Три зоны
-            </Select.Option>
-          </Select>
+          <ErrorMessage>{errors.resource}</ErrorMessage>
         </FormItem>
 
-        <FormWrap>
-          <FormItem
-            label={`Первичные показания прибора${rateNum !== 1 ? ' (День)' : ''}`}
-          >
-            <Input
-              type="number"
-              placeholder="Введите первичные показания"
-              onChange={onChangeStartupReadings(1)}
-              value={values.startupReadings1 || undefined}
-            />
-            <ErrorMessage>{errors.startupReadings1}</ErrorMessage>
-          </FormItem>
+        <FormItem label="Модель прибора">
+          <AutoComplete
+            prefix={language !== 'unknown' && <Language>{language}</Language>}
+            size="large"
+            value={values.model}
+            placeholder="Введите модель прибора"
+            onChange={(value) => {
+              setFieldValue('model', value);
+              handleFetchModels(String(value));
+              setLanguage(languageDetect(value as string));
+            }}
+            options={modelNames?.map((elem) => ({ value: elem })) || []}
+          />
+          <ErrorMessage>{errors.model}</ErrorMessage>
+        </FormItem>
 
-          {rateNum >= 2 && (
-            <FormItem label="Первичные показания прибора (Ночь)">
-              <Input
-                type="number"
-                placeholder="Введите первичные показания"
-                onChange={onChangeStartupReadings(2)}
-                value={values.startupReadings2 || undefined}
-              />
-              <ErrorMessage>{errors.startupReadings2}</ErrorMessage>
-            </FormItem>
-          )}
-          {rateNum >= 3 && (
-            <FormItem>
-              <Input
-                type="number"
-                placeholder="Введите первичные показания"
-                onChange={onChangeStartupReadings(3)}
-                value={values.startupReadings3 || undefined}
-              />
-              <ErrorMessage>{errors.startupReadings3}</ErrorMessage>
-            </FormItem>
-          )}
-
-          {rateNum === 1 && defaultReadingsFields}
-        </FormWrap>
-
-        {rateNum !== 1 && <FormWrap>{defaultReadingsFields}</FormWrap>}
-
-        <FormItem label="Дата ввода в эксплуатацию">
-          <DatePickerNative
+        <FormItem label="Серийный номер">
+          <Input
+            small={false}
+            placeholder="Введите серийный номер прибора"
             onChange={(value) =>
-              setFieldValue('openingDate', dayjs(value).format('YYYY-MM-DD'))
+              setFieldValue('serialNumber', value.target.value)
             }
-            value={values.openingDate}
+            name="serialNumber"
+            value={values.serialNumber}
+            onBlur={(value) =>
+              value.target.value &&
+              handleFetchSerialNumberForCheck(value.target.value)
+            }
+            suffix={<Loader show={isFetchSerialNumberLoading} />}
           />
-          <ErrorMessage>{errors.openingDate}</ErrorMessage>
+          <ErrorMessage>{errors.serialNumber}</ErrorMessage>
+          {isSerialNumberAllreadyExist && (
+            <ErrorMessage>
+              Данный серийный номер уже существует в базе
+            </ErrorMessage>
+          )}
         </FormItem>
 
-        <SwitchWrapper>
-          <Switch
-            checked={values.isPolling}
-            onChange={(value) => setFieldValue('isPolling', value)}
-          />
-          <TextWrapper>Дистанционное снятие показаний</TextWrapper>
-        </SwitchWrapper>
-
-        <FormWrap>{bottomDateFields}</FormWrap>
-
-        <FormWrap>
-          <FormItem label="Пломба">
-            <Input
-              placeholder="Номер пломбы"
-              value={values.sealNumber || undefined}
-              onChange={(value) =>
-                setFieldValue('sealNumber', value.target.value)
-              }
-              name="sealNumber"
-            />
-          </FormItem>
-
-          <FormItem label="Дата установки пломбы">
-            <DatePickerNative
-              onChange={(value) =>
-                setFieldValue(
-                  'sealInstallationDate',
-                  dayjs(value).format('YYYY-MM-DD'),
-                )
-              }
-              value={values.sealInstallationDate}
-            />
-          </FormItem>
-        </FormWrap>
-
-        <FormItem label="Монтажная организация">
+        <FormItem label="Место установки">
           <Select
-            onChange={(value) => setFieldValue('contractorId', value)}
-            value={values.contractorId || void 0}
-            placeholder="Выберите монтажную организацию"
+            placeholder="Выберите место установки"
+            value={values.mountPlaceId || undefined}
+            onChange={(value) => setFieldValue('mountPlaceId', value)}
           >
-            {contractors?.map((elem) => (
+            {mountPlaces?.map((elem) => (
               <Select.Option value={elem.id} key={elem.id}>
-                {elem.name}
+                {elem.description}
               </Select.Option>
             ))}
           </Select>
+          <ErrorMessage>{errors.mountPlaceId}</ErrorMessage>
         </FormItem>
 
-        <Footer>
-          <Button type="ghost" onClick={() => navigate(-1)}>
-            Отмена
-          </Button>
-          <Button onClick={() => handleSubmit()}>Далее</Button>
-        </Footer>
-      </form>
+        <FormItem label="Разрядность">
+          <Input
+            type="number"
+            placeholder="Введите разрядность прибора"
+            name="bitDepth"
+            onChange={(value) => setFieldValue('bitDepth', value.target.value)}
+            value={values.bitDepth || undefined}
+          />
+          <ErrorMessage>{errors.bitDepth}</ErrorMessage>
+        </FormItem>
+      </FormWrap>
+
+      <FormItem label="Тариф прибора">
+        <Select
+          placeholder="Выберите тариф прибора"
+          value={values.rateType}
+          onChange={(value) => setFieldValue('rateType', value)}
+        >
+          <Select.Option value={EIndividualDeviceRateType.OneZone}>
+            Одна зона
+          </Select.Option>
+          <Select.Option value={EIndividualDeviceRateType.TwoZone}>
+            Две зоны
+          </Select.Option>
+          <Select.Option value={EIndividualDeviceRateType.ThreeZone}>
+            Три зоны
+          </Select.Option>
+        </Select>
+      </FormItem>
+
+      <FormWrap>
+        <FormItem
+          label={`Первичные показания прибора${rateNum !== 1 ? ' (День)' : ''}`}
+        >
+          <Input
+            type="number"
+            placeholder="Введите первичные показания"
+            onChange={onChangeStartupReadings(1)}
+            value={values.startupReadings1 || undefined}
+          />
+          <ErrorMessage>{errors.startupReadings1}</ErrorMessage>
+        </FormItem>
+
+        {rateNum >= 2 && (
+          <FormItem label="Первичные показания прибора (Ночь)">
+            <Input
+              type="number"
+              placeholder="Введите первичные показания"
+              onChange={onChangeStartupReadings(2)}
+              value={values.startupReadings2 || undefined}
+            />
+            <ErrorMessage>{errors.startupReadings2}</ErrorMessage>
+          </FormItem>
+        )}
+        {rateNum >= 3 && (
+          <FormItem>
+            <Input
+              type="number"
+              placeholder="Введите первичные показания"
+              onChange={onChangeStartupReadings(3)}
+              value={values.startupReadings3 || undefined}
+            />
+            <ErrorMessage>{errors.startupReadings3}</ErrorMessage>
+          </FormItem>
+        )}
+
+        {rateNum === 1 && defaultReadingsFields}
+      </FormWrap>
+
+      {rateNum !== 1 && <FormWrap>{defaultReadingsFields}</FormWrap>}
+
+      <FormItem label="Дата ввода в эксплуатацию">
+        <DatePickerNative
+          onChange={(value) =>
+            setFieldValue('openingDate', dayjs(value).format('YYYY-MM-DD'))
+          }
+          value={values.openingDate}
+        />
+        <ErrorMessage>{errors.openingDate}</ErrorMessage>
+      </FormItem>
+
+      <SwitchWrapper>
+        <Switch
+          checked={values.isPolling}
+          onChange={(value) => setFieldValue('isPolling', value)}
+        />
+        <TextWrapper>Дистанционное снятие показаний</TextWrapper>
+      </SwitchWrapper>
+
+      <FormWrap>{bottomDateFields}</FormWrap>
+
+      <FormWrap>
+        <FormItem label="Пломба">
+          <Input
+            placeholder="Номер пломбы"
+            value={values.sealNumber || undefined}
+            onChange={(value) =>
+              setFieldValue('sealNumber', value.target.value)
+            }
+            name="sealNumber"
+          />
+        </FormItem>
+
+        <FormItem label="Дата установки пломбы">
+          <DatePickerNative
+            onChange={(value) =>
+              setFieldValue(
+                'sealInstallationDate',
+                dayjs(value).format('YYYY-MM-DD'),
+              )
+            }
+            value={values.sealInstallationDate}
+          />
+        </FormItem>
+      </FormWrap>
+
+      <FormItem label="Монтажная организация">
+        <Select
+          onChange={(value) => setFieldValue('contractorId', value)}
+          value={values.contractorId || void 0}
+          placeholder="Выберите монтажную организацию"
+        >
+          {contractors?.map((elem) => (
+            <Select.Option value={elem.id} key={elem.id}>
+              {elem.name}
+            </Select.Option>
+          ))}
+        </Select>
+      </FormItem>
+
+      <Footer>
+        <Button type="ghost" onClick={() => navigate(-1)}>
+          Отмена
+        </Button>
+        <Button onClick={() => handleSubmit()}>Далее</Button>
+      </Footer>
     </Wrap>
   );
 };

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Badge = styled.div`
   margin-top: 24px;
@@ -39,4 +39,34 @@ export const FeatureToggle = styled.div<{ color: string; isActive: boolean }>`
   &:hover {
     background: ${({ color, isActive }) => (isActive ? color + 'cc' : 'white')};
   }
+`;
+
+export const CredsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+`;
+
+const hoverCredCSS = css`
+  &:hover {
+    background: #ffffff;
+    border: 1px solid #2a2a2a;
+    cursor: pointer;
+  }
+`;
+
+export const CredItem = styled.div<{ disabled: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ededed;
+  color: #2a2a2a;
+  padding: 2px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: 0.2s;
+  font-weight: 400;
+  border: 1px solid #dcdcdc;
+
+  ${({ disabled }) => !disabled && hoverCredCSS}
 `;
