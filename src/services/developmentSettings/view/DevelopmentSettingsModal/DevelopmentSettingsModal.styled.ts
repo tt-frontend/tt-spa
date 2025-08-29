@@ -51,7 +51,9 @@ const hoverCredCSS = css`
   &:hover {
     background: #ffffff;
     border: 1px solid #2a2a2a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    transform: scale(1.05);
   }
 `;
 
@@ -65,8 +67,8 @@ export const CredItem = styled.div<{ disabled: boolean }>`
   border-radius: 4px;
   font-weight: bold;
   transition: 0.2s;
-  font-weight: 400;
-  border: 1px solid #dcdcdc;
+  font-weight: 500;
+  border: 1px solid #ededed;
 
   ${({ disabled }) => !disabled && hoverCredCSS}
 `;
