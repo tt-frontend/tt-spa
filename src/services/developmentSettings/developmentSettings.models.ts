@@ -1,11 +1,12 @@
 import { createEvent, createStore } from 'effector';
 import { featureToggles } from 'featureToggles';
 import {
-  CreadItem,
+  ICredItem,
   FeatureToggles,
   FeatureTogglesSet,
 } from './developmentSettings.types';
 import { persist } from 'effector-storage/local';
+import { currentUserService } from 'services/currentUser/currentUserService';
 
 const $isDevSettingsModalOpen = createStore(false);
 
@@ -33,7 +34,17 @@ const $featureToggles = createStore<FeatureToggles>(featureToggles)
       : prev,
   );
 
-const $credsList = createStore<CreadItem[]>([]).reset(resetCreds);
+const $credsList = createStore<ICredItem[]>([])
+  .reset(resetCreds)
+  .on(currentUserService.outputs.$currentUser.updates, (prev, user) => {
+    if (!user) return prev;
+
+    return prev.map((item) => {
+      if (item.email !== user.email) return item;
+
+      return { ...item, user };
+    });
+  });
 
 persist({
   store: $credsList,

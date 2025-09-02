@@ -50,7 +50,7 @@ export const CredsWrapper = styled.div`
 const hoverCredCSS = css`
   &:hover {
     background: #ffffff;
-    border: 1px solid #2a2a2a;
+    /* border: 1px solid #2a2a2a; */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transform: scale(1.05);
@@ -59,11 +59,12 @@ const hoverCredCSS = css`
 
 export const CredItem = styled.div<{ disabled: boolean }>`
   display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #ededed;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 60px;
+  background: white;
   color: #2a2a2a;
-  padding: 2px 16px;
+  padding: 4px 24px 4px 8px;
   border-radius: 4px;
   font-weight: bold;
   transition: 0.2s;
@@ -71,4 +72,38 @@ export const CredItem = styled.div<{ disabled: boolean }>`
   border: 1px solid #ededed;
 
   ${({ disabled }) => !disabled && hoverCredCSS}
+`;
+
+export const UserName = styled.div`
+  font-size: 12px;
+  color: var(--primary-100);
+`;
+
+export const CredentialsTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding-bottom: 8px;
+
+  .segmented {
+    * {
+      color: black;
+      font-weight: 500;
+    }
+  }
+`;
+
+export const CredResetButton = styled.div`
+  height: 24px;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: #efefefc5;
+  }
 `;

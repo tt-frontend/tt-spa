@@ -1,3 +1,4 @@
+import { OrganizationUserResponse } from 'api/types';
 import { featureToggles } from 'featureToggles';
 
 export type DevelopmentSettingsContainerProps = {
@@ -10,7 +11,8 @@ export type FeatureTogglesSet = {
   [key: string]: boolean;
 };
 
-export interface CreadItem {
+export interface ICredItem {
   email: string;
   password: string;
+  user?: OrganizationUserResponse;
 }

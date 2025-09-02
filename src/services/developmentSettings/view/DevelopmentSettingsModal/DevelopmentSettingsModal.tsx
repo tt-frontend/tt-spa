@@ -9,17 +9,25 @@ import { FormItem } from 'ui-kit/FormItem';
 import { Select } from 'ui-kit/Select';
 import {
   Badge,
+  CredentialsTitle,
   CredItem,
+  CredResetButton,
   CredsWrapper,
   DevUrlInputWrapper,
   FeatureToggle,
   FeatureTogglesWrapper,
+  UserName,
 } from './DevelopmentSettingsModal.styled';
 import { DevelopmentSettingsModalProps } from './DevelopmentSettingsModal.types';
 import { urls } from './DevelopmentSettingsModal.constants';
 import { baseURL } from 'api';
 import { FeatureTogglesTranslates } from 'services/developmentSettings/developmentSettings.constants';
-import { FeatureToggles } from 'services/developmentSettings/developmentSettings.types';
+import {
+  ICredItem,
+  FeatureToggles,
+} from 'services/developmentSettings/developmentSettings.types';
+import { sortUserRoles } from 'services/company/companyProfileService/view/CompanyProfile/Tabs/Staff/Staff.utils';
+import { Segmented } from 'antd';
 
 export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
   visible,
@@ -38,6 +46,8 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
     () => Object.entries(featureToggles),
     [featureToggles],
   );
+
+  const [credView, setCredView] = React.useState<'role' | 'name'>('role');
 
   return (
     <FormModal
@@ -73,27 +83,38 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
                 icon={<SettingsIcon />}
                 onClick={() => setDevUrl(baseURL)}
                 disabled={isAuth}
-              >
-                Reset
-              </Button>
+              ></Button>
             </DevUrlInputWrapper>
           </FormItem>
           {Boolean(credsList.length) && (
-            <FormItem label="Credentials">
+            <FormItem
+              label={
+                <CredentialsTitle>
+                  <div>Credentials</div>
+                  <Segmented
+                    className="segmented"
+                    size="small"
+                    value={credView}
+                    onChange={(value) => setCredView(value as 'role' | 'name')}
+                    options={[
+                      { value: 'role', label: 'role' },
+                      { value: 'name', label: 'name' },
+                    ]}
+                  />
+                  <CredResetButton onClick={resetCreds}>Reset</CredResetButton>
+                </CredentialsTitle>
+              }
+            >
               <CredsWrapper>
                 {credsList.map((elem) => (
-                  <CredItem
-                    disabled={isAuth}
+                  <CredentialBlock
+                    credView={credView}
                     key={elem.email}
-                    onClick={() => !isAuth && handleLogin(elem)}
-                  >
-                    {elem.email}
-                  </CredItem>
+                    cred={elem}
+                    isAuth={isAuth}
+                    handleLogin={handleLogin}
+                  />
                 ))}
-                <FeatureToggle onClick={resetCreds} isActive color="#000000">
-                  <SettingsIcon />
-                  reset
-                </FeatureToggle>
               </CredsWrapper>
             </FormItem>
           )}
@@ -125,7 +146,7 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
               </FeatureTogglesWrapper>
             </FormItem>
           )}
-          <Badge>TT frontend team {dayjs().format('YYYY')} [ver: 2.0.0]</Badge>
+          <Badge>TT frontend team {dayjs().format('YYYY')} [ver: 2.0.1]</Badge>
         </>
       }
       centered
@@ -134,5 +155,37 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
       onCancel={closeDevSettingsModal}
       customFooter={<></>}
     />
+  );
+};
+
+const CredentialBlock: FC<{
+  cred: ICredItem;
+  isAuth: boolean;
+  handleLogin: (cred: ICredItem) => void;
+  credView: 'name' | 'role';
+}> = ({ cred, isAuth, handleLogin, credView }) => {
+  const sortedRoles = cred.user && sortUserRoles(cred.user.roles || []);
+
+  console.log(sortedRoles);
+
+  const firstNameLetter = cred.user?.firstName?.[0];
+  const middleNameLetter = cred.user?.middleName?.[0];
+
+  return (
+    <CredItem
+      disabled={isAuth}
+      key={cred.email}
+      onClick={() => !isAuth && handleLogin(cred)}
+    >
+      {credView === 'name' && cred.user && (
+        <UserName>
+          {cred.user.lastName} {firstNameLetter && `${firstNameLetter}. `}
+          {middleNameLetter && `${middleNameLetter}.`}
+        </UserName>
+      )}
+      {credView === 'role' && <UserName>{sortedRoles?.[0]?.value}</UserName>}
+
+      <div>{cred.email}</div>
+    </CredItem>
   );
 };
