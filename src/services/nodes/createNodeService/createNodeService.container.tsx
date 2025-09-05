@@ -10,6 +10,7 @@ import { addressSearchService } from 'services/addressSearchService/addressSearc
 import { EHouseCategory } from 'api/types';
 import { mountAddressService } from './view/CreateNodePage/MountAddress/MountAddress.models';
 import { ConfigurationConstructor } from './view/CreateNodePage/ConfigurationConstructor';
+import { addPipeNodeCommonDeviceService } from '../addPipeNodeCommonDeviceService';
 
 const { inputs, outputs, gates } = createNodeService;
 const { CreateNodeGate } = gates;
@@ -65,6 +66,7 @@ export const CreateNodeContainer = () => {
     setConfigurationConstructorOpen,
     configurationType,
     setConfigurationType,
+    updateCommonDeviceRequestPayload,
   } = useUnit({
     isBuildingLoading: outputs.$isLoadingBuilding,
     building: outputs.$building,
@@ -97,6 +99,8 @@ export const CreateNodeContainer = () => {
     setConfigurationConstructorOpen: inputs.setConfigurationConstructorOpen,
     configurationType: outputs.$configurationType,
     setConfigurationType: inputs.setConfigurationType,
+    updateCommonDeviceRequestPayload:
+      addPipeNodeCommonDeviceService.inputs.updateCommonDeviceRequestPayload,
   });
 
   useEffect(() => {
@@ -133,6 +137,9 @@ export const CreateNodeContainer = () => {
         <ConfigurationConstructor
           setConfigurationConstructorOpen={setConfigurationConstructorOpen}
           configurationType={configurationType}
+          requestPayload={requestPayload}
+          updateRequestPayload={updateRequestPayload}
+          updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
         />
       )}
       {!isConfigurationConstructorOpen && (

@@ -74,8 +74,6 @@ export const CreateNodePage: FC<CreateNodePageProps> = ({
     3: (
       <ConnectedDevices
         goPrevStep={goPrevStep}
-        requestPayload={requestPayload}
-        updateRequestPayload={updateRequestPayload}
         validateNode={validateNode}
         isValidationLoading={isValidationLoading}
         setConfigurationConstructorOpen={setConfigurationConstructorOpen}

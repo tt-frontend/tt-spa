@@ -31,10 +31,12 @@ export const Footer = styled.div`
 export const RightPanel = styled.div`
   position: fixed;
   display: flex;
+  flex-direction: column;
   top: 90px;
   bottom: 140px;
   right: 60px;
 
+  gap: 16px;
   padding: 20px 16px;
   width: 300px;
   background: #ffffff;
