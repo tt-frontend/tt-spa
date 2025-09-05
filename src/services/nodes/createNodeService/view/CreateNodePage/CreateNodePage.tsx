@@ -36,6 +36,9 @@ export const CreateNodePage: FC<CreateNodePageProps> = ({
   handleFinallyDeleteServiceZone,
   successDeleteServiceZone,
   deletingServiceZoneCount,
+  setConfigurationConstructorOpen,
+  configurationType,
+  setConfigurationType,
 }) => {
   const stepComponentDictionary: { [key: number]: ReactNode } = {
     0: (
@@ -65,15 +68,16 @@ export const CreateNodePage: FC<CreateNodePageProps> = ({
         requestPayload={requestPayload}
         handleDeleteServiceZone={handleDeleteServiceZone}
         successDeleteServiceZone={successDeleteServiceZone}
+        setConfigurationType={setConfigurationType}
       />
     ),
     3: (
       <ConnectedDevices
         goPrevStep={goPrevStep}
-        requestPayload={requestPayload}
-        updateRequestPayload={updateRequestPayload}
         validateNode={validateNode}
         isValidationLoading={isValidationLoading}
+        setConfigurationConstructorOpen={setConfigurationConstructorOpen}
+        configurationType={configurationType}
       />
     ),
   };

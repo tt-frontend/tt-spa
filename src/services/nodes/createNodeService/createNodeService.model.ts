@@ -6,6 +6,7 @@ import {
   CalculatorIntoHousingStockResponse,
   CreatePipeNodeRequest,
   EHouseCategory,
+  EPipeNodeConfig,
   EPipeNodeValidationMessageStringDictionaryItem,
   HousingStockResponse,
   NodeServiceZoneListResponse,
@@ -82,6 +83,10 @@ const closeConfiramtionModal = createEvent();
 const handleDeleteServiceZone = createEvent<NodeServiceZoneResponse | null>();
 const handleFinallyDeleteServiceZone = createEvent<number>();
 
+const setConfigurationConstructorOpen = createEvent<boolean>();
+
+const setConfigurationType = createEvent<EPipeNodeConfig>();
+
 const validateNode = createEvent();
 const validateNodeFx = createEffect<
   CreatePipeNodeRequest,
@@ -150,6 +155,16 @@ const $deletingServiceZone = createStore<NodeServiceZoneResponse | null>(null)
   .reset(CreateNodeGate.close);
 
 const $isDialogOpen = $deletingServiceZone.map(Boolean);
+
+const $isConfigurationConstructorOpen = createStore<boolean>(false).on(
+  setConfigurationConstructorOpen,
+  (_, value) => value,
+);
+
+const $configurationType = createStore<EPipeNodeConfig | null>(null).on(
+  setConfigurationType,
+  (_, data) => data,
+);
 
 sample({
   clock: CreateNodeGate.open,
@@ -300,6 +315,8 @@ export const createNodeService = {
     handleDeleteServiceZone,
     handleFinallyDeleteServiceZone,
     successDeleteServiceZone,
+    setConfigurationConstructorOpen,
+    setConfigurationType,
   },
   outputs: {
     $building,
@@ -319,6 +336,8 @@ export const createNodeService = {
     $isDialogOpen,
     $deletingServiceZone,
     $deletingServiceZoneCount,
+    $isConfigurationConstructorOpen,
+    $configurationType,
   },
   gates: {
     CreateNodeGate,
