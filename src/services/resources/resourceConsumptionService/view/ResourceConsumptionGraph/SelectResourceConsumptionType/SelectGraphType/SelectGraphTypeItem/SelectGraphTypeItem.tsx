@@ -25,7 +25,7 @@ export const SelectGraphTypeItem: FC<SelectGraphTypeItemProps> = ({
       disabled={isConsumptionDataEmpty || disabled}
     >
       <OpacityWrapper disabled={!isActive}>
-        <Checkbox disabled={!isActive} checked={checked} />
+        <Checkbox disabled={!isActive} checked={checked && isActive} />
         <Circle color={color} />
         {text}
       </OpacityWrapper>
