@@ -35,6 +35,11 @@ export const SerialNumber = styled.div`
   color: rgba(39, 47, 90, 0.7);
   font-size: 16px;
   font-weight: 500;
+
+  max-width: 120px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 export const Block = styled.div`

@@ -4,12 +4,6 @@ import { CreatePipeHousingMeteringDeviceInNodeRequest } from 'api/types';
 import { CommunicationPipePayload } from 'services/nodes/addPipeNodeCommonDeviceService/addPipeNodeCommonDeviceService.types';
 
 type Props = {
-  is1: boolean;
-  is2: boolean;
-  is3: boolean;
-  is4: boolean;
-  is5: boolean;
-  is6: boolean;
   updateCommonDeviceRequestPayload: (
     payload: Partial<
       CreatePipeHousingMeteringDeviceInNodeRequest & {
@@ -20,23 +14,28 @@ type Props = {
   feedFlow: CommunicationPipePayload | undefined;
   recharge: CommunicationPipePayload | undefined;
   feedBackFlow: CommunicationPipePayload | undefined;
-
   openAddCommonDeviceModal: () => void;
 };
 
 export const HeatWithRechargeScheme: FC<Props> = ({
-  is1,
-  is2,
-  is3,
-  is4,
-  is5,
-  is6,
   updateCommonDeviceRequestPayload,
-  feedFlow,
   openAddCommonDeviceModal,
+  feedFlow,
   feedBackFlow,
   recharge,
 }) => {
+  const is1 = Boolean(feedFlow?.devices?.[0]);
+
+  const is2 = Boolean(feedFlow?.devices?.[1]);
+
+  const is3 = Boolean(feedBackFlow?.devices?.[0]);
+
+  const is4 = Boolean(feedBackFlow?.devices?.[1]);
+
+  const is5 = Boolean(recharge?.devices?.[0]);
+
+  const is6 = Boolean(recharge?.devices?.[1]);
+
   return (
     <svg
       width="556"
@@ -128,7 +127,7 @@ export const HeatWithRechargeScheme: FC<Props> = ({
               id="Rectangle 1345"
               d="M51.0498 30.1631H72.291C73.9333 30.1631 75.2655 31.4944 75.2656 33.1367V54.3779C75.2656 56.0203 73.9334 57.3525 72.291 57.3525H51.0498C49.4075 57.3524 48.0762 56.0203 48.0762 54.3779V33.1367C48.0763 31.4945 49.4076 30.1632 51.0498 30.1631Z"
               fill="white"
-              stroke="#F3F5F6"
+              stroke="#f3f3f6"
               strokeWidth="0.849655"
             />
             <g id="icon16/menu/meter devices">
@@ -164,13 +163,13 @@ export const HeatWithRechargeScheme: FC<Props> = ({
             }}
           >
             <rect
-              className="svgStyle"
               x="16"
               y="8"
               width="33"
               height="33"
               rx="4"
               fill="#189EE9"
+              className="svgStyle"
             />
             <path
               fillRule="evenodd"

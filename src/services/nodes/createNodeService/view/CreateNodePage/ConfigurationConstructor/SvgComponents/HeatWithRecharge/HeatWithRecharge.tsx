@@ -29,66 +29,6 @@ export const HeatWithRecharge: FC<Props> = ({
       addPipeNodeCommonDeviceService.inputs.openAddCommonDeviceModal,
   });
 
-  const first = communicationPipes.find(
-    (pipe) => pipe.magistral === EMagistralType.FeedFlow,
-  )?.devices?.[0];
-
-  const second = communicationPipes.find(
-    (pipe) => pipe.magistral === EMagistralType.FeedFlow,
-  )?.devices?.[1];
-
-  const therd = communicationPipes.find(
-    (pipe) => pipe.magistral === EMagistralType.FeedBackFlow,
-  )?.devices?.[0];
-
-  const fors = communicationPipes.find(
-    (pipe) => pipe.magistral === EMagistralType.FeedBackFlow,
-  )?.devices?.[1];
-
-  const fifs = communicationPipes.find(
-    (pipe) => pipe.magistral === EMagistralType.Recharge,
-  )?.devices?.[0];
-
-  const six = communicationPipes.find(
-    (pipe) => pipe.magistral === EMagistralType.Recharge,
-  )?.devices?.[1];
-
-  const is1 = Boolean(
-    communicationPipes.find(
-      (pipe) => pipe.magistral === EMagistralType.FeedFlow,
-    )?.devices?.[0],
-  );
-
-  const is2 = Boolean(
-    communicationPipes.find(
-      (pipe) => pipe.magistral === EMagistralType.FeedFlow,
-    )?.devices?.[1],
-  );
-
-  const is3 = Boolean(
-    communicationPipes.find(
-      (pipe) => pipe.magistral === EMagistralType.FeedBackFlow,
-    )?.devices?.[0],
-  );
-
-  const is4 = Boolean(
-    communicationPipes.find(
-      (pipe) => pipe.magistral === EMagistralType.FeedBackFlow,
-    )?.devices?.[1],
-  );
-
-  const is5 = Boolean(
-    communicationPipes.find(
-      (pipe) => pipe.magistral === EMagistralType.Recharge,
-    )?.devices?.[0],
-  );
-
-  const is6 = Boolean(
-    communicationPipes.find(
-      (pipe) => pipe.magistral === EMagistralType.Recharge,
-    )?.devices?.[1],
-  );
-
   const feedFlow = communicationPipes.find(
     (pipe) => pipe.magistral === EMagistralType.FeedFlow,
   );
@@ -101,16 +41,22 @@ export const HeatWithRecharge: FC<Props> = ({
     (pipe) => pipe.magistral === EMagistralType.Recharge,
   );
 
+  const firstDevice = feedFlow?.devices?.[0];
+
+  const secondDevice = feedFlow?.devices?.[1];
+
+  const thirdDevice = feedBackFlow?.devices?.[0];
+
+  const fourthDevice = feedBackFlow?.devices?.[1];
+
+  const fifthDevice = recharge?.devices?.[0];
+
+  const sixthDevice = recharge?.devices?.[1];
+
   return (
     <Wrapper>
       <SchemaWrapper>
         <HeatWithRechargeScheme
-          is1={is1}
-          is2={is2}
-          is3={is3}
-          is4={is4}
-          is5={is5}
-          is6={is6}
           updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
           feedFlow={feedFlow}
           feedBackFlow={feedBackFlow}
@@ -121,12 +67,12 @@ export const HeatWithRecharge: FC<Props> = ({
 
       <RightPanel>
         <TitleText>Добавить прибор</TitleText>
-        {first ? (
+        {firstDevice ? (
           <Panel>
             <Block>
               <DeviceIcon />
-              <ModelName>{first.model}</ModelName>
-              <SerialNumber>({first.serialNumber})</SerialNumber>
+              <ModelName>{firstDevice.model}</ModelName>
+              <SerialNumber>({firstDevice.serialNumber})</SerialNumber>
             </Block>
 
             <Block>
@@ -134,7 +80,6 @@ export const HeatWithRecharge: FC<Props> = ({
                 onClick={() => {
                   if (feedFlow?.id) {
                     handleDeleteDevice(feedFlow?.id, 0);
-                    console.log('cddd');
                   }
                 }}
               />
@@ -152,12 +97,12 @@ export const HeatWithRecharge: FC<Props> = ({
             <AddButton> + Добавить прибор</AddButton>
           </Panel>
         )}
-        {second ? (
+        {secondDevice ? (
           <Panel>
             <Block>
               <DeviceIcon />
-              <ModelName>{second.model}</ModelName>
-              <SerialNumber>({second.serialNumber})</SerialNumber>
+              <ModelName>{secondDevice.model}</ModelName>
+              <SerialNumber>({secondDevice.serialNumber})</SerialNumber>
             </Block>
 
             <Block>
@@ -182,12 +127,12 @@ export const HeatWithRecharge: FC<Props> = ({
             <AddButton> + Добавить прибор</AddButton>
           </Panel>
         )}
-        {therd ? (
+        {thirdDevice ? (
           <Panel>
             <Block>
               <DeviceIcon />
-              <ModelName>{therd.model}</ModelName>
-              <SerialNumber>({therd.serialNumber})</SerialNumber>
+              <ModelName>{thirdDevice.model}</ModelName>
+              <SerialNumber>({thirdDevice.serialNumber})</SerialNumber>
             </Block>
 
             <Block>
@@ -212,12 +157,12 @@ export const HeatWithRecharge: FC<Props> = ({
             <AddButton> + Добавить прибор</AddButton>
           </Panel>
         )}
-        {fors ? (
+        {fourthDevice ? (
           <Panel>
             <Block>
               <DeviceIcon />
-              <ModelName>{fors.model}</ModelName>
-              <SerialNumber>({fors.serialNumber})</SerialNumber>
+              <ModelName>{fourthDevice.model}</ModelName>
+              <SerialNumber>({fourthDevice.serialNumber})</SerialNumber>
             </Block>
 
             <Block>
@@ -242,12 +187,12 @@ export const HeatWithRecharge: FC<Props> = ({
             <AddButton> + Добавить прибор</AddButton>
           </Panel>
         )}
-        {fifs ? (
+        {fifthDevice ? (
           <Panel>
             <Block>
               <DeviceIcon />
-              <ModelName>{fifs.model}</ModelName>
-              <SerialNumber>({fifs.serialNumber})</SerialNumber>
+              <ModelName>{fifthDevice.model}</ModelName>
+              <SerialNumber>({fifthDevice.serialNumber})</SerialNumber>
             </Block>
 
             <Block>
@@ -272,12 +217,12 @@ export const HeatWithRecharge: FC<Props> = ({
             <AddButton> + Добавить прибор</AddButton>
           </Panel>
         )}
-        {six ? (
+        {sixthDevice ? (
           <Panel>
             <Block>
               <DeviceIcon />
-              <ModelName>{six.model}</ModelName>
-              <SerialNumber>({six.serialNumber})</SerialNumber>
+              <ModelName>{sixthDevice.model}</ModelName>
+              <SerialNumber>({sixthDevice.serialNumber})</SerialNumber>
             </Block>
 
             <Block>

@@ -33,12 +33,6 @@ export const ConfigurationConstructor: FC<Props> = ({
   console.log({ configuration });
   console.log({ requestPayload });
 
-  // const handleAddCommunicationPipe = ( //не использовалось
-  //   communicationPipe: CommunicationPipePayload,
-  // ) => {
-  //   setCommunicationPipes((prev) => [...prev, communicationPipe]);
-  // };
-
   const handleAddDevice = (device: CreateCommonDevicePartitial) => {
     const pipeId = String(device.pipeId);
 
@@ -62,13 +56,24 @@ export const ConfigurationConstructor: FC<Props> = ({
   };
 
   const handleDeleteDevice = (pipeId: string, deviceIndex: number) => {
-    setCommunicationPipes((prev) =>
-      prev.map((pipe) => {
+    setCommunicationPipes((pipes) =>
+      pipes.map((pipe) => {
         if (pipe.id !== pipeId) return pipe;
 
         return {
           ...pipe,
           devices: pipe.devices?.filter((_, index) => index !== deviceIndex),
+        };
+      }),
+    );
+  };
+
+  const handleClear = () => {
+    setCommunicationPipes((pipes) =>
+      pipes.map((pipe) => {
+        return {
+          ...pipe,
+          devices: [],
         };
       }),
     );
@@ -105,7 +110,9 @@ export const ConfigurationConstructor: FC<Props> = ({
         />
 
         <Footer>
-          <Button type="ghost">Очистить</Button>
+          <Button type="ghost" onClick={handleClear}>
+            Очистить
+          </Button>
           <RightBlock>
             <Button
               type="ghost"

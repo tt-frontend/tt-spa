@@ -6,6 +6,8 @@ export const Wrapper = styled.div`
   width: 112%;
   height: 100%;
   margin-left: -100px;
+
+  overflow: hidden;
 `;
 
 export const RightBlock = styled.div`
