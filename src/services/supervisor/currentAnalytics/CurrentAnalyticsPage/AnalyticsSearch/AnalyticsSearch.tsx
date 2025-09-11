@@ -147,8 +147,6 @@ export const AnalyticsSearch: FC<Props> = ({
             (cities) => cities.city === value,
           )?.coordinates;
 
-          console.log(coordinates);
-
           if (coordinates) {
             handleSetCoordinates([coordinates.latitude, coordinates.longitude]);
           }
