@@ -1,16 +1,14 @@
 import { FC } from 'react';
-import {
-  AddButton,
-  ModelName,
-  Panel,
-  Block,
-  SerialNumber,
-  Wrapper,
-} from './HeatWithRecharge.styled';
+
 import { Props } from './HeatWithRecharge.types';
 import {
+  AddButton,
+  Block,
+  ModelName,
+  Panel,
   RightPanel,
   SchemaWrapper,
+  SerialNumber,
   TitleText,
 } from '../../ConfigurationConstructor.styled';
 import { HeatWithRechargeScheme } from '../Assets/HeatWithRechargeScheme';
@@ -54,7 +52,7 @@ export const HeatWithRecharge: FC<Props> = ({
   const sixthDevice = recharge?.devices?.[1];
 
   return (
-    <Wrapper>
+    <>
       <SchemaWrapper>
         <HeatWithRechargeScheme
           updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
@@ -248,6 +246,6 @@ export const HeatWithRecharge: FC<Props> = ({
           </Panel>
         )}
       </RightPanel>
-    </Wrapper>
+    </>
   );
 };
