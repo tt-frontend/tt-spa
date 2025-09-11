@@ -1,6 +1,4 @@
 import { FC } from 'react';
-
-import { Props } from './HeatWithRecharge.types';
 import {
   AddButton,
   Block,
@@ -10,14 +8,15 @@ import {
   SchemaWrapper,
   SerialNumber,
   TitleText,
-} from '../../ConfigurationConstructor.styled';
-import { HeatWithRechargeScheme } from '../Assets/HeatWithRechargeScheme';
+} from '../ConfigurationConstructor.styled';
+import { HeatWithRechargeScheme } from './Assets/HeatWithRechargeScheme';
 import { useUnit } from 'effector-react';
 import { addPipeNodeCommonDeviceService } from 'services/nodes/addPipeNodeCommonDeviceService';
 import { EMagistralType } from 'api/types';
 import { CloseDarkIcon, DeviceIcon } from 'ui-kit/icons';
+import { SvgComponentProps } from '../ConfigurationConstructor.types';
 
-export const HeatWithRecharge: FC<Props> = ({
+export const HeatWithRecharge: FC<SvgComponentProps> = ({
   communicationPipes,
   updateCommonDeviceRequestPayload,
   handleDeleteDevice,

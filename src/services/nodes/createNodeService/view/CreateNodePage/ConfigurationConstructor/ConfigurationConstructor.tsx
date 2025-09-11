@@ -2,9 +2,11 @@ import { FC, useEffect, useState } from 'react';
 import { Footer, RightBlock, Wrapper } from './ConfigurationConstructor.styled';
 import { Props } from './ConfigurationConstructor.types';
 import { Button } from 'ui-kit/Button';
-import { HeatWithRecharge } from './SvgComponents/HeatWithRecharge';
 import { omit } from 'lodash';
-import { CreatePipeHousingMeteringDeviceInNodeRequest } from 'api/types';
+import {
+  CreatePipeHousingMeteringDeviceInNodeRequest,
+  EPipeNodeConfig,
+} from 'api/types';
 import {
   CommunicationPipePayload,
   CreateCommonDevicePartitial,
@@ -13,9 +15,10 @@ import {
   AddPipeNodeCommonDeviceContainer,
   addPipeNodeCommonDeviceService,
 } from 'services/nodes/addPipeNodeCommonDeviceService';
+import { svgComponents } from './ConfigurationConstructor.constants';
 
 export const ConfigurationConstructor: FC<Props> = ({
-  //   configurationType,
+  configurationType,
   setConfigurationConstructorOpen,
   requestPayload,
   updateRequestPayload,
@@ -28,10 +31,6 @@ export const ConfigurationConstructor: FC<Props> = ({
   >(requestPayload?.communicationPipes || []);
 
   const { configuration } = requestPayload;
-
-  console.log({ communicationPipes });
-  console.log({ configuration });
-  console.log({ requestPayload });
 
   const handleAddDevice = (device: CreateCommonDevicePartitial) => {
     const pipeId = String(device.pipeId);
@@ -91,6 +90,8 @@ export const ConfigurationConstructor: FC<Props> = ({
     updateRequestPayload({ communicationPipes });
   }, [communicationPipes, updateRequestPayload]);
 
+  const Component = svgComponents[configurationType as EPipeNodeConfig];
+
   return (
     <>
       {configuration && (
@@ -101,9 +102,7 @@ export const ConfigurationConstructor: FC<Props> = ({
       )}
 
       <Wrapper>
-        {/* dictionary[configurationType] => <SvgComponents /> */}
-
-        <HeatWithRecharge
+        <Component
           communicationPipes={communicationPipes}
           updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
           handleDeleteDevice={handleDeleteDevice}
