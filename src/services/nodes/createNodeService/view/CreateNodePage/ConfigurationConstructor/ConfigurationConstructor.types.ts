@@ -16,4 +16,6 @@ export type Props = {
       }
     >,
   ) => void;
+  isValidationLoading: boolean;
+  validateNode: () => void;
 };

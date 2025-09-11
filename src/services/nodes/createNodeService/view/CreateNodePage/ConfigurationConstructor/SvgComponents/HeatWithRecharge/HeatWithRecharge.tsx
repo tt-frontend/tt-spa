@@ -22,6 +22,7 @@ import { CloseDarkIcon, DeviceIcon } from 'ui-kit/icons';
 export const HeatWithRecharge: FC<Props> = ({
   communicationPipes,
   updateCommonDeviceRequestPayload,
+  handleDeleteDevice,
 }) => {
   const { openAddCommonDeviceModal } = useUnit({
     openAddCommonDeviceModal:
@@ -129,7 +130,14 @@ export const HeatWithRecharge: FC<Props> = ({
             </Block>
 
             <Block>
-              <CloseDarkIcon />
+              <CloseDarkIcon
+                onClick={() => {
+                  if (feedFlow?.id) {
+                    handleDeleteDevice(feedFlow?.id, 0);
+                    console.log('cddd');
+                  }
+                }}
+              />
             </Block>
           </Panel>
         ) : (
@@ -153,7 +161,13 @@ export const HeatWithRecharge: FC<Props> = ({
             </Block>
 
             <Block>
-              <CloseDarkIcon />
+              <CloseDarkIcon
+                onClick={() => {
+                  if (feedFlow?.id) {
+                    handleDeleteDevice(feedFlow?.id, 1);
+                  }
+                }}
+              />
             </Block>
           </Panel>
         ) : (
@@ -177,7 +191,13 @@ export const HeatWithRecharge: FC<Props> = ({
             </Block>
 
             <Block>
-              <CloseDarkIcon />
+              <CloseDarkIcon
+                onClick={() => {
+                  if (feedBackFlow?.id) {
+                    handleDeleteDevice(feedBackFlow?.id, 0);
+                  }
+                }}
+              />
             </Block>
           </Panel>
         ) : (
@@ -201,7 +221,13 @@ export const HeatWithRecharge: FC<Props> = ({
             </Block>
 
             <Block>
-              <CloseDarkIcon />
+              <CloseDarkIcon
+                onClick={() => {
+                  if (feedBackFlow?.id) {
+                    handleDeleteDevice(feedBackFlow?.id, 1);
+                  }
+                }}
+              />
             </Block>
           </Panel>
         ) : (
@@ -225,7 +251,13 @@ export const HeatWithRecharge: FC<Props> = ({
             </Block>
 
             <Block>
-              <CloseDarkIcon />
+              <CloseDarkIcon
+                onClick={() => {
+                  if (recharge?.id) {
+                    handleDeleteDevice(recharge?.id, 0);
+                  }
+                }}
+              />
             </Block>
           </Panel>
         ) : (
@@ -249,7 +281,13 @@ export const HeatWithRecharge: FC<Props> = ({
             </Block>
 
             <Block>
-              <CloseDarkIcon />
+              <CloseDarkIcon
+                onClick={() => {
+                  if (recharge?.id) {
+                    handleDeleteDevice(recharge?.id, 1);
+                  }
+                }}
+              />
             </Block>
           </Panel>
         ) : (

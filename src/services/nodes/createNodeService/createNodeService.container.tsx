@@ -140,6 +140,8 @@ export const CreateNodeContainer = () => {
           requestPayload={requestPayload}
           updateRequestPayload={updateRequestPayload}
           updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
+          isValidationLoading={isValidationLoading}
+          validateNode={() => validateNode()}
         />
       )}
       {!isConfigurationConstructorOpen && (

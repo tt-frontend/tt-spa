@@ -10,4 +10,5 @@ export type Props = {
       }
     >,
   ) => void;
+  handleDeleteDevice: (pipeId: string, deviceIndex: number) => void;
 };

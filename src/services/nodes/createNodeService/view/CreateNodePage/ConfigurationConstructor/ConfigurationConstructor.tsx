@@ -20,6 +20,8 @@ export const ConfigurationConstructor: FC<Props> = ({
   requestPayload,
   updateRequestPayload,
   updateCommonDeviceRequestPayload,
+  isValidationLoading,
+  validateNode,
 }) => {
   const [communicationPipes, setCommunicationPipes] = useState<
     CommunicationPipePayload[]
@@ -59,18 +61,18 @@ export const ConfigurationConstructor: FC<Props> = ({
     );
   };
 
-  //   const handleDeleteDevice = (pipeId: string, deviceIndex: number) => {
-  //   setCommunicationPipes((prev) =>
-  //     prev.map((pipe) => {
-  //       if (pipe.id !== pipeId) return pipe;
+  const handleDeleteDevice = (pipeId: string, deviceIndex: number) => {
+    setCommunicationPipes((prev) =>
+      prev.map((pipe) => {
+        if (pipe.id !== pipeId) return pipe;
 
-  //       return {
-  //         ...pipe,
-  //         devices: pipe.devices?.filter((_, index) => index !== deviceIndex),
-  //       };
-  //     }),
-  //   );
-  // };
+        return {
+          ...pipe,
+          devices: pipe.devices?.filter((_, index) => index !== deviceIndex),
+        };
+      }),
+    );
+  };
 
   useEffect(
     () =>
@@ -99,6 +101,7 @@ export const ConfigurationConstructor: FC<Props> = ({
         <HeatWithRecharge
           communicationPipes={communicationPipes}
           updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
+          handleDeleteDevice={handleDeleteDevice}
         />
 
         <Footer>
@@ -110,7 +113,9 @@ export const ConfigurationConstructor: FC<Props> = ({
             >
               Отмена
             </Button>
-            <Button>Сохранить</Button>
+            <Button onClick={validateNode} isLoading={isValidationLoading}>
+              Сохранить
+            </Button>
           </RightBlock>
         </Footer>
       </Wrapper>

@@ -18,6 +18,7 @@ export const AddPipeNodeCommonDeviceContainer: FC<Props> = ({
     close,
     currentFormStep,
     goPrevStep,
+    goNextStep,
     handleFormComplete,
     isModalOpen,
     requestPayload,
@@ -29,6 +30,7 @@ export const AddPipeNodeCommonDeviceContainer: FC<Props> = ({
     close: inputs.closeAddCommonDeviceModal,
     updateRequestPayload: inputs.updateCommonDeviceRequestPayload,
     goPrevStep: inputs.goPrevStep,
+    goNextStep: inputs.goNextStep,
     handleFormComplete: inputs.handleFormComplete,
   });
 
@@ -38,12 +40,15 @@ export const AddPipeNodeCommonDeviceContainer: FC<Props> = ({
   const cancelBtnText = currentFormStep === 0 ? 'Отмена' : 'Назад';
 
   const onCancel = currentFormStep === 0 ? close : goPrevStep;
+  const onSubmit =
+    currentFormStep === EXTREAM_STEP_NUMBER ? handleFormComplete : goNextStep;
 
   return (
     <>
       <FormModal
         visible={isModalOpen}
         onCancel={() => onCancel()}
+        onSubmit={() => onSubmit()}
         cancelBtnText={cancelBtnText}
         submitBtnText={submitBtnText}
         title="Добавление нового ОДПУ"

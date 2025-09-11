@@ -21,10 +21,6 @@ export const ConnectedDevices: FC<ConnectedDevicesProps> = ({
   setConfigurationConstructorOpen,
   configurationType,
 }) => {
-  // const { openAddCommonDeviceModal } = useUnit({
-  //   openAddCommonDeviceModal: inputs.openAddCommonDeviceModal,
-  // });
-
   // const isNodeConfigWithoutODPU =
   //   configuration === EPipeNodeConfig.HeatNoHousingMeteringDevice;
 
