@@ -144,7 +144,7 @@ const $calculatorsList = createStore<
 
 const $isConfirmationModalOpen = createStore(false)
   .on(openConfiramtionModal, () => true)
-  .reset(closeConfiramtionModal);
+  .reset(closeConfiramtionModal, CreateNodeGate.close);
 
 const $nodeServiceZones = createStore<NodeServiceZoneListResponse | null>(null)
   .on(fetchNodeServiceZonesFx.doneData, (_, zones) => zones)
@@ -156,15 +156,13 @@ const $deletingServiceZone = createStore<NodeServiceZoneResponse | null>(null)
 
 const $isDialogOpen = $deletingServiceZone.map(Boolean);
 
-const $isConfigurationConstructorOpen = createStore<boolean>(false).on(
-  setConfigurationConstructorOpen,
-  (_, value) => value,
-);
+const $isConfigurationConstructorOpen = createStore<boolean>(false)
+  .on(setConfigurationConstructorOpen, (_, value) => value)
+  .reset(CreateNodeGate.close);
 
-const $configurationType = createStore<EPipeNodeConfig | null>(null).on(
-  setConfigurationType,
-  (_, data) => data,
-);
+const $configurationType = createStore<EPipeNodeConfig | null>(null)
+  .on(setConfigurationType, (_, data) => data)
+  .reset(CreateNodeGate.close);
 
 sample({
   clock: CreateNodeGate.open,
@@ -274,7 +272,7 @@ const handlePipeNodeCreated = createPipeNodeFx.doneData;
 
 sample({
   clock: handlePipeNodeCreated,
-  target: closeConfiramtionModal,
+  target: [closeConfiramtionModal],
 });
 
 sample({

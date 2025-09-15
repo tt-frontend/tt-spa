@@ -14,7 +14,7 @@ import { addPipeNodeCommonDeviceService } from 'services/nodes/addPipeNodeCommon
 import { EMagistralType } from 'api/types';
 import { CloseDarkIcon, DeviceIcon } from 'ui-kit/icons';
 import { SvgComponentProps } from '../ConfigurationConstructor.types';
-import { ColdWaterNoDeviceScheme } from './Assets/ColdWaterNoDeviceScheme';
+import { ColdWaterSupplyScheme } from './Assets/ColdWaterSupplyScheme';
 
 export const ColdWaterSupply: FC<SvgComponentProps> = ({
   communicationPipes,
@@ -32,10 +32,12 @@ export const ColdWaterSupply: FC<SvgComponentProps> = ({
 
   const firstDevice = feedFlow?.devices?.[0];
 
+  const secondDevice = feedFlow?.devices?.[1];
+
   return (
     <>
       <SchemaWrapper>
-        <ColdWaterNoDeviceScheme
+        <ColdWaterSupplyScheme
           updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
           feedFlow={feedFlow}
           openAddCommonDeviceModal={openAddCommonDeviceModal}
@@ -44,6 +46,7 @@ export const ColdWaterSupply: FC<SvgComponentProps> = ({
 
       <RightPanel>
         <TitleText>Добавить прибор</TitleText>
+
         {firstDevice ? (
           <Panel>
             <Block>
@@ -57,6 +60,37 @@ export const ColdWaterSupply: FC<SvgComponentProps> = ({
                 onClick={() => {
                   if (feedFlow?.id) {
                     handleDeleteDevice(feedFlow?.id, 0);
+                  }
+                }}
+              />
+            </Block>
+          </Panel>
+        ) : (
+          <Panel
+            onClick={() => {
+              updateCommonDeviceRequestPayload({
+                pipeId: Number(feedFlow?.id),
+              });
+              openAddCommonDeviceModal();
+            }}
+          >
+            <AddButton> + Добавить прибор</AddButton>
+          </Panel>
+        )}
+
+        {secondDevice ? (
+          <Panel>
+            <Block>
+              <DeviceIcon />
+              <ModelName>{secondDevice.model}</ModelName>
+              <SerialNumber>({secondDevice.serialNumber})</SerialNumber>
+            </Block>
+
+            <Block>
+              <CloseDarkIcon
+                onClick={() => {
+                  if (feedFlow?.id) {
+                    handleDeleteDevice(feedFlow?.id, 1);
                   }
                 }}
               />

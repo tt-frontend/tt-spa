@@ -34,10 +34,6 @@ export const HeatNoRecharge: FC<SvgComponentProps> = ({
     (pipe) => pipe.magistral === EMagistralType.FeedBackFlow,
   );
 
-  const recharge = communicationPipes.find(
-    (pipe) => pipe.magistral === EMagistralType.Recharge,
-  );
-
   const firstDevice = feedFlow?.devices?.[0];
 
   const secondDevice = feedFlow?.devices?.[1];
@@ -45,10 +41,6 @@ export const HeatNoRecharge: FC<SvgComponentProps> = ({
   const thirdDevice = feedBackFlow?.devices?.[0];
 
   const fourthDevice = feedBackFlow?.devices?.[1];
-
-  const fifthDevice = recharge?.devices?.[0];
-
-  const sixthDevice = recharge?.devices?.[1];
 
   return (
     <>
@@ -176,66 +168,6 @@ export const HeatNoRecharge: FC<SvgComponentProps> = ({
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(feedBackFlow?.id),
-              });
-              openAddCommonDeviceModal();
-            }}
-          >
-            <AddButton> + Добавить прибор</AddButton>
-          </Panel>
-        )}
-        {fifthDevice ? (
-          <Panel>
-            <Block>
-              <DeviceIcon />
-              <ModelName>{fifthDevice.model}</ModelName>
-              <SerialNumber>({fifthDevice.serialNumber})</SerialNumber>
-            </Block>
-
-            <Block>
-              <CloseDarkIcon
-                onClick={() => {
-                  if (recharge?.id) {
-                    handleDeleteDevice(recharge?.id, 0);
-                  }
-                }}
-              />
-            </Block>
-          </Panel>
-        ) : (
-          <Panel
-            onClick={() => {
-              updateCommonDeviceRequestPayload({
-                pipeId: Number(recharge?.id),
-              });
-              openAddCommonDeviceModal();
-            }}
-          >
-            <AddButton> + Добавить прибор</AddButton>
-          </Panel>
-        )}
-        {sixthDevice ? (
-          <Panel>
-            <Block>
-              <DeviceIcon />
-              <ModelName>{sixthDevice.model}</ModelName>
-              <SerialNumber>({sixthDevice.serialNumber})</SerialNumber>
-            </Block>
-
-            <Block>
-              <CloseDarkIcon
-                onClick={() => {
-                  if (recharge?.id) {
-                    handleDeleteDevice(recharge?.id, 1);
-                  }
-                }}
-              />
-            </Block>
-          </Panel>
-        ) : (
-          <Panel
-            onClick={() => {
-              updateCommonDeviceRequestPayload({
-                pipeId: Number(recharge?.id),
               });
               openAddCommonDeviceModal();
             }}

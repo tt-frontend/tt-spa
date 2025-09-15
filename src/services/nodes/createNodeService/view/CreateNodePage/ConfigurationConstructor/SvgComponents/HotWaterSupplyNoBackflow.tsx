@@ -32,6 +32,8 @@ export const HotWaterSupplyNoBackflow: FC<SvgComponentProps> = ({
 
   const firstDevice = feedFlow?.devices?.[0];
 
+  const secondDevice = feedFlow?.devices?.[1];
+
   return (
     <>
       <SchemaWrapper>
@@ -57,6 +59,37 @@ export const HotWaterSupplyNoBackflow: FC<SvgComponentProps> = ({
                 onClick={() => {
                   if (feedFlow?.id) {
                     handleDeleteDevice(feedFlow?.id, 0);
+                  }
+                }}
+              />
+            </Block>
+          </Panel>
+        ) : (
+          <Panel
+            onClick={() => {
+              updateCommonDeviceRequestPayload({
+                pipeId: Number(feedFlow?.id),
+              });
+              openAddCommonDeviceModal();
+            }}
+          >
+            <AddButton> + Добавить прибор</AddButton>
+          </Panel>
+        )}
+
+        {secondDevice ? (
+          <Panel>
+            <Block>
+              <DeviceIcon />
+              <ModelName>{secondDevice.model}</ModelName>
+              <SerialNumber>({secondDevice.serialNumber})</SerialNumber>
+            </Block>
+
+            <Block>
+              <CloseDarkIcon
+                onClick={() => {
+                  if (feedFlow?.id) {
+                    handleDeleteDevice(feedFlow?.id, 1);
                   }
                 }}
               />
