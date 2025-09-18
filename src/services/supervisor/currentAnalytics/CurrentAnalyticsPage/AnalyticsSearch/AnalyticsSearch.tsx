@@ -137,7 +137,7 @@ export const AnalyticsSearch: FC<Props> = ({
         small
         value={dashboardFilters.City}
         allowClear
-        onChange={(value: unknown) => {
+        onChange={(value) => {
           setDashboardFilters({
             City: value as string,
             ManagementFirmId: null,

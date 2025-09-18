@@ -73,7 +73,7 @@ const $existingApartmentNumbers = createStore<ExistingApartmentNumberType[]>([])
 
 const AddressSearchGate = createGate();
 const ExistingCitiesGate = createGate();
-const ExistingCitiesGateWithCoordinates = createGate();
+const ExistingCitiesWithCoordinatesGate = createGate();
 const ExistingStreetsGate = createGate<GetExistingSteetRequestParams>();
 
 sample({
@@ -89,7 +89,7 @@ sample({
 });
 
 sample({
-  clock: ExistingCitiesGateWithCoordinates.open,
+  clock: ExistingCitiesWithCoordinatesGate.open,
   target: fetchExistingCitiesWithCoordinates,
 });
 
@@ -137,6 +137,6 @@ export const addressSearchService = {
     ExistingCitiesGate,
     ExistingStreetsGate,
     AddressSearchGate,
-    ExistingCitiesGateWithCoordinates,
+    ExistingCitiesWithCoordinatesGate,
   },
 };
