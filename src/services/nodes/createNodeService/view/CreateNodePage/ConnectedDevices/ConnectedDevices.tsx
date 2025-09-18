@@ -21,9 +21,6 @@ export const ConnectedDevices: FC<ConnectedDevicesProps> = ({
   setConfigurationConstructorOpen,
   configurationType,
 }) => {
-  // const isNodeConfigWithoutODPU =
-  //   configuration === EPipeNodeConfig.HeatNoHousingMeteringDevice;
-
   return (
     <>
       <Title>Подключенные приборы</Title>

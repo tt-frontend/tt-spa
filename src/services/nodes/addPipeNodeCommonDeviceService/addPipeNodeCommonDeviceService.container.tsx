@@ -47,8 +47,8 @@ export const AddPipeNodeCommonDeviceContainer: FC<Props> = ({
     <>
       <FormModal
         visible={isModalOpen}
-        onCancel={() => onCancel()}
-        onSubmit={() => onSubmit()}
+        onCancel={onCancel}
+        onSubmit={onSubmit}
         cancelBtnText={cancelBtnText}
         submitBtnText={submitBtnText}
         title="Добавление нового ОДПУ"
@@ -61,7 +61,7 @@ export const AddPipeNodeCommonDeviceContainer: FC<Props> = ({
             currentFormStep={currentFormStep}
             requestPayload={requestPayload}
             communicationPipes={communicationPipes}
-            handleFormComplete={() => handleFormComplete()}
+            handleFormComplete={handleFormComplete}
           />
         }
       />
