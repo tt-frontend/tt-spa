@@ -589,6 +589,7 @@ export enum EIndividualDeviceReportOption {
   DeviceCheckingDateExpiration = 'DeviceCheckingDateExpiration',
   ClosedDevices = 'ClosedDevices',
   InvalidBitDepth = 'InvalidBitDepth',
+  InstalledSeal = 'InstalledSeal',
 }
 
 export enum EIndividualDeviceReadingsSource {
@@ -3895,6 +3896,7 @@ export interface IndividualDevicesConstructedReportResponse {
   deviceCheckingDateExpirationOption: DeviceCheckingDateExpirationConstructedReportResponse | null;
   closedDevicesOption: ClosedDevicesConstructedReportResponse | null;
   invalidBitDepthOption: InvalidBitDepthConstructedReportResponse | null;
+  installedSealOption: InstalledSealConstructedReportResponse | null;
 }
 
 export interface InspectorCreateRequest {
@@ -3958,6 +3960,12 @@ export interface InspectorsConstructedReportResponse {
    */
   dayPlan: number;
   counts: number[] | null;
+}
+
+export interface InstalledSealConstructedReportResponse {
+  sealNumber: string | null;
+  /** @format date-time */
+  sealInstallationDate: string | null;
 }
 
 export interface InvalidBitDepthConstructedReportResponse {

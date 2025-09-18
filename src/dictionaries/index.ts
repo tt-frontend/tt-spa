@@ -35,6 +35,7 @@ export const ReportOptionsDictionary: {
   [EIndividualDeviceReportOption.InvalidCheckingDates]:
     'Некорректные даты поверки приборов',
   [EIndividualDeviceReportOption.InvalidBitDepth]: 'Отсутствие разрядности',
+  [EIndividualDeviceReportOption.InstalledSeal]: 'Установленные пломбы',
 };
 
 export const ResourceShortNamesDictionary: {
