@@ -93,6 +93,7 @@ export const CommonDataStep: FC<CommonDataStepProps> = ({
             placeholder="Выберите"
             value={values.pipeId ? String(values.pipeId) : undefined}
             onChange={(value) => setFieldValue('pipeId', Number(value))}
+            disabled
           >
             {communicationPipes.map((pipe) => (
               <Select.Option key={pipe.id} value={pipe.id}>
