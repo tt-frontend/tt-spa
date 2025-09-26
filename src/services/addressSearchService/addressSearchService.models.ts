@@ -3,6 +3,7 @@ import { createGate } from 'effector-react';
 import {
   getApartments,
   getExistingCities,
+  getExistingCitiesWithCoordinates,
   getExistingStreets,
 } from './addressSearchService.api';
 import {
@@ -11,7 +12,10 @@ import {
   GetExistingSteetRequestParams,
 } from './addressSearchService.types';
 import { AddressSearchValues } from './view/AddressSearch/AddressSearch.types';
-import { ApartmentListResponsePagedList } from 'api/types';
+import {
+  ApartmentListResponsePagedList,
+  CitiesWithCoordinatesResponse,
+} from 'api/types';
 
 const handleSearchApartNumber = createEvent<AddressSearchValues>();
 const handleResetForm = createEvent();
@@ -23,6 +27,11 @@ const fetchExistingCities = createEffect<void, string[] | null>(
 );
 const successFetchExistingCities = createEvent();
 
+const fetchExistingCitiesWithCoordinates = createEffect<
+  void,
+  CitiesWithCoordinatesResponse[] | null
+>(getExistingCitiesWithCoordinates);
+
 const getApartmentsFx = createEffect<
   GetApartmentsRequest,
   ApartmentListResponsePagedList
@@ -32,6 +41,10 @@ const $existingCities = createStore<string[] | null>(null).on(
   fetchExistingCities.doneData,
   (_, cities) => cities,
 );
+
+const $existingCitiesWithCoordinates = createStore<
+  CitiesWithCoordinatesResponse[] | null
+>(null).on(fetchExistingCitiesWithCoordinates.doneData, (_, cities) => cities);
 
 const fetchExistingStreets = createEffect<
   GetExistingSteetRequestParams,
@@ -60,6 +73,7 @@ const $existingApartmentNumbers = createStore<ExistingApartmentNumberType[]>([])
 
 const AddressSearchGate = createGate();
 const ExistingCitiesGate = createGate();
+const ExistingCitiesWithCoordinatesGate = createGate();
 const ExistingStreetsGate = createGate<GetExistingSteetRequestParams>();
 
 sample({
@@ -72,6 +86,11 @@ sample({
   clock: ExistingCitiesGate.open,
   filter: ({ cities, isLoading }) => !cities && !isLoading,
   target: fetchExistingCities,
+});
+
+sample({
+  clock: ExistingCitiesWithCoordinatesGate.open,
+  target: fetchExistingCitiesWithCoordinates,
 });
 
 sample({
@@ -106,6 +125,7 @@ export const addressSearchService = {
     $existingStreets,
     $isExistingCitiesLoading,
     $existingApartmentNumbers,
+    $existingCitiesWithCoordinates,
   },
   inputs: {
     handleSearchApartNumber,
@@ -117,5 +137,6 @@ export const addressSearchService = {
     ExistingCitiesGate,
     ExistingStreetsGate,
     AddressSearchGate,
+    ExistingCitiesWithCoordinatesGate,
   },
 };
