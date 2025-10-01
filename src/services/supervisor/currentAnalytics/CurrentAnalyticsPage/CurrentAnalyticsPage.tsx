@@ -6,7 +6,6 @@ import {
 } from './CurrentAnalyticsPage.styled';
 import { Props } from './CurrentAnalyticsPage.types';
 import { PageHeader } from 'ui-kit/shared/PageHeader';
-import { AnalyticsSearch } from './AnalyticsSearch';
 import { WithLoader } from 'ui-kit/shared/WithLoader';
 import { InfoOptionsPanels } from './InfoOptionsPanels';
 import { splitArrayForDashboard } from './CurrentAnalyticsPage.utils';
@@ -24,6 +23,7 @@ import { Segmented } from 'ui-kit/Segmented';
 import { BuildingsPageSegment } from 'services/objects/objectsProfileService/view/ObjectsProfile/ObjectsProfile.types';
 import { ListIcon, MapIcon } from 'ui-kit/icons';
 import { TasksMapContainer } from 'services/tasks/tasksMapService';
+import { AnalyticsSearch } from 'services/supervisor/AnalyticsSearch';
 
 export const CurrentAnalyticsPage: FC<Props> = ({
   isLoadingSummary,

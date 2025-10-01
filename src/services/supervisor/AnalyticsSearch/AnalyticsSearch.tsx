@@ -11,8 +11,8 @@ import dayjs from 'dayjs';
 import { useUnit } from 'effector-react';
 import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
 import { Segmented } from 'ui-kit/Segmented';
-import { currentAnalyticsService } from '../../currentAnalyticsService.models';
 import { tasksMapService } from 'services/tasks/tasksMapService';
+import { currentAnalyticsService } from '../currentAnalytics/currentAnalyticsService.models';
 
 export const AnalyticsSearch: FC<Props> = ({
   dashboardFilters,
