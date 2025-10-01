@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { Wrapper } from './AnalyticsSearch.styled';
 import { EDateRange, Props } from './AnalyticsSearch.types';
 import { RangePicker } from 'ui-kit/RangePicker';
@@ -36,6 +36,18 @@ export const AnalyticsSearch: FC<Props> = ({
     setPeriodType: currentAnalyticsService.inputs.setPeriodType,
     handleSetCoordinates: tasksMapService.inputs.handleSetCoordinates,
   });
+
+  const citiesOptions = useMemo(() => {
+    if (!dashboardFilters.District || !existingMoDistricts) return null;
+
+    const ditrict = existingMoDistricts.items?.find(
+      (item) => item.name === dashboardFilters.District,
+    );
+
+    if (!ditrict) return null;
+
+    return ditrict.subjects.map((elem) => elem.name);
+  }, [dashboardFilters, existingMoDistricts]);
 
   return (
     <Wrapper
@@ -137,7 +149,18 @@ export const AnalyticsSearch: FC<Props> = ({
       )}
 
       {existingMoDistricts && (
-        <Select placeholder="Округ" small allowClear>
+        <Select
+          placeholder="Округ"
+          small
+          allowClear
+          value={dashboardFilters.District}
+          onChange={(value) =>
+            setDashboardFilters({
+              District: value as string | null,
+              City: null,
+            })
+          }
+        >
           {existingMoDistricts?.items?.map((item) => (
             <Select.Option key={item.name} value={item.name}>
               {item.name} ({item.type})
@@ -166,14 +189,22 @@ export const AnalyticsSearch: FC<Props> = ({
           }
         }}
       >
-        {existingCitiesWithCoordinates?.map((cityResponse, index) => (
-          <Select.Option
-            key={`${cityResponse.city}${index}`}
-            value={cityResponse.city}
-          >
-            {cityResponse.city}
-          </Select.Option>
-        ))}
+        {!citiesOptions &&
+          existingCitiesWithCoordinates?.map((cityResponse, index) => (
+            <Select.Option
+              key={`${cityResponse.city}${index}`}
+              value={cityResponse.city}
+            >
+              {cityResponse.city}
+            </Select.Option>
+          ))}
+
+        {citiesOptions &&
+          citiesOptions.map((city) => (
+            <Select.Option key={city} value={city}>
+              {city}
+            </Select.Option>
+          ))}
       </Select>
 
       <Select

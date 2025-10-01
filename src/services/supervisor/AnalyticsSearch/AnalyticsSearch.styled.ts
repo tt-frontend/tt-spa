@@ -7,6 +7,6 @@ export const Wrapper = styled.div<{ isCommon: boolean; moDistricts: boolean }>`
       const moDistrictsStyles = moDistricts && '1fr';
 
       return [commonStyles, moDistrictsStyles].filter(Boolean).join(' ');
-    }} 1.2fr 1fr 1fr 1.5fr auto;
+    }} 1.2fr 1fr 1fr 1fr auto;
   gap: 8px;
 `;
