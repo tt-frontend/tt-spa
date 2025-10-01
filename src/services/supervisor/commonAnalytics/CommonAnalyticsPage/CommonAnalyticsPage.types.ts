@@ -1,3 +1,4 @@
+import { IExistingMoDistrictPagedList } from 'api/extend.types';
 import {
   DashboardSummaryResponse,
   DashboardTaskMalfunctionResponse,
@@ -26,4 +27,5 @@ export type Props = {
   organizations: OrganizationResponsePagedList | null;
   dateRangeType: EDateRange;
   setDateRangeType: (payload: EDateRange) => void;
+  existingMoDistricts: IExistingMoDistrictPagedList | null;
 };

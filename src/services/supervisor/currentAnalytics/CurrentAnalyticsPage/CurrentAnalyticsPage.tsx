@@ -42,6 +42,7 @@ export const CurrentAnalyticsPage: FC<Props> = ({
   organizationsList,
   pageSegment,
   setSegment,
+  existingMoDistricts,
 }) => {
   const dataList = useMemo(() => {
     const dataMap = {
@@ -197,6 +198,7 @@ export const CurrentAnalyticsPage: FC<Props> = ({
             setDashboardFilters={setDashboardFilters}
             resetDashboardFilters={resetDashboardFilters}
             organizationsList={organizationsList}
+            existingMoDistricts={existingMoDistricts}
           />
           <InfoOptionsPanels
             isLoading={isLoadingSummary}

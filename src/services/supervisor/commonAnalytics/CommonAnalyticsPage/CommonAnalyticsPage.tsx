@@ -20,6 +20,7 @@ export const CommonAnalyticsPage: FC<Props> = ({
   organizations,
   dateRangeType,
   setDateRangeType,
+  existingMoDistricts,
 }) => {
   const isEmpty = useMemo(
     () => !analyticsData || !analyticsData.length || isLoading,
@@ -39,6 +40,7 @@ export const CommonAnalyticsPage: FC<Props> = ({
         selectValue={dateRangeType}
         setValue={setDateRangeType}
         organizationsList={organizations}
+        existingMoDistricts={existingMoDistricts}
       />
       <InfoOptionsPanels
         dashboardSummary={dashboardSummary}

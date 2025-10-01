@@ -6,6 +6,8 @@ import {
   dashboardOrganizationsQuery,
 } from './commonAnalyticsService.api';
 import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
+import { existingMoDistrictsService } from '../existingMoDistricts';
+import { existingMoDistrictsQuery } from '../existingMoDistricts/existingMoDistrictsService.api';
 
 const { inputs, outputs, gates } = commonAnalyticsService;
 
@@ -14,6 +16,10 @@ const { CommonAnalyticsGate } = gates;
 const {
   gates: { ExistingCitiesGate },
 } = addressSearchService;
+
+const {
+  gates: { ExistingMoDistrictsGate },
+} = existingMoDistrictsService;
 
 export const CommonAnalyticsContainer = () => {
   const {
@@ -29,6 +35,7 @@ export const CommonAnalyticsContainer = () => {
     organizations,
     dateRangeType,
     setDateRangeType,
+    existingMoDistricts,
   } = useUnit({
     setDashboardFilters: inputs.setDashboardFilters,
     dashboardFilters: outputs.$dashboardFilters,
@@ -42,12 +49,14 @@ export const CommonAnalyticsContainer = () => {
     organizations: dashboardOrganizationsQuery.$data,
     dateRangeType: outputs.$dateRangeType,
     setDateRangeType: inputs.setDateRangeType,
+    existingMoDistricts: existingMoDistrictsQuery.$data,
   });
 
   return (
     <>
       <ExistingCitiesGate />
       <CommonAnalyticsGate />
+      <ExistingMoDistrictsGate />
       <CommonAnalyticsPage
         setDashboardFilters={setDashboardFilters}
         dashboardFilters={dashboardFilters}
@@ -61,6 +70,7 @@ export const CommonAnalyticsContainer = () => {
         organizations={organizations}
         dateRangeType={dateRangeType}
         setDateRangeType={setDateRangeType}
+        existingMoDistricts={existingMoDistricts}
       />
     </>
   );

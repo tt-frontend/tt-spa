@@ -12,4 +12,5 @@ export const PollActionTypeLookup: { [key in PollActionType]: string } = {
   [PollActionType.OpenIndividualDevicesReport]: '-',
   [PollActionType.RunnersReports]: '-',
   [PollActionType.IndividualExportDispatcher24]: '-',
+  [PollActionType.IndividualExportErc]: '-',
 };

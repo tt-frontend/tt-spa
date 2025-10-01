@@ -22,6 +22,7 @@ export const AnalyticsSearch: FC<Props> = ({
   selectValue,
   setValue,
   organizationsList,
+  existingMoDistricts,
 }) => {
   const {
     existingCitiesWithCoordinates,
@@ -37,7 +38,10 @@ export const AnalyticsSearch: FC<Props> = ({
   });
 
   return (
-    <Wrapper isCommon={Boolean(isCommon)}>
+    <Wrapper
+      isCommon={Boolean(isCommon)}
+      moDistricts={Boolean(existingMoDistricts)}
+    >
       {!isCommon && (
         <Segmented
           active={periodType}
@@ -129,6 +133,16 @@ export const AnalyticsSearch: FC<Props> = ({
           <Select.Option key={EDateRange.Quarter} value={EDateRange.Quarter}>
             Последний квартал
           </Select.Option>
+        </Select>
+      )}
+
+      {existingMoDistricts && (
+        <Select placeholder="Округ" small allowClear>
+          {existingMoDistricts?.items?.map((item) => (
+            <Select.Option key={item.name} value={item.name}>
+              {item.name} ({item.type})
+            </Select.Option>
+          ))}
         </Select>
       )}
 

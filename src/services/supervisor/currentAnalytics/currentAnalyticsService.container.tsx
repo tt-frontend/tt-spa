@@ -13,6 +13,8 @@ import { currentAnalyticsService } from './currentAnalyticsService.models';
 import { getItemArray } from './currentAnalyticsService.utils';
 import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
 import { TaskTypesGate } from 'services/tasks/taskTypesService/taskTypesService.model';
+import { existingMoDistrictsService } from '../existingMoDistricts';
+import { existingMoDistrictsQuery } from '../existingMoDistricts/existingMoDistrictsService.api';
 
 const {
   inputs,
@@ -23,6 +25,10 @@ const {
 const {
   gates: { ExistingCitiesWithCoordinatesGate },
 } = addressSearchService;
+
+const {
+  gates: { ExistingMoDistrictsGate },
+} = existingMoDistrictsService;
 
 export const CurrentAnalyticsContainer = () => {
   const {
@@ -42,6 +48,7 @@ export const CurrentAnalyticsContainer = () => {
     organizationsList,
     pageSegment,
     setSegment,
+    existingMoDistricts,
   } = useUnit({
     dashboardSummary: dashboardSummaryQuery.$data,
     isLoadingSummary: dashboardSummaryQuery.$pending,
@@ -59,6 +66,7 @@ export const CurrentAnalyticsContainer = () => {
     organizationsList: dashboardOrganizationsQuery.$data,
     pageSegment: outputs.$pageSegment,
     setSegment: inputs.setSegment,
+    existingMoDistricts: existingMoDistrictsQuery.$data,
   });
 
   return (
@@ -66,6 +74,7 @@ export const CurrentAnalyticsContainer = () => {
       <ExistingCitiesWithCoordinatesGate />
       <TaskTypesGate />
       <CurrentAnalyticsGate />
+      <ExistingMoDistrictsGate />
       <CurrentAnalyticsPage
         dashboardSummary={dashboardSummary}
         isLoadingSummary={isLoadingSummary}
@@ -85,6 +94,7 @@ export const CurrentAnalyticsContainer = () => {
         organizationsList={organizationsList}
         pageSegment={pageSegment}
         setSegment={setSegment}
+        existingMoDistricts={existingMoDistricts}
       />
     </>
   );
