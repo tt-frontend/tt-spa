@@ -81,6 +81,7 @@ export enum PollActionType {
   OpenIndividualDevicesReport = 'OpenIndividualDevicesReport',
   RunnersReports = 'RunnersReports',
   IndividualExportDispatcher24 = 'IndividualExportDispatcher24',
+  IndividualExportErc = 'IndividualExportErc',
 }
 
 export enum OrganizationType {
@@ -2180,6 +2181,7 @@ export interface DashboardFilterParameters {
   /** @format date-time */
   to?: string | null;
   city?: string | null;
+  district?: string | null;
   /** @format int32 */
   managementFirmId?: number | null;
   buildingIds?: number[] | null;
@@ -2207,6 +2209,7 @@ export interface DashboardMalfunctionDetailChartItemModel {
 
 export interface DashboardNavigationBreadCrumbs {
   city?: string | null;
+  district?: string | null;
   managingFirmName?: string | null;
   /** @format int32 */
   managingFirmId?: number | null;
@@ -7389,6 +7392,35 @@ export class Api<
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
      *
      * @tags Buildings
+     * @name BuildingsExistingMoDistrictsList
+     * @summary HousingStocksRead
+     * @request GET:/api/Buildings/ExistingMoDistricts
+     * @secure
+     */
+    buildingsExistingMoDistrictsList: (
+      query?: {
+        District?: string;
+        /** @format int32 */
+        PageNumber?: number;
+        /** @format int32 */
+        PageSize?: number;
+        OrderBy?: EOrderByRule;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<StringPagedList, ErrorApiResponse>({
+        path: `/api/Buildings/ExistingMoDistricts`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
+     *
+     * @tags Buildings
      * @name BuildingsLiteList
      * @summary HousingStocksRead
      * @request GET:/api/Buildings/Lite
@@ -8541,6 +8573,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8576,6 +8609,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8611,6 +8645,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8646,6 +8681,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8681,6 +8717,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8716,6 +8753,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8751,6 +8789,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8786,6 +8825,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8821,6 +8861,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8856,6 +8897,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8891,6 +8933,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8926,6 +8969,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8961,6 +9005,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -8996,6 +9041,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -9031,6 +9077,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -9066,6 +9113,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -9101,6 +9149,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -9136,6 +9185,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -9171,6 +9221,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -9206,6 +9257,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -9241,6 +9293,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -9276,6 +9329,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -9311,6 +9365,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -9346,6 +9401,7 @@ export class Api<
         /** @format date-time */
         To?: string;
         City?: string;
+        District?: string;
         /** @format int32 */
         ManagementFirmId?: number;
         BuildingIds?: number[];
@@ -9924,6 +9980,37 @@ export class Api<
     ) =>
       this.request<PollResponse, ErrorApiResponse>({
         path: `/api/Exports/IndividualDeviceReadingsDispatcher24`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Старший оператор</li>
+     *
+     * @tags Exports
+     * @name ExportsIndividualDeviceReadingsXlsxList
+     * @summary ErcExport
+     * @request GET:/api/Exports/IndividualDeviceReadingsXlsx
+     * @secure
+     */
+    exportsIndividualDeviceReadingsXlsxList: (
+      query?: {
+        /** @format int32 */
+        Year?: number;
+        /** @format int32 */
+        Month?: number;
+        ManagementFirmIds?: number[];
+        Command?: PollCommand;
+        /** @format int32 */
+        PollId?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<PollResponse, ErrorApiResponse>({
+        path: `/api/Exports/IndividualDeviceReadingsXlsx`,
         method: 'GET',
         query: query,
         secure: true,

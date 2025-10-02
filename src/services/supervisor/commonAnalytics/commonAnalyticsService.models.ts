@@ -17,7 +17,7 @@ import {
   DashboardTaskResourceResponse,
 } from 'api/types';
 import { getItemArray } from '../currentAnalytics/currentAnalyticsService.utils';
-import { EDateRange } from '../currentAnalytics/CurrentAnalyticsPage/AnalyticsSearch/AnalyticsSearch.types';
+import { EDateRange } from '../AnalyticsSearch/AnalyticsSearch.types';
 
 const CommonAnalyticsGate = createGate();
 const setCurrentDashboardType = createEvent<DashboardDataType>();

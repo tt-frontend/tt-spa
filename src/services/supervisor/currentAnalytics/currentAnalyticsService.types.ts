@@ -18,6 +18,7 @@ export type DashboardQueryParams = {
   /** @format date-time */
   To?: string | null;
   City?: string | null;
+  District?: string | null;
   /** @format int32 */
   ManagementFirmId?: number | null;
   BuildingIds?: number[];
