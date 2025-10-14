@@ -1,3 +1,4 @@
+import TextArea from 'antd/es/input/TextArea';
 import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -157,4 +158,12 @@ export const IdCredIconWrapper = styled.div<{ gradient: [string, string] }>`
   align-items: center;
   justify-content: center;
   border-radius: 2px;
+`;
+
+export const TextAreaSC = styled(TextArea)`
+  font-family: monospace !important;
+
+  * {
+    font-family: monospace !important;
+  }
 `;

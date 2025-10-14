@@ -17,4 +17,5 @@ export type DevelopmentSettingsModalProps = {
   resetCreds: () => void;
   handleLogin: (payload: LoginRequest) => void;
   removeCred: (email: string) => void;
+  setCredsList: (payload: ICredItem[]) => void;
 };

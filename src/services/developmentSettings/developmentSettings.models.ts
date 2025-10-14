@@ -37,6 +37,8 @@ const $featureToggles = createStore<FeatureToggles>(featureToggles)
       : prev,
   );
 
+const setCredsList = createEvent<ICredItem[]>();
+
 const $credsList = createStore<ICredItem[]>([])
   .reset(resetCreds)
   .on(currentUserService.outputs.$currentUser.updates, (prev, user) => {
@@ -48,7 +50,8 @@ const $credsList = createStore<ICredItem[]>([])
       return { ...item, user };
     });
   })
-  .on(removeCred, (prev, email) => prev.filter((elem) => elem.email !== email));
+  .on(removeCred, (prev, email) => prev.filter((elem) => elem.email !== email))
+  .on(setCredsList, (_, data) => data);
 
 persist({
   store: $credsList,
@@ -109,6 +112,7 @@ export const developmentSettingsService = {
     setFeatureToggles,
     resetCreds,
     removeCred,
+    setCredsList,
   },
   outputs: {
     $isDevSettingsModalOpen,

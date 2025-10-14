@@ -23,6 +23,7 @@ export const DevelopmentSettingsContainer: FC<
     resetCreds,
     handleLogin,
     removeCred,
+    setCredsList,
   } = useUnit({
     visible: outputs.$isDevSettingsModalOpen,
     devUrl: currentOrganizationService.outputs.$devUrl,
@@ -35,6 +36,7 @@ export const DevelopmentSettingsContainer: FC<
     resetCreds: inputs.resetCreds,
     handleLogin: loginService.inputs.handlePostLogin,
     removeCred: inputs.removeCred,
+    setCredsList: inputs.setCredsList,
   });
 
   return (
@@ -51,6 +53,7 @@ export const DevelopmentSettingsContainer: FC<
       resetCreds={resetCreds}
       handleLogin={handleLogin}
       removeCred={removeCred}
+      setCredsList={setCredsList}
     />
   );
 };
