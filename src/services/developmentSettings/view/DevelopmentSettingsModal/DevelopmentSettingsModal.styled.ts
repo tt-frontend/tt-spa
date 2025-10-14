@@ -1,5 +1,11 @@
 import styled, { css } from 'styled-components';
 
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
 export const Badge = styled.div`
   margin-top: 24px;
   color: #9a9fac;
@@ -100,7 +106,6 @@ export const CredentialsTitle = styled.div`
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding-bottom: 8px;
 
   .segmented {
     * {

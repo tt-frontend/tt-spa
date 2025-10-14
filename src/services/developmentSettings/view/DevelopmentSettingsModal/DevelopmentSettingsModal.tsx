@@ -17,6 +17,7 @@ import {
   FeatureTogglesWrapper,
   RemoveCredIconWrapper,
   UserName,
+  Wrapper,
 } from './DevelopmentSettingsModal.styled';
 import { DevelopmentSettingsModalProps } from './DevelopmentSettingsModal.types';
 import { urls } from './DevelopmentSettingsModal.constants';
@@ -56,7 +57,7 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
     <FormModal
       formId="dev-settings-form"
       form={
-        <>
+        <Wrapper>
           {!isAuth && (
             <FormItem label="URL's list">
               <Select
@@ -73,7 +74,7 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
               </Select>
             </FormItem>
           )}
-          <FormItem label="URL">
+          <FormItem label="URL" labelCol={{ offset: 12 }}>
             <DevUrlInputWrapper>
               <Input
                 small
@@ -150,7 +151,7 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
             </FormItem>
           )}
           <Badge>TT frontend team {dayjs().format('YYYY')} [ver: 2.0.1]</Badge>
-        </>
+        </Wrapper>
       }
       centered
       title="🛠️ development settings"
