@@ -16,6 +16,7 @@ import {
   DevUrlInputWrapper,
   FeatureToggle,
   FeatureTogglesWrapper,
+  RemoveCredIconWrapper,
   UserName,
 } from './DevelopmentSettingsModal.styled';
 import { DevelopmentSettingsModalProps } from './DevelopmentSettingsModal.types';
@@ -27,7 +28,8 @@ import {
   FeatureToggles,
 } from 'services/developmentSettings/developmentSettings.types';
 import { sortUserRoles } from 'services/company/companyProfileService/view/CompanyProfile/Tabs/Staff/Staff.utils';
-import { Segmented } from 'antd';
+import { Segmented, Tooltip } from 'antd';
+import { X } from 'react-bootstrap-icons';
 
 export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
   visible,
@@ -41,6 +43,7 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
   credsList,
   resetCreds,
   handleLogin,
+  removeCred,
 }) => {
   const featuresArray = useMemo(
     () => Object.entries(featureToggles),
@@ -113,6 +116,7 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
                     cred={elem}
                     isAuth={isAuth}
                     handleLogin={handleLogin}
+                    removeCred={() => removeCred(elem.email)}
                   />
                 ))}
               </CredsWrapper>
@@ -163,13 +167,14 @@ const CredentialBlock: FC<{
   isAuth: boolean;
   handleLogin: (cred: ICredItem) => void;
   credView: 'name' | 'role';
-}> = ({ cred, isAuth, handleLogin, credView }) => {
+  removeCred: () => void;
+}> = ({ cred, isAuth, handleLogin, credView, removeCred }) => {
   const sortedRoles = cred.user && sortUserRoles(cred.user.roles || []);
-
-  console.log(sortedRoles);
 
   const firstNameLetter = cred.user?.firstName?.[0];
   const middleNameLetter = cred.user?.middleName?.[0];
+
+  console.log(removeCred);
 
   return (
     <CredItem
@@ -177,6 +182,20 @@ const CredentialBlock: FC<{
       key={cred.email}
       onClick={() => !isAuth && handleLogin(cred)}
     >
+      <RemoveCredIconWrapper
+        className="removeCredIconWrapper"
+        onClick={(event) => {
+          event.stopPropagation();
+          event.preventDefault();
+
+          removeCred();
+        }}
+      >
+        <Tooltip mouseEnterDelay={0.5} title="Удалить">
+          <X size={16} />
+        </Tooltip>
+      </RemoveCredIconWrapper>
+
       {credView === 'name' && cred.user && (
         <UserName>
           {cred.user.lastName} {firstNameLetter && `${firstNameLetter}. `}

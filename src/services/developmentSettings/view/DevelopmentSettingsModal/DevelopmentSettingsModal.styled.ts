@@ -70,8 +70,15 @@ export const CredItem = styled.div<{ disabled: boolean }>`
   transition: 0.2s;
   font-weight: 500;
   border: 1px solid #ededed;
+  position: relative;
 
   ${({ disabled }) => !disabled && hoverCredCSS}
+
+  &:hover {
+    .removeCredIconWrapper {
+      visibility: visible;
+    }
+  }
 `;
 
 export const UserName = styled.div`
@@ -106,4 +113,20 @@ export const CredResetButton = styled.div`
   &:hover {
     background: #efefefc5;
   }
+`;
+
+export const RemoveCredIconWrapper = styled.div`
+  visibility: hidden;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  cursor: pointer;
+  background: white;
+  border: 1px solid #d7d7d7;
+  height: 16px;
+  width: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
 `;

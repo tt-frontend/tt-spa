@@ -17,6 +17,9 @@ const setFeatureToggles = createEvent<FeatureTogglesSet | null>();
 const toggleFeature = createEvent<string>();
 const resetFeatureToggles = createEvent();
 
+// by email
+const removeCred = createEvent<string>();
+
 const resetCreds = createEvent();
 
 const $featureToggles = createStore<FeatureToggles>(featureToggles)
@@ -44,7 +47,8 @@ const $credsList = createStore<ICredItem[]>([])
 
       return { ...item, user };
     });
-  });
+  })
+  .on(removeCred, (prev, email) => prev.filter((elem) => elem.email !== email));
 
 persist({
   store: $credsList,
@@ -104,6 +108,7 @@ export const developmentSettingsService = {
     resetFeatureToggles,
     setFeatureToggles,
     resetCreds,
+    removeCred,
   },
   outputs: {
     $isDevSettingsModalOpen,
