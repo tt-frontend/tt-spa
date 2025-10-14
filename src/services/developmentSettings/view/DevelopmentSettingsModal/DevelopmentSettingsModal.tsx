@@ -11,7 +11,6 @@ import {
   Badge,
   CredentialsTitle,
   CredItem,
-  CredResetButton,
   CredsWrapper,
   DevUrlInputWrapper,
   FeatureToggle,
@@ -30,6 +29,7 @@ import {
 import { sortUserRoles } from 'services/company/companyProfileService/view/CompanyProfile/Tabs/Staff/Staff.utils';
 import { Segmented, Tooltip } from 'antd';
 import { X } from 'react-bootstrap-icons';
+import { generateColorsFromString } from 'utils/generateGradient';
 
 export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
   visible,
@@ -41,7 +41,7 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
   resetFeatureToggles,
   isAuth,
   credsList,
-  resetCreds,
+  // resetCreds,
   handleLogin,
   removeCred,
 }) => {
@@ -104,7 +104,6 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
                       { value: 'name', label: 'name' },
                     ]}
                   />
-                  <CredResetButton onClick={resetCreds}>Reset</CredResetButton>
                 </CredentialsTitle>
               }
             >
@@ -181,6 +180,7 @@ const CredentialBlock: FC<{
       disabled={isAuth}
       key={cred.email}
       onClick={() => !isAuth && handleLogin(cred)}
+      gradient={generateColorsFromString(cred.email + cred.user?.id)}
     >
       <RemoveCredIconWrapper
         className="removeCredIconWrapper"

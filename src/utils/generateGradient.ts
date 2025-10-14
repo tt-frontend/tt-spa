@@ -1,28 +1,29 @@
 /**
  * Генератор пары красивых цветов из строки.
- * Чистая функция: одинаковая строка -> одинаковые цвета.
+ * Чистая функция: одинаковая строка → одинаковые цвета.
  */
 export function generateColorsFromString(
   str: string,
   opts: {
-    saturation?: number; // 0–100, default 60
-    lightness?: number; // 0–100, default 50
+    colorCount?: number;
+    saturation?: number;
+    lightness?: number;
   } = {},
 ): [string, string] {
-  const { saturation = 60, lightness = 50 } = opts;
+  const { colorCount = 3, saturation = 60, lightness = 50 } = opts;
 
-  // --- 1) 32-bit хеш строки (djb2) ---
+  // 1) Простой 32-bit хеш строки (djb2-like)
   function hashString(s: string): number {
     let h = 5381;
     for (let i = 0; i < s.length; i++) {
-      h = (h << 5) + h + s.charCodeAt(i);
-      h &= 0xffffffff;
+      h = (h << 5) + h + s.charCodeAt(i); // h * 33 + c
+      h &= 0xffffffff; // удерживаем 32-бита
     }
     return h >>> 0;
   }
 
-  // --- 2) PRNG (Mulberry32) ---
-  function mulberry32(seed: number) {
+  // 2) Mulberry32 seeded PRNG (детерминированный)
+  function mulberry32(seed: number): () => number {
     return function (): number {
       let t = (seed += 0x6d2b79f5);
       t = Math.imul(t ^ (t >>> 15), t | 1);
@@ -31,7 +32,7 @@ export function generateColorsFromString(
     };
   }
 
-  // --- 3) HSL → HEX ---
+  // 3) HSL -> HEX
   function hslToHex(h: number, s: number, l: number): string {
     s /= 100;
     l /= 100;
@@ -47,17 +48,33 @@ export function generateColorsFromString(
     return `#${f(0)}${f(8)}${f(4)}`;
   }
 
-  // --- 4) Генерация двух цветов ---
+  // --- Генерация ---
   const seed = hashString(str) || 1;
   const rnd = mulberry32(seed);
-  const baseHue = seed % 360;
+  const baseHue = Math.floor(seed % 360);
+  const golden = 0.618033988749895;
 
-  // Второй цвет смещён на ~120–180°, чтобы получился контраст, но не яд.
-  const hue1 = baseHue;
-  const hue2 = (baseHue + 120 + rnd() * 60) % 360;
+  interface HSL {
+    h: number;
+    s: number;
+    l: number;
+  }
 
-  const color1 = hslToHex(hue1, saturation, lightness);
-  const color2 = hslToHex(hue2, saturation, lightness);
+  const hues: HSL[] = [];
 
-  return [color1, color2];
+  for (let i = 0; i < colorCount; i++) {
+    const hue = Math.round((baseHue + 360 * ((rnd() + i * golden) % 1)) % 360);
+    const satDisp = Math.round(saturation + (rnd() - 0.5) * 20); // ±10
+    const lightDisp = Math.round(lightness + (rnd() - 0.5) * 16); // ±8
+    hues.push({
+      h: hue,
+      s: Math.max(20, Math.min(100, satDisp)),
+      l: Math.max(8, Math.min(92, lightDisp)),
+    });
+  }
+
+  const colors = hues.map((hsl) => hslToHex(hsl.h, hsl.s, hsl.l));
+
+  // Возвращаем только первые два цвета
+  return [colors[0], colors[1]];
 }
