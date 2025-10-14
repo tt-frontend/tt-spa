@@ -1,4 +1,11 @@
+import TextArea from 'antd/es/input/TextArea';
 import styled, { css } from 'styled-components';
+
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
 
 export const Badge = styled.div`
   margin-top: 24px;
@@ -49,20 +56,19 @@ export const CredsWrapper = styled.div`
 
 const hoverCredCSS = css`
   &:hover {
-    background: #ffffff;
-    /* border: 1px solid #2a2a2a; */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    transform: scale(1.05);
   }
 `;
 
-export const CredItem = styled.div<{ disabled: boolean }>`
+export const CredItem = styled.div<{
+  disabled: boolean;
+  gradient: [string, string];
+}>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 60px;
-  background: white;
+  /* background: linear-gradient(45deg, #ffffff, #ffffff); */
   color: #2a2a2a;
   padding: 4px 24px 4px 8px;
   border-radius: 4px;
@@ -70,8 +76,25 @@ export const CredItem = styled.div<{ disabled: boolean }>`
   transition: 0.2s;
   font-weight: 500;
   border: 1px solid #ededed;
+  position: relative;
 
   ${({ disabled }) => !disabled && hoverCredCSS}
+
+  &:hover {
+    transition: 0.2s;
+    background: linear-gradient(
+      45deg,
+      ${({ gradient }) => gradient[0]},
+      ${({ gradient }) => gradient[1]}
+    );
+    * {
+      color: white;
+    }
+    .removeCredIconWrapper {
+      visibility: visible;
+    }
+    border-color: white;
+  }
 `;
 
 export const UserName = styled.div`
@@ -84,7 +107,6 @@ export const CredentialsTitle = styled.div`
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding-bottom: 8px;
 
   .segmented {
     * {
@@ -105,5 +127,43 @@ export const CredResetButton = styled.div`
 
   &:hover {
     background: #efefefc5;
+  }
+`;
+
+export const RemoveCredIconWrapper = styled.div`
+  visibility: hidden;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  cursor: pointer;
+  background: #ffffff38;
+  height: 16px;
+  width: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+`;
+
+export const IdCredIconWrapper = styled.div<{ gradient: [string, string] }>`
+  visibility: hidden;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  cursor: pointer;
+  background: #ffffff38;
+  height: 16px;
+  width: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+`;
+
+export const TextAreaSC = styled(TextArea)`
+  font-family: monospace !important;
+
+  * {
+    font-family: monospace !important;
   }
 `;

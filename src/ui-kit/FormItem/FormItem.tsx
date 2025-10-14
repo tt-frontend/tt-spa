@@ -6,7 +6,7 @@ export const FormItem: React.FC<
   { children: React.ReactNode; block?: boolean } & FormItemProps
 > = ({ children, ...attrs }) => {
   return (
-    <FormItemSC colon={false} {...attrs}>
+    <FormItemSC colon={false} {...attrs} layout="vertical">
       {children}
     </FormItemSC>
   );

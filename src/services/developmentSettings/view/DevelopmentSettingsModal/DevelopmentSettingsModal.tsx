@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import dayjs from 'api/dayjs';
 import stc from 'string-to-color';
 import { FormModal } from 'ui-kit/Modals/FormModal';
@@ -11,15 +11,20 @@ import {
   Badge,
   CredentialsTitle,
   CredItem,
-  CredResetButton,
   CredsWrapper,
   DevUrlInputWrapper,
   FeatureToggle,
   FeatureTogglesWrapper,
+  RemoveCredIconWrapper,
+  TextAreaSC,
   UserName,
+  Wrapper,
 } from './DevelopmentSettingsModal.styled';
 import { DevelopmentSettingsModalProps } from './DevelopmentSettingsModal.types';
-import { urls } from './DevelopmentSettingsModal.constants';
+import {
+  AccountsArraySchema,
+  urls,
+} from './DevelopmentSettingsModal.constants';
 import { baseURL } from 'api';
 import { FeatureTogglesTranslates } from 'services/developmentSettings/developmentSettings.constants';
 import {
@@ -27,7 +32,17 @@ import {
   FeatureToggles,
 } from 'services/developmentSettings/developmentSettings.types';
 import { sortUserRoles } from 'services/company/companyProfileService/view/CompanyProfile/Tabs/Staff/Staff.utils';
-import { Segmented } from 'antd';
+import { message, Segmented, Tooltip } from 'antd';
+import {
+  Clipboard,
+  ClipboardCheck,
+  InputCursorText,
+  X,
+} from 'react-bootstrap-icons';
+import { generateColorsFromString } from 'utils/generateGradient';
+import { useClipboard } from '@custom-react-hooks/use-clipboard';
+import * as yup from 'yup';
+import { ErrorMessage } from 'ui-kit/ErrorMessage';
 
 export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
   visible,
@@ -39,9 +54,13 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
   resetFeatureToggles,
   isAuth,
   credsList,
-  resetCreds,
+  // resetCreds,
   handleLogin,
+  removeCred,
+  setCredsList,
 }) => {
+  const [inputCredsOpen, setInputCredsOpen] = React.useState(false);
+
   const featuresArray = useMemo(
     () => Object.entries(featureToggles),
     [featureToggles],
@@ -49,11 +68,87 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
 
   const [credView, setCredView] = React.useState<'role' | 'name'>('role');
 
+  const { copyToClipboard, clipboardContent } = useClipboard({});
+
+  const credsJson = useMemo(() => {
+    return JSON.stringify(credsList, null, 2);
+  }, [credsList]);
+
+  function copyCreds() {
+    try {
+      copyToClipboard(credsJson);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const isCopied = clipboardContent === credsJson;
+
+  const [credsText, setCredsText] = React.useState(credsJson);
+
+  useEffect(() => {
+    setCredsText(credsJson);
+  }, [credsJson]);
+
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!inputCredsOpen) {
+      setError(null);
+      setCredsText(credsJson);
+    }
+  }, [inputCredsOpen]);
+
+  async function onSaveCreds() {
+    try {
+      const creds = JSON.parse(credsText);
+
+      try {
+        console.log(creds);
+        await AccountsArraySchema.validate(creds, { strict: true });
+
+        setCredsList(creds);
+        setInputCredsOpen(false);
+        setError(null);
+
+        message.success('Saved!');
+      } catch (err) {
+        if (err instanceof yup.ValidationError) {
+          setError('Validation error: ' + err.path + '  ' + err.message);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      message.error('Incorrect json, see error in console');
+    }
+  }
+
   return (
     <FormModal
       formId="dev-settings-form"
       form={
-        <>
+        <Wrapper>
+          <FormModal
+            innerModalProps={{ width: 600 }}
+            formId="save-creds-form"
+            title="Edit creds"
+            visible={inputCredsOpen}
+            submitBtnText="Save"
+            cancelBtnText="Cancel"
+            onCancel={() => setInputCredsOpen(false)}
+            onSubmit={onSaveCreds}
+            form={
+              <>
+                <TextAreaSC
+                  status={error ? 'error' : ''}
+                  style={{ minHeight: 400 }}
+                  value={credsText}
+                  onChange={(e) => setCredsText(e.target.value)}
+                />
+                {error && <ErrorMessage>{error}</ErrorMessage>}
+              </>
+            }
+          />
           {!isAuth && (
             <FormItem label="URL's list">
               <Select
@@ -70,7 +165,7 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
               </Select>
             </FormItem>
           )}
-          <FormItem label="URL">
+          <FormItem label="URL" labelCol={{ offset: 12 }}>
             <DevUrlInputWrapper>
               <Input
                 small
@@ -101,7 +196,23 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
                       { value: 'name', label: 'name' },
                     ]}
                   />
-                  <CredResetButton onClick={resetCreds}>Reset</CredResetButton>
+                  {!isCopied && (
+                    <Clipboard
+                      onClick={copyCreds}
+                      style={{ cursor: 'pointer' }}
+                    />
+                  )}
+                  {isCopied && (
+                    <ClipboardCheck
+                      color="#21c421"
+                      onClick={copyCreds}
+                      style={{ cursor: 'pointer' }}
+                    />
+                  )}
+                  <InputCursorText
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => setInputCredsOpen(true)}
+                  />
                 </CredentialsTitle>
               }
             >
@@ -113,6 +224,7 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
                     cred={elem}
                     isAuth={isAuth}
                     handleLogin={handleLogin}
+                    removeCred={() => removeCred(elem.email)}
                   />
                 ))}
               </CredsWrapper>
@@ -146,8 +258,8 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
               </FeatureTogglesWrapper>
             </FormItem>
           )}
-          <Badge>TT frontend team {dayjs().format('YYYY')} [ver: 2.0.1]</Badge>
-        </>
+          <Badge>TT frontend team {dayjs().format('YYYY')} [ver: 2.1.0]</Badge>
+        </Wrapper>
       }
       centered
       title="🛠️ development settings"
@@ -163,10 +275,9 @@ const CredentialBlock: FC<{
   isAuth: boolean;
   handleLogin: (cred: ICredItem) => void;
   credView: 'name' | 'role';
-}> = ({ cred, isAuth, handleLogin, credView }) => {
+  removeCred: () => void;
+}> = ({ cred, isAuth, handleLogin, credView, removeCred }) => {
   const sortedRoles = cred.user && sortUserRoles(cred.user.roles || []);
-
-  console.log(sortedRoles);
 
   const firstNameLetter = cred.user?.firstName?.[0];
   const middleNameLetter = cred.user?.middleName?.[0];
@@ -176,7 +287,22 @@ const CredentialBlock: FC<{
       disabled={isAuth}
       key={cred.email}
       onClick={() => !isAuth && handleLogin(cred)}
+      gradient={generateColorsFromString(cred.email + cred.user?.id)}
     >
+      <RemoveCredIconWrapper
+        className="removeCredIconWrapper"
+        onClick={(event) => {
+          event.stopPropagation();
+          event.preventDefault();
+
+          removeCred();
+        }}
+      >
+        <Tooltip mouseEnterDelay={0.5} title="delete">
+          <X size={16} />
+        </Tooltip>
+      </RemoveCredIconWrapper>
+
       {credView === 'name' && cred.user && (
         <UserName>
           {cred.user.lastName} {firstNameLetter && `${firstNameLetter}. `}

@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@custom-react-hooks/use-clipboard": "^1.6.0",
     "@farfetched/core": "0.13.1",
     "@pbe/react-yandex-maps": "^1.2.5",
     "@types/react": "^19.1.2",
