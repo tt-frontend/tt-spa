@@ -44,6 +44,9 @@ export const IndividualDevicesReport: FC<IndividualDevicesReportProps> = ({
   const isInvalidBitDepth =
     reportOption === EIndividualDeviceReportOption.InvalidBitDepth;
 
+  const isInstalledSealReport =
+    reportOption === EIndividualDeviceReportOption.InstalledSeal;
+
   const isOperators = usePermission([
     ESecuredIdentityRoleName.Operator,
     ESecuredIdentityRoleName.SeniorOperator,
@@ -203,6 +206,23 @@ export const IndividualDevicesReport: FC<IndividualDevicesReportProps> = ({
           hidden: !isInvalidBitDepth,
           render: (elem) =>
             elem.invalidBitDepthOption?.scaleFactor || 'Нет данных',
+        },
+        {
+          label: 'Пломба',
+          size: '80px',
+          hidden: !isInstalledSealReport,
+          render: (elem) => elem.installedSealOption?.sealNumber || null,
+        },
+        {
+          label: 'Дата переопломбировки',
+          size: '180px',
+          hidden: !isInstalledSealReport,
+          render: (elem) =>
+            elem.installedSealOption?.sealInstallationDate
+              ? dayjs(elem.installedSealOption?.sealInstallationDate).format(
+                  'DD.MM.YYYY',
+                )
+              : null,
         },
       ]}
       elements={individualDevicesReportData}

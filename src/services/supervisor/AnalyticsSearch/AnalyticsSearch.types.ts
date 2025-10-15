@@ -1,5 +1,6 @@
 import { OrganizationResponsePagedList } from 'api/types';
-import { DashboardQueryParams } from '../../currentAnalyticsService.types';
+import { IExistingMoDistrictPagedList } from 'api/extend.types';
+import { DashboardQueryParams } from '../currentAnalytics/currentAnalyticsService.types';
 
 export type Props = {
   dashboardFilters: DashboardQueryParams;
@@ -9,6 +10,7 @@ export type Props = {
   selectValue?: EDateRange;
   setValue?: (payload: EDateRange) => void;
   organizationsList: OrganizationResponsePagedList | null;
+  existingMoDistricts: IExistingMoDistrictPagedList | null;
 };
 
 export enum EDateRange {

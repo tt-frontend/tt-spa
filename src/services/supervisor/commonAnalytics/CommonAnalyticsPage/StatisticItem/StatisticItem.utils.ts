@@ -5,8 +5,8 @@ import {
   DashboardResourceDetailChartItemModel,
 } from 'api/types';
 import dayjs from 'dayjs';
-import { EDateRange } from 'services/supervisor/currentAnalytics/CurrentAnalyticsPage/AnalyticsSearch/AnalyticsSearch.types';
 import { ChartType } from './StatisticItem.types';
+import { EDateRange } from 'services/supervisor/AnalyticsSearch/AnalyticsSearch.types';
 
 export function prepareChartData(
   data: DashboardResourceDetailChartItemModel[] &
@@ -64,21 +64,27 @@ export function prepareChartData(
       // Группируем details по resourceType и malfunctionType
       const groupedDetails = items
         .flatMap((item) => item.details || [])
-        .reduce((acc, detail) => {
-          const key = `${detail.resourceType || ''}-${
-            'malfunctionType' in detail ? detail.malfunctionType || '' : ''
-          }`;
-          if (!acc[key]) {
-            acc[key] = { ...detail };
-          } else {
-            acc[key].totalTasksCount =
-              (acc[key].totalTasksCount || 0) + (detail.totalTasksCount || 0);
-            acc[key].expiredTasksCount =
-              (acc[key].expiredTasksCount || 0) +
-              (detail.expiredTasksCount || 0);
-          }
-          return acc;
-        }, {} as Record<string, DashboardMalfunctionChartItemModel | DashboardResourceChartItemModel>);
+        .reduce(
+          (acc, detail) => {
+            const key = `${detail.resourceType || ''}-${
+              'malfunctionType' in detail ? detail.malfunctionType || '' : ''
+            }`;
+            if (!acc[key]) {
+              acc[key] = { ...detail };
+            } else {
+              acc[key].totalTasksCount =
+                (acc[key].totalTasksCount || 0) + (detail.totalTasksCount || 0);
+              acc[key].expiredTasksCount =
+                (acc[key].expiredTasksCount || 0) +
+                (detail.expiredTasksCount || 0);
+            }
+            return acc;
+          },
+          {} as Record<
+            string,
+            DashboardMalfunctionChartItemModel | DashboardResourceChartItemModel
+          >,
+        );
 
       return {
         x: monthKey,

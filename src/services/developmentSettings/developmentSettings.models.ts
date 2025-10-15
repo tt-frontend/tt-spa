@@ -1,7 +1,12 @@
 import { createEvent, createStore } from 'effector';
 import { featureToggles } from 'featureToggles';
-import { FeatureToggles, FeatureTogglesSet } from './developmentSettings.types';
+import {
+  ICredItem,
+  FeatureToggles,
+  FeatureTogglesSet,
+} from './developmentSettings.types';
 import { persist } from 'effector-storage/local';
+import { currentUserService } from 'services/currentUser/currentUserService';
 
 const $isDevSettingsModalOpen = createStore(false);
 
@@ -11,6 +16,11 @@ const closeDevSettingsModal = createEvent();
 const setFeatureToggles = createEvent<FeatureTogglesSet | null>();
 const toggleFeature = createEvent<string>();
 const resetFeatureToggles = createEvent();
+
+// by email
+const removeCred = createEvent<string>();
+
+const resetCreds = createEvent();
 
 const $featureToggles = createStore<FeatureToggles>(featureToggles)
   .on(toggleFeature, (prev, feature) => ({
@@ -26,6 +36,27 @@ const $featureToggles = createStore<FeatureToggles>(featureToggles)
         }
       : prev,
   );
+
+const setCredsList = createEvent<ICredItem[]>();
+
+const $credsList = createStore<ICredItem[]>([])
+  .reset(resetCreds)
+  .on(currentUserService.outputs.$currentUser.updates, (prev, user) => {
+    if (!user) return prev;
+
+    return prev.map((item) => {
+      if (item.email !== user.email) return item;
+
+      return { ...item, user };
+    });
+  })
+  .on(removeCred, (prev, email) => prev.filter((elem) => elem.email !== email))
+  .on(setCredsList, (_, data) => data);
+
+persist({
+  store: $credsList,
+  key: 'credsList',
+});
 
 persist<FeatureToggles>({
   store: $featureToggles,
@@ -79,9 +110,13 @@ export const developmentSettingsService = {
     toggleFeature,
     resetFeatureToggles,
     setFeatureToggles,
+    resetCreds,
+    removeCred,
+    setCredsList,
   },
   outputs: {
     $isDevSettingsModalOpen,
     $featureToggles,
+    $credsList,
   },
 };

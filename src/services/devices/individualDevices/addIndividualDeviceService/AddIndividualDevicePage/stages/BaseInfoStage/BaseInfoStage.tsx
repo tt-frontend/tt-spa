@@ -32,6 +32,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from 'ui-kit/Button';
 import { validationSchema } from './BaseInfoStage.constants';
 import { languageDetect } from 'utils/languageDetect';
+import { useEnterToTab } from 'hooks/useEnterAsTab';
 
 const {
   gates: { ContractorsGate, IndividualDeviceMountPlacesGate },
@@ -213,12 +214,15 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
     </>
   );
 
+  useEnterToTab();
+
   return (
     <Wrap>
       <IndividualDeviceMountPlacesGate apartmentId={Number(id)} />
       <ContractorsGate />
 
       <FormHeader>Общие данные о приборе</FormHeader>
+
       <FormWrap>
         <FormItem label="Тип ресурса">
           <ResourceSelect

@@ -10,6 +10,8 @@ import {
   DashboardDataType,
   DashboardQueryParams,
 } from '../currentAnalyticsService.types';
+import { BuildingsPageSegment } from 'services/objects/objectsProfileService/view/ObjectsProfile/ObjectsProfile.types';
+import { IExistingMoDistrictPagedList } from 'api/extend.types';
 
 export type Props = {
   isLoadingSummary: boolean;
@@ -26,4 +28,7 @@ export type Props = {
   setDashboardFilters: (payload: DashboardQueryParams) => void;
   resetDashboardFilters: () => void;
   organizationsList: OrganizationResponsePagedList | null;
+  pageSegment: BuildingsPageSegment;
+  setSegment: (payload: BuildingsPageSegment) => void;
+  existingMoDistricts: IExistingMoDistrictPagedList | null;
 };

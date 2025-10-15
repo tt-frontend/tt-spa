@@ -1,9 +1,8 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { Wrapper } from './AnalyticsSearch.styled';
 import { EDateRange, Props } from './AnalyticsSearch.types';
 import { RangePicker } from 'ui-kit/RangePicker';
 import { Select } from 'ui-kit/Select';
-
 import { StyledMenuButton } from 'ui-kit/ContextMenuButton/ContextMenuButton.styled';
 import { ResetIcon } from 'ui-kit/icons';
 import { Tooltip } from 'antd';
@@ -12,7 +11,8 @@ import dayjs from 'dayjs';
 import { useUnit } from 'effector-react';
 import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
 import { Segmented } from 'ui-kit/Segmented';
-import { currentAnalyticsService } from '../../currentAnalyticsService.models';
+import { tasksMapService } from 'services/tasks/tasksMapService';
+import { currentAnalyticsService } from '../currentAnalytics/currentAnalyticsService.models';
 
 export const AnalyticsSearch: FC<Props> = ({
   dashboardFilters,
@@ -22,15 +22,38 @@ export const AnalyticsSearch: FC<Props> = ({
   selectValue,
   setValue,
   organizationsList,
+  existingMoDistricts,
 }) => {
-  const { existingCities, periodType, setPeriodType } = useUnit({
-    existingCities: addressSearchService.outputs.$existingCities,
+  const {
+    existingCitiesWithCoordinates,
+    periodType,
+    setPeriodType,
+    handleSetCoordinates,
+  } = useUnit({
+    existingCitiesWithCoordinates:
+      addressSearchService.outputs.$existingCitiesWithCoordinates,
     periodType: currentAnalyticsService.outputs.$periodType,
     setPeriodType: currentAnalyticsService.inputs.setPeriodType,
+    handleSetCoordinates: tasksMapService.inputs.handleSetCoordinates,
   });
 
+  const citiesOptions = useMemo(() => {
+    if (!dashboardFilters.District || !existingMoDistricts) return null;
+
+    const ditrict = existingMoDistricts.items?.find(
+      (item) => item.name === dashboardFilters.District,
+    );
+
+    if (!ditrict) return null;
+
+    return ditrict.subjects.map((elem) => elem.name);
+  }, [dashboardFilters, existingMoDistricts]);
+
   return (
-    <Wrapper isCommon={Boolean(isCommon)}>
+    <Wrapper
+      isCommon={Boolean(isCommon)}
+      moDistricts={Boolean(existingMoDistricts)}
+    >
       {!isCommon && (
         <Segmented
           active={periodType}
@@ -125,21 +148,65 @@ export const AnalyticsSearch: FC<Props> = ({
         </Select>
       )}
 
+      {existingMoDistricts && (
+        <Select
+          placeholder="Округ"
+          small
+          allowClear
+          value={dashboardFilters.District}
+          onChange={(value) =>
+            setDashboardFilters({
+              District: value as string | null,
+              City: null,
+            })
+          }
+        >
+          {existingMoDistricts?.items?.map((item) => (
+            <Select.Option key={item.name} value={item.name}>
+              {item.name} ({item.type})
+            </Select.Option>
+          ))}
+        </Select>
+      )}
+
       <Select
         placeholder="Город"
         small
         value={dashboardFilters.City}
         allowClear
-        onChange={(city) =>
-          setDashboardFilters({ City: city as string, ManagementFirmId: null })
-        }
+        onChange={(value) => {
+          setDashboardFilters({
+            City: value as string,
+            ManagementFirmId: null,
+          });
+
+          const coordinates = existingCitiesWithCoordinates?.find(
+            (cities) => cities.city === value,
+          )?.coordinates;
+
+          if (coordinates) {
+            handleSetCoordinates([coordinates.latitude, coordinates.longitude]);
+          }
+        }}
       >
-        {existingCities?.map((city) => (
-          <Select.Option key={city} value={city}>
-            {city}
-          </Select.Option>
-        ))}
+        {!citiesOptions &&
+          existingCitiesWithCoordinates?.map((cityResponse, index) => (
+            <Select.Option
+              key={`${cityResponse.city}${index}`}
+              value={cityResponse.city}
+            >
+              {cityResponse.city}
+            </Select.Option>
+          ))}
+
+        {citiesOptions &&
+          citiesOptions.map((city) => (
+            <Select.Option key={city} value={city}>
+              {city}
+            </Select.Option>
+          ))}
       </Select>
+
       <Select
         placeholder="УК"
         small

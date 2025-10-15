@@ -1,4 +1,4 @@
-import { EDateRange } from 'services/supervisor/currentAnalytics/CurrentAnalyticsPage/AnalyticsSearch/AnalyticsSearch.types';
+import { EDateRange } from 'services/supervisor/AnalyticsSearch/AnalyticsSearch.types';
 import { ChartType } from '../StatisticItem.types';
 import { DashboardDataType } from 'services/supervisor/currentAnalytics/currentAnalyticsService.types';
 

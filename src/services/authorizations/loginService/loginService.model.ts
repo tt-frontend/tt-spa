@@ -8,7 +8,7 @@ import { developmentSettingsService } from 'services/developmentSettings/develop
 
 const handlePostLogin = createEvent<LoginRequest>();
 
-const postLoginFx = createEffect<
+export const postLoginFx = createEffect<
   LoginRequest,
   TokenResponse,
   EffectFailDataAxiosError
@@ -27,6 +27,24 @@ postLoginFx.failData.watch((error) => {
 });
 
 sample({ clock: handlePostLogin, target: postLoginFx });
+
+developmentSettingsService.outputs.$credsList.on(
+  postLoginFx.done,
+  (prev, { params }) => {
+    const isExist = prev.some((elem) => elem.email === params.email);
+
+    if (isExist) {
+      return prev;
+    }
+
+    return [...prev, { email: params.email, password: params.password }];
+  },
+);
+
+sample({
+  clock: postLoginFx.done,
+  target: developmentSettingsService.inputs.closeDevSettingsModal,
+});
 
 export const loginService = {
   inputs: {

@@ -441,6 +441,11 @@
     react-confetti "^6.1.0"
     strip-ansi "^7.1.0"
 
+"@custom-react-hooks/use-clipboard@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@custom-react-hooks/use-clipboard/-/use-clipboard-1.6.0.tgz#c506e364df71d8e5a0beaa5f37a3d295ff1c6df4"
+  integrity sha512-f8kYV5imgbcqNNaqEABtNqxtvImelNHrgWUbE/A4ZFGwaiMKAvCMVK71EiNiYETf4EuYAHZ6tmwQXAokjzPlzw==
+
 "@emotion/hash@^0.8.0":
   version "0.8.0"
   resolved "https://registry.npmjs.org/@emotion/hash/-/hash-0.8.0.tgz"
