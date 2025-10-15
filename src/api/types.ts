@@ -4218,6 +4218,30 @@ export interface MeteringDeviceSearchListResponse {
   resource: EResourceType | null;
 }
 
+export interface MunicipalSubjectResponse {
+  name: string | null;
+  type: string | null;
+  subjects: MunicipalSubjectResponse[] | null;
+}
+
+export interface MunicipalSubjectResponsePagedList {
+  /** @format int32 */
+  totalItems: number;
+  /** @format int32 */
+  pageNumber: number;
+  /** @format int32 */
+  pageSize: number;
+  /** @format int32 */
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  /** @format int32 */
+  nextPageNumber: number;
+  /** @format int32 */
+  previousPageNumber: number;
+  items: MunicipalSubjectResponse[] | null;
+}
+
 export interface NodeCheckResponse {
   /** @format int32 */
   id: number;
@@ -7408,7 +7432,7 @@ export class Api<
       },
       params: RequestParams = {},
     ) =>
-      this.request<StringPagedList, ErrorApiResponse>({
+      this.request<MunicipalSubjectResponsePagedList, ErrorApiResponse>({
         path: `/api/Buildings/ExistingMoDistricts`,
         method: 'GET',
         query: query,
