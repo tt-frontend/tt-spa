@@ -191,6 +191,7 @@ export const HeatWithRechargeScheme: FC<Props> = ({
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(feedFlow?.id),
+                housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
               });
               openAddCommonDeviceModal();
             }}
@@ -251,6 +252,7 @@ export const HeatWithRechargeScheme: FC<Props> = ({
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(recharge?.id),
+                housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
               });
               openAddCommonDeviceModal();
             }}
@@ -312,6 +314,8 @@ export const HeatWithRechargeScheme: FC<Props> = ({
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(feedBackFlow?.id),
+                housingMeteringDeviceType:
+                  EHousingMeteringDeviceType.TemperatureSensor,
               });
               openAddCommonDeviceModal();
             }}
@@ -377,6 +381,8 @@ export const HeatWithRechargeScheme: FC<Props> = ({
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(feedFlow?.id),
+                housingMeteringDeviceType:
+                  EHousingMeteringDeviceType.TemperatureSensor,
               });
               openAddCommonDeviceModal();
             }}
@@ -442,6 +448,8 @@ export const HeatWithRechargeScheme: FC<Props> = ({
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(recharge?.id),
+                housingMeteringDeviceType:
+                  EHousingMeteringDeviceType.TemperatureSensor,
               });
               openAddCommonDeviceModal();
             }}
@@ -507,6 +515,7 @@ export const HeatWithRechargeScheme: FC<Props> = ({
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(feedBackFlow?.id),
+                housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
               });
               openAddCommonDeviceModal();
             }}

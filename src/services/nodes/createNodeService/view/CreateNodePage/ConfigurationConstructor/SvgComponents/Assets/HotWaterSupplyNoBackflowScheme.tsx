@@ -104,6 +104,7 @@ export const HotWaterSupplyNoBackflowScheme: FC<Props> = ({
           onClick={() => {
             updateCommonDeviceRequestPayload({
               pipeId: Number(feedFlow?.id),
+              housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
             });
             openAddCommonDeviceModal();
           }}
@@ -164,6 +165,8 @@ export const HotWaterSupplyNoBackflowScheme: FC<Props> = ({
           onClick={() => {
             updateCommonDeviceRequestPayload({
               pipeId: Number(feedFlow?.id),
+              housingMeteringDeviceType:
+                EHousingMeteringDeviceType.TemperatureSensor,
             });
             openAddCommonDeviceModal();
           }}

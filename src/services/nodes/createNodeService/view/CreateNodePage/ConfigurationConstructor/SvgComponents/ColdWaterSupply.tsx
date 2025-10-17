@@ -8,7 +8,6 @@ import {
   RightPanel,
   SchemaWrapper,
   SerialNumber,
-  TitleText,
 } from '../ConfigurationConstructor.styled';
 import { useUnit } from 'effector-react';
 import { addPipeNodeCommonDeviceService } from 'services/nodes/addPipeNodeCommonDeviceService';
@@ -52,8 +51,6 @@ export const ColdWaterSupply: FC<SvgComponentProps> = ({
       </SchemaWrapper>
 
       <RightPanel>
-        <TitleText>Добавить прибор</TitleText>
-
         {firstDevice ? (
           <PanelDevice>
             <Block>

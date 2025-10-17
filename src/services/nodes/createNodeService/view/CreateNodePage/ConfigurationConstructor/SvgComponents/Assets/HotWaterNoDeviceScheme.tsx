@@ -115,6 +115,7 @@ export const HotWaterNoDeviceScheme: FC<Props> = ({
           onClick={() => {
             updateCommonDeviceRequestPayload({
               pipeId: Number(feedFlow?.id),
+              housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
             });
             openAddCommonDeviceModal();
           }}

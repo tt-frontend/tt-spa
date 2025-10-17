@@ -19,7 +19,7 @@ export const SchemaWrapper = styled.div`
 export const RightPanel = styled.div`
   display: flex;
   flex-direction: column;
-
+  margin-top: 16px;
   gap: 16px;
   width: 100%;
 `;

@@ -8,7 +8,6 @@ import {
   RightPanel,
   SchemaWrapper,
   SerialNumber,
-  TitleText,
 } from '../ConfigurationConstructor.styled';
 import { HeatWithRechargeScheme } from './Assets/HeatWithRechargeScheme';
 import { useUnit } from 'effector-react';
@@ -83,7 +82,6 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
       </SchemaWrapper>
 
       <RightPanel>
-        <TitleText>Добавить прибор</TitleText>
         {firstDevice ? (
           <PanelDevice>
             <Block>

@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import './svg.css';
-import { CreatePipeHousingMeteringDeviceInNodeRequest } from 'api/types';
+import {
+  CreatePipeHousingMeteringDeviceInNodeRequest,
+  EHousingMeteringDeviceType,
+} from 'api/types';
 import { CommunicationPipePayload } from 'services/nodes/addPipeNodeCommonDeviceService/addPipeNodeCommonDeviceService.types';
 
 type Props = {
@@ -116,6 +119,7 @@ export const ColdWaterNoDeviceScheme: FC<Props> = ({
           onClick={() => {
             updateCommonDeviceRequestPayload({
               pipeId: Number(feedFlow?.id),
+              housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
             });
             openAddCommonDeviceModal();
           }}

@@ -103,6 +103,7 @@ export const ColdWaterSupplyScheme: FC<Props> = ({
           onClick={() => {
             updateCommonDeviceRequestPayload({
               pipeId: Number(feedFlow?.id),
+              housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
             });
             openAddCommonDeviceModal();
           }}
@@ -163,6 +164,8 @@ export const ColdWaterSupplyScheme: FC<Props> = ({
           onClick={() => {
             updateCommonDeviceRequestPayload({
               pipeId: Number(feedFlow?.id),
+              housingMeteringDeviceType:
+                EHousingMeteringDeviceType.TemperatureSensor,
             });
             openAddCommonDeviceModal();
           }}
