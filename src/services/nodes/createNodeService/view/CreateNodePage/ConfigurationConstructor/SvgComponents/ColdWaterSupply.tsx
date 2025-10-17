@@ -4,6 +4,7 @@ import {
   ModelName,
   Panel,
   PanelDevice,
+  RightBlock,
   RightPanel,
   SchemaWrapper,
   SerialNumber,
@@ -61,7 +62,8 @@ export const ColdWaterSupply: FC<SvgComponentProps> = ({
               <SerialNumber>({firstDevice.serialNumber})</SerialNumber>
             </Block>
 
-            <Block>
+            <RightBlock>
+              Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
                   if (feedFlow?.id) {
@@ -72,7 +74,7 @@ export const ColdWaterSupply: FC<SvgComponentProps> = ({
                   }
                 }}
               />
-            </Block>
+            </RightBlock>
           </PanelDevice>
         ) : (
           <Panel
@@ -96,7 +98,8 @@ export const ColdWaterSupply: FC<SvgComponentProps> = ({
               <SerialNumber>({secondDevice.serialNumber})</SerialNumber>
             </Block>
 
-            <Block>
+            <RightBlock>
+              Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
                   if (feedFlow?.id) {
@@ -107,7 +110,7 @@ export const ColdWaterSupply: FC<SvgComponentProps> = ({
                   }
                 }}
               />
-            </Block>
+            </RightBlock>
           </PanelDevice>
         ) : (
           <Panel

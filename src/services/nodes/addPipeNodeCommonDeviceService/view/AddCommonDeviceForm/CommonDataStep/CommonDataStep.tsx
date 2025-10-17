@@ -68,6 +68,7 @@ export const CommonDataStep: FC<CommonDataStepProps> = ({
         <FormItem label="Тип ресурса">
           <ResourceSelect resource={resource} disabled />
         </FormItem>
+
         <FormItem label="Тип прибора">
           <Select
             value={values.housingMeteringDeviceType || undefined}
@@ -75,6 +76,7 @@ export const CommonDataStep: FC<CommonDataStepProps> = ({
               setFieldValue('housingMeteringDeviceType', value)
             }
             placeholder="Выберите"
+            disabled
           >
             {deviceTypesOptions.map((type) => (
               <Select.Option key={type} value={type}>

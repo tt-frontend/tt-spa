@@ -4,6 +4,7 @@ import {
   ModelName,
   Panel,
   PanelDevice,
+  RightBlock,
   RightPanel,
   SchemaWrapper,
   SerialNumber,
@@ -91,7 +92,8 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
               <SerialNumber>({firstDevice.serialNumber})</SerialNumber>
             </Block>
 
-            <Block>
+            <RightBlock>
+              Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
                   if (feedFlow?.id) {
@@ -102,7 +104,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
                   }
                 }}
               />
-            </Block>
+            </RightBlock>
           </PanelDevice>
         ) : (
           <Panel
@@ -125,7 +127,8 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
               <SerialNumber>({secondDevice.serialNumber})</SerialNumber>
             </Block>
 
-            <Block>
+            <RightBlock>
+              Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
                   if (feedFlow?.id) {
@@ -136,7 +139,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
                   }
                 }}
               />
-            </Block>
+            </RightBlock>
           </PanelDevice>
         ) : (
           <Panel
@@ -160,7 +163,8 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
               <SerialNumber>({thirdDevice.serialNumber})</SerialNumber>
             </Block>
 
-            <Block>
+            <RightBlock>
+              Труба: {feedBackFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
                   if (feedBackFlow?.id) {
@@ -171,7 +175,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
                   }
                 }}
               />
-            </Block>
+            </RightBlock>
           </PanelDevice>
         ) : (
           <Panel
@@ -194,7 +198,8 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
               <SerialNumber>({fourthDevice.serialNumber})</SerialNumber>
             </Block>
 
-            <Block>
+            <RightBlock>
+              Труба: {feedBackFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
                   if (feedBackFlow?.id) {
@@ -205,7 +210,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
                   }
                 }}
               />
-            </Block>
+            </RightBlock>
           </PanelDevice>
         ) : (
           <Panel
@@ -229,7 +234,8 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
               <SerialNumber>({fifthDevice.serialNumber})</SerialNumber>
             </Block>
 
-            <Block>
+            <RightBlock>
+              Труба: {recharge?.number}
               <CloseDarkIcon
                 onClick={() => {
                   if (recharge?.id) {
@@ -240,7 +246,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
                   }
                 }}
               />
-            </Block>
+            </RightBlock>
           </PanelDevice>
         ) : (
           <Panel
@@ -263,7 +269,8 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
               <SerialNumber>({sixthDevice.serialNumber})</SerialNumber>
             </Block>
 
-            <Block>
+            <RightBlock>
+              Труба: {recharge?.number}
               <CloseDarkIcon
                 onClick={() => {
                   if (recharge?.id) {
@@ -274,7 +281,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
                   }
                 }}
               />
-            </Block>
+            </RightBlock>
           </PanelDevice>
         ) : (
           <Panel

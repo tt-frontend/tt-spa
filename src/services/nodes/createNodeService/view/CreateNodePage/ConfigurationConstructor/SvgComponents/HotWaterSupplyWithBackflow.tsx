@@ -4,6 +4,7 @@ import {
   ModelName,
   Panel,
   PanelDevice,
+  RightBlock,
   RightPanel,
   SchemaWrapper,
   SerialNumber,
@@ -75,7 +76,8 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
               <SerialNumber>({firstDevice.serialNumber})</SerialNumber>
             </Block>
 
-            <Block>
+            <RightBlock>
+              Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
                   if (feedFlow?.id) {
@@ -86,7 +88,7 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
                   }
                 }}
               />
-            </Block>
+            </RightBlock>
           </PanelDevice>
         ) : (
           <Panel
@@ -109,7 +111,8 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
               <SerialNumber>({secondDevice.serialNumber})</SerialNumber>
             </Block>
 
-            <Block>
+            <RightBlock>
+              Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
                   if (feedFlow?.id) {
@@ -120,7 +123,7 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
                   }
                 }}
               />
-            </Block>
+            </RightBlock>
           </PanelDevice>
         ) : (
           <Panel
@@ -144,7 +147,8 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
               <SerialNumber>({thirdDevice.serialNumber})</SerialNumber>
             </Block>
 
-            <Block>
+            <RightBlock>
+              Труба: {feedBackFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
                   if (feedBackFlow?.id) {
@@ -155,7 +159,7 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
                   }
                 }}
               />
-            </Block>
+            </RightBlock>
           </PanelDevice>
         ) : (
           <Panel
@@ -178,7 +182,8 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
               <SerialNumber>({fourthDevice.serialNumber})</SerialNumber>
             </Block>
 
-            <Block>
+            <RightBlock>
+              Труба: {feedBackFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
                   if (feedBackFlow?.id) {
@@ -189,7 +194,7 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
                   }
                 }}
               />
-            </Block>
+            </RightBlock>
           </PanelDevice>
         ) : (
           <Panel
