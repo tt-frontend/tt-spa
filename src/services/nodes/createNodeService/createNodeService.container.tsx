@@ -9,7 +9,6 @@ import { CreateCalculatorModalContainer } from 'services/calculators/createCalcu
 import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
 import { EHouseCategory } from 'api/types';
 import { mountAddressService } from './view/CreateNodePage/MountAddress/MountAddress.models';
-import { ConfigurationConstructor } from './view/CreateNodePage/ConfigurationConstructor';
 import { addPipeNodeCommonDeviceService } from '../addPipeNodeCommonDeviceService';
 
 const { inputs, outputs, gates } = createNodeService;
@@ -62,8 +61,6 @@ export const CreateNodeContainer = () => {
     deletingServiceZone,
     handleFinallyDeleteServiceZone,
     deletingServiceZoneCount,
-    isConfigurationConstructorOpen,
-    setConfigurationConstructorOpen,
     configurationType,
     setConfigurationType,
     updateCommonDeviceRequestPayload,
@@ -95,8 +92,6 @@ export const CreateNodeContainer = () => {
     deletingServiceZone: outputs.$deletingServiceZone,
     handleFinallyDeleteServiceZone: inputs.handleFinallyDeleteServiceZone,
     deletingServiceZoneCount: outputs.$deletingServiceZoneCount,
-    isConfigurationConstructorOpen: outputs.$isConfigurationConstructorOpen,
-    setConfigurationConstructorOpen: inputs.setConfigurationConstructorOpen,
     configurationType: outputs.$configurationType,
     setConfigurationType: inputs.setConfigurationType,
     updateCommonDeviceRequestPayload:
@@ -133,50 +128,36 @@ export const CreateNodeContainer = () => {
           validationResult={validationResult}
         />
       )}
-      {isConfigurationConstructorOpen && (
-        <ConfigurationConstructor
-          setConfigurationConstructorOpen={setConfigurationConstructorOpen}
-          configurationType={configurationType}
-          requestPayload={requestPayload}
-          updateRequestPayload={updateRequestPayload}
-          updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
-          isValidationLoading={isValidationLoading}
-          validateNode={() => validateNode()}
-        />
-      )}
-      {!isConfigurationConstructorOpen && (
-        <CreateNodePage
-          building={building}
-          existingCities={existingCities}
-          existingStreets={existingStreets}
-          isBuildingLoading={isBuildingLoading}
-          updateRequestPayload={updateRequestPayload}
-          goPrevStep={() => goPrevStep()}
-          stepNumber={stepNumber}
-          calculatorsList={calculatorsList}
-          openCreateCalculatorModal={() =>
-            requestPayload.buildingId &&
-            openCreateCalculatorModal(requestPayload.buildingId)
-          }
-          isDisabledAddress={Boolean(buildingId)}
-          isValidationLoading={isValidationLoading}
-          requestPayload={requestPayload}
-          nodeServiceZones={nodeServiceZones}
-          openCreateNodeServiceZoneModal={() =>
-            openCreateNodeServiceZoneModal()
-          }
-          validateNode={() => validateNode()}
-          handleDeleteServiceZone={handleDeleteServiceZone}
-          isDialogOpen={isDialogOpen}
-          deletingServiceZone={deletingServiceZone}
-          handleFinallyDeleteServiceZone={handleFinallyDeleteServiceZone}
-          successDeleteServiceZone={inputs.successDeleteServiceZone}
-          deletingServiceZoneCount={deletingServiceZoneCount}
-          setConfigurationConstructorOpen={setConfigurationConstructorOpen}
-          configurationType={configurationType}
-          setConfigurationType={setConfigurationType}
-        />
-      )}
+
+      <CreateNodePage
+        building={building}
+        existingCities={existingCities}
+        existingStreets={existingStreets}
+        isBuildingLoading={isBuildingLoading}
+        updateRequestPayload={updateRequestPayload}
+        goPrevStep={() => goPrevStep()}
+        stepNumber={stepNumber}
+        calculatorsList={calculatorsList}
+        openCreateCalculatorModal={() =>
+          requestPayload.buildingId &&
+          openCreateCalculatorModal(requestPayload.buildingId)
+        }
+        isDisabledAddress={Boolean(buildingId)}
+        isValidationLoading={isValidationLoading}
+        requestPayload={requestPayload}
+        nodeServiceZones={nodeServiceZones}
+        openCreateNodeServiceZoneModal={() => openCreateNodeServiceZoneModal()}
+        validateNode={() => validateNode()}
+        handleDeleteServiceZone={handleDeleteServiceZone}
+        isDialogOpen={isDialogOpen}
+        deletingServiceZone={deletingServiceZone}
+        handleFinallyDeleteServiceZone={handleFinallyDeleteServiceZone}
+        successDeleteServiceZone={inputs.successDeleteServiceZone}
+        deletingServiceZoneCount={deletingServiceZoneCount}
+        configurationType={configurationType}
+        setConfigurationType={setConfigurationType}
+        updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
+      />
     </>
   );
 };

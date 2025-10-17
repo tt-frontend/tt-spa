@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import './svg.css';
-import { CreatePipeHousingMeteringDeviceInNodeRequest } from 'api/types';
+import {
+  CreatePipeHousingMeteringDeviceInNodeRequest,
+  EHousingMeteringDeviceType,
+} from 'api/types';
 import { CommunicationPipePayload } from 'services/nodes/addPipeNodeCommonDeviceService/addPipeNodeCommonDeviceService.types';
 
 type Props = {
@@ -20,7 +23,12 @@ export const HeatNoHousingMeteringDeviceScheme: FC<Props> = ({
   openAddCommonDeviceModal,
   feedFlow,
 }) => {
-  const is1 = Boolean(feedFlow?.devices?.[0]);
+  const feedFlowdevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
+
+  const is1 = Boolean(feedFlowdevice);
 
   return (
     <svg

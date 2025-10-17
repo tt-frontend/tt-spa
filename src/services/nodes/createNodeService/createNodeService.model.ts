@@ -156,7 +156,7 @@ const $deletingServiceZone = createStore<NodeServiceZoneResponse | null>(null)
 
 const $isDialogOpen = $deletingServiceZone.map(Boolean);
 
-const $isConfigurationConstructorOpen = createStore<boolean>(false)
+const $isConfigurationConstructorOpen = createStore<boolean>(true)
   .on(setConfigurationConstructorOpen, (_, value) => value)
   .reset(CreateNodeGate.close);
 

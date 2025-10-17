@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import './svg.css';
-import { CreatePipeHousingMeteringDeviceInNodeRequest } from 'api/types';
+import {
+  CreatePipeHousingMeteringDeviceInNodeRequest,
+  EHousingMeteringDeviceType,
+} from 'api/types';
 import { CommunicationPipePayload } from 'services/nodes/addPipeNodeCommonDeviceService/addPipeNodeCommonDeviceService.types';
 
 type Props = {
@@ -22,15 +25,33 @@ export const HotWaterSupplyWithBackflowScheme: FC<Props> = ({
   feedFlow,
   feedBackFlow,
 }) => {
-  const is1 = Boolean(feedFlow?.devices?.[0]);
+  const feedFlowdevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
+  const feedTermodevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType ===
+      EHousingMeteringDeviceType.TemperatureSensor,
+  );
 
-  const is2 = Boolean(feedFlow?.devices?.[1]);
+  const backFlowdevice = feedBackFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
+  const backTermodevice = feedBackFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType ===
+      EHousingMeteringDeviceType.TemperatureSensor,
+  );
 
-  const is3 = Boolean(feedBackFlow?.devices?.[0]);
+  const is1 = Boolean(feedFlowdevice);
 
-  const is4 = Boolean(feedBackFlow?.devices?.[1]);
+  const is2 = Boolean(feedTermodevice);
 
-  console.log(is3);
+  const is3 = Boolean(backFlowdevice);
+
+  const is4 = Boolean(backTermodevice);
 
   return (
     <svg

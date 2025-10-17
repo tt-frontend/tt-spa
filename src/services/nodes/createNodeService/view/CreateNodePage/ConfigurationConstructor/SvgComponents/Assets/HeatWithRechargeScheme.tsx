@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import './svg.css';
-import { CreatePipeHousingMeteringDeviceInNodeRequest } from 'api/types';
+import {
+  CreatePipeHousingMeteringDeviceInNodeRequest,
+  EHousingMeteringDeviceType,
+} from 'api/types';
 import { CommunicationPipePayload } from 'services/nodes/addPipeNodeCommonDeviceService/addPipeNodeCommonDeviceService.types';
 
 type Props = {
@@ -24,17 +27,47 @@ export const HeatWithRechargeScheme: FC<Props> = ({
   feedBackFlow,
   recharge,
 }) => {
-  const is1 = Boolean(feedFlow?.devices?.[0]);
+  const feedFlowdevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
+  const feedTermodevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType ===
+      EHousingMeteringDeviceType.TemperatureSensor,
+  );
 
-  const is2 = Boolean(feedFlow?.devices?.[1]);
+  const backFlowdevice = feedBackFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
+  const backTermodevice = feedBackFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType ===
+      EHousingMeteringDeviceType.TemperatureSensor,
+  );
 
-  const is3 = Boolean(feedBackFlow?.devices?.[0]);
+  const rechargeFlowdevice = recharge?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
+  const rechargeTermodevice = recharge?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType ===
+      EHousingMeteringDeviceType.TemperatureSensor,
+  );
 
-  const is4 = Boolean(feedBackFlow?.devices?.[1]);
+  const is1 = Boolean(feedFlowdevice);
 
-  const is5 = Boolean(recharge?.devices?.[0]);
+  const is2 = Boolean(feedTermodevice);
 
-  const is6 = Boolean(recharge?.devices?.[1]);
+  const is3 = Boolean(backFlowdevice);
+
+  const is4 = Boolean(backTermodevice);
+
+  const is5 = Boolean(rechargeFlowdevice);
+
+  const is6 = Boolean(rechargeTermodevice);
 
   return (
     <svg

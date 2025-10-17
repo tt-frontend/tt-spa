@@ -1,47 +1,27 @@
 import React, { FC } from 'react';
 import { Button } from 'ui-kit/Button';
-import { Title } from 'ui-kit/Title';
 import { Footer } from '../CreateNodePage.styled';
 import { ConnectedDevicesProps } from './ConnectedDevices.types';
-import {
-  Background,
-  ButtonSC,
-  ConstructorWrapper,
-  Overlay,
-  Subtitle,
-  TitleText,
-} from './ConnectedDevices.styled';
-import { configurationSchemes } from '../CommonData/CommonData';
-import { DeviceGreyIcon } from 'ui-kit/icons';
+import { ButtonSC } from './ConnectedDevices.styled';
+import { ConfigurationConstructor } from '../ConfigurationConstructor';
 
 export const ConnectedDevices: FC<ConnectedDevicesProps> = ({
   goPrevStep,
   validateNode,
   isValidationLoading,
-  setConfigurationConstructorOpen,
   configurationType,
+  updateCommonDeviceRequestPayload,
+  requestPayload,
+  updateRequestPayload,
 }) => {
   return (
     <>
-      <Title>Подключенные приборы</Title>
-
-      <ConstructorWrapper>
-        <Background>
-          {configurationType && configurationSchemes[configurationType]}
-        </Background>
-
-        <Overlay>
-          <DeviceGreyIcon />
-          <TitleText>Подключить приборы</TitleText>
-          <Subtitle>
-            Перейдите в конструктор, чтобы настроить конфигурацию и добавить
-            приборы
-          </Subtitle>
-          <Button onClick={() => setConfigurationConstructorOpen(true)}>
-            Перейти в конструктор
-          </Button>
-        </Overlay>
-      </ConstructorWrapper>
+      <ConfigurationConstructor
+        configurationType={configurationType}
+        requestPayload={requestPayload}
+        updateRequestPayload={updateRequestPayload}
+        updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
+      />
 
       <Footer>
         <Button type="ghost" onClick={goPrevStep}>

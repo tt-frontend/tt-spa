@@ -1,10 +1,9 @@
 import { FC, useEffect, useState } from 'react';
-import { Footer, RightBlock, Wrapper } from './ConfigurationConstructor.styled';
 import { Props } from './ConfigurationConstructor.types';
-import { Button } from 'ui-kit/Button';
 import { omit } from 'lodash';
 import {
   CreatePipeHousingMeteringDeviceInNodeRequest,
+  EHousingMeteringDeviceType,
   EPipeNodeConfig,
 } from 'api/types';
 import {
@@ -19,12 +18,9 @@ import { svgComponents } from './ConfigurationConstructor.constants';
 
 export const ConfigurationConstructor: FC<Props> = ({
   configurationType,
-  setConfigurationConstructorOpen,
   requestPayload,
   updateRequestPayload,
   updateCommonDeviceRequestPayload,
-  isValidationLoading,
-  validateNode,
 }) => {
   const [communicationPipes, setCommunicationPipes] = useState<
     CommunicationPipePayload[]
@@ -54,25 +50,19 @@ export const ConfigurationConstructor: FC<Props> = ({
     );
   };
 
-  const handleDeleteDevice = (pipeId: string, deviceIndex: number) => {
+  const handleDeleteDevice = (
+    pipeId: string,
+    deviceType: EHousingMeteringDeviceType,
+  ) => {
     setCommunicationPipes((pipes) =>
       pipes.map((pipe) => {
         if (pipe.id !== pipeId) return pipe;
 
         return {
           ...pipe,
-          devices: pipe.devices?.filter((_, index) => index !== deviceIndex),
-        };
-      }),
-    );
-  };
-
-  const handleClear = () => {
-    setCommunicationPipes((pipes) =>
-      pipes.map((pipe) => {
-        return {
-          ...pipe,
-          devices: [],
+          devices: pipe.devices?.filter(
+            (device) => device.housingMeteringDeviceType !== deviceType,
+          ),
         };
       }),
     );
@@ -101,30 +91,11 @@ export const ConfigurationConstructor: FC<Props> = ({
         />
       )}
 
-      <Wrapper>
-        <Component
-          communicationPipes={communicationPipes}
-          updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
-          handleDeleteDevice={handleDeleteDevice}
-        />
-
-        <Footer>
-          <Button type="ghost" onClick={handleClear}>
-            Очистить
-          </Button>
-          <RightBlock>
-            <Button
-              type="ghost"
-              onClick={() => setConfigurationConstructorOpen(false)}
-            >
-              Отмена
-            </Button>
-            <Button onClick={validateNode} isLoading={isValidationLoading}>
-              Сохранить
-            </Button>
-          </RightBlock>
-        </Footer>
-      </Wrapper>
+      <Component
+        communicationPipes={communicationPipes}
+        updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
+        handleDeleteDevice={handleDeleteDevice}
+      />
     </>
   );
 };

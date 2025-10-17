@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import {
-  AddButton,
   Block,
   ModelName,
   Panel,
+  PanelDevice,
   RightPanel,
   SchemaWrapper,
   SerialNumber,
@@ -12,8 +12,8 @@ import {
 import { HeatWithRechargeScheme } from './Assets/HeatWithRechargeScheme';
 import { useUnit } from 'effector-react';
 import { addPipeNodeCommonDeviceService } from 'services/nodes/addPipeNodeCommonDeviceService';
-import { EMagistralType } from 'api/types';
-import { CloseDarkIcon, DeviceIcon } from 'ui-kit/icons';
+import { EHousingMeteringDeviceType, EMagistralType } from 'api/types';
+import { CloseDarkIcon, DeviceIcon, PlusBlueIcon } from 'ui-kit/icons';
 import { SvgComponentProps } from '../ConfigurationConstructor.types';
 
 export const HeatWithRecharge: FC<SvgComponentProps> = ({
@@ -38,17 +38,36 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
     (pipe) => pipe.magistral === EMagistralType.Recharge,
   );
 
-  const firstDevice = feedFlow?.devices?.[0];
+  const firstDevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
+  const secondDevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType ===
+      EHousingMeteringDeviceType.TemperatureSensor,
+  );
 
-  const secondDevice = feedFlow?.devices?.[1];
+  const thirdDevice = feedBackFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
+  const fourthDevice = feedBackFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType ===
+      EHousingMeteringDeviceType.TemperatureSensor,
+  );
 
-  const thirdDevice = feedBackFlow?.devices?.[0];
+  const fifthDevice = recharge?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
 
-  const fourthDevice = feedBackFlow?.devices?.[1];
-
-  const fifthDevice = recharge?.devices?.[0];
-
-  const sixthDevice = recharge?.devices?.[1];
+  const sixthDevice = recharge?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType ===
+      EHousingMeteringDeviceType.TemperatureSensor,
+  );
 
   return (
     <>
@@ -65,7 +84,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
       <RightPanel>
         <TitleText>Добавить прибор</TitleText>
         {firstDevice ? (
-          <Panel>
+          <PanelDevice>
             <Block>
               <DeviceIcon />
               <ModelName>{firstDevice.model}</ModelName>
@@ -76,26 +95,30 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
               <CloseDarkIcon
                 onClick={() => {
                   if (feedFlow?.id) {
-                    handleDeleteDevice(feedFlow?.id, 0);
+                    handleDeleteDevice(
+                      feedFlow?.id,
+                      EHousingMeteringDeviceType.FlowMeter,
+                    );
                   }
                 }}
               />
             </Block>
-          </Panel>
+          </PanelDevice>
         ) : (
           <Panel
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(feedFlow?.id),
+                housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
               });
               openAddCommonDeviceModal();
             }}
           >
-            <AddButton> + Добавить прибор</AddButton>
+            <PlusBlueIcon /> Добавить расходомер (подающая магистраль)
           </Panel>
         )}
         {secondDevice ? (
-          <Panel>
+          <PanelDevice>
             <Block>
               <DeviceIcon />
               <ModelName>{secondDevice.model}</ModelName>
@@ -106,26 +129,31 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
               <CloseDarkIcon
                 onClick={() => {
                   if (feedFlow?.id) {
-                    handleDeleteDevice(feedFlow?.id, 1);
+                    handleDeleteDevice(
+                      feedFlow?.id,
+                      EHousingMeteringDeviceType.TemperatureSensor,
+                    );
                   }
                 }}
               />
             </Block>
-          </Panel>
+          </PanelDevice>
         ) : (
           <Panel
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(feedFlow?.id),
+                housingMeteringDeviceType:
+                  EHousingMeteringDeviceType.TemperatureSensor,
               });
               openAddCommonDeviceModal();
             }}
           >
-            <AddButton> + Добавить прибор</AddButton>
+            <PlusBlueIcon /> Добавить термодатчик (подающая магистраль)
           </Panel>
         )}
         {thirdDevice ? (
-          <Panel>
+          <PanelDevice>
             <Block>
               <DeviceIcon />
               <ModelName>{thirdDevice.model}</ModelName>
@@ -136,26 +164,30 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
               <CloseDarkIcon
                 onClick={() => {
                   if (feedBackFlow?.id) {
-                    handleDeleteDevice(feedBackFlow?.id, 0);
+                    handleDeleteDevice(
+                      feedBackFlow?.id,
+                      EHousingMeteringDeviceType.FlowMeter,
+                    );
                   }
                 }}
               />
             </Block>
-          </Panel>
+          </PanelDevice>
         ) : (
           <Panel
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(feedBackFlow?.id),
+                housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
               });
               openAddCommonDeviceModal();
             }}
           >
-            <AddButton> + Добавить прибор</AddButton>
+            <PlusBlueIcon /> Добавить расходомер (обратная магистраль)
           </Panel>
         )}
         {fourthDevice ? (
-          <Panel>
+          <PanelDevice>
             <Block>
               <DeviceIcon />
               <ModelName>{fourthDevice.model}</ModelName>
@@ -166,26 +198,31 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
               <CloseDarkIcon
                 onClick={() => {
                   if (feedBackFlow?.id) {
-                    handleDeleteDevice(feedBackFlow?.id, 1);
+                    handleDeleteDevice(
+                      feedBackFlow?.id,
+                      EHousingMeteringDeviceType.TemperatureSensor,
+                    );
                   }
                 }}
               />
             </Block>
-          </Panel>
+          </PanelDevice>
         ) : (
           <Panel
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(feedBackFlow?.id),
+                housingMeteringDeviceType:
+                  EHousingMeteringDeviceType.TemperatureSensor,
               });
               openAddCommonDeviceModal();
             }}
           >
-            <AddButton> + Добавить прибор</AddButton>
+            <PlusBlueIcon /> Добавить термодатчик (обратная магистраль)
           </Panel>
         )}
         {fifthDevice ? (
-          <Panel>
+          <PanelDevice>
             <Block>
               <DeviceIcon />
               <ModelName>{fifthDevice.model}</ModelName>
@@ -196,26 +233,30 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
               <CloseDarkIcon
                 onClick={() => {
                   if (recharge?.id) {
-                    handleDeleteDevice(recharge?.id, 0);
+                    handleDeleteDevice(
+                      recharge?.id,
+                      EHousingMeteringDeviceType.FlowMeter,
+                    );
                   }
                 }}
               />
             </Block>
-          </Panel>
+          </PanelDevice>
         ) : (
           <Panel
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(recharge?.id),
+                housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
               });
               openAddCommonDeviceModal();
             }}
           >
-            <AddButton> + Добавить прибор</AddButton>
+            <PlusBlueIcon /> Добавить расходомер (подпитка)
           </Panel>
         )}
         {sixthDevice ? (
-          <Panel>
+          <PanelDevice>
             <Block>
               <DeviceIcon />
               <ModelName>{sixthDevice.model}</ModelName>
@@ -226,22 +267,27 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
               <CloseDarkIcon
                 onClick={() => {
                   if (recharge?.id) {
-                    handleDeleteDevice(recharge?.id, 1);
+                    handleDeleteDevice(
+                      recharge?.id,
+                      EHousingMeteringDeviceType.TemperatureSensor,
+                    );
                   }
                 }}
               />
             </Block>
-          </Panel>
+          </PanelDevice>
         ) : (
           <Panel
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(recharge?.id),
+                housingMeteringDeviceType:
+                  EHousingMeteringDeviceType.TemperatureSensor,
               });
               openAddCommonDeviceModal();
             }}
           >
-            <AddButton> + Добавить прибор</AddButton>
+            <PlusBlueIcon /> Добавить термодатчик (подпитка)
           </Panel>
         )}
       </RightPanel>

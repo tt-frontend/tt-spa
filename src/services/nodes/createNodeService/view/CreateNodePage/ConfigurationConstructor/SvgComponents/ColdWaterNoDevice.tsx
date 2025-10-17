@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import {
-  AddButton,
   Block,
   ModelName,
   Panel,
+  PanelDevice,
   RightPanel,
   SchemaWrapper,
   SerialNumber,
@@ -11,8 +11,8 @@ import {
 } from '../ConfigurationConstructor.styled';
 import { useUnit } from 'effector-react';
 import { addPipeNodeCommonDeviceService } from 'services/nodes/addPipeNodeCommonDeviceService';
-import { EMagistralType } from 'api/types';
-import { CloseDarkIcon, DeviceIcon } from 'ui-kit/icons';
+import { EHousingMeteringDeviceType, EMagistralType } from 'api/types';
+import { CloseDarkIcon, DeviceIcon, PlusBlueIcon } from 'ui-kit/icons';
 import { SvgComponentProps } from '../ConfigurationConstructor.types';
 import { ColdWaterNoDeviceScheme } from './Assets/ColdWaterNoDeviceScheme';
 
@@ -30,7 +30,10 @@ export const ColdWaterNoDevice: FC<SvgComponentProps> = ({
     (pipe) => pipe.magistral === EMagistralType.FeedFlow,
   );
 
-  const firstDevice = feedFlow?.devices?.[0];
+  const firstDevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
 
   return (
     <>
@@ -45,7 +48,7 @@ export const ColdWaterNoDevice: FC<SvgComponentProps> = ({
       <RightPanel>
         <TitleText>Добавить прибор</TitleText>
         {firstDevice ? (
-          <Panel>
+          <PanelDevice>
             <Block>
               <DeviceIcon />
               <ModelName>{firstDevice.model}</ModelName>
@@ -56,22 +59,26 @@ export const ColdWaterNoDevice: FC<SvgComponentProps> = ({
               <CloseDarkIcon
                 onClick={() => {
                   if (feedFlow?.id) {
-                    handleDeleteDevice(feedFlow?.id, 0);
+                    handleDeleteDevice(
+                      feedFlow?.id,
+                      EHousingMeteringDeviceType.FlowMeter,
+                    );
                   }
                 }}
               />
             </Block>
-          </Panel>
+          </PanelDevice>
         ) : (
           <Panel
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(feedFlow?.id),
+                housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
               });
               openAddCommonDeviceModal();
             }}
           >
-            <AddButton> + Добавить прибор</AddButton>
+            <PlusBlueIcon /> Добавить расходомер (подающая магистраль)
           </Panel>
         )}
       </RightPanel>

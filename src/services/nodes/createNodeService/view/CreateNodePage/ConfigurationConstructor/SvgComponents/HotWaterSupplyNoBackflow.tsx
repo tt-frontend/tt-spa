@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import {
-  AddButton,
   Block,
   ModelName,
   Panel,
+  PanelDevice,
   RightPanel,
   SchemaWrapper,
   SerialNumber,
@@ -11,8 +11,8 @@ import {
 } from '../ConfigurationConstructor.styled';
 import { useUnit } from 'effector-react';
 import { addPipeNodeCommonDeviceService } from 'services/nodes/addPipeNodeCommonDeviceService';
-import { EMagistralType } from 'api/types';
-import { CloseDarkIcon, DeviceIcon } from 'ui-kit/icons';
+import { EHousingMeteringDeviceType, EMagistralType } from 'api/types';
+import { CloseDarkIcon, DeviceIcon, PlusBlueIcon } from 'ui-kit/icons';
 import { SvgComponentProps } from '../ConfigurationConstructor.types';
 import { HotWaterSupplyNoBackflowScheme } from './Assets/HotWaterSupplyNoBackflowScheme';
 
@@ -30,9 +30,15 @@ export const HotWaterSupplyNoBackflow: FC<SvgComponentProps> = ({
     (pipe) => pipe.magistral === EMagistralType.FeedFlow,
   );
 
-  const firstDevice = feedFlow?.devices?.[0];
-
-  const secondDevice = feedFlow?.devices?.[1];
+  const firstDevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
+  const secondDevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType ===
+      EHousingMeteringDeviceType.TemperatureSensor,
+  );
 
   return (
     <>
@@ -47,7 +53,7 @@ export const HotWaterSupplyNoBackflow: FC<SvgComponentProps> = ({
       <RightPanel>
         <TitleText>Добавить прибор</TitleText>
         {firstDevice ? (
-          <Panel>
+          <PanelDevice>
             <Block>
               <DeviceIcon />
               <ModelName>{firstDevice.model}</ModelName>
@@ -58,27 +64,31 @@ export const HotWaterSupplyNoBackflow: FC<SvgComponentProps> = ({
               <CloseDarkIcon
                 onClick={() => {
                   if (feedFlow?.id) {
-                    handleDeleteDevice(feedFlow?.id, 0);
+                    handleDeleteDevice(
+                      feedFlow?.id,
+                      EHousingMeteringDeviceType.FlowMeter,
+                    );
                   }
                 }}
               />
             </Block>
-          </Panel>
+          </PanelDevice>
         ) : (
           <Panel
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(feedFlow?.id),
+                housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
               });
               openAddCommonDeviceModal();
             }}
           >
-            <AddButton> + Добавить прибор</AddButton>
+            <PlusBlueIcon /> Добавить расходомер (подающая магистраль)
           </Panel>
         )}
 
         {secondDevice ? (
-          <Panel>
+          <PanelDevice>
             <Block>
               <DeviceIcon />
               <ModelName>{secondDevice.model}</ModelName>
@@ -89,22 +99,27 @@ export const HotWaterSupplyNoBackflow: FC<SvgComponentProps> = ({
               <CloseDarkIcon
                 onClick={() => {
                   if (feedFlow?.id) {
-                    handleDeleteDevice(feedFlow?.id, 1);
+                    handleDeleteDevice(
+                      feedFlow?.id,
+                      EHousingMeteringDeviceType.TemperatureSensor,
+                    );
                   }
                 }}
               />
             </Block>
-          </Panel>
+          </PanelDevice>
         ) : (
           <Panel
             onClick={() => {
               updateCommonDeviceRequestPayload({
                 pipeId: Number(feedFlow?.id),
+                housingMeteringDeviceType:
+                  EHousingMeteringDeviceType.TemperatureSensor,
               });
               openAddCommonDeviceModal();
             }}
           >
-            <AddButton> + Добавить прибор</AddButton>
+            <PlusBlueIcon /> Добавить термодатчик (подающая магистраль)
           </Panel>
         )}
       </RightPanel>

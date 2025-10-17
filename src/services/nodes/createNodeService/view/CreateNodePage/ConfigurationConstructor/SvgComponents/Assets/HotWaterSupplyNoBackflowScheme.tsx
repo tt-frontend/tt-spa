@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import './svg.css';
-import { CreatePipeHousingMeteringDeviceInNodeRequest } from 'api/types';
+import {
+  CreatePipeHousingMeteringDeviceInNodeRequest,
+  EHousingMeteringDeviceType,
+} from 'api/types';
 import { CommunicationPipePayload } from 'services/nodes/addPipeNodeCommonDeviceService/addPipeNodeCommonDeviceService.types';
 
 type Props = {
@@ -20,9 +23,19 @@ export const HotWaterSupplyNoBackflowScheme: FC<Props> = ({
   openAddCommonDeviceModal,
   feedFlow,
 }) => {
-  const is1 = Boolean(feedFlow?.devices?.[0]);
+  const feedFlowdevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
+  const feedTermodevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType ===
+      EHousingMeteringDeviceType.TemperatureSensor,
+  );
 
-  const is2 = Boolean(feedFlow?.devices?.[1]);
+  const is1 = Boolean(feedFlowdevice);
+
+  const is2 = Boolean(feedTermodevice);
 
   return (
     <svg
