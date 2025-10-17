@@ -139,6 +139,9 @@ export const HotWaterNoDeviceScheme: FC<Props> = ({
           />
         </g>
       )}
+      <text x="180" y="180" fontSize="14" fontWeight="500" fill="#272F5A">
+        Расходомер
+      </text>
 
       <defs>
         <filter

@@ -128,6 +128,9 @@ export const HotWaterSupplyNoBackflowScheme: FC<Props> = ({
           />
         </g>
       )}
+      <text x="99" y="170" fontSize="12" fontWeight="500" fill="#272F5A">
+        Расходомер
+      </text>
 
       {is2 ? (
         <g filter="url(#filter1_dd_210_30840)">
@@ -190,6 +193,9 @@ export const HotWaterSupplyNoBackflowScheme: FC<Props> = ({
           />
         </g>
       )}
+      <text x="262" y="170" fontSize="12" fontWeight="500" fill="#272F5A">
+        Термодатчик
+      </text>
 
       <defs>
         <filter

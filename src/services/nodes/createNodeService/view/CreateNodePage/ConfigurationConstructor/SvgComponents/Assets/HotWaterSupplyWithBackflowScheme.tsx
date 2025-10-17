@@ -166,6 +166,9 @@ export const HotWaterSupplyWithBackflowScheme: FC<Props> = ({
           />
         </g>
       )}
+      <text x="66" y="74" fontSize="12" fontWeight="500" fill="#272F5A">
+        Расходомер
+      </text>
 
       {is4 ? (
         <g filter="url(#filter1_dd_225_157)">
@@ -224,6 +227,9 @@ export const HotWaterSupplyWithBackflowScheme: FC<Props> = ({
           />
         </g>
       )}
+      <text x="162" y="264" fontSize="12" fontWeight="500" fill="#272F5A">
+        Термодатчик
+      </text>
 
       {is2 ? (
         <g filter="url(#filter2_dd_225_157)">
@@ -286,6 +292,9 @@ export const HotWaterSupplyWithBackflowScheme: FC<Props> = ({
           />
         </g>
       )}
+      <text x="166" y="74" fontSize="12" fontWeight="500" fill="#272F5A">
+        Термодатчик
+      </text>
 
       {is3 ? (
         <g filter="url(#filter3_dd_225_157)">
@@ -347,6 +356,9 @@ export const HotWaterSupplyWithBackflowScheme: FC<Props> = ({
           />
         </g>
       )}
+      <text x="264" y="264" fontSize="12" fontWeight="500" fill="#272F5A">
+        Расходомер
+      </text>
 
       <defs>
         <filter

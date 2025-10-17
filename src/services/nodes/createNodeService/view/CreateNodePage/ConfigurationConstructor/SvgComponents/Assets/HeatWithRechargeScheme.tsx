@@ -215,6 +215,10 @@ export const HeatWithRechargeScheme: FC<Props> = ({
             />
           </g>
         )}
+        <text x="30" y="74" fontSize="12" fontWeight="500" fill="#272F5A">
+          Расходомер
+        </text>
+
         {is5 ? (
           <g id="Group 1085" filter="url(#filter1_dd_212_6787)">
             <path
@@ -276,6 +280,9 @@ export const HeatWithRechargeScheme: FC<Props> = ({
             />
           </g>
         )}
+        <text x="25" y="260" fontSize="12" fontWeight="500" fill="#272F5A">
+          Расходомер
+        </text>
 
         {is4 ? (
           <g id="Group 1083_2" filter="url(#filter2_dd_212_6787)">
@@ -339,6 +346,9 @@ export const HeatWithRechargeScheme: FC<Props> = ({
             />
           </g>
         )}
+        <text x="190" y="190" fontSize="12" fontWeight="500" fill="#272F5A">
+          Термодатчик
+        </text>
 
         {is2 ? (
           <g id="Group 1081" filter="url(#filter3_dd_212_6787)">
@@ -406,6 +416,9 @@ export const HeatWithRechargeScheme: FC<Props> = ({
             />
           </g>
         )}
+        <text x="190" y="74" fontSize="12" fontWeight="500" fill="#272F5A">
+          Термодатчик
+        </text>
 
         {is6 ? (
           <g id="Group 1086" filter="url(#filter4_dd_212_6787)">
@@ -473,6 +486,9 @@ export const HeatWithRechargeScheme: FC<Props> = ({
             />
           </g>
         )}
+        <text x="105" y="260" fontSize="12" fontWeight="500" fill="#272F5A">
+          Термодатчик
+        </text>
 
         {is3 ? (
           <g id="Group 1084" filter="url(#filter5_dd_212_6787)">
@@ -540,6 +556,9 @@ export const HeatWithRechargeScheme: FC<Props> = ({
           </g>
         )}
       </g>
+      <text x="286" y="190" fontSize="12" fontWeight="500" fill="#272F5A">
+        Расходомер
+      </text>
 
       <defs>
         <filter

@@ -128,6 +128,10 @@ export const ColdWaterSupplyScheme: FC<Props> = ({
         </g>
       )}
 
+      <text x="102" y="172" fontSize="12" fontWeight="500" fill="#272F5A">
+        Расходомер
+      </text>
+
       {is2 ? (
         <g filter="url(#filter1_dd_206_9951)">
           <rect
@@ -189,6 +193,9 @@ export const ColdWaterSupplyScheme: FC<Props> = ({
           />
         </g>
       )}
+      <text x="262" y="172" fontSize="12" fontWeight="500" fill="#272F5A">
+        Термодатчик
+      </text>
 
       <defs>
         <filter

@@ -138,6 +138,9 @@ export const HeatNoHousingMeteringDeviceScheme: FC<Props> = ({
           />
         </g>
       )}
+      <text x="182" y="185" fontSize="14" fontWeight="500" fill="#272F5A">
+        Расходомер
+      </text>
 
       <defs>
         <filter
