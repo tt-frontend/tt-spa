@@ -20,6 +20,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
   communicationPipes,
   updateCommonDeviceRequestPayload,
   handleDeleteDevice,
+  entryNumber,
 }) => {
   const { openAddCommonDeviceModal } = useUnit({
     openAddCommonDeviceModal:
@@ -91,6 +92,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
@@ -126,6 +128,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
@@ -162,6 +165,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {feedBackFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
@@ -197,6 +201,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {feedBackFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
@@ -233,6 +238,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {recharge?.number}
               <CloseDarkIcon
                 onClick={() => {
@@ -268,6 +274,7 @@ export const HeatWithRecharge: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {recharge?.number}
               <CloseDarkIcon
                 onClick={() => {

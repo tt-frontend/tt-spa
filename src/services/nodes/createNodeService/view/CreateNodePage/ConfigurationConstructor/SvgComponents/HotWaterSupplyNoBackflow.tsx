@@ -20,6 +20,7 @@ export const HotWaterSupplyNoBackflow: FC<SvgComponentProps> = ({
   communicationPipes,
   updateCommonDeviceRequestPayload,
   handleDeleteDevice,
+  entryNumber,
 }) => {
   const { openAddCommonDeviceModal } = useUnit({
     openAddCommonDeviceModal:
@@ -60,6 +61,7 @@ export const HotWaterSupplyNoBackflow: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
@@ -96,6 +98,7 @@ export const HotWaterSupplyNoBackflow: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {

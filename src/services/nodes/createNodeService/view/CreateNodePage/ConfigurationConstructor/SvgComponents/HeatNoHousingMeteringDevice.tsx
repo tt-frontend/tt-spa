@@ -20,6 +20,7 @@ export const HeatNoHousingMeteringDevice: FC<SvgComponentProps> = ({
   communicationPipes,
   updateCommonDeviceRequestPayload,
   handleDeleteDevice,
+  entryNumber,
 }) => {
   const { openAddCommonDeviceModal } = useUnit({
     openAddCommonDeviceModal:
@@ -55,6 +56,7 @@ export const HeatNoHousingMeteringDevice: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
