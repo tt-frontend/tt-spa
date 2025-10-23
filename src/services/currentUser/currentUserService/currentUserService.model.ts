@@ -8,6 +8,7 @@ import { currentUserEditServiceService } from '../currentUserEditService/current
 const fetchCurrentUserFx = createEffect<void, OrganizationUserResponse>(
   getCurrentUser,
 );
+
 const $currentUser = createStore<OrganizationUserResponse | null>(null)
   .on(fetchCurrentUserFx.doneData, (_, user) => user)
   .on(currentUserEditServiceService.inputs.handleUpdateUser, (_, data) => data);

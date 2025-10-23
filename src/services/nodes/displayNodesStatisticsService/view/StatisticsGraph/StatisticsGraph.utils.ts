@@ -76,7 +76,7 @@ const getTaskXPos = (payload: GetTaskXPosPayload) => {
 
   if (reportType === 'hourly') {
     const hourlyX = Math.round(
-      dayjs(currentData).diff(dayjs(minDate), 'minutes') / 60,
+      dayjs(currentData).utc(true).diff(dayjs(minDate), 'minutes') / 60 + 1,
     );
 
     return hourlyX;

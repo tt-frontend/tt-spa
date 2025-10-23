@@ -6,7 +6,6 @@ import {
 } from './CurrentAnalyticsPage.styled';
 import { Props } from './CurrentAnalyticsPage.types';
 import { PageHeader } from 'ui-kit/shared/PageHeader';
-import { AnalyticsSearch } from './AnalyticsSearch';
 import { WithLoader } from 'ui-kit/shared/WithLoader';
 import { InfoOptionsPanels } from './InfoOptionsPanels';
 import { splitArrayForDashboard } from './CurrentAnalyticsPage.utils';
@@ -20,6 +19,11 @@ import { TaskQualityDashboardPanel } from './DashboardPanel/TaskQualityDashboard
 import { Empty } from 'antd';
 import { BreadCrumbs } from './BreadCrumbs';
 import { FilterStatus } from './FilterStatus';
+import { Segmented } from 'ui-kit/Segmented';
+import { BuildingsPageSegment } from 'services/objects/objectsProfileService/view/ObjectsProfile/ObjectsProfile.types';
+import { ListIcon, MapIcon } from 'ui-kit/icons';
+import { TasksMapContainer } from 'services/tasks/tasksMapService';
+import { AnalyticsSearch } from 'services/supervisor/AnalyticsSearch';
 
 export const CurrentAnalyticsPage: FC<Props> = ({
   isLoadingSummary,
@@ -36,6 +40,9 @@ export const CurrentAnalyticsPage: FC<Props> = ({
   setDashboardFilters,
   resetDashboardFilters,
   organizationsList,
+  pageSegment,
+  setSegment,
+  existingMoDistricts,
 }) => {
   const dataList = useMemo(() => {
     const dataMap = {
@@ -165,38 +172,67 @@ export const CurrentAnalyticsPage: FC<Props> = ({
 
   return (
     <Wrapper>
-      <PageHeader title="Текущая ситуация" contextMenu={{}} />
-      <AnalyticsSearch
-        dashboardFilters={dashboardFilters}
-        setDashboardFilters={setDashboardFilters}
-        resetDashboardFilters={resetDashboardFilters}
-        organizationsList={organizationsList}
-      />
-      <InfoOptionsPanels
-        isLoading={isLoadingSummary}
-        dashboardSummary={dashboardSummary}
-        currentDashboardType={currentDashboardType}
-        setCurrentDashboardType={setCurrentDashboardType}
-      />
-      <StatusPanelWrapper>
-        <BreadCrumbs
-          setDashboardFilters={setDashboardFilters}
-          dashboardSummary={dashboardSummary}
+      <PageHeader title="Текущая ситуация">
+        <Segmented<BuildingsPageSegment>
+          active={pageSegment}
+          items={[
+            {
+              title: 'Список',
+              name: 'list',
+              icon: <ListIcon />,
+            },
+            {
+              title: 'На карте',
+              name: 'map',
+              icon: <MapIcon />,
+            },
+          ]}
+          onChange={setSegment}
         />
-        <FilterStatus
-          setDashboardFilters={setDashboardFilters}
-          dashboardFilters={dashboardFilters}
-          currentDashboardType={currentDashboardType}
-        />
-      </StatusPanelWrapper>
-      <WithLoader isLoading={isLoadingSummary || isLoadingPanels}>
-        {isEmpty && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-        {!isEmpty && (
-          <DashboardPanelWrapper>
-            {Dashboard && <Dashboard />}
-          </DashboardPanelWrapper>
-        )}
-      </WithLoader>
+      </PageHeader>
+
+      {pageSegment === 'list' && (
+        <>
+          <AnalyticsSearch
+            dashboardFilters={dashboardFilters}
+            setDashboardFilters={setDashboardFilters}
+            resetDashboardFilters={resetDashboardFilters}
+            organizationsList={organizationsList}
+            existingMoDistricts={existingMoDistricts}
+          />
+          <InfoOptionsPanels
+            isLoading={isLoadingSummary}
+            dashboardSummary={dashboardSummary}
+            currentDashboardType={currentDashboardType}
+            setCurrentDashboardType={setCurrentDashboardType}
+          />
+          <StatusPanelWrapper>
+            <BreadCrumbs
+              setDashboardFilters={setDashboardFilters}
+              dashboardSummary={dashboardSummary}
+            />
+            <FilterStatus
+              setDashboardFilters={setDashboardFilters}
+              dashboardFilters={dashboardFilters}
+              currentDashboardType={currentDashboardType}
+            />
+          </StatusPanelWrapper>
+          <WithLoader isLoading={isLoadingSummary || isLoadingPanels}>
+            {isEmpty && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+            {!isEmpty && (
+              <DashboardPanelWrapper>
+                {Dashboard && <Dashboard />}
+              </DashboardPanelWrapper>
+            )}
+          </WithLoader>
+        </>
+      )}
+
+      {pageSegment === 'map' && (
+        <>
+          <TasksMapContainer />
+        </>
+      )}
     </Wrapper>
   );
 };

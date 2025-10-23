@@ -46,7 +46,7 @@ export const BottomBlock = styled.div`
 `;
 
 export const ButtonBlue = styled(Button)`
-  width: 100px;
+  width: auto;
   border-color: rgba(24, 158, 233, 1);
 `;
 

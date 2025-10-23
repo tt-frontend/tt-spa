@@ -14,6 +14,7 @@ import {
   DashboardQueryParams,
 } from './currentAnalyticsService.types';
 import dayjs from 'dayjs';
+import { BuildingsPageSegment } from 'services/objects/objectsProfileService/view/ObjectsProfile/ObjectsProfile.types';
 
 const CurrentAnalyticsGate = createGate();
 const setCurrentDashboardType = createEvent<DashboardDataType>();
@@ -48,6 +49,13 @@ const setPeriodType = createEvent<'today' | 'period'>();
 const $periodType = createStore<'today' | 'period'>('today').on(
   setPeriodType,
   (_, type) => type,
+);
+
+const setSegment = createEvent<BuildingsPageSegment>();
+
+const $pageSegment = createStore<BuildingsPageSegment>('list').on(
+  setSegment,
+  (_, segment) => segment,
 );
 
 sample({
@@ -111,12 +119,14 @@ export const currentAnalyticsService = {
     setDashboardFilters,
     resetDashboardFilters,
     setPeriodType,
+    setSegment,
   },
   outputs: {
     $currentDashboardType,
     $isLoading,
     $dashboardFilters,
     $periodType,
+    $pageSegment,
   },
   gates: { CurrentAnalyticsGate },
 };

@@ -11,7 +11,7 @@ import {
 import { TickComponent } from 'ui-kit/shared/GraphComponents/TickComponent';
 import { getMax } from './Chart.utils';
 import { TooltipComponent } from './TooltipComponent';
-import { EDateRange } from 'services/supervisor/currentAnalytics/CurrentAnalyticsPage/AnalyticsSearch/AnalyticsSearch.types';
+import { EDateRange } from 'services/supervisor/AnalyticsSearch/AnalyticsSearch.types';
 
 export const Chart: FC<Props> = ({ chart, type, currentDashboardType }) => {
   const mock = [{ x: ' ', y: 0 }];

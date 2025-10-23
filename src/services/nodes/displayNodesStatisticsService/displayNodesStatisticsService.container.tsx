@@ -21,7 +21,7 @@ const wrapperId = 'nodeConsumptionGraphWrapper';
 
 export const DisplayNodesStatisticsContainer: FC<
   DisplayNodesStatisticsContainerProps
-> = ({ nodeId, pipeCount }) => {
+> = ({ nodeId, pipeCount, resource }) => {
   const {
     graphType,
     currentArhiveFilter,
@@ -81,6 +81,7 @@ export const DisplayNodesStatisticsContainer: FC<
           paramsList={paramsList}
           setGraphParam={setGraphType}
           setArchiveFilter={setArchiveFilter}
+          resource={resource}
         />
 
         <WithLoader isLoading={isLoading}>
