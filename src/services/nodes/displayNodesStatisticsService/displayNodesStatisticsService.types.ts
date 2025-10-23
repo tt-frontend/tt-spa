@@ -1,9 +1,11 @@
 import dayjs from 'api/dayjs';
 import { ReportType } from './view/StatisticsGraph/StatisticsGraph.types';
+import { EResourceType } from 'api/types';
 
 export type DisplayNodesStatisticsContainerProps = {
   nodeId: number;
   pipeCount: number;
+  resource: EResourceType;
 };
 
 export type FetchArchiveReadingsPayload = ArchiveReadingsFilter & {

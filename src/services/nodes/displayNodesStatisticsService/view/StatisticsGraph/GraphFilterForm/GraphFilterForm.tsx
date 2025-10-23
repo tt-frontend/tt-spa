@@ -27,6 +27,7 @@ import { ReportType } from '../StatisticsGraph.types';
 import { SortingIcon } from 'ui-kit/icons';
 import { Select } from 'ui-kit/Select';
 import styles from './GraphFilterForm.module.scss';
+import { EResourceType } from 'api/types';
 
 const cx = classNames.bind(styles);
 
@@ -38,6 +39,7 @@ export const GraphFilterForm: React.FC<GraphFilterFormProps> = ({
   paramsList,
   setArchiveFilter,
   currentFilter,
+  resource,
 }) => {
   const [isActive, setIsActive] = useState(false);
   const openModal = () => setIsActive(true);
@@ -85,6 +87,15 @@ export const GraphFilterForm: React.FC<GraphFilterFormProps> = ({
       (field) => field === currentGraphParam,
     );
     if (isCurrentFieldExist) {
+      return;
+    }
+
+    const energyConsumptionField = paramsList.find(
+      (field) => field === 'Энергия, ГКал',
+    );
+
+    if (resource === EResourceType.Heat && energyConsumptionField) {
+      setGraphParam(energyConsumptionField);
       return;
     }
 
@@ -228,4 +239,5 @@ type GraphFilterFormProps = {
   setArchiveFilter: (filter: ArchiveReadingsFilter) => void;
   currentFilter: ArchiveReadingsFilter;
   paramsList: string[];
+  resource: EResourceType;
 };
