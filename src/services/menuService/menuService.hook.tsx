@@ -6,6 +6,7 @@ import {
   DocumentIcon,
   DownloadIcon,
   ListIcon,
+  MainIcon,
   ObjectsIcon,
   ReportsIcon,
   SettingsIcon,
@@ -24,6 +25,12 @@ export const useMenuItems = (): MenuItem[] => {
   });
 
   return [
+    {
+      title: 'Главная',
+      path: `/main`,
+      icon: MainIcon,
+      type: MenuType.Main,
+    },
     {
       title: 'Текущая ситуация',
       path: `/supervisor/currentAnalytics`,
