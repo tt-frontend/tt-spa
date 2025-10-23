@@ -6,6 +6,6 @@ export type Props = {
 
 export enum IndividualDeviceProfileTab {
   Info = 'info',
-  Documents = 'documents',
   ReadingsHistory = 'readings-navigate',
+  Connection = 'connection',
 }
