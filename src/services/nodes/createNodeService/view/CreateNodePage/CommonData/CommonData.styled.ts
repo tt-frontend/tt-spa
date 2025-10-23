@@ -39,3 +39,10 @@ export const ZoneOption = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+
+export const SchemeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+`;

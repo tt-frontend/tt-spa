@@ -1,0 +1,563 @@
+import { FC } from 'react';
+import './svg.css';
+import {
+  CreatePipeHousingMeteringDeviceInNodeRequest,
+  EHousingMeteringDeviceType,
+} from 'api/types';
+import { CommunicationPipePayload } from 'services/nodes/addPipeNodeCommonDeviceService/addPipeNodeCommonDeviceService.types';
+
+type Props = {
+  updateCommonDeviceRequestPayload: (
+    payload: Partial<
+      CreatePipeHousingMeteringDeviceInNodeRequest & {
+        pipeId: number;
+      }
+    >,
+  ) => void;
+  feedFlow: CommunicationPipePayload | undefined;
+  feedBackFlow: CommunicationPipePayload | undefined;
+  openAddCommonDeviceModal: () => void;
+};
+
+export const HeatNoRechargeScheme: FC<Props> = ({
+  updateCommonDeviceRequestPayload,
+  openAddCommonDeviceModal,
+  feedFlow,
+  feedBackFlow,
+}) => {
+  const feedFlowdevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
+  const feedTermodevice = feedFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType ===
+      EHousingMeteringDeviceType.TemperatureSensor,
+  );
+
+  const backFlowdevice = feedBackFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
+  );
+  const backTermodevice = feedBackFlow?.devices?.find(
+    (device) =>
+      device.housingMeteringDeviceType ===
+      EHousingMeteringDeviceType.TemperatureSensor,
+  );
+
+  const is1 = Boolean(feedFlowdevice);
+
+  const is2 = Boolean(feedTermodevice);
+
+  const is3 = Boolean(backFlowdevice);
+
+  const is4 = Boolean(backTermodevice);
+
+  return (
+    <svg
+      width="557"
+      height="281"
+      viewBox="0 0 557 281"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        x="363.797"
+        y="42.4827"
+        width="188.623"
+        height="6.79723"
+        rx="3.39862"
+        transform="rotate(90 363.797 42.4827)"
+        fill="#DCDEE4"
+      />
+      <rect
+        x="26.49"
+        y="40.7833"
+        width="385.743"
+        height="6.79724"
+        rx="3.39862"
+        fill="#9254DE"
+      />
+      <rect x="27" y="228" width="385" height="7" rx="3.5" fill="#9254DE" />
+      <path
+        d="M409.684 0.424805H554.126C555.299 0.424805 556.25 1.37576 556.25 2.54883V277.837C556.25 279.01 555.299 279.961 554.126 279.961H409.684C408.511 279.961 407.56 279.01 407.56 277.837V2.54883C407.56 1.37581 408.511 0.424879 409.684 0.424805Z"
+        fill="white"
+        stroke="#DCDEE4"
+        strokeWidth="0.849655"
+      />
+      <path
+        d="M21.6924 45.332C21.8583 45.1661 21.8583 44.8971 21.6924 44.7312L18.9888 42.0276C18.8229 41.8617 18.5539 41.8617 18.388 42.0276C18.2221 42.1935 18.2221 42.4625 18.388 42.6284L20.7912 45.0316L18.388 47.4348C18.2221 47.6007 18.2221 47.8697 18.388 48.0356C18.5539 48.2015 18.8229 48.2015 18.9888 48.0356L21.6924 45.332ZM1.00024 45.0316V45.4564H21.392V45.0316V44.6068H1.00024V45.0316Z"
+        fill="black"
+      />
+      <path
+        d="M435.474 45.332C435.64 45.1661 435.64 44.8971 435.474 44.7312L432.771 42.0276C432.605 41.8617 432.336 41.8617 432.17 42.0276C432.004 42.1935 432.004 42.4625 432.17 42.6284L434.573 45.0316L432.17 47.4348C432.004 47.6007 432.004 47.8697 432.17 48.0356C432.336 48.2015 432.605 48.2015 432.771 48.0356L435.474 45.332ZM414.782 45.0316V45.4564H435.174V45.0316V44.6068H414.782V45.0316Z"
+        fill="black"
+      />
+      <path
+        d="M0.699724 232.256C0.533817 232.09 0.533817 231.821 0.699724 231.655L3.40331 228.952C3.56922 228.786 3.8382 228.786 4.00411 228.952C4.17001 229.118 4.17001 229.387 4.00411 229.553L1.60092 231.956L4.00411 234.359C4.17001 234.525 4.17001 234.794 4.00411 234.96C3.8382 235.126 3.56922 235.126 3.40331 234.96L0.699724 232.256ZM21.3918 231.956V232.381H1.00012V231.956V231.531H21.3918V231.956Z"
+        fill="black"
+      />
+      <path
+        d="M414.482 232.256C414.316 232.09 414.316 231.821 414.482 231.655L417.186 228.952C417.351 228.786 417.62 228.786 417.786 228.952C417.952 229.118 417.952 229.387 417.786 229.553L415.383 231.956L417.786 234.359C417.952 234.525 417.952 234.794 417.786 234.96C417.62 235.126 417.351 235.126 417.186 234.96L414.482 232.256ZM435.174 231.956V232.381H414.782V231.956V231.531H435.174V231.956Z"
+        fill="black"
+      />
+
+      {is1 ? (
+        <g filter="url(#filter0_dd_208_16922)">
+          <path
+            d="M88.0498 30.1627H109.291C110.933 30.1627 112.266 31.4941 112.266 33.1364V54.3776C112.266 56.0199 110.933 57.3522 109.291 57.3522H88.0498C86.4075 57.3521 85.0762 56.0199 85.0762 54.3776V33.1364C85.0763 31.4941 86.4076 30.1628 88.0498 30.1627Z"
+            fill="white"
+            stroke="#F3F5F6"
+            strokeWidth="0.849655"
+          />
+          <mask id="path-10-inside-1_208_16922" fill="white">
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M98.246 48.4304C100.592 48.4304 102.494 46.5284 102.494 44.1822C102.494 41.8359 100.592 39.9339 98.246 39.9339C95.8997 39.9339 93.9977 41.8359 93.9977 44.1822C93.9977 46.5284 95.8997 48.4304 98.246 48.4304ZM98.246 49.2801C100.133 49.2801 101.78 48.2549 102.662 46.7311H104.194H105.043V45.8815V42.4828V41.6332H104.194H102.662C101.78 40.1094 100.133 39.0842 98.246 39.0842C96.359 39.0842 94.7115 40.1094 93.8301 41.6332H92.2984H91.4487V42.4828V45.8815V46.7311H92.2984H93.8301C94.7115 48.2549 96.359 49.2801 98.246 49.2801ZM104.194 45.8815H103.054C103.242 45.35 103.344 44.778 103.344 44.1822C103.344 43.5863 103.242 43.0144 103.054 42.4828H104.194V45.8815ZM92.2984 42.4828H93.4381C93.2503 43.0144 93.148 43.5863 93.148 44.1822C93.148 44.778 93.2503 45.35 93.4381 45.8815H92.2984L92.2984 42.4828ZM96.5467 43.3325V42.4828H99.9453V43.3325H96.5467ZM95.697 42.4828C95.697 42.0136 96.0774 41.6332 96.5467 41.6332H99.9453C100.415 41.6332 100.795 42.0136 100.795 42.4828V43.3325C100.795 43.8018 100.415 44.1822 99.9453 44.1822H96.5467C96.0774 44.1822 95.697 43.8018 95.697 43.3325V42.4828ZM96.5467 45.0318H97.3963V45.8815H96.5467V45.0318ZM99.9453 45.0318H99.0956V45.8815H99.9453V45.0318Z"
+            />
+          </mask>
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M98.246 48.4304C100.592 48.4304 102.494 46.5284 102.494 44.1822C102.494 41.8359 100.592 39.9339 98.246 39.9339C95.8997 39.9339 93.9977 41.8359 93.9977 44.1822C93.9977 46.5284 95.8997 48.4304 98.246 48.4304ZM98.246 49.2801C100.133 49.2801 101.78 48.2549 102.662 46.7311H104.194H105.043V45.8815V42.4828V41.6332H104.194H102.662C101.78 40.1094 100.133 39.0842 98.246 39.0842C96.359 39.0842 94.7115 40.1094 93.8301 41.6332H92.2984H91.4487V42.4828V45.8815V46.7311H92.2984H93.8301C94.7115 48.2549 96.359 49.2801 98.246 49.2801ZM104.194 45.8815H103.054C103.242 45.35 103.344 44.778 103.344 44.1822C103.344 43.5863 103.242 43.0144 103.054 42.4828H104.194V45.8815ZM92.2984 42.4828H93.4381C93.2503 43.0144 93.148 43.5863 93.148 44.1822C93.148 44.778 93.2503 45.35 93.4381 45.8815H92.2984L92.2984 42.4828ZM96.5467 43.3325V42.4828H99.9453V43.3325H96.5467ZM95.697 42.4828C95.697 42.0136 96.0774 41.6332 96.5467 41.6332H99.9453C100.415 41.6332 100.795 42.0136 100.795 42.4828V43.3325C100.795 43.8018 100.415 44.1822 99.9453 44.1822H96.5467C96.0774 44.1822 95.697 43.8018 95.697 43.3325V42.4828ZM96.5467 45.0318H97.3963V45.8815H96.5467V45.0318ZM99.9453 45.0318H99.0956V45.8815H99.9453V45.0318Z"
+            fill="#272F5A"
+            stroke="#272F5A"
+            strokeWidth="1.69931"
+            mask="url(#path-10-inside-1_208_16922)"
+          />
+        </g>
+      ) : (
+        <g
+          filter="url(#filter0_dd_22376_18901)"
+          transform="translate(73 24) scale(0.8)"
+          onClick={() => {
+            updateCommonDeviceRequestPayload({
+              pipeId: Number(feedFlow?.id),
+              housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
+            });
+            openAddCommonDeviceModal();
+          }}
+        >
+          <rect
+            x="16"
+            y="8"
+            width="33"
+            height="33"
+            rx="4"
+            fill="#189EE9"
+            className="svgStyle"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M32.5 19H31.5V24.5H26V25.5H31.5V31H32.5V25.5H38V24.5H32.5V19Z"
+            fill="white"
+            stroke="white"
+            strokeWidth="0.3"
+          />
+        </g>
+      )}
+      <text x="68" y="74" fontSize="12" fontWeight="500" fill="#272F5A">
+        Расходомер
+      </text>
+
+      {is4 ? (
+        <g filter="url(#filter1_dd_208_16922)">
+          <path
+            d="M188.398 218.425H209.64C211.282 218.425 212.614 219.756 212.614 221.398V242.64C212.614 244.282 211.282 245.614 209.64 245.614H188.398C186.756 245.614 185.425 244.282 185.425 242.64V221.398C185.425 219.756 186.756 218.425 188.398 218.425Z"
+            fill="white"
+            stroke="#F3F5F6"
+            strokeWidth="0.849655"
+          />
+          <mask id="path-12-inside-2_208_16922" fill="white">
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M198.595 236.693C200.941 236.693 202.843 234.791 202.843 232.444C202.843 230.098 200.941 228.196 198.595 228.196C196.248 228.196 194.346 230.098 194.346 232.444C194.346 234.791 196.248 236.693 198.595 236.693ZM198.595 237.542C200.482 237.542 202.129 236.517 203.011 234.993H204.542H205.392V234.144V230.745V229.895H204.542H203.011C202.129 228.372 200.482 227.346 198.595 227.346C196.708 227.346 195.06 228.372 194.179 229.895H192.647H191.797V230.745V234.144V234.993H192.647H194.179C195.06 236.517 196.708 237.542 198.595 237.542ZM204.542 234.144H203.402C203.59 233.612 203.693 233.04 203.693 232.444C203.693 231.848 203.59 231.276 203.402 230.745H204.542V234.144ZM192.647 230.745H193.787C193.599 231.276 193.497 231.848 193.497 232.444C193.497 233.04 193.599 233.612 193.787 234.144H192.647L192.647 230.745ZM196.895 231.595V230.745H200.294V231.595H196.895ZM196.046 230.745C196.046 230.276 196.426 229.895 196.895 229.895H200.294C200.763 229.895 201.144 230.276 201.144 230.745V231.595C201.144 232.064 200.763 232.444 200.294 232.444H196.895C196.426 232.444 196.046 232.064 196.046 231.595V230.745ZM196.895 233.294H197.745V234.144H196.895V233.294ZM200.294 233.294H199.444V234.144H200.294V233.294Z"
+            />
+          </mask>
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M198.595 236.693C200.941 236.693 202.843 234.791 202.843 232.444C202.843 230.098 200.941 228.196 198.595 228.196C196.248 228.196 194.346 230.098 194.346 232.444C194.346 234.791 196.248 236.693 198.595 236.693ZM198.595 237.542C200.482 237.542 202.129 236.517 203.011 234.993H204.542H205.392V234.144V230.745V229.895H204.542H203.011C202.129 228.372 200.482 227.346 198.595 227.346C196.708 227.346 195.06 228.372 194.179 229.895H192.647H191.797V230.745V234.144V234.993H192.647H194.179C195.06 236.517 196.708 237.542 198.595 237.542ZM204.542 234.144H203.402C203.59 233.612 203.693 233.04 203.693 232.444C203.693 231.848 203.59 231.276 203.402 230.745H204.542V234.144ZM192.647 230.745H193.787C193.599 231.276 193.497 231.848 193.497 232.444C193.497 233.04 193.599 233.612 193.787 234.144H192.647L192.647 230.745ZM196.895 231.595V230.745H200.294V231.595H196.895ZM196.046 230.745C196.046 230.276 196.426 229.895 196.895 229.895H200.294C200.763 229.895 201.144 230.276 201.144 230.745V231.595C201.144 232.064 200.763 232.444 200.294 232.444H196.895C196.426 232.444 196.046 232.064 196.046 231.595V230.745ZM196.895 233.294H197.745V234.144H196.895V233.294ZM200.294 233.294H199.444V234.144H200.294V233.294Z"
+            fill="#272F5A"
+            stroke="#272F5A"
+            strokeWidth="1.69931"
+            mask="url(#path-12-inside-2_208_16922)"
+          />
+        </g>
+      ) : (
+        <g
+          filter="url(#filter0_dd_22376_18901)"
+          transform="translate(173 214) scale(0.8)"
+          onClick={() => {
+            updateCommonDeviceRequestPayload({
+              pipeId: Number(feedBackFlow?.id),
+              housingMeteringDeviceType:
+                EHousingMeteringDeviceType.TemperatureSensor,
+            });
+            openAddCommonDeviceModal();
+          }}
+        >
+          <rect
+            x="16"
+            y="8"
+            width="33"
+            height="33"
+            rx="4"
+            fill="#189EE9"
+            className="svgStyle"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M32.5 19H31.5V24.5H26V25.5H31.5V31H32.5V25.5H38V24.5H32.5V19Z"
+            fill="white"
+            stroke="white"
+            strokeWidth="0.3"
+          />
+        </g>
+      )}
+      <text x="164" y="264" fontSize="12" fontWeight="500" fill="#272F5A">
+        Термодатчик
+      </text>
+
+      {is2 ? (
+        <g filter="url(#filter2_dd_208_16922)">
+          <rect
+            x="185.425"
+            y="30.1627"
+            width="27.189"
+            height="27.189"
+            rx="2.97379"
+            fill="white"
+            stroke="#F3F5F6"
+            strokeWidth="0.849655"
+          />
+          <mask id="path-14-inside-3_208_16922" fill="white">
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M198.595 48.4304C200.941 48.4304 202.843 46.5284 202.843 44.1822C202.843 41.8359 200.941 39.9339 198.595 39.9339C196.248 39.9339 194.346 41.8359 194.346 44.1822C194.346 46.5284 196.248 48.4304 198.595 48.4304ZM198.595 49.2801C200.482 49.2801 202.129 48.2549 203.011 46.7311H204.542H205.392V45.8815V42.4828V41.6332H204.542H203.011C202.129 40.1094 200.482 39.0842 198.595 39.0842C196.708 39.0842 195.06 40.1094 194.179 41.6332H192.647H191.797V42.4828V45.8815V46.7311H192.647H194.179C195.06 48.2549 196.708 49.2801 198.595 49.2801ZM204.542 45.8815H203.402C203.59 45.35 203.693 44.778 203.693 44.1822C203.693 43.5863 203.59 43.0144 203.402 42.4828H204.542V45.8815ZM192.647 42.4828H193.787C193.599 43.0144 193.497 43.5863 193.497 44.1822C193.497 44.778 193.599 45.35 193.787 45.8815H192.647L192.647 42.4828ZM196.895 43.3325V42.4828H200.294V43.3325H196.895ZM196.046 42.4828C196.046 42.0136 196.426 41.6332 196.895 41.6332H200.294C200.763 41.6332 201.144 42.0136 201.144 42.4828V43.3325C201.144 43.8018 200.763 44.1822 200.294 44.1822H196.895C196.426 44.1822 196.046 43.8018 196.046 43.3325V42.4828ZM196.895 45.0318H197.745V45.8815H196.895V45.0318ZM200.294 45.0318H199.444V45.8815H200.294V45.0318Z"
+            />
+          </mask>
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M198.595 48.4304C200.941 48.4304 202.843 46.5284 202.843 44.1822C202.843 41.8359 200.941 39.9339 198.595 39.9339C196.248 39.9339 194.346 41.8359 194.346 44.1822C194.346 46.5284 196.248 48.4304 198.595 48.4304ZM198.595 49.2801C200.482 49.2801 202.129 48.2549 203.011 46.7311H204.542H205.392V45.8815V42.4828V41.6332H204.542H203.011C202.129 40.1094 200.482 39.0842 198.595 39.0842C196.708 39.0842 195.06 40.1094 194.179 41.6332H192.647H191.797V42.4828V45.8815V46.7311H192.647H194.179C195.06 48.2549 196.708 49.2801 198.595 49.2801ZM204.542 45.8815H203.402C203.59 45.35 203.693 44.778 203.693 44.1822C203.693 43.5863 203.59 43.0144 203.402 42.4828H204.542V45.8815ZM192.647 42.4828H193.787C193.599 43.0144 193.497 43.5863 193.497 44.1822C193.497 44.778 193.599 45.35 193.787 45.8815H192.647L192.647 42.4828ZM196.895 43.3325V42.4828H200.294V43.3325H196.895ZM196.046 42.4828C196.046 42.0136 196.426 41.6332 196.895 41.6332H200.294C200.763 41.6332 201.144 42.0136 201.144 42.4828V43.3325C201.144 43.8018 200.763 44.1822 200.294 44.1822H196.895C196.426 44.1822 196.046 43.8018 196.046 43.3325V42.4828ZM196.895 45.0318H197.745V45.8815H196.895V45.0318ZM200.294 45.0318H199.444V45.8815H200.294V45.0318Z"
+            fill="#272F5A"
+            stroke="#272F5A"
+            strokeWidth="1.69931"
+            mask="url(#path-14-inside-3_208_16922)"
+          />
+        </g>
+      ) : (
+        <g
+          filter="url(#filter0_dd_22376_18901)"
+          transform="translate(173 24) scale(0.8)"
+          onClick={() => {
+            updateCommonDeviceRequestPayload({
+              pipeId: Number(feedFlow?.id),
+              housingMeteringDeviceType:
+                EHousingMeteringDeviceType.TemperatureSensor,
+            });
+            openAddCommonDeviceModal();
+          }}
+        >
+          <rect
+            x="16"
+            y="8"
+            width="33"
+            height="33"
+            rx="4"
+            fill="#189EE9"
+            className="svgStyle"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M32.5 19H31.5V24.5H26V25.5H31.5V31H32.5V25.5H38V24.5H32.5V19Z"
+            fill="white"
+            stroke="white"
+            strokeWidth="0.3"
+          />
+        </g>
+      )}
+      <text x="168" y="74" fontSize="12" fontWeight="500" fill="#272F5A">
+        Термодатчик
+      </text>
+
+      {is3 ? (
+        <g filter="url(#filter3_dd_208_16922)">
+          <rect
+            x="281.425"
+            y="218.425"
+            width="27.189"
+            height="27.189"
+            rx="2.97379"
+            fill="white"
+            stroke="#F3F5F6"
+            strokeWidth="0.849655"
+          />
+          <mask id="path-16-inside-4_208_16922" fill="white">
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M294.595 236.693C296.941 236.693 298.843 234.791 298.843 232.444C298.843 230.098 296.941 228.196 294.595 228.196C292.248 228.196 290.346 230.098 290.346 232.444C290.346 234.791 292.248 236.693 294.595 236.693ZM294.595 237.542C296.482 237.542 298.129 236.517 299.011 234.993H300.542H301.392V234.144V230.745V229.895H300.542H299.011C298.129 228.372 296.482 227.346 294.595 227.346C292.708 227.346 291.06 228.372 290.179 229.895H288.647H287.797V230.745V234.144V234.993H288.647H290.179C291.06 236.517 292.708 237.542 294.595 237.542ZM300.542 234.144H299.402C299.59 233.612 299.693 233.04 299.693 232.444C299.693 231.848 299.59 231.276 299.402 230.745H300.542V234.144ZM288.647 230.745H289.787C289.599 231.276 289.497 231.848 289.497 232.444C289.497 233.04 289.599 233.612 289.787 234.144H288.647L288.647 230.745ZM292.895 231.595V230.745H296.294V231.595H292.895ZM292.046 230.745C292.046 230.276 292.426 229.895 292.895 229.895H296.294C296.763 229.895 297.144 230.276 297.144 230.745V231.595C297.144 232.064 296.763 232.444 296.294 232.444H292.895C292.426 232.444 292.046 232.064 292.046 231.595V230.745ZM292.895 233.294H293.745V234.144H292.895V233.294ZM296.294 233.294H295.444V234.144H296.294V233.294Z"
+            />
+          </mask>
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M294.595 236.693C296.941 236.693 298.843 234.791 298.843 232.444C298.843 230.098 296.941 228.196 294.595 228.196C292.248 228.196 290.346 230.098 290.346 232.444C290.346 234.791 292.248 236.693 294.595 236.693ZM294.595 237.542C296.482 237.542 298.129 236.517 299.011 234.993H300.542H301.392V234.144V230.745V229.895H300.542H299.011C298.129 228.372 296.482 227.346 294.595 227.346C292.708 227.346 291.06 228.372 290.179 229.895H288.647H287.797V230.745V234.144V234.993H288.647H290.179C291.06 236.517 292.708 237.542 294.595 237.542ZM300.542 234.144H299.402C299.59 233.612 299.693 233.04 299.693 232.444C299.693 231.848 299.59 231.276 299.402 230.745H300.542V234.144ZM288.647 230.745H289.787C289.599 231.276 289.497 231.848 289.497 232.444C289.497 233.04 289.599 233.612 289.787 234.144H288.647L288.647 230.745ZM292.895 231.595V230.745H296.294V231.595H292.895ZM292.046 230.745C292.046 230.276 292.426 229.895 292.895 229.895H296.294C296.763 229.895 297.144 230.276 297.144 230.745V231.595C297.144 232.064 296.763 232.444 296.294 232.444H292.895C292.426 232.444 292.046 232.064 292.046 231.595V230.745ZM292.895 233.294H293.745V234.144H292.895V233.294ZM296.294 233.294H295.444V234.144H296.294V233.294Z"
+            fill="#272F5A"
+            stroke="#272F5A"
+            strokeWidth="1.69931"
+            mask="url(#path-16-inside-4_208_16922)"
+          />
+        </g>
+      ) : (
+        <g
+          filter="url(#filter0_dd_22376_18901)"
+          transform="translate(269 214) scale(0.8)"
+          onClick={() => {
+            updateCommonDeviceRequestPayload({
+              pipeId: Number(feedBackFlow?.id),
+              housingMeteringDeviceType: EHousingMeteringDeviceType.FlowMeter,
+            });
+            openAddCommonDeviceModal();
+          }}
+        >
+          <rect
+            x="16"
+            y="8"
+            width="33"
+            height="33"
+            rx="4"
+            fill="#189EE9"
+            className="svgStyle"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M32.5 19H31.5V24.5H26V25.5H31.5V31H32.5V25.5H38V24.5H32.5V19Z"
+            fill="white"
+            stroke="white"
+            strokeWidth="0.3"
+          />
+        </g>
+      )}
+      <text x="264" y="264" fontSize="12" fontWeight="500" fill="#272F5A">
+        Расходомер
+      </text>
+
+      <defs>
+        <filter
+          id="filter0_dd_208_16922"
+          x="71.0569"
+          y="22.9407"
+          width="55.2275"
+          height="55.2275"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="6.79724" />
+          <feGaussianBlur stdDeviation="6.79724" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.306823 0 0 0 0 0.364905 0 0 0 0 0.570833 0 0 0 0.08 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_208_16922"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="3.39862" />
+          <feGaussianBlur stdDeviation="1.69931" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.306823 0 0 0 0 0.364905 0 0 0 0 0.570833 0 0 0 0.16 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="effect1_dropShadow_208_16922"
+            result="effect2_dropShadow_208_16922"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect2_dropShadow_208_16922"
+            result="shape"
+          />
+        </filter>
+        <filter
+          id="filter1_dd_208_16922"
+          x="171.406"
+          y="211.203"
+          width="55.2275"
+          height="55.2275"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="6.79724" />
+          <feGaussianBlur stdDeviation="6.79724" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.306823 0 0 0 0 0.364905 0 0 0 0 0.570833 0 0 0 0.08 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_208_16922"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="3.39862" />
+          <feGaussianBlur stdDeviation="1.69931" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.306823 0 0 0 0 0.364905 0 0 0 0 0.570833 0 0 0 0.16 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="effect1_dropShadow_208_16922"
+            result="effect2_dropShadow_208_16922"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect2_dropShadow_208_16922"
+            result="shape"
+          />
+        </filter>
+        <filter
+          id="filter2_dd_208_16922"
+          x="171.406"
+          y="22.9407"
+          width="55.2275"
+          height="55.2275"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="6.79724" />
+          <feGaussianBlur stdDeviation="6.79724" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.306823 0 0 0 0 0.364905 0 0 0 0 0.570833 0 0 0 0.08 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_208_16922"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="3.39862" />
+          <feGaussianBlur stdDeviation="1.69931" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.306823 0 0 0 0 0.364905 0 0 0 0 0.570833 0 0 0 0.16 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="effect1_dropShadow_208_16922"
+            result="effect2_dropShadow_208_16922"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect2_dropShadow_208_16922"
+            result="shape"
+          />
+        </filter>
+        <filter
+          id="filter3_dd_208_16922"
+          x="267.406"
+          y="211.203"
+          width="55.2275"
+          height="55.2275"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="6.79724" />
+          <feGaussianBlur stdDeviation="6.79724" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.306823 0 0 0 0 0.364905 0 0 0 0 0.570833 0 0 0 0.08 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_208_16922"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="3.39862" />
+          <feGaussianBlur stdDeviation="1.69931" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.306823 0 0 0 0 0.364905 0 0 0 0 0.570833 0 0 0 0.16 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="effect1_dropShadow_208_16922"
+            result="effect2_dropShadow_208_16922"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect2_dropShadow_208_16922"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+};

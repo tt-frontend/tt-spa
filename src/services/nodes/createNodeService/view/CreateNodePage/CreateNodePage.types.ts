@@ -1,5 +1,7 @@
 import {
   CalculatorIntoHousingStockResponse,
+  CreatePipeHousingMeteringDeviceInNodeRequest,
+  EPipeNodeConfig,
   HousingStockResponse,
   NodeServiceZoneListResponse,
   NodeServiceZoneResponse,
@@ -33,4 +35,13 @@ export type CreateNodePageProps = {
   handleFinallyDeleteServiceZone: (payload: number) => void;
   successDeleteServiceZone: Event<void>;
   deletingServiceZoneCount: number | null;
+  configurationType: EPipeNodeConfig | null;
+  setConfigurationType: (payload: EPipeNodeConfig) => void;
+  updateCommonDeviceRequestPayload: (
+    payload: Partial<
+      CreatePipeHousingMeteringDeviceInNodeRequest & {
+        pipeId: number;
+      }
+    >,
+  ) => void;
 };

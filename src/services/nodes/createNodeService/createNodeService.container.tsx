@@ -9,6 +9,7 @@ import { CreateCalculatorModalContainer } from 'services/calculators/createCalcu
 import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
 import { EHouseCategory } from 'api/types';
 import { mountAddressService } from './view/CreateNodePage/MountAddress/MountAddress.models';
+import { addPipeNodeCommonDeviceService } from '../addPipeNodeCommonDeviceService';
 
 const { inputs, outputs, gates } = createNodeService;
 const { CreateNodeGate } = gates;
@@ -60,6 +61,9 @@ export const CreateNodeContainer = () => {
     deletingServiceZone,
     handleFinallyDeleteServiceZone,
     deletingServiceZoneCount,
+    configurationType,
+    setConfigurationType,
+    updateCommonDeviceRequestPayload,
   } = useUnit({
     isBuildingLoading: outputs.$isLoadingBuilding,
     building: outputs.$building,
@@ -88,6 +92,10 @@ export const CreateNodeContainer = () => {
     deletingServiceZone: outputs.$deletingServiceZone,
     handleFinallyDeleteServiceZone: inputs.handleFinallyDeleteServiceZone,
     deletingServiceZoneCount: outputs.$deletingServiceZoneCount,
+    configurationType: outputs.$configurationType,
+    setConfigurationType: inputs.setConfigurationType,
+    updateCommonDeviceRequestPayload:
+      addPipeNodeCommonDeviceService.inputs.updateCommonDeviceRequestPayload,
   });
 
   useEffect(() => {
@@ -120,6 +128,7 @@ export const CreateNodeContainer = () => {
           validationResult={validationResult}
         />
       )}
+
       <CreateNodePage
         building={building}
         existingCities={existingCities}
@@ -145,6 +154,9 @@ export const CreateNodeContainer = () => {
         handleFinallyDeleteServiceZone={handleFinallyDeleteServiceZone}
         successDeleteServiceZone={inputs.successDeleteServiceZone}
         deletingServiceZoneCount={deletingServiceZoneCount}
+        configurationType={configurationType}
+        setConfigurationType={setConfigurationType}
+        updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
       />
     </>
   );
