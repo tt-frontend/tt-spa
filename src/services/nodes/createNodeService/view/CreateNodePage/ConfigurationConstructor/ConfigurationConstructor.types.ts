@@ -32,4 +32,5 @@ export type SvgComponentProps = {
     pipeId: string,
     deviceType: EHousingMeteringDeviceType,
   ) => void;
+  entryNumber: number | null | undefined;
 };

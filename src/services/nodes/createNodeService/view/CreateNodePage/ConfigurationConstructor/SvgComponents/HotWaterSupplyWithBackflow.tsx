@@ -20,6 +20,7 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
   communicationPipes,
   updateCommonDeviceRequestPayload,
   handleDeleteDevice,
+  entryNumber,
 }) => {
   const { openAddCommonDeviceModal } = useUnit({
     openAddCommonDeviceModal:
@@ -33,6 +34,8 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
   const feedBackFlow = communicationPipes.find(
     (pipe) => pipe.magistral === EMagistralType.FeedBackFlow,
   );
+
+  console.log(communicationPipes);
 
   const firstDevice = feedFlow?.devices?.find(
     (device) =>
@@ -181,6 +184,7 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {feedBackFlow?.number}
               <CloseDarkIcon
                 onClick={() => {

@@ -26,7 +26,7 @@ export const ConfigurationConstructor: FC<Props> = ({
     CommunicationPipePayload[]
   >(requestPayload?.communicationPipes || []);
 
-  const { configuration } = requestPayload;
+  const { configuration, entryNumber } = requestPayload;
 
   const handleAddDevice = (device: CreateCommonDevicePartitial) => {
     const pipeId = String(device.pipeId);
@@ -95,6 +95,7 @@ export const ConfigurationConstructor: FC<Props> = ({
         communicationPipes={communicationPipes}
         updateCommonDeviceRequestPayload={updateCommonDeviceRequestPayload}
         handleDeleteDevice={handleDeleteDevice}
+        entryNumber={entryNumber}
       />
     </>
   );

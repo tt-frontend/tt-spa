@@ -96,7 +96,7 @@ export const Block = styled.div`
 export const RightBlock = styled.div`
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 20px;
 
   color: rgba(39, 47, 90, 0.7);
 `;
