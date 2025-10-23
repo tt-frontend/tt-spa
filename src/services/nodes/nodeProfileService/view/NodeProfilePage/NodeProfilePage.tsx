@@ -67,6 +67,7 @@ export const NodeProfilePage: FC<NodeProfilePageProps> = ({
         <DisplayNodesStatisticsContainer
           nodeId={pipeNode.id}
           pipeCount={pipeNode.communicationPipes?.length || 0}
+          resource={pipeNode.resource}
         />
       ),
       [PipeNodeProfileSection.Connection]: <NodeConnection node={pipeNode} />,
