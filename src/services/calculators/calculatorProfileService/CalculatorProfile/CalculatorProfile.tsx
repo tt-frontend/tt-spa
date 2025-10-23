@@ -206,7 +206,7 @@ export const CalculatorProfile: FC<CalculatorProfileProps> = ({
 
   return (
     <div>
-      <GoBack />
+      <GoBack path="/devices/odpu" />
       <PageHeaderSC
         title={
           <>
