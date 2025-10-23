@@ -1,12 +1,9 @@
-import {
-  CreateNodeFormPayload,
-  UpdateNodeFormPayloadCallback,
-} from 'services/nodes/createNodeService/createNodeService.types';
+import { EPipeNodeConfig } from 'api/types';
 
 export type ConnectedDevicesProps = {
   goPrevStep: () => void;
-  requestPayload: CreateNodeFormPayload;
-  updateRequestPayload: UpdateNodeFormPayloadCallback;
   validateNode: () => void;
   isValidationLoading: boolean;
+  setConfigurationConstructorOpen: (payload: boolean) => void;
+  configurationType: EPipeNodeConfig | null;
 };

@@ -15,4 +15,5 @@ export const validationSchema = Yup.object().shape({
   housingMeteringDeviceType: Yup.string()
     .nullable()
     .required('Это поле обязательное'),
+  pipeId: Yup.string().nullable().required('Это поле обязательное'),
 });
