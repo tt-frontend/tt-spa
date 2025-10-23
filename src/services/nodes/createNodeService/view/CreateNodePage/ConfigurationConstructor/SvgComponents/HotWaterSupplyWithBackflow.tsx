@@ -35,8 +35,6 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
     (pipe) => pipe.magistral === EMagistralType.FeedBackFlow,
   );
 
-  console.log(communicationPipes);
-
   const firstDevice = feedFlow?.devices?.find(
     (device) =>
       device.housingMeteringDeviceType === EHousingMeteringDeviceType.FlowMeter,
@@ -78,6 +76,7 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
@@ -113,6 +112,7 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {feedFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
@@ -149,6 +149,7 @@ export const HotWaterSupplyWithBackflow: FC<SvgComponentProps> = ({
             </Block>
 
             <RightBlock>
+              {entryNumber && <div>Ввод: {entryNumber}</div>}
               Труба: {feedBackFlow?.number}
               <CloseDarkIcon
                 onClick={() => {
