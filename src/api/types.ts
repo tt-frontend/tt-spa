@@ -4008,6 +4008,39 @@ export interface LogoutRequest {
   refreshToken: string;
 }
 
+export interface MainDashboardCalculatorStatisticsModel {
+  /** @format int32 */
+  successCount?: number;
+  /** @format int32 */
+  notPollingCount?: number;
+  /** @format int32 */
+  errorCount?: number;
+  /** @format int32 */
+  noArchiveCount?: number;
+}
+
+export interface MainDashboardMalfunctionModel {
+  malfunctionType?: ManagingFirmTaskType;
+  /** @format int32 */
+  totalTasksCount?: number;
+  /** @format int32 */
+  expiredTasksCount?: number;
+}
+
+export interface MainDashboardResourceDisconnectingModel {
+  resourceType?: ResourceType;
+  /** @format date-time */
+  startDate?: string;
+  /** @format date-time */
+  endDate?: string | null;
+}
+
+export interface MainDashboardResponse {
+  calculatorsStatistics: MainDashboardCalculatorStatisticsModel | null;
+  resourceDisconnecting: MainDashboardResourceDisconnectingModel[] | null;
+  malfunctions: MainDashboardMalfunctionModel[] | null;
+}
+
 export interface ManagementFirmCompetenceResponse {
   /** @format uuid */
   id: string;
@@ -4216,6 +4249,30 @@ export interface MeteringDeviceSearchListResponse {
   /** @format int32 */
   deviceAddress: number | null;
   resource: EResourceType | null;
+}
+
+export interface MunicipalSubjectResponse {
+  name: string | null;
+  type: string | null;
+  subjects: MunicipalSubjectResponse[] | null;
+}
+
+export interface MunicipalSubjectResponsePagedList {
+  /** @format int32 */
+  totalItems: number;
+  /** @format int32 */
+  pageNumber: number;
+  /** @format int32 */
+  pageSize: number;
+  /** @format int32 */
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  /** @format int32 */
+  nextPageNumber: number;
+  /** @format int32 */
+  previousPageNumber: number;
+  items: MunicipalSubjectResponse[] | null;
 }
 
 export interface NodeCheckResponse {
@@ -7408,7 +7465,7 @@ export class Api<
       },
       params: RequestParams = {},
     ) =>
-      this.request<StringPagedList, ErrorApiResponse>({
+      this.request<MunicipalSubjectResponsePagedList, ErrorApiResponse>({
         path: `/api/Buildings/ExistingMoDistricts`,
         method: 'GET',
         query: query,
@@ -9414,6 +9471,37 @@ export class Api<
     ) =>
       this.request<DashboardTaskMalfunctionModel, ErrorApiResponse>({
         path: `/api/Dashboard/common/malfunctions/detail`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li>
+     *
+     * @tags Dashboard
+     * @name DashboardMainList
+     * @summary DashboardMainView
+     * @request GET:/api/Dashboard/main
+     * @secure
+     */
+    dashboardMainList: (
+      query?: {
+        /** @format date-time */
+        Date?: string;
+        City?: string;
+        District?: string;
+        BuildingIds?: number[];
+        /** @format int32 */
+        ManagementFirmId?: number;
+        Address?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<MainDashboardResponse, ErrorApiResponse>({
+        path: `/api/Dashboard/main`,
         method: 'GET',
         query: query,
         secure: true,
