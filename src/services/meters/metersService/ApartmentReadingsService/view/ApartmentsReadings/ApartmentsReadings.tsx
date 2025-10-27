@@ -59,6 +59,7 @@ export const ApartmentsReadings: FC<ApartmentsReadingsProps> = ({
         handleClickDevice={() => setSearchMode(SearchMode.Apartment)}
         apartmentId={apartment?.id}
         allIndividualDeviceMountPlaces={allIndividualDeviceMountPlaces}
+        handleSearchApartment={handleSearchApartment}
       />
     ),
   };

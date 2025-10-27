@@ -14,7 +14,6 @@ import { WithLoader } from 'ui-kit/shared/WithLoader';
 import { ApartmentIndividualDevicesMetersContainer } from 'services/meters/apartmentIndividualDevicesMetersService';
 import { ApartmentInfo } from './ApartmentInfo';
 import { ApartmentAlerts } from './ApartmentAlerts';
-import { apartmentReadingsService } from '../../../ApartmentReadingsService.model';
 import { useNavigate, useParams } from 'react-router-dom';
 import confirm from 'antd/lib/modal/confirm';
 import { TypeAddressToStart } from 'ui-kit/shared/TypeToStart';
@@ -22,6 +21,7 @@ import { EApartmentStatus } from 'api/types';
 import { NothingFound } from 'ui-kit/shared/NothingFound';
 import dayjs from 'dayjs';
 import { ApartmentReadingsActsJournalContainer } from './apartmentReadingsActsJournal';
+import { apartmentReadingsService } from '../../../ApartmentReadingsService.model';
 
 const { gates } = apartmentReadingsService;
 const { ApartmentGate } = gates;
@@ -47,6 +47,7 @@ export const ApartmentProfile: FC<ApartmentProfileProps> = ({
   replacePhoneNumber,
 }) => {
   const { id } = useParams<{ id: string }>();
+
   const navigate = useNavigate();
 
   const address = apartment?.housingStock?.address?.mainAddress;
