@@ -17,6 +17,7 @@ const { AllIndividualDeviceMountPlacesGate } =
 
 export const DevicesSearch: FC<DevicesSearchProps> = ({
   handleClickDevice,
+  handleSearchApartment,
 }) => {
   const [serialNumber, setSerialNumber] = useState('');
   const [devices, setDevices] =
@@ -68,7 +69,10 @@ export const DevicesSearch: FC<DevicesSearchProps> = ({
   ) => (
     <NavLink
       to={`/meters/apartments/${device.apartmentId}`}
-      onClick={handleClickDevice}
+      onClick={() => {
+        handleClickDevice();
+        handleSearchApartment({ IndividualDeviceSerialNumber: serialNumber });
+      }}
       key={device.id}
     >
       <Device key={index}>
