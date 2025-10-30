@@ -76,9 +76,7 @@ export const createTimerForTaskHeader = (
 
     return {
       stage: {
-        remainingTime: getFormatedTime(
-          Math.abs(new Date(ext!).valueOf() - Date.now()),
-        ),
+        remainingTime: getFormatedTime(new Date(ext!).valueOf() - Date.now()),
         isFailed,
         deadlineDate: `(до ${new Date(ext!).toLocaleDateString()})`,
       },
