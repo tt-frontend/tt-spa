@@ -5,3 +5,8 @@ export const Wrapper = styled.div`
   gap: 16px;
   grid-template-columns: repeat(2, 1fr);
 `;
+
+export const DeviceAnalsisChart = styled.div`
+  width: 200px;
+  height: 200px;
+`;
