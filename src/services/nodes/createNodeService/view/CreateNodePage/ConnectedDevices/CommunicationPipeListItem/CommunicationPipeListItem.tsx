@@ -16,7 +16,7 @@ import {
 } from './CommunicationPipeListItem.types';
 import { MeteringDeviceListItem } from './MeteringDeviceListItem';
 import { PipeIcon } from 'ui-kit/icons';
-import { getDevicesCountText } from './CommunicationPipeListItem.utils';
+import { getDeviceWordForm } from './CommunicationPipeListItem.utils';
 import { ListOpeningChevron } from 'ui-kit/shared/ListOpeningChevron';
 import { resourceFromConfig } from 'utils/resourceFromConfigLookup';
 
@@ -32,7 +32,7 @@ export const CommunicationPipeListItem: FC<CommunicationPipeListItemProps> = ({
 
   const devicesCount = pipe.devices?.length || 0;
 
-  const devicesCountText = getDevicesCountText(devicesCount);
+  const devicesCountText = getDeviceWordForm(devicesCount);
 
   const resource = useMemo(
     () => resourceFromConfig[configuration],
