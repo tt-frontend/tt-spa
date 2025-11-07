@@ -39,8 +39,10 @@ sample({
   target: getMainFx,
 });
 
+const $isLoading = getMainFx.pending;
+
 export const mainServiceService = {
   inputs: { setFilter, resetFilter },
-  outputs: { $filter, $mainData },
+  outputs: { $filter, $mainData, $isLoading },
   gates: { PageGate },
 };

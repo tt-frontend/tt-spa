@@ -11,10 +11,12 @@ const {
 } = mainServiceService;
 
 export const MainServiceContainer = () => {
-  const { filter, setFilter, resetFilter } = useUnit({
+  const { filter, setFilter, resetFilter, data, isLoading } = useUnit({
     filter: outputs.$filter,
     setFilter: inputs.setFilter,
     resetFilter: inputs.resetFilter,
+    data: outputs.$mainData,
+    isLoading: outputs.$isLoading,
   });
 
   return (
@@ -22,7 +24,7 @@ export const MainServiceContainer = () => {
       <PageHeader title="УК «Лесные озёра»" />
       <PageGate />
       <Filter filter={filter} setFilter={setFilter} resetFilter={resetFilter} />
-      <Dashboard />
+      <Dashboard isLoading={isLoading} data={data} />
     </div>
   );
 };
