@@ -6,8 +6,10 @@ import { DeviceConnectionAnalysis } from './DeviceConnectionAnalysis';
 export const Dashboard: FC<Props> = ({ data, isLoading }) => {
   return (
     <Wrapper>
-      {isLoading && 'загрузка'}
-      <DeviceConnectionAnalysis data={data?.calculatorsStatistics || null} />
+      <DeviceConnectionAnalysis
+        data={data?.calculatorsStatistics || null}
+        isLoading={isLoading}
+      />
     </Wrapper>
   );
 };
