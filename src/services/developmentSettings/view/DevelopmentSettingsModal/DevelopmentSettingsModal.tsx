@@ -43,6 +43,7 @@ import { generateColorsFromString } from 'utils/generateGradient';
 import { useClipboard } from '@custom-react-hooks/use-clipboard';
 import * as yup from 'yup';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
+import packagejson from '../../../../../package.json';
 
 export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
   visible,
@@ -258,7 +259,10 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
               </FeatureTogglesWrapper>
             </FormItem>
           )}
-          <Badge>TT frontend team {dayjs().format('YYYY')} [ver: 2.1.0]</Badge>
+          <Badge>
+            TT frontend team {dayjs().format('YYYY')} [ds: 2.2.0] [app:{' '}
+            {packagejson.version}]
+          </Badge>
         </Wrapper>
       }
       centered

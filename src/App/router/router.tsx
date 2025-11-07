@@ -79,6 +79,7 @@ import { usePermission } from 'hooks/usePermission';
 import { ReadingReportsArchiveContainer } from 'services/workWithReadings/readingReportsArchive';
 import { AddApartmentContainer } from 'services/apartments/addApartment';
 import { resourceConsumptionService } from 'services/resources/resourceConsumptionService';
+import { MainServiceContainer } from 'services/mainService';
 
 const {
   gates: { CurrentUserGate },
@@ -625,6 +626,14 @@ export const useRoutes = (
           path: '/reports',
           element: isSeniorOperator ? (
             <ReportsContainer />
+          ) : (
+            <AccessDeniedPage />
+          ),
+        },
+        {
+          path: '/main',
+          element: isAdministrator ? (
+            <MainServiceContainer />
           ) : (
             <AccessDeniedPage />
           ),

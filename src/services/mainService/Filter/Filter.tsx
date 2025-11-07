@@ -1,0 +1,90 @@
+import { FC } from 'react';
+import { Wrapper } from './Filter.styled';
+import { Props } from './Filter.types';
+import { DatePicker } from 'ui-kit/DatePicker';
+import { Select } from 'ui-kit/Select';
+import { AddressTreeSelect } from 'ui-kit/shared/AddressTreeSelect';
+import { Tooltip } from 'ui-kit/shared/Tooltip';
+import { StyledMenuButton } from 'ui-kit/ContextMenuButton/ContextMenuButton.styled';
+import { ResetIcon } from 'ui-kit/icons';
+import dayjs from 'dayjs';
+
+export const Filter: FC<Props> = ({ filter, setFilter, resetFilter }) => {
+  return (
+    <Wrapper>
+      <DatePicker
+        small
+        format="DD.MM.YYYY"
+        value={filter.Date ? dayjs(filter.Date, 'DD.MM.YYYY') : undefined}
+        onChange={(_, dateString) => setFilter({ Date: dateString as string })}
+      />
+
+      <Select
+        placeholder="Округ"
+        small
+        allowClear
+        value={filter.District}
+        onChange={(value) =>
+          setFilter({
+            District: value as string | null,
+            City: null,
+          })
+        }
+      >
+        {/* {existingMoDistricts?.items?.map((item) => (
+          <Select.Option key={item.name} value={item.name}>
+            {item.name} ({item.type})
+          </Select.Option>
+        ))} */}
+      </Select>
+
+      <Select
+        placeholder="Город"
+        small
+        value={filter.City}
+        allowClear
+        onChange={(value) => {
+          setFilter({
+            City: value as string,
+            ManagementFirmId: null,
+          });
+        }}
+      >
+        {/* {citiesOptions &&
+          citiesOptions.map((city) => (
+            <Select.Option key={city} value={city}>
+              {city}
+            </Select.Option>
+          ))} */}
+      </Select>
+
+      <Select
+        placeholder="УК"
+        small
+        allowClear
+        value={filter.ManagementFirmId}
+        onChange={(value) => setFilter({ ManagementFirmId: value as number })}
+      >
+        {/* {organizationsList?.items?.map((elem) => (
+          <Select key={elem.id} value={elem.id}>
+            {elem.name}
+          </Select>
+        ))} */}
+      </Select>
+      <AddressTreeSelect
+        small
+        placeholder="Адрес"
+        selectedHousingStockIds={filter.BuildingIds || []}
+        treeData={[]}
+        onChange={(values) => {
+          setFilter({ BuildingIds: values });
+        }}
+      />
+      <Tooltip title="Сбросить фильтры">
+        <StyledMenuButton size="small" onClick={resetFilter}>
+          <ResetIcon />
+        </StyledMenuButton>
+      </Tooltip>
+    </Wrapper>
+  );
+};

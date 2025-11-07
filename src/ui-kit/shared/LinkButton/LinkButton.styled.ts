@@ -6,6 +6,9 @@ export const Wrapper = styled.div`
   font-weight: 500;
   font-size: 16px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
   &:hover {
     opacity: 0.8;
