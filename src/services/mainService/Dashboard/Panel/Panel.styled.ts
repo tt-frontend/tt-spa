@@ -22,5 +22,5 @@ export const Header = styled.div`
 `;
 
 export const Body = styled.div<{ padding?: number }>`
-  padding: ${({ padding }) => padding || 16}px;
+  padding: ${({ padding }) => padding ?? 16}px;
 `;
