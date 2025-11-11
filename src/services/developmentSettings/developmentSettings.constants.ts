@@ -3,6 +3,7 @@ import { FeatureToggles } from './developmentSettings.types';
 export const FeatureTogglesTranslates: {
   [key in keyof FeatureToggles]: string;
 } = {
+  dashboardPage: 'Дашборд',
   workingRanges: 'Рабочие диапазоны',
   dispatcherAddTask: 'Диспетчер: создание заявки',
   services: 'Услуги',

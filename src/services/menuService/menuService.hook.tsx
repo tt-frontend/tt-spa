@@ -6,7 +6,6 @@ import {
   DocumentIcon,
   DownloadIcon,
   ListIcon,
-  MainIcon,
   ObjectsIcon,
   ReportsIcon,
   SettingsIcon,
@@ -18,6 +17,7 @@ import { MenuItem, MenuType } from './menuService.types';
 import { MeterSection } from 'services/meters/metersService/metersService.types';
 import { ServiceSection } from 'services/services/servicesService/servicesService.types';
 import { developmentSettingsService } from 'services/developmentSettings/developmentSettings.models';
+import { Grid } from 'react-bootstrap-icons';
 
 export const useMenuItems = (): MenuItem[] => {
   const { featureToggles } = useUnit({
@@ -25,12 +25,16 @@ export const useMenuItems = (): MenuItem[] => {
   });
 
   return [
-    {
-      title: 'Главная',
-      path: `/main`,
-      icon: MainIcon,
-      type: MenuType.Main,
-    },
+    ...(featureToggles.dashboardPage
+      ? [
+          {
+            title: 'Главная',
+            path: `/main`,
+            icon: Grid,
+            type: MenuType.Main,
+          },
+        ]
+      : []),
     {
       title: 'Текущая ситуация',
       path: `/supervisor/currentAnalytics`,

@@ -6,4 +6,5 @@ export const featureToggles = {
   controllersDistribution: false,
   mvitu: false,
   workWithReadings: false,
+  dashboardPage: false,
 };
