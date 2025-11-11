@@ -3,18 +3,38 @@ import { Props } from './ResourceDisconnectingGanttChart.types';
 import { Panel } from '../Panel';
 import {
   Content,
+  DateItem,
+  DatesWrapper,
+  GanttPanel,
+  GanttPanelItem,
+  GanttPanelWrapper,
   Header,
+  ResourceDisconnectionItem,
   ResourcePanel,
   ResourcePanelItem,
 } from './ResourceDisconnectingGanttChart.styled';
 import dayjs from 'dayjs';
 import { EResourceType } from 'api/types';
 import { ResourceInfo } from 'ui-kit/shared/ResourceInfo';
+import { prepareDisconnectionsData } from './ResourceDisconnectingGanttChart.utils';
+import { Tooltip } from 'antd';
 
-export const ResourceDisconnectingGanttChart: FC<Props> = () => {
+export const ResourceDisconnectingGanttChart: FC<Props> = ({ data }) => {
   const currentDate = dayjs();
 
   const currentMonthString = currentDate.format('MMMM');
+
+  const dates = new Array(31).fill(0).map((_, i) => currentDate.add(i, 'day'));
+
+  const periodDate = dates.at(-1)!.endOf('D');
+
+  const diconnectionData = prepareDisconnectionsData(
+    data || [],
+    currentDate,
+    periodDate,
+  );
+
+  console.log(diconnectionData);
 
   return (
     <Panel title="Отключения" link="/resourceDisconnecting" padding={0}>
@@ -27,7 +47,31 @@ export const ResourceDisconnectingGanttChart: FC<Props> = () => {
             </ResourcePanelItem>
           ))}
         </ResourcePanel>
-        <div>Gantt</div>
+        <GanttPanelWrapper>
+          <DatesWrapper>
+            {dates.map((date) => (
+              <DateItem key={date.toString()}>{date.format('D')}</DateItem>
+            ))}
+          </DatesWrapper>
+          <GanttPanel>
+            {Object.values(EResourceType).map((resource) => (
+              <GanttPanelItem key={resource}>
+                {diconnectionData[resource].map((item) => (
+                  <Tooltip
+                    title={`${dayjs(item.startDate).format('D')} – ${dayjs(item.endDate).format('D MMMM')}`}
+                    key={`${item.startDate}${item.endDate}${item.resourceType}`}
+                  >
+                    <ResourceDisconnectionItem
+                      width={item.xEnd - item.xStart}
+                      left={item.xStart}
+                      resource={resource}
+                    />
+                  </Tooltip>
+                ))}
+              </GanttPanelItem>
+            ))}
+          </GanttPanel>
+        </GanttPanelWrapper>
       </Content>
     </Panel>
   );
