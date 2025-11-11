@@ -105,7 +105,6 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
       const creds = JSON.parse(credsText);
 
       try {
-        console.log(creds);
         await AccountsArraySchema.validate(creds, { strict: true });
 
         setCredsList(creds);
