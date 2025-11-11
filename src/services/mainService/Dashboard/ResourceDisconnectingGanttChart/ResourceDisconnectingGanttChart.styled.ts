@@ -76,13 +76,37 @@ export const ResourceDisconnectionItem = styled.div<{
   resource: EResourceType;
   width: number;
   left: number;
+  isLeftOverflow: boolean;
+  isRightOverflow: boolean;
 }>`
   position: absolute;
   background: ${({ resource }) => resourceColorLookup[resource]};
   height: 24px;
-  border-radius: 8px;
+  border-radius: ${getPanelBorderRadius};
   width: ${({ width }) => width}%;
   left: ${({ left }) => left}%;
   border: 2px solid white;
   box-sizing: border-box;
 `;
+
+function getPanelBorderRadius({
+  isLeftOverflow,
+  isRightOverflow,
+}: {
+  isLeftOverflow: boolean;
+  isRightOverflow: boolean;
+}) {
+  if (isLeftOverflow && isRightOverflow) {
+    return 0;
+  }
+
+  if (isLeftOverflow) {
+    return '0 6px 6px 0';
+  }
+
+  if (isRightOverflow) {
+    return '6px 0 0 6px';
+  }
+
+  return '6px';
+}

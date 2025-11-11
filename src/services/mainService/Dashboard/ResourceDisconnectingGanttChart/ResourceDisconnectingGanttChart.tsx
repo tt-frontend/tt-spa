@@ -20,13 +20,18 @@ import { prepareDisconnectionsData } from './ResourceDisconnectingGanttChart.uti
 import { Tooltip } from 'antd';
 
 export const ResourceDisconnectingGanttChart: FC<Props> = ({ data }) => {
-  const currentDate = dayjs();
+  const currentDate = dayjs().startOf('D');
 
   const currentMonthString = currentDate.format('MMMM');
 
   const dates = new Array(31).fill(0).map((_, i) => currentDate.add(i, 'day'));
 
-  const periodDate = dates.at(-1)!.endOf('D');
+  const periodDate = currentDate.add(30, 'day').endOf('D');
+
+  console.log({
+    first: currentDate.add(31, 'D').endOf('D').format('DD.MM.YYYY'),
+    second: periodDate.format('DD.MM.YYYY'),
+  });
 
   const diconnectionData = prepareDisconnectionsData(
     data || [],
@@ -56,12 +61,14 @@ export const ResourceDisconnectingGanttChart: FC<Props> = ({ data }) => {
           <GanttPanel>
             {Object.values(EResourceType).map((resource) => (
               <GanttPanelItem key={resource}>
-                {diconnectionData[resource].map((item) => (
+                {diconnectionData[resource]?.map((item) => (
                   <Tooltip
                     title={`${dayjs(item.startDate).format('D')} – ${dayjs(item.endDate).format('D MMMM')}`}
                     key={`${item.startDate}${item.endDate}${item.resourceType}`}
                   >
                     <ResourceDisconnectionItem
+                      isLeftOverflow={item.xStart === 0}
+                      isRightOverflow={item.xEnd === 100}
                       width={item.xEnd - item.xStart}
                       left={item.xStart}
                       resource={resource}
