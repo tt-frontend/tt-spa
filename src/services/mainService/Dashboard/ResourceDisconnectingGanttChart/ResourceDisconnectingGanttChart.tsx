@@ -28,18 +28,11 @@ export const ResourceDisconnectingGanttChart: FC<Props> = ({ data }) => {
 
   const periodDate = currentDate.add(30, 'day').endOf('D');
 
-  console.log({
-    first: currentDate.add(31, 'D').endOf('D').format('DD.MM.YYYY'),
-    second: periodDate.format('DD.MM.YYYY'),
-  });
-
   const diconnectionData = prepareDisconnectionsData(
     data || [],
     currentDate,
     periodDate,
   );
-
-  console.log(diconnectionData);
 
   return (
     <Panel title="Отключения" link="/resourceDisconnecting" padding={0}>
