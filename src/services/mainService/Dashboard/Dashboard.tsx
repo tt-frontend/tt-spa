@@ -3,6 +3,7 @@ import { Wrapper } from './Dashboard.styled';
 import { Props } from './Dashboard.types';
 import { DeviceConnectionAnalysis } from './DeviceConnectionAnalysis';
 import { ResourceDisconnectingGanttChart } from './ResourceDisconnectingGanttChart';
+import { ResourceConsamptionGraph } from './ResourceConsamptionGraph';
 
 export const Dashboard: FC<Props> = ({ data, isLoading }) => {
   return (
@@ -15,6 +16,8 @@ export const Dashboard: FC<Props> = ({ data, isLoading }) => {
         data={data?.resourceDisconnecting || null}
         isLoading={isLoading}
       />
+
+      <ResourceConsamptionGraph />
     </Wrapper>
   );
 };
