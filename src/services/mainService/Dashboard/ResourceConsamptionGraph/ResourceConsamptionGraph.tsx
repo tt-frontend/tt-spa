@@ -1,12 +1,200 @@
 import { FC } from 'react';
-import { Wrapper } from './ResourceConsamptionGraph.styled';
 import { Props } from './ResourceConsamptionGraph.types';
-import { Panel } from '../Panel';
+// import { Panel } from '../Panel';
+// import {
+//   AlertTitle,
+//   AlertWrapper,
+//   getCurrentDataStyle,
+// } from 'services/resources/resourceConsumptionService/view/ResourceConsumptionGraph/ResourceConsumptionGraph.styled';
+// import { Alert } from 'ui-kit/Alert';
+// import { GraphGradient } from 'ui-kit/shared/GraphComponents/GraphGradient';
+// import {
+//   VictoryArea,
+//   VictoryAxis,
+//   VictoryChart,
+//   VictoryLine,
+//   VictoryTheme,
+//   VictoryVoronoiContainer,
+// } from 'victory';
+// import { CustomTooltip } from 'ui-kit/shared/GraphComponents/CustomTooltip';
+// import { ResourceConsumptionGraphTooltip } from 'services/resources/resourceConsumptionService/view/ResourceConsumptionGraph/ResourceConsumptionGraphTooltip';
+// import {
+//   ResourceConsumptionGraphColorsMeasure,
+//   tickValues,
+// } from 'services/resources/resourceConsumptionService/view/ResourceConsumptionGraph/ResourceConsumptionGraph.constants';
+// import {
+//   getGraphTypeColors,
+//   hasNoConsecutiveNumbers,
+// } from 'services/resources/resourceConsumptionService/view/ResourceConsumptionGraph/ResourceConsumptionGraph.utils';
+// import { ResourceConsumptionGraphType } from 'services/resources/resourceConsumptionService/resourceConsumptionService.types';
+// import {
+//   horizontalAxisStyle,
+//   verticalAxisStyle,
+// } from 'services/nodes/displayNodesStatisticsService/view/StatisticsGraph/StatisticsGraph.styled';
+// import { Wrapper } from './ResourceConsamptionGraph.styled';
 
-export const ResourceConsamptionGraph: FC<Props> = () => {
-  return (
-    <Wrapper>
-      <Panel title="Анализ потребления ресурсов"></Panel>
-    </Wrapper>
-  );
-};
+// const height = 360;
+
+export const ResourceConsamptionGraph: FC<Props> = () =>
+  //     {
+  //   consumptionData,
+  //   isDataLoading,
+  //   selectedResource,
+  //   resourceForColor,
+  // }
+  {
+    return <></>;
+    //   const isConsumptionDataItemsEmpty = useMemo(
+    //     () =>
+    //       [
+    //         hasNoConsecutiveNumbers(
+    //           consumptionData.currentMonthData?.housing || [],
+    //         ),
+    //         hasNoConsecutiveNumbers(
+    //           consumptionData.currentMonthData?.normative || [],
+    //         ),
+    //       ].every(Boolean) && !isDataLoading,
+    //     [consumptionData, isDataLoading],
+    //   );
+
+    //   if (isConsumptionDataItemsEmpty) {
+    //     return (
+    //       <>
+    //         <Wrapper id="graphWrapper">
+    //           <AlertWrapper>
+    //             {isHousingMeteringDevices && (
+    //               <Alert centered type="danger" icon="warning">
+    //                 <AlertTitle>Нет данных за выбранный период</AlertTitle>
+    //               </Alert>
+    //             )}
+    //             {!isHousingMeteringDevices && (
+    //               <Alert centered type="default" icon="info">
+    //                 <AlertTitle>
+    //                   Опрос домовых приборов учета еще не подключен
+    //                 </AlertTitle>
+    //               </Alert>
+    //             )}
+    //           </AlertWrapper>
+    //           <VictoryChart
+    //             padding={{ top: 0, bottom: 0, left: 26, right: 0 }}
+    //             domain={{ y: dynamicMinMax }}
+    //             style={{
+    //               parent: {
+    //                 overflow: 'visible',
+    //                 height: 300,
+    //               },
+    //             }}
+    //             height={300}
+    //             width={600}
+    //             theme={VictoryTheme.material}
+    //             containerComponent={<VictoryVoronoiContainer />}
+    //           >
+    //             <VictoryAxis
+    //               tickValues={tickValues}
+    //               tickFormat={(day) => {
+    //                 if (day % 5) {
+    //                   return '';
+    //                 }
+    //                 return day;
+    //               }}
+    //               style={horizontalAxisStyle}
+    //             />
+    //             <VictoryAxis dependentAxis style={verticalAxisStyle} />
+    //           </VictoryChart>
+    //         </Wrapper>
+    //       </>
+    //     );
+    //   }
+
+    //   return (
+    //     <Wrapper>
+    //       <Panel title="Анализ потребления ресурсов"></Panel>
+
+    //       <Wrapper id="graphWrapper">
+    //         {isOnlyHousingDataEmpty && (
+    //           <AlertWrapper>
+    //             <Alert centered type="default" icon="warning">
+    //               <AlertTitle>Нет данных по общедомовому потреблению.</AlertTitle>
+    //             </Alert>
+    //           </AlertWrapper>
+    //         )}
+
+    //         <GraphGradient resource={resourceForColor} />
+    //         <VictoryChart
+    //           domain={{ y: dynamicMinMax, x: [-1, 32] }}
+    //           padding={{ top: 0, bottom: 0, left: 26, right: 0 }}
+    //           domainPadding={{ x: [-50, 0] }}
+    //           style={{
+    //             parent: {
+    //               overflow: 'visible',
+    //               height: isOnlyHousingDataEmpty ? 300 : height,
+    //             },
+    //           }}
+    //           height={isOnlyHousingDataEmpty ? 300 : height}
+    //           width={600}
+    //           theme={VictoryTheme.material}
+    //           containerComponent={<VictoryVoronoiContainer />}
+    //         >
+    //           <VictoryAxis
+    //             tickFormat={(day) => {
+    //               if (day === 0) {
+    //                 return day;
+    //               }
+    //               if (day % 5) {
+    //                 return '';
+    //               }
+    //               return day;
+    //             }}
+    //             style={horizontalAxisStyle}
+    //           />
+    //           <VictoryAxis
+    //             domain={dynamicMinMax}
+    //             dependentAxis
+    //             style={verticalAxisStyle}
+    //           />
+
+    //           <VictoryArea
+    //             data={consumptionData.currentMonthData?.housing}
+    //             x="key"
+    //             y="value"
+    //             interpolation="monotoneX"
+    //             style={getCurrentDataStyle(resourceForColor)}
+    //             labels={() => ''}
+    //             labelComponent={
+    //               <CustomTooltip
+    //                 flyoutStyle={{ fill: 'var(--main-100)' }}
+    //                 style={{ fill: '#fff' }}
+    //                 height={height}
+    //                 flyoutComponent={
+    //                   <ResourceConsumptionGraphTooltip
+    //                     startOfMonth={''}
+    //                     measure={ResourceConsumptionGraphColorsMeasure[selectedResource]}
+    //                   />
+    //                 }
+    //                 minValue={dynamicMinMax[0]}
+    //                 maxValue={dynamicMinMax[1]}
+    //               />
+    //             }
+    //           />
+
+    //           <VictoryLine
+    //             data={currentMonthData}
+    //             interpolation="monotoneX"
+    //             x="key"
+    //             y="value"
+    //             style={{
+    //               data: {
+    //                 stroke: getGraphTypeColors({
+    //                   resource: resourceForColor,
+    //                   type: ResourceConsumptionGraphType.Housing,
+    //                   isOpacityNeed: true,
+    //                 }),
+    //                 strokeWidth: 2,
+    //               },
+    //             }}
+    //           />
+    //         </VictoryChart>
+    //       </Wrapper>
+    //     </Wrapper>
+    //   );
+  };

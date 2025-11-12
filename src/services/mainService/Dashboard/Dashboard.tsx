@@ -5,7 +5,12 @@ import { DeviceConnectionAnalysis } from './DeviceConnectionAnalysis';
 import { ResourceDisconnectingGanttChart } from './ResourceDisconnectingGanttChart';
 import { ResourceConsamptionGraph } from './ResourceConsamptionGraph';
 
-export const Dashboard: FC<Props> = ({ data, isLoading }) => {
+export const Dashboard: FC<Props> = ({
+  data,
+  isLoading,
+  selectedResource,
+  selectedResourceForColor,
+}) => {
   return (
     <Wrapper>
       <DeviceConnectionAnalysis
@@ -17,7 +22,12 @@ export const Dashboard: FC<Props> = ({ data, isLoading }) => {
         isLoading={isLoading}
       />
 
-      <ResourceConsamptionGraph />
+      <ResourceConsamptionGraph
+        // consumptionData={}
+        isDataLoading={false}
+        selectedResource={selectedResource}
+        resourceForColor={selectedResourceForColor}
+      />
     </Wrapper>
   );
 };

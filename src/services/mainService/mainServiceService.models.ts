@@ -1,7 +1,7 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
 import { ManePayload } from './mainServiceService.types';
 import { getMain } from './mainServiceService.api';
-import { MainDashboardResponse } from 'api/types';
+import { EResourceType, MainDashboardResponse } from 'api/types';
 import { EffectFailDataAxiosError } from 'types';
 import { createGate } from 'effector-react';
 
@@ -33,6 +33,18 @@ const $mainData = createStore<MainDashboardResponse | null>(null).on(
   (_, data) => data,
 );
 
+const setResource = createEvent<EResourceType>();
+
+const $selectedResource = createStore<EResourceType>(
+  EResourceType.ColdWaterSupply,
+)
+  .on(setResource, (_, resource) => resource)
+  .reset(resetFilter);
+
+const $selectedResourceForColor = createStore<EResourceType>(
+  EResourceType.ColdWaterSupply,
+);
+
 sample({
   clock: PageGate.open,
   source: $filter,
@@ -43,6 +55,12 @@ const $isLoading = getMainFx.pending;
 
 export const mainServiceService = {
   inputs: { setFilter, resetFilter },
-  outputs: { $filter, $mainData, $isLoading },
+  outputs: {
+    $filter,
+    $mainData,
+    $isLoading,
+    $selectedResource,
+    $selectedResourceForColor,
+  },
   gates: { PageGate },
 };
