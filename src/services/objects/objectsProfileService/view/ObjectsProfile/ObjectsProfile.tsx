@@ -77,12 +77,6 @@ export const ObjectsProfile: FC<ObjectsProfileProps> = ({
         onClick: openFlowTemperatureDeviationReportModal,
         hidden: !isPermitionToCreateFeedFlowPipeTemperatureReport,
       },
-      {
-        id: 'individual-device-report',
-        title: 'Сводный отчёт по ИПУ',
-        onClick: openHeatIndividualDevicesReportModal,
-        hidden: !isPermitionToCreateObjectAndIPUReport,
-      },
     ].map((elem) => ({
       ...elem,
       title: <ReportMenuListItem>{elem.title}</ReportMenuListItem>,

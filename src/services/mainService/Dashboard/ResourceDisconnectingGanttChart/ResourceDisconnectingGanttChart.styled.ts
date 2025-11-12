@@ -80,13 +80,19 @@ export const ResourceDisconnectionItem = styled.div<{
   isRightOverflow: boolean;
 }>`
   position: absolute;
-  background: ${({ resource }) => resourceColorLookup[resource]};
+  background: ${({ resource }) => resourceColorLookup[resource]}77;
   height: 24px;
   border-radius: ${getPanelBorderRadius};
   width: ${({ width }) => width}%;
   left: ${({ left }) => left}%;
   border: 2px solid white;
   box-sizing: border-box;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: ${({ resource }) => resourceColorLookup[resource]};
+  }
 `;
 
 function getPanelBorderRadius({
