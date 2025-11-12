@@ -189,15 +189,8 @@ sample({
 });
 
 sample({
+  clock: pauseApartmentService.inputs.pauseApartmentStatusFx.doneData,
   source: ApartmentGate.state.map(({ id }) => ({ ApartmentId: id })),
-  clock: [
-    sample({
-      source: $apartment,
-      clock: ApartmentGate.state,
-      filter: (apartment, { id }) => Boolean(id && id !== apartment?.id),
-    }),
-    pauseApartmentService.inputs.pauseApartmentStatusFx.doneData,
-  ],
   target: getApartmentQuery.start,
 });
 

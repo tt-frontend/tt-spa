@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createEvent, createStore } from 'effector';
-import { apiService } from 'api';
+import { apiService, prodUrl } from 'api';
 import { tokensService } from './tokensService';
 import { forbiddenList } from '../utils/403handling';
 import { notification, message } from 'antd';
@@ -13,12 +13,12 @@ export const isDevMode = true;
 let refreshPromise: null | Promise<unknown> = null;
 const clearPromise = () => (refreshPromise = null);
 
-axios.defaults.baseURL = apiService.outputs.$devUrl.getState();
+axios.defaults.baseURL = isDevMode
+  ? apiService.outputs.$devUrl.getState()
+  : prodUrl;
 
 apiService.outputs.$devUrl.watch((url) => {
-  axios.defaults.baseURL = url;
-
-  if (url) localStorage.setItem('dev-api-url', url);
+  if (isDevMode) axios.defaults.baseURL = url;
 });
 
 axios.interceptors.request.use((req) => {

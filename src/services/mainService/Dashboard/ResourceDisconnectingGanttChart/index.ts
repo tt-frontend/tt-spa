@@ -1,0 +1,1 @@
+export { ResourceDisconnectingGanttChart } from './ResourceDisconnectingGanttChart';

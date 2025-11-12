@@ -1,4 +1,5 @@
 import { IndividualDeviceMountPlaceForFilterResponse } from 'api/types';
+import { GetApartmentsRequestPayload } from '../../../ApartmentReadingsService.types';
 
 export type DevicesSearchProps = {
   handleClickDevice: () => void;
@@ -6,4 +7,5 @@ export type DevicesSearchProps = {
   allIndividualDeviceMountPlaces:
     | IndividualDeviceMountPlaceForFilterResponse[]
     | null;
+  handleSearchApartment: (payload: GetApartmentsRequestPayload) => void;
 };

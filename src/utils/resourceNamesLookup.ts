@@ -6,3 +6,10 @@ export const resourceNamesLookup: { [key: string]: string } = {
   [EResourceType.Electricity]: 'Электричество',
   [EResourceType.Heat]: 'Тепло',
 };
+
+export const resourceColorLookup: { [key in EResourceType]: string } = {
+  [EResourceType.HotWaterSupply]: '#ff8c68',
+  [EResourceType.ColdWaterSupply]: '#79afff',
+  [EResourceType.Electricity]: '#e2b104',
+  [EResourceType.Heat]: '#9254de',
+};

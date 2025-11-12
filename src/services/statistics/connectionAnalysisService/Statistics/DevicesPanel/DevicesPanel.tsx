@@ -2,7 +2,7 @@ import React, { FC, useEffect, useMemo, useState } from 'react';
 import { PaginationSC, Wrapper } from './DevicesPanel.styled';
 import { Props } from './DevicesPanel.types';
 import { CalculatorInfo } from './CalculatorDevices';
-import { getDevicesCountText } from 'services/nodes/createNodeService/view/CreateNodePage/ConnectedDevices/CommunicationPipeListItem/CommunicationPipeListItem.utils';
+import { getDeviceWordForm } from 'services/nodes/createNodeService/view/CreateNodePage/ConnectedDevices/CommunicationPipeListItem/CommunicationPipeListItem.utils';
 import {
   CheckGreenIcon,
   NoConnectionIcon,
@@ -25,7 +25,7 @@ export const DevicesPanel: FC<Props> = ({
 
   const devicesCount = calculators?.totalItems || 0;
 
-  const devicesCountText = getDevicesCountText(devicesCount);
+  const devicesCountText = getDeviceWordForm(devicesCount);
 
   const panelIcon = useMemo(() => {
     if (panelTitle === ECalculatorConnectionGroupType.Success) {

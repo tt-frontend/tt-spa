@@ -124,6 +124,8 @@ import ClipIcon from './svg/clip.svg?react';
 import CloseDarkIcon from './svg/closeDark.svg?react';
 import DeviceGreyIcon from './svg/deviceGrey.svg?react';
 import PlusBlueIcon from './svg/plusBlue.svg?react';
+import MainIcon from './svg/mainIcon.svg?react';
+import ChevronRightIcon from './svg/chevronRight.svg?react';
 
 export {
   FinishIcon,
@@ -252,4 +254,6 @@ export {
   CloseDarkIcon,
   DeviceGreyIcon,
   PlusBlueIcon,
+  MainIcon,
+  ChevronRightIcon,
 };

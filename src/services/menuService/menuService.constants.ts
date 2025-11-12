@@ -29,6 +29,7 @@ export const privates: MenuFiltrationConfig = {
     ESecuredIdentityRoleName.ManagingFirmDispatcher,
   ],
   [MenuType.SupervisorAnalytics]: [ESecuredIdentityRoleName.Supervisor],
+  [MenuType.Main]: [ESecuredIdentityRoleName.Administrator],
 };
 
 export const hidden: MenuFiltrationConfig = {
