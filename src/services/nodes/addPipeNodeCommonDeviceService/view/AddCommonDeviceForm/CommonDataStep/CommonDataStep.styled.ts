@@ -5,3 +5,16 @@ export const LineWrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 16px;
 `;
+
+export const PipeSelectOption = styled.div`
+  color: #272f5ad1;
+`;
+
+export const MagistralLabel = styled.span`
+  opacity: 0.75;
+`;
+
+export const PipeNumber = styled.span`
+  font-weight: 500;
+  color: #272f5a;
+`;

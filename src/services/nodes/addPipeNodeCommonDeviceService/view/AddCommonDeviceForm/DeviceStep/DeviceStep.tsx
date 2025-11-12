@@ -7,20 +7,12 @@ import { getInitialDateFieldValue } from 'services/nodes/createNodeService/view/
 import { DatePicker } from 'ui-kit/DatePicker';
 import { FormItem } from 'ui-kit/FormItem';
 import { Input } from 'ui-kit/Input';
-import { Select } from 'ui-kit/Select';
 import { validationSchema } from './DeviceStep.constants';
-import {
-  LineWrapper,
-  MagistralLabel,
-  PipeNumber,
-  PipeSelectOption,
-} from './DeviceStep.styled';
+import { LineWrapper } from './DeviceStep.styled';
 import { DeviceStepProps } from './DeviceStep.types';
-import { MagistralsDisctionary } from 'dictionaries';
 import dayjs from 'api/dayjs';
 
 export const DeviceStep: FC<DeviceStepProps> = ({
-  communicationPipes,
   requestPayload,
   updateRequestPayload,
   formId,
@@ -36,20 +28,16 @@ export const DeviceStep: FC<DeviceStepProps> = ({
         futureCheckingDate: getInitialDateFieldValue(
           requestPayload.futureCheckingDate,
         ),
-        pipeId: requestPayload.pipeId || null,
       },
       validationSchema,
       enableReinitialize: true,
       validateOnChange: false,
       onSubmit: (values) => {
-        if (!values.pipeId) return;
-
         updateRequestPayload({
           model: values.model,
           serialNumber: values.serialNumber,
           lastCheckingDate: values.lastCheckingDate?.format('YYYY-MM-DD'),
           futureCheckingDate: values.futureCheckingDate?.format('YYYY-MM-DD'),
-          pipeId: values.pipeId,
         });
       },
     });
@@ -96,26 +84,6 @@ export const DeviceStep: FC<DeviceStepProps> = ({
         </FormItem>
       </LineWrapper>
       <SpaceLine />
-      <LineWrapper>
-        <FormItem label="Труба">
-          <Select
-            placeholder="Выберите"
-            value={values.pipeId ? String(values.pipeId) : undefined}
-            onChange={(value) => setFieldValue('pipeId', Number(value))}
-          >
-            {communicationPipes.map((pipe) => (
-              <Select.Option key={pipe.id} value={pipe.id}>
-                <PipeSelectOption>
-                  <PipeNumber>№{pipe.number}</PipeNumber> ({pipe.diameter}мм){' '}
-                  <MagistralLabel>магистраль:</MagistralLabel>{' '}
-                  {pipe.magistral && MagistralsDisctionary[pipe.magistral]}
-                </PipeSelectOption>
-              </Select.Option>
-            ))}
-          </Select>
-          <ErrorMessage>{errors.pipeId}</ErrorMessage>
-        </FormItem>
-      </LineWrapper>
     </Form>
   );
 };

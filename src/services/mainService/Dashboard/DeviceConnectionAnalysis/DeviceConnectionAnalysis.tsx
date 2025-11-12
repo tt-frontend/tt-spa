@@ -13,7 +13,6 @@ import { Empty, Skeleton } from 'antd';
 import { PieChartFill } from 'react-bootstrap-icons';
 
 export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
-  
   return (
     <Panel title="Анализ подключения приборов" link="/deviceAnalysis">
       {!data && !isLoading && (

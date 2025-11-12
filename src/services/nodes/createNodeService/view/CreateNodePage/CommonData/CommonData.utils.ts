@@ -74,8 +74,8 @@ export const getInitialPipesFromConfig = (config: EPipeNodeConfig) => {
       FeedBackFlowPipe,
     ],
     [EPipeNodeConfig.HeatNoHousingMeteringDevice]: [FeedFlowPipe],
-    [EPipeNodeConfig.HotWaterNoDevice]: [],
-    [EPipeNodeConfig.ColdWaterNoDevice]: [],
+    [EPipeNodeConfig.HotWaterNoDevice]: [FeedFlowPipe],
+    [EPipeNodeConfig.ColdWaterNoDevice]: [FeedFlowPipe],
   };
 
   return PipesLookup[config];

@@ -19,6 +19,7 @@ export type CommonDataProps = {
   requestPayload: CreateNodeFormPayload;
   handleDeleteServiceZone: (payload: NodeServiceZoneResponse | null) => void;
   successDeleteServiceZone: Event<void>;
+  setConfigurationType: (payload: EPipeNodeConfig) => void;
 };
 
 export type NodeResourcesList = {
