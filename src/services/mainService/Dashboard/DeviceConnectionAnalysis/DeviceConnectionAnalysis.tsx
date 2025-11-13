@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Props } from './DeviceConnectionAnalysis.types';
 import { Panel } from '../Panel';
 import {
@@ -12,9 +12,38 @@ import { VictoryLabel, VictoryPie, VictoryTheme } from 'victory';
 import { Empty, Skeleton } from 'antd';
 import { PieChartFill } from 'react-bootstrap-icons';
 
+const startValues = [{ y: 0 }, { y: 0 }, { y: 0 }, { y: 100 }];
+
 export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
+  const [pocketData, setPocketData] = useState(startValues);
+
+  useEffect(() => {
+    if (isLoading || !data) {
+      setPocketData(startValues);
+      return;
+    }
+
+    setPocketData([
+      { y: data.successCount || 0 },
+      {
+        y: data.notPollingCount || 0,
+      },
+      { y: data.errorCount || 0 },
+      { y: data.noArchiveCount || 0 },
+    ]);
+
+    return () => setPocketData(startValues);
+  }, [isLoading, data]);
+
+  const total = data
+    ? Object.values(data).reduce((acc, value) => acc + (value || 0), 0)
+    : 0;
+
   return (
-    <Panel title="Анализ подключения приборов" link="/deviceAnalysis">
+    <Panel
+      title="Анализ подключения приборов"
+      link="/statistics/connectionAnalysis"
+    >
       {!data && !isLoading && (
         <Empty description="Нет данных" image={Empty.PRESENTED_IMAGE_SIMPLE} />
       )}
@@ -80,23 +109,16 @@ export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
                 width={400}
                 height={400}
                 labels={[]}
-                data={[
-                  { x: 'Cats', y: data.successCount, color: '#17B45A' },
-                  { x: 'Dogs', y: data.notPollingCount, color: '#E2B104' },
-                  { x: 'Birds', y: data.errorCount, color: '#ED3B45' },
-                  { x: 'Rabbits', y: data.noArchiveCount, color: '#E7EAEC' },
-                ]}
+                data={pocketData}
                 innerRadius={150}
                 radius={180}
                 labelRadius={150}
                 cornerRadius={4}
                 theme={VictoryTheme.clean}
-                style={{
-                  data: {
-                    fill: (props) => {
-                      return (props.datum as { color: string }).color || 0;
-                    },
-                  },
+                colorScale={['#17B45A', '#E2B104', '#ED3B45', '#E7EAEC']}
+                animate={{
+                  duration: 1000,
+                  easing: 'exp',
                 }}
               />
               <VictoryLabel
@@ -104,7 +126,7 @@ export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
                 style={{ fontSize: 58, fontWeight: '500', fill: '#272F5AE5' }}
                 x={200}
                 y={200}
-                text={'2048'.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                text={total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               />
             </svg>
           </DeviceAnalsisChart>

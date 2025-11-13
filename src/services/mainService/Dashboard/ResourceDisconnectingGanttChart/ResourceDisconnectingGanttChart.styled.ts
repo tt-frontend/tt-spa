@@ -1,5 +1,6 @@
+import { Skeleton } from 'antd';
 import { EResourceType } from 'api/types';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { resourceColorLookup } from 'utils/resourceNamesLookup';
 
 export const Wrapper = styled.div``;
@@ -35,6 +36,7 @@ export const GanttPanelWrapper = styled.div`
   border-bottom: 1px solid #f3f5f6;
   position: relative;
   width: 100%;
+  overflow: hidden;
 `;
 
 export const DatesWrapper = styled.div`
@@ -72,6 +74,22 @@ export const GanttPanelItem = styled.div`
   position: relative;
 `;
 
+const growWidth = keyframes`
+  from {
+    width: 0;
+    opacity: 0.6;
+  }
+  to {
+    width: var(--target-width);
+    opacity: 1;
+  }
+`;
+
+// --- Общий css-фрагмент для анимации ---
+const appearAnimation = css`
+  animation: ${growWidth} 0.5s ease-out forwards;
+`;
+
 export const ResourceDisconnectionItem = styled.div<{
   resource: EResourceType;
   width: number;
@@ -90,9 +108,33 @@ export const ResourceDisconnectionItem = styled.div<{
   cursor: pointer;
   transition: 0.2s;
 
+  --target-width: ${({ width }) => width}%;
+
+  ${appearAnimation};
+
   &:hover {
     background: ${({ resource }) => resourceColorLookup[resource]};
   }
+`;
+
+export const ResourceDisconnectionLoaderItem = styled(Skeleton.Button)<{
+  width: number;
+  left: number;
+  isLeftOverflow: boolean;
+  isRightOverflow: boolean;
+}>`
+  position: absolute;
+  height: 24px !important;
+  border-radius: ${getPanelBorderRadius} !important;
+  min-width: ${({ width }) => width}% !important;
+  width: ${({ width }) => width}% !important;
+
+  * {
+    border-radius: ${getPanelBorderRadius} !important;
+    /* min-width: ${({ width }) => width}% !important; */
+    /* width: ${({ width }) => width}% !important; */
+  }
+  left: ${({ left }) => left}%;
 `;
 
 function getPanelBorderRadius({
