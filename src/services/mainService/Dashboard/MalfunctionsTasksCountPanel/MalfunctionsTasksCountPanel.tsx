@@ -47,7 +47,11 @@ export const MalfunctionsTasksCountPanel: FC<Props> = ({
                 {MalfunctionDescription[item.malfunctionType as string]}
               </Title>
               <TasksCount>
-                <CountUp fontSize="32px" value={item.totalTasksCount || 0} />
+                <CountUp
+                  duration={0.5}
+                  fontSize="32px"
+                  value={item.totalTasksCount || 0}
+                />
               </TasksCount>
               <AdditionTasksCountWrapper>
                 Просроченные{' '}
