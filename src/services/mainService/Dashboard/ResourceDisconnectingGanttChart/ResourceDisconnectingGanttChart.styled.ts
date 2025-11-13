@@ -1,3 +1,4 @@
+import { Skeleton } from 'antd';
 import { EResourceType } from 'api/types';
 import styled from 'styled-components';
 import { resourceColorLookup } from 'utils/resourceNamesLookup';
@@ -35,6 +36,7 @@ export const GanttPanelWrapper = styled.div`
   border-bottom: 1px solid #f3f5f6;
   position: relative;
   width: 100%;
+  overflow: hidden;
 `;
 
 export const DatesWrapper = styled.div`
@@ -93,6 +95,26 @@ export const ResourceDisconnectionItem = styled.div<{
   &:hover {
     background: ${({ resource }) => resourceColorLookup[resource]};
   }
+`;
+
+export const ResourceDisconnectionLoaderItem = styled(Skeleton.Button)<{
+  width: number;
+  left: number;
+  isLeftOverflow: boolean;
+  isRightOverflow: boolean;
+}>`
+  position: absolute;
+  height: 24px !important;
+  border-radius: ${getPanelBorderRadius} !important;
+  min-width: ${({ width }) => width}% !important;
+  width: ${({ width }) => width}% !important;
+
+  * {
+    border-radius: ${getPanelBorderRadius} !important;
+    /* min-width: ${({ width }) => width}% !important; */
+    /* width: ${({ width }) => width}% !important; */
+  }
+  left: ${({ left }) => left}%;
 `;
 
 function getPanelBorderRadius({
