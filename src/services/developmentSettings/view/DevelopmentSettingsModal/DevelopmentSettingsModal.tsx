@@ -25,7 +25,6 @@ import {
   AccountsArraySchema,
   urls,
 } from './DevelopmentSettingsModal.constants';
-import { baseURL } from 'api';
 import { FeatureTogglesTranslates } from 'services/developmentSettings/developmentSettings.constants';
 import {
   ICredItem,
@@ -43,7 +42,8 @@ import { generateColorsFromString } from 'utils/generateGradient';
 import { useClipboard } from '@custom-react-hooks/use-clipboard';
 import * as yup from 'yup';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
-import packagejson from '../../../../../package.json';
+import { APP_VERSION } from 'constants/version';
+import { baseURL } from 'constants/apiUrl';
 
 export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
   visible,
@@ -260,7 +260,7 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
           )}
           <Badge>
             TT frontend team {dayjs().format('YYYY')} [ds: 2.2.0] [app:{' '}
-            {packagejson.version}]
+            {APP_VERSION}]
           </Badge>
         </Wrapper>
       }

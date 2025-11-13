@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { createEvent, createStore } from 'effector';
-import { apiService, prodUrl } from 'api';
+import { apiService } from 'api';
 import { tokensService } from './tokensService';
 import { forbiddenList } from '../utils/403handling';
 import { notification, message } from 'antd';
 import { cancellableUrl } from 'services/cancelRequestService/cancelRequestService.constants';
 import { cancelRequestService } from 'services/cancelRequestService';
 import { isUndefined } from 'lodash/fp';
-
-export const isDevMode = true;
+import { isDevMode } from 'constants/devMode';
+import { prodUrl } from 'constants/apiUrl';
 
 let refreshPromise: null | Promise<unknown> = null;
 const clearPromise = () => (refreshPromise = null);
