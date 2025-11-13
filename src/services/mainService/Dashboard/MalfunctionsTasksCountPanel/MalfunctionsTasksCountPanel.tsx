@@ -13,7 +13,11 @@ import { MalfunctionDescription } from 'services/supervisor/commonAnalytics/Comm
 
 export const MalfunctionsTasksCountPanel: FC<Props> = ({ malfunctions }) => {
   return (
-    <Panel title="Задачи" padding="0 16px 16px 16px">
+    <Panel
+      title="Задачи"
+      padding="0 16px 16px 16px"
+      link="/tasks/list/Observing"
+    >
       <Wrapper>
         {malfunctions?.map((item) => (
           <MalfunctionPanel key={item.malfunctionType}>

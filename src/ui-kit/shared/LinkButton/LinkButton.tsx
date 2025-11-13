@@ -8,9 +8,10 @@ export const LinkButton: FC<LinkButtonProps> = ({
   onClick,
   fontSize,
   chevron,
+  link,
 }) => {
   return (
-    <Wrapper onClick={onClick} style={{ fontSize }}>
+    <Wrapper to={link || ''} onClick={onClick} style={{ fontSize }}>
       {children}
       {chevron && <ChevronRightIcon />}
     </Wrapper>

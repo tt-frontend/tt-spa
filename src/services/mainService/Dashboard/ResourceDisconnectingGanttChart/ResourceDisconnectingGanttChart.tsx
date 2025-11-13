@@ -35,7 +35,7 @@ export const ResourceDisconnectingGanttChart: FC<Props> = ({ data }) => {
   );
 
   return (
-    <Panel title="Отключения" link="/resourceDisconnecting" padding={0}>
+    <Panel title="Отключения" link="/statistics/disabledResources" padding={0}>
       <Header>{currentMonthString}</Header>
       <Content>
         <ResourcePanel>

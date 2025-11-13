@@ -14,7 +14,10 @@ import { PieChartFill } from 'react-bootstrap-icons';
 
 export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
   return (
-    <Panel title="Анализ подключения приборов" link="/deviceAnalysis">
+    <Panel
+      title="Анализ подключения приборов"
+      link="/statistics/connectionAnalysis"
+    >
       {!data && !isLoading && (
         <Empty description="Нет данных" image={Empty.PRESENTED_IMAGE_SIMPLE} />
       )}
