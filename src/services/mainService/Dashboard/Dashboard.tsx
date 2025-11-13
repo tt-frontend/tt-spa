@@ -16,7 +16,10 @@ export const Dashboard: FC<Props> = ({ data, isLoading }) => {
         data={data?.resourceDisconnecting || null}
         isLoading={isLoading}
       />
-      <MalfunctionsTasksCountPanel malfunctions={data?.malfunctions || null} />
+      <MalfunctionsTasksCountPanel
+        malfunctions={data?.malfunctions || null}
+        isLoading={isLoading}
+      />
     </Wrapper>
   );
 };
