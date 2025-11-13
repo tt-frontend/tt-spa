@@ -39,8 +39,6 @@ export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
     ? Object.values(data).reduce((acc, value) => acc + (value || 0), 0)
     : 0;
 
-  console.log(pocketData);
-
   return (
     <Panel
       title="Анализ подключения приборов"
