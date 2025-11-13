@@ -1,6 +1,6 @@
 import { Skeleton } from 'antd';
 import { EResourceType } from 'api/types';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { resourceColorLookup } from 'utils/resourceNamesLookup';
 
 export const Wrapper = styled.div``;
@@ -74,6 +74,22 @@ export const GanttPanelItem = styled.div`
   position: relative;
 `;
 
+const growWidth = keyframes`
+  from {
+    width: 0;
+    opacity: 0.6;
+  }
+  to {
+    width: var(--target-width);
+    opacity: 1;
+  }
+`;
+
+// --- Общий css-фрагмент для анимации ---
+const appearAnimation = css`
+  animation: ${growWidth} 0.5s ease-out forwards;
+`;
+
 export const ResourceDisconnectionItem = styled.div<{
   resource: EResourceType;
   width: number;
@@ -91,6 +107,10 @@ export const ResourceDisconnectionItem = styled.div<{
   box-sizing: border-box;
   cursor: pointer;
   transition: 0.2s;
+
+  --target-width: ${({ width }) => width}%;
+
+  ${appearAnimation};
 
   &:hover {
     background: ${({ resource }) => resourceColorLookup[resource]};

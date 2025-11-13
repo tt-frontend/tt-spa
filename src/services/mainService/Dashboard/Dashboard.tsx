@@ -5,8 +5,7 @@ import { DeviceConnectionAnalysis } from './DeviceConnectionAnalysis';
 import { ResourceDisconnectingGanttChart } from './ResourceDisconnectingGanttChart';
 import { MalfunctionsTasksCountPanel } from './MalfunctionsTasksCountPanel';
 
-export const Dashboard: FC<Props> = ({ data }) => {
-  const isLoading = true;
+export const Dashboard: FC<Props> = ({ data, isLoading }) => {
   return (
     <Wrapper>
       <DeviceConnectionAnalysis

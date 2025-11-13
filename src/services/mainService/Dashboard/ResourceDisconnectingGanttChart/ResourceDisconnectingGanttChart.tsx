@@ -36,8 +36,6 @@ export const ResourceDisconnectingGanttChart: FC<Props> = ({
     periodDate,
   );
 
-  console.log(JSON.stringify(diconnectionData));
-
   return (
     <Panel title="Отключения" link="/statistics/disabledResources" padding={0}>
       <Header>{currentMonthString}</Header>
