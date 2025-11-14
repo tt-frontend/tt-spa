@@ -21,6 +21,9 @@ export const MainServiceContainer = () => {
     resetFilter,
     data,
     isLoading,
+    selectedResource,
+    selectedResourceForColor,
+    setResource,
     existingMoDistricts,
     organizations,
   } = useUnit({
@@ -29,6 +32,9 @@ export const MainServiceContainer = () => {
     resetFilter: inputs.resetFilter,
     data: outputs.$mainData,
     isLoading: outputs.$isLoading,
+    selectedResource: outputs.$selectedResource,
+    selectedResourceForColor: outputs.$selectedResourceForColor,
+    setResource: inputs.setResource,
     existingMoDistricts: existingMoDistrictsQuery.$data,
     organizations: dashboardOrganizationsQuery.$data,
   });
@@ -44,7 +50,13 @@ export const MainServiceContainer = () => {
         existingMoDistricts={existingMoDistricts}
         organizations={organizations}
       />
-      <Dashboard isLoading={isLoading} data={data} />
+      <Dashboard
+        isLoading={isLoading}
+        data={data}
+        selectedResource={selectedResource}
+        selectedResourceForColor={selectedResourceForColor}
+        setResource={setResource}
+      />
     </div>
   );
 };
