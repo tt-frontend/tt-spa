@@ -10,6 +10,7 @@ import {
   GanttPanelWrapper,
   Header,
   ResourceDisconnectionItem,
+  ResourceDisconnectionLoaderItem,
   ResourcePanel,
   ResourcePanelItem,
 } from './ResourceDisconnectingGanttChart.styled';
@@ -18,20 +19,16 @@ import { EResourceType } from 'api/types';
 import { ResourceInfo } from 'ui-kit/shared/ResourceInfo';
 import { prepareDisconnectionsData } from './ResourceDisconnectingGanttChart.utils';
 import { Tooltip } from 'antd';
+import { mockLoaders } from './ResourceDisconnectingGanttChart.constants';
 
-export const ResourceDisconnectingGanttChart: FC<Props> = ({ data }) => {
+export const ResourceDisconnectingGanttChart: FC<Props> = ({
+  data,
+  isLoading,
+}) => {
   const currentDate = dayjs().startOf('D');
-
   const currentMonthString = currentDate.format('MMMM');
-
   const dates = new Array(31).fill(0).map((_, i) => currentDate.add(i, 'day'));
-
   const periodDate = currentDate.add(30, 'day').endOf('D');
-
-  console.log({
-    first: currentDate.add(31, 'D').endOf('D').format('DD.MM.YYYY'),
-    second: periodDate.format('DD.MM.YYYY'),
-  });
 
   const diconnectionData = prepareDisconnectionsData(
     data || [],
@@ -39,11 +36,10 @@ export const ResourceDisconnectingGanttChart: FC<Props> = ({ data }) => {
     periodDate,
   );
 
-  console.log(diconnectionData);
-
   return (
-    <Panel title="Отключения" link="/resourceDisconnecting" padding={0}>
+    <Panel title="Отключения" link="/statistics/disabledResources" padding={0}>
       <Header>{currentMonthString}</Header>
+
       <Content>
         <ResourcePanel>
           {Object.values(EResourceType).map((resource) => (
@@ -52,29 +48,46 @@ export const ResourceDisconnectingGanttChart: FC<Props> = ({ data }) => {
             </ResourcePanelItem>
           ))}
         </ResourcePanel>
+
         <GanttPanelWrapper>
           <DatesWrapper>
             {dates.map((date) => (
               <DateItem key={date.toString()}>{date.format('D')}</DateItem>
             ))}
           </DatesWrapper>
+
           <GanttPanel>
             {Object.values(EResourceType).map((resource) => (
               <GanttPanelItem key={resource}>
-                {diconnectionData[resource]?.map((item) => (
-                  <Tooltip
-                    title={`${dayjs(item.startDate).format('D')} – ${dayjs(item.endDate).format('D MMMM')}`}
-                    key={`${item.startDate}${item.endDate}${item.resourceType}`}
-                  >
-                    <ResourceDisconnectionItem
+                {isLoading &&
+                  // --- ЛОАДЕРЫ В ВИДЕ ПЛИТОК ---
+
+                  mockLoaders[resource].map((item) => (
+                    <ResourceDisconnectionLoaderItem
+                      key={`${item.xStart}${item.xEnd}${item.resourceType}`}
+                      active
                       isLeftOverflow={item.xStart === 0}
                       isRightOverflow={item.xEnd === 100}
                       width={item.xEnd - item.xStart}
                       left={item.xStart}
-                      resource={resource}
                     />
-                  </Tooltip>
-                ))}
+                  ))}
+                {!isLoading &&
+                  // --- ОСНОВНОЙ КОНТЕНТ ---
+                  diconnectionData[resource]?.map((item) => (
+                    <Tooltip
+                      title={`${dayjs(item.startDate).format('D')} – ${dayjs(item.endDate).format('D MMMM')}`}
+                      key={`${item.startDate}${item.endDate}${item.resourceType}`}
+                    >
+                      <ResourceDisconnectionItem
+                        isLeftOverflow={item.xStart === 0}
+                        isRightOverflow={item.xEnd === 100}
+                        width={item.xEnd - item.xStart}
+                        left={item.xStart}
+                        resource={resource}
+                      />
+                    </Tooltip>
+                  ))}
               </GanttPanelItem>
             ))}
           </GanttPanel>

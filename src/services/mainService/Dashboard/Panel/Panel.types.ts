@@ -1,6 +1,6 @@
 export type Props = {
   title: string;
-  padding?: number;
+  padding?: number | string;
   link?: string;
   children?: React.ReactNode;
 };

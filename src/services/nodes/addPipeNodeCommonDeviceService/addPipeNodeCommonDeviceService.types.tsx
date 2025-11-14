@@ -7,9 +7,6 @@ import {
 export type Props = {
   configuration: EPipeNodeConfig;
   communicationPipes: CommunicationPipePayload[];
-  handleAddCommunicationPipe: (
-    communicationPipe: CommunicationPipePayload,
-  ) => void;
 };
 
 export type CreateCommonDevicePartitial = Partial<

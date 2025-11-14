@@ -1,7 +1,7 @@
 import { LoginPage } from './view/LoginPage';
 import { loginService } from './loginService.model';
 import { useUnit } from 'effector-react';
-import { isDevMode } from 'api/axios';
+import { isDevMode } from 'constants/devMode';
 
 const { inputs, outputs } = loginService;
 

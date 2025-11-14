@@ -21,6 +21,10 @@ export const Header = styled.div`
   justify-content: space-between;
 `;
 
-export const Body = styled.div<{ padding?: number }>`
-  padding: ${({ padding }) => padding ?? 16}px;
+export const Body = styled.div<{ padding?: number | string }>`
+  padding: ${({ padding }) => {
+    if (padding === undefined || padding === null) return '16px';
+
+    return typeof padding === 'number' ? padding + 'px' : padding;
+  }};
 `;

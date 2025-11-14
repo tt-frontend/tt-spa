@@ -4,6 +4,7 @@ import { Props } from './Dashboard.types';
 import { DeviceConnectionAnalysis } from './DeviceConnectionAnalysis';
 import { ResourceDisconnectingGanttChart } from './ResourceDisconnectingGanttChart';
 import { ResourceConsamptionGraph } from './ResourceConsamptionGraph';
+import { MalfunctionsTasksCountPanel } from './MalfunctionsTasksCountPanel';
 
 export const Dashboard: FC<Props> = ({
   data,
@@ -27,6 +28,11 @@ export const Dashboard: FC<Props> = ({
         isDataLoading={false}
         selectedResource={selectedResource}
         resourceForColor={selectedResourceForColor}
+      />
+
+      <MalfunctionsTasksCountPanel
+        malfunctions={data?.malfunctions || null}
+        isLoading={isLoading}
       />
     </Wrapper>
   );
