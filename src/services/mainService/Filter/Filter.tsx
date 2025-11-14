@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { Wrapper } from './Filter.styled';
 import { Props } from './Filter.types';
 import { DatePicker } from 'ui-kit/DatePicker';
@@ -9,7 +9,25 @@ import { StyledMenuButton } from 'ui-kit/ContextMenuButton/ContextMenuButton.sty
 import { ResetIcon } from 'ui-kit/icons';
 import dayjs from 'dayjs';
 
-export const Filter: FC<Props> = ({ filter, setFilter, resetFilter }) => {
+export const Filter: FC<Props> = ({
+  filter,
+  setFilter,
+  resetFilter,
+  existingMoDistricts,
+  organizations,
+}) => {
+  const citiesOptions = useMemo(() => {
+    if (!filter.District || !existingMoDistricts) return null;
+
+    const ditrict = existingMoDistricts.items?.find(
+      (item) => item.name === filter.District,
+    );
+
+    if (!ditrict) return null;
+
+    return ditrict.subjects.map((elem) => elem.name);
+  }, [filter, existingMoDistricts]);
+
   return (
     <Wrapper>
       <DatePicker
@@ -31,11 +49,11 @@ export const Filter: FC<Props> = ({ filter, setFilter, resetFilter }) => {
           })
         }
       >
-        {/* {existingMoDistricts?.items?.map((item) => (
+        {existingMoDistricts?.items?.map((item) => (
           <Select.Option key={item.name} value={item.name}>
             {item.name} ({item.type})
           </Select.Option>
-        ))} */}
+        ))}
       </Select>
 
       <Select
@@ -50,12 +68,12 @@ export const Filter: FC<Props> = ({ filter, setFilter, resetFilter }) => {
           });
         }}
       >
-        {/* {citiesOptions &&
+        {citiesOptions &&
           citiesOptions.map((city) => (
             <Select.Option key={city} value={city}>
               {city}
             </Select.Option>
-          ))} */}
+          ))}
       </Select>
 
       <Select
@@ -65,11 +83,11 @@ export const Filter: FC<Props> = ({ filter, setFilter, resetFilter }) => {
         value={filter.ManagementFirmId}
         onChange={(value) => setFilter({ ManagementFirmId: value as number })}
       >
-        {/* {organizationsList?.items?.map((elem) => (
+        {organizations?.items?.map((elem) => (
           <Select key={elem.id} value={elem.id}>
             {elem.name}
           </Select>
-        ))} */}
+        ))}
       </Select>
       <AddressTreeSelect
         small
