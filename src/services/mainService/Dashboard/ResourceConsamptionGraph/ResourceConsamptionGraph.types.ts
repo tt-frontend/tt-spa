@@ -1,15 +1,8 @@
-import { EResourceType } from 'api/types';
-import {
-  MonthConsumptionData,
-  ResourceConsumptionGraphDataType,
-} from 'services/resources/resourceConsumptionService/resourceConsumptionService.types';
+import { EResourceType, MainDashboardHousingConsumptionModel } from 'api/types';
 
 export type Props = {
+  consumptionData: MainDashboardHousingConsumptionModel | null;
   selectedResource: EResourceType;
   resourceForColor: EResourceType;
-  consumptionData?: {
-    [ResourceConsumptionGraphDataType.currentMonthData]?: MonthConsumptionData;
-    [ResourceConsumptionGraphDataType.prevMonthData]?: MonthConsumptionData;
-  };
   isDataLoading: boolean;
 };

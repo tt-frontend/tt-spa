@@ -5,4 +5,5 @@ export type Props = {
   data: MainDashboardResponse | null;
   selectedResource: EResourceType;
   selectedResourceForColor: EResourceType;
+  setResource: (payload: EResourceType) => void;
 };

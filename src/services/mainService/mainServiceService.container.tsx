@@ -19,6 +19,7 @@ export const MainServiceContainer = () => {
     isLoading,
     selectedResource,
     selectedResourceForColor,
+    setResource,
   } = useUnit({
     filter: outputs.$filter,
     setFilter: inputs.setFilter,
@@ -27,6 +28,7 @@ export const MainServiceContainer = () => {
     isLoading: outputs.$isLoading,
     selectedResource: outputs.$selectedResource,
     selectedResourceForColor: outputs.$selectedResourceForColor,
+    setResource: inputs.setResource,
   });
 
   return (
@@ -39,6 +41,7 @@ export const MainServiceContainer = () => {
         data={data}
         selectedResource={selectedResource}
         selectedResourceForColor={selectedResourceForColor}
+        setResource={setResource}
       />
     </div>
   );

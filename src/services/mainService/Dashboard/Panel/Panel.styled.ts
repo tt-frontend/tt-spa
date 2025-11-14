@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   width: 100%;
   border: 1px solid #dcdee4;
   border-radius: 4px;
+  height: fit-content;
 `;
 
 export const Title = styled.div`

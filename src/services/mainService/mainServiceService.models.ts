@@ -54,7 +54,7 @@ sample({
 const $isLoading = getMainFx.pending;
 
 export const mainServiceService = {
-  inputs: { setFilter, resetFilter },
+  inputs: { setFilter, resetFilter, setResource },
   outputs: {
     $filter,
     $mainData,

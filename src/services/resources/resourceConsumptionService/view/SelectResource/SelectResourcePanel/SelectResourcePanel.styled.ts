@@ -9,7 +9,6 @@ export const Wrapper = styled.div<{ active: boolean }>`
   height: 66px;
   width: 100%;
 
-  min-width: 160px;
   padding: 16px;
 
   border-radius: 4px;
