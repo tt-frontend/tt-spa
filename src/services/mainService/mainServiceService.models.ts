@@ -1,7 +1,11 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
 import { ManePayload } from './mainServiceService.types';
-import { getMain } from './mainServiceService.api';
 import { EResourceType, MainDashboardResponse } from 'api/types';
+import {
+  existingMoDistrictsQuery,
+  getMain,
+  dashboardOrganizationsQuery,
+} from './mainServiceService.api';
 import { EffectFailDataAxiosError } from 'types';
 import { createGate } from 'effector-react';
 
@@ -48,7 +52,29 @@ const $selectedResourceForColor = createStore<EResourceType>(
 sample({
   clock: PageGate.open,
   source: $filter,
+  fn: (filter) => ({
+    District: filter.District as string,
+  }),
+  target: existingMoDistrictsQuery.start,
+});
+
+sample({
+  clock: PageGate.open,
+  source: $filter,
   target: getMainFx,
+});
+
+sample({
+  source: $filter,
+  target: getMainFx,
+});
+
+const $city = $filter.map(({ City }) => City || null);
+
+sample({
+  source: $city,
+  clock: [PageGate.open, $city.updates],
+  target: dashboardOrganizationsQuery.start,
 });
 
 const $isLoading = getMainFx.pending;
