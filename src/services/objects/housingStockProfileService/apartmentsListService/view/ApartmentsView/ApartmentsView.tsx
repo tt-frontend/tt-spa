@@ -51,7 +51,9 @@ export const ApartmentsView: FC<ApartmentsViewProps> = ({
             clearCurrentApartmentId={clearCurrentApartmentId}
           />
         )}
-        {isApartmentsListEmpty && <AddChessBoardPanel />}
+        {isApartmentsListEmpty && (
+          <AddChessBoardPanel buildingId={hosuingStockId} />
+        )}
         {!apartmentsPagedList && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
       </WithLoader>
     </div>
