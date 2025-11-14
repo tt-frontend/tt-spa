@@ -1,10 +1,6 @@
+import { baseURL } from 'constants/apiUrl';
 import { createEvent, createStore } from 'effector';
 import { persist } from 'effector-storage/local';
-
-export const prodUrl = 'https://prod.k8s.transparent-technology.ru/api';
-const devUrl = 'https://stage.k8s.transparent-technology.ru/api/';
-
-export const baseURL = import.meta.env.VITE_API_URL || devUrl;
 
 const apiURL = baseURL;
 

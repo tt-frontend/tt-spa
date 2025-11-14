@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
 
 export type LinkButtonProps = {
-  onClick: () => void;
+  onClick?: () => void;
   children?: ReactNode;
   fontSize?: number;
   chevron?: boolean;
+  link?: string;
 };

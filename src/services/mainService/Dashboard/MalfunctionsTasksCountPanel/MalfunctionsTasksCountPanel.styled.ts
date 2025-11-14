@@ -36,8 +36,12 @@ export const AdditionTasksCountWrapper = styled.div`
   line-height: 16px;
   letter-spacing: 0%;
   vertical-align: middle;
+  display: flex;
+  gap: 4px;
+  align-items: center;
 `;
 
-export const ExpiredTasksCount = styled.strong`
+export const ExpiredTasksCount = styled.span`
   color: red;
+  font-weight: 500;
 `;

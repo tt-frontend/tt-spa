@@ -1,6 +1,6 @@
-import { isDevMode } from 'api/axios';
 import botStageQrCode from './assets/qr_stage_bot.jpg';
 import botProdQrCode from './assets/qr_bot.png';
+import { isDevMode } from 'constants/devMode';
 
 export const botData = isDevMode
   ? {

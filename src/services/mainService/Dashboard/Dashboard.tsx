@@ -20,6 +20,7 @@ export const Dashboard: FC<Props> = ({ data, isLoading }) => {
         />
         <MalfunctionsTasksCountPanel
           malfunctions={data?.malfunctions || null}
+          isLoading={isLoading}
         />
       </Wrapper>
 
