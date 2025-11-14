@@ -58,7 +58,7 @@ const getMenuButtons = (props: {
 };
 
 export const ContextMenuButton: FC<ContextMenuButtonProps> = (props) => {
-  const { menuButtons, disabled, size, children = null } = props;
+  const { menuButtons, disabled, size, children = null, icon = null } = props;
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -116,7 +116,7 @@ export const ContextMenuButton: FC<ContextMenuButtonProps> = (props) => {
                 setIsVisible(true);
               }}
             >
-              <MoreIcon />
+              {icon ?? <MoreIcon />}
             </StyledMenuButton>
           )}
         </>

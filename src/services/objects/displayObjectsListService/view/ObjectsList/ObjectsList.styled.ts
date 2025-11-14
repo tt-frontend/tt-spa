@@ -32,4 +32,5 @@ export const PaginationSC = styled(Pagination)`
 
 export const ListWrapper = styled.div`
   margin-bottom: 60px;
+  max-width: 960px;
 `;
