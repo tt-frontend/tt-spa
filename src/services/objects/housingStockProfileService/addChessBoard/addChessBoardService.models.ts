@@ -1,8 +1,17 @@
-import { createDomain } from 'effector';
+import { sample } from 'effector';
+import { createGate } from 'effector-react';
+import { buildingQuery } from './addChessBoardService.api';
 
-const domain = createDomain('addChessBoardService');
+const ChessBoardGate = createGate<{ buildingId: number }>();
+
+sample({
+  clock: ChessBoardGate.open,
+  fn: ({ buildingId }) => buildingId,
+  target: buildingQuery.start,
+});
 
 export const addChessBoardService = {
-  inputs: {}, 
+  inputs: {},
   outputs: {},
+  gates: { ChessBoardGate },
 };
