@@ -1,12 +1,11 @@
 import { FC, useMemo } from 'react';
 import { Props } from './ResourceConsamptionGraph.types';
-import { Panel } from '../Panel';
 import {
-  // AlertTitle,
-  // AlertWrapper,
+  AlertTitle,
+  AlertWrapper,
   getCurrentDataStyle,
 } from 'services/resources/resourceConsumptionService/view/ResourceConsumptionGraph/ResourceConsumptionGraph.styled';
-// import { Alert } from 'ui-kit/Alert';
+import { Alert } from 'ui-kit/Alert';
 import { GraphGradient } from 'ui-kit/shared/GraphComponents/GraphGradient';
 import {
   VictoryArea,
@@ -33,10 +32,9 @@ import {
 } from 'services/nodes/displayNodesStatisticsService/view/StatisticsGraph/StatisticsGraph.styled';
 import { Wrapper } from './ResourceConsamptionGraph.styled';
 import {
-  DataForHousingConsumptionPlotServiceModel,
-  DateTimeDoubleDictionaryItem,
-} from 'api/types';
-import { getMinAndMax } from 'utils/Graph.utils';
+  getDynamicMinMax,
+  modelToArray,
+} from './ResourceConsamptionGraph.utils';
 
 const height = 360;
 
@@ -46,56 +44,24 @@ export const ResourceConsamptionGraph: FC<Props> = ({
   selectedResource,
   resourceForColor,
 }) => {
-  const minDelta = 0.01;
-
-  function getMinAndMaxForResourceConsumptionGraph<T>(
-    dataArr: ((T & { value: number }[]) | null)[],
-  ) {
-    const filteredDataArr = dataArr.filter((data) => Boolean(data)) as (T &
-      { value: number }[])[];
-
-    return getMinAndMax(filteredDataArr?.flat(), minDelta);
-  }
-
-  const dynamicMinMax = useMemo(() => {
-    const housingData = consumptionData?.resourceConsumption
-      ? Object.entries(consumptionData.resourceConsumption).map(([key, v]) => ({
-          key,
-          value: v === null ? undefined : v,
-        }))
-      : null;
-
-    const housingPrevData = consumptionData?.resourceConsumptionPrevious
-      ? Object.entries(consumptionData.resourceConsumptionPrevious).map(
-          ([key, v]) => ({
-            key,
-            value: v === null ? undefined : v,
-          }),
-        )
-      : null;
-
-    const minAndMax =
-      getMinAndMaxForResourceConsumptionGraph<DateTimeDoubleDictionaryItem>([
-        housingData,
-        housingPrevData,
-      ]);
-
-    return [minAndMax.minValue, minAndMax.maxValue] as [number, number];
-  }, [consumptionData]);
-
-  function modelToArray(
-    model: DataForHousingConsumptionPlotServiceModel | null,
-  ): DateTimeDoubleDictionaryItem[] {
-    if (!model?.housingConsumption) return [];
-    return Object.entries(model.housingConsumption).map(([key, v]) => ({
-      key,
-      value: v === null ? undefined : v,
-    }));
-  }
-  const housing = modelToArray(consumptionData?.resourceConsumption || null);
-  const housingPrev = modelToArray(
-    consumptionData?.resourceConsumptionPrevious || null,
+  const housing = useMemo(
+    () => modelToArray(consumptionData?.resourceConsumption || null),
+    [consumptionData],
   );
+
+  const housingPrev = useMemo(
+    () => modelToArray(consumptionData?.resourceConsumptionPrevious || null),
+    [consumptionData],
+  );
+
+  const dynamicMinMax: [number, number] = useMemo(() => {
+    if (!housing.length && !housingPrev.length) {
+      return [0, 100];
+    }
+
+    const [min, max] = getDynamicMinMax(housing, housingPrev);
+    return [min, max];
+  }, [housing, housingPrev, consumptionData]);
 
   const isConsumptionDataItemsEmpty = useMemo(
     () =>
@@ -106,11 +72,28 @@ export const ResourceConsamptionGraph: FC<Props> = ({
     [consumptionData, isDataLoading],
   );
 
+  const isHousingMeteringDevices = useMemo(() => {
+    return (
+      Boolean(consumptionData?.resourceConsumption) ||
+      Boolean(consumptionData?.resourceConsumptionPrevious)
+    );
+  }, [consumptionData]);
+
+  const startOfMonth = useMemo(() => {
+    const obj = consumptionData?.resourceConsumption?.housingConsumption;
+
+    if (!obj || Object.keys(obj).length === 0) return '';
+
+    const firstKey = Object.keys(obj).sort()[0];
+
+    return firstKey;
+  }, [consumptionData]);
+
   if (isConsumptionDataItemsEmpty) {
     return (
       <>
         <Wrapper id="graphWrapper">
-          {/* <AlertWrapper>
+          <AlertWrapper>
             {isHousingMeteringDevices && (
               <Alert centered type="danger" icon="warning">
                 <AlertTitle>Нет данных за выбранный период</AlertTitle>
@@ -123,17 +106,17 @@ export const ResourceConsamptionGraph: FC<Props> = ({
                 </AlertTitle>
               </Alert>
             )}
-          </AlertWrapper> */}
+          </AlertWrapper>
           <VictoryChart
-            padding={{ top: 0, bottom: 0, left: 26, right: 0 }}
+            padding={{ top: 0, bottom: 26, left: -70, right: -100 }}
             domain={{ y: dynamicMinMax }}
             style={{
               parent: {
                 overflow: 'visible',
-                height: 300,
+                height: height,
               },
             }}
-            height={300}
+            height={height}
             width={600}
             theme={VictoryTheme.material}
             containerComponent={<VictoryVoronoiContainer />}
@@ -157,8 +140,6 @@ export const ResourceConsamptionGraph: FC<Props> = ({
 
   return (
     <Wrapper>
-      <Panel title="Анализ потребления ресурсов"></Panel>
-
       <Wrapper id="graphWrapper">
         {/* {isOnlyHousingDataEmpty && (
           <AlertWrapper>
@@ -171,15 +152,15 @@ export const ResourceConsamptionGraph: FC<Props> = ({
         <GraphGradient resource={resourceForColor} />
         <VictoryChart
           domain={{ y: dynamicMinMax, x: [-1, 32] }}
-          padding={{ top: 0, bottom: 0, left: 26, right: 0 }}
+          padding={{ top: 0, bottom: 26, left: -70, right: -100 }}
           domainPadding={{ x: [-50, 0] }}
           style={{
             parent: {
               overflow: 'visible',
-              // height: isOnlyHousingDataEmpty ? 300 : height,
+              height: height,
             },
           }}
-          // height={isOnlyHousingDataEmpty ? 300 : height}
+          height={height}
           width={600}
           theme={VictoryTheme.material}
           containerComponent={<VictoryVoronoiContainer />}
@@ -216,7 +197,7 @@ export const ResourceConsamptionGraph: FC<Props> = ({
                 height={height}
                 flyoutComponent={
                   <ResourceConsumptionGraphTooltip
-                    startOfMonth={''}
+                    startOfMonth={startOfMonth}
                     measure={
                       ResourceConsumptionGraphColorsMeasure[selectedResource]
                     }

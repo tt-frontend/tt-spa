@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  @media screen and (max-width: 1400px) {
+  @media screen and (max-width: 1600px) {
     display: grid;
     gap: 16px;
     grid-template-columns: 1fr;

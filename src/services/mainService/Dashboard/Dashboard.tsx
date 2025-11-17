@@ -28,6 +28,11 @@ export const Dashboard: FC<Props> = ({
           isLoading={isLoading}
         />
 
+        <MalfunctionsTasksCountPanel
+          malfunctions={data?.malfunctions || null}
+          isLoading={isLoading}
+        />
+
         <Panel
           title="Анализ потребления ресурсов"
           link="/statistics/resourceConsumption"
@@ -45,11 +50,6 @@ export const Dashboard: FC<Props> = ({
             resourceForColor={selectedResourceForColor}
           />
         </Panel>
-
-        <MalfunctionsTasksCountPanel
-          malfunctions={data?.malfunctions || null}
-          isLoading={isLoading}
-        />
       </Wrapper>
 
       <ManeInfo isLoading={isLoading} />

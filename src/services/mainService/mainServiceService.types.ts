@@ -1,3 +1,5 @@
+import { ResourceType } from 'api/types';
+
 export type ManePayload = {
   Date?: string | null;
   City?: string | null;
@@ -6,4 +8,5 @@ export type ManePayload = {
   /** @format int32 */
   ManagementFirmId?: number | null;
   Address?: string | null;
+  ResourceType?: ResourceType;
 };
