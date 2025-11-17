@@ -58,6 +58,7 @@ export default defineConfig(() => {
     },
     build: {
       outDir: 'build',
+      sourcemap:  "inline" ,
     },
     assetsInclude: ['/sb-preview/runtime.js'],
   };
