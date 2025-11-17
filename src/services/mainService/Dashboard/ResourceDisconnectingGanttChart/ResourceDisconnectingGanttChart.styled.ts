@@ -103,7 +103,7 @@ export const ResourceDisconnectionItem = styled.div<{
   border-radius: ${getPanelBorderRadius};
   width: ${({ width }) => width}%;
   left: ${({ left }) => left}%;
-  border: 2px solid white;
+  border: 1px solid white;
   box-sizing: border-box;
   cursor: pointer;
   transition: 0.2s;
