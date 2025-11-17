@@ -158,3 +158,24 @@ function getPanelBorderRadius({
 
   return '6px';
 }
+
+export const TooltipDates = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0%;
+`;
+
+export const TooltionObects = styled.div`
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0%;
+`;
+
+export const TooltipWrapper = styled.div`
+  padding: 6px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;

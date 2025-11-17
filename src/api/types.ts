@@ -2369,6 +2369,10 @@ export interface DataAfterSplittingHomeownerAccountResponse {
   newApartmentHomeownerAccount: HomeownerAccountResponse | null;
 }
 
+export interface DataForHousingConsumptionPlotServiceModel {
+  housingConsumption?: Record<string, number | null>;
+}
+
 export interface DateTimeDoubleDictionaryItem {
   /** @format date-time */
   key?: string;
@@ -4019,6 +4023,12 @@ export interface MainDashboardCalculatorStatisticsModel {
   noArchiveCount?: number;
 }
 
+export interface MainDashboardHousingConsumptionModel {
+  summaryData?: SummaryHousingConsumptionsByResourcesServiceModel | null;
+  resourceConsumption?: DataForHousingConsumptionPlotServiceModel | null;
+  resourceConsumptionPrevious?: DataForHousingConsumptionPlotServiceModel | null;
+}
+
 export interface MainDashboardMalfunctionModel {
   malfunctionType?: ManagingFirmTaskType;
   /** @format int32 */
@@ -4033,12 +4043,41 @@ export interface MainDashboardResourceDisconnectingModel {
   startDate?: string;
   /** @format date-time */
   endDate?: string | null;
+  /** @format int32 */
+  objectsCount?: number;
 }
 
 export interface MainDashboardResponse {
   calculatorsStatistics: MainDashboardCalculatorStatisticsModel | null;
   resourceDisconnecting: MainDashboardResourceDisconnectingModel[] | null;
   malfunctions: MainDashboardMalfunctionModel[] | null;
+  housingConsumption: MainDashboardHousingConsumptionModel | null;
+  summaryData: MainDashboardSummaryModel | null;
+}
+
+export interface MainDashboardSummaryModel {
+  /** @format int32 */
+  districtCount?: number;
+  /** @format int32 */
+  municipalDistrictCount?: number;
+  /** @format int32 */
+  managingFirmCount?: number;
+  /** @format int32 */
+  livingObjectsCount?: number;
+  /** @format int32 */
+  nonResidentialObjectsCount?: number;
+  nodes?: {
+    /** @format int32 */
+    None?: number;
+    /** @format int32 */
+    Heat?: number;
+    /** @format int32 */
+    HotWaterSupply?: number;
+    /** @format int32 */
+    ColdWaterSupply?: number;
+    /** @format int32 */
+    Electricity?: number;
+  } | null;
 }
 
 export interface ManagementFirmCompetenceResponse {
@@ -5284,6 +5323,21 @@ export interface SubscriberStatisticsСonsumptionResponse {
   homeownerAccountPhoneNumbers: string[] | null;
   /** @deprecated */
   homeownerAccountPhoneNumber: string | null;
+}
+
+export interface SummaryHousingConsumptionsByResourcesServiceModel {
+  consumptions?: {
+    /** @format double */
+    None?: number;
+    /** @format double */
+    Heat?: number;
+    /** @format double */
+    HotWaterSupply?: number;
+    /** @format double */
+    ColdWaterSupply?: number;
+    /** @format double */
+    Electricity?: number;
+  } | null;
 }
 
 export interface SwitchCalculatorRequest {
@@ -9497,6 +9551,7 @@ export class Api<
         /** @format int32 */
         ManagementFirmId?: number;
         Address?: string;
+        ResourceType?: ResourceType;
       },
       params: RequestParams = {},
     ) =>
