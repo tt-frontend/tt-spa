@@ -1,6 +1,6 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
 import { ManePayload } from './mainServiceService.types';
-import { EResourceType, MainDashboardResponse } from 'api/types';
+import { EResourceType, MainDashboardResponse, ResourceType } from 'api/types';
 import {
   existingMoDistrictsQuery,
   getMain,
@@ -12,6 +12,8 @@ import { createGate } from 'effector-react';
 const PageGate = createGate();
 
 const setFilter = createEvent<ManePayload>();
+
+const setResource = createEvent<EResourceType>();
 
 const resetFilter = createEvent();
 
@@ -28,16 +30,19 @@ const $filter = createStore<ManePayload>({
   BuildingIds: null,
   ManagementFirmId: null,
   Address: null,
+  ResourceType: ResourceType.ColdWaterSupply,
 })
   .on(setFilter, (prev, data) => ({ ...prev, ...data }))
+  .on(setResource, (prev, resource) => ({
+    ...prev,
+    ResourceType: resource as unknown as ResourceType,
+  }))
   .reset(resetFilter);
 
 const $mainData = createStore<MainDashboardResponse | null>(null).on(
   getMainFx.doneData,
   (_, data) => data,
 );
-
-const setResource = createEvent<EResourceType>();
 
 const $selectedResource = createStore<EResourceType>(
   EResourceType.ColdWaterSupply,
@@ -75,6 +80,12 @@ sample({
   source: $city,
   clock: [PageGate.open, $city.updates],
   target: dashboardOrganizationsQuery.start,
+});
+
+sample({
+  clock: getMainFx.doneData,
+  source: $selectedResource,
+  target: $selectedResourceForColor,
 });
 
 const $isLoading = getMainFx.pending;
