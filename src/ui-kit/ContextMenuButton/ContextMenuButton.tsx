@@ -8,6 +8,7 @@ import {
 import {
   ChevronSC,
   MenuItem,
+  MenuItemTitle,
   StyledMenuButton,
 } from './ContextMenuButton.styled';
 import { getButtonColor } from './ContextMenuButton.utils';
@@ -17,11 +18,12 @@ const getMenuButtons = (props: {
   handleClose: () => void;
   openedButtons: string[];
   toggle: (id: string) => void;
+  level: number;
 }): ReactNode[] => {
-  const { menuButtons, handleClose, openedButtons, toggle } = props;
+  const { menuButtons, handleClose, openedButtons, toggle, level } = props;
 
   return menuButtons.map((button, index) => {
-    const { title, onClick, color, id = '' } = button;
+    const { title, onClick, color, id = '', icon, strong } = button;
 
     const currentColor = getButtonColor(color);
 
@@ -32,6 +34,7 @@ const getMenuButtons = (props: {
         ? getMenuButtons({
             ...props,
             menuButtons: button.children,
+            level: level + 1,
           })
         : [];
 
@@ -49,7 +52,10 @@ const getMenuButtons = (props: {
         }}
         color={currentColor}
       >
-        {title}
+        <MenuItemTitle strong={strong} level={level}>
+          {icon}
+          {title}
+        </MenuItemTitle>
         {button.children && <ChevronSC isOpen={isOpened} />}
       </MenuItem>,
       ...children,
@@ -76,6 +82,7 @@ export const ContextMenuButton: FC<ContextMenuButtonProps> = (props) => {
     >
       {menuButtonsFiltered &&
         getMenuButtons({
+          level: 0,
           menuButtons: menuButtonsFiltered,
           handleClose: () => setIsVisible(false),
           openedButtons,

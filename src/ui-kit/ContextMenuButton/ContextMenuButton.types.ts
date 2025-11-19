@@ -29,4 +29,6 @@ export type ContextMenuElement = {
   color?: ContextMenuButtonColor;
   id?: string;
   children?: ContextMenuElement[];
+  icon?: ReactNode;
+  strong?: boolean;
 };

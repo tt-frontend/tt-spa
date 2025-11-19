@@ -13,6 +13,8 @@ import { PlusIcon } from 'ui-kit/icons';
 import { Button } from 'ui-kit/Button';
 import { getBuildingAddress } from 'utils/getBuildingAddress';
 import { Skeleton } from 'antd';
+import { ApartmentIcon } from './assets/ApartmentIcon';
+import { ParkingIcon } from './assets/ParkingIcon';
 
 export const CreateChessBoardPage: FC<Props> = ({
   building,
@@ -28,6 +30,56 @@ export const CreateChessBoardPage: FC<Props> = ({
           <ContextMenuButton
             size="small"
             icon={<PlusIcon style={{ transform: 'scale(0.8)' }} />}
+            menuButtons={[
+              {
+                title: 'Добавить элемент подъезда',
+                icon: <ApartmentIcon />,
+                strong: true,
+                id: 'add-entrance-element',
+                children: [
+                  {
+                    title: 'Подъезд',
+                    id: 'entrance',
+                  },
+                  {
+                    title: 'Жилой этаж',
+                    id: 'residential-floor',
+                  },
+                ],
+              },
+              {
+                title: 'Добавить нежилое помещение',
+                icon: <ParkingIcon />,
+                strong: true,
+                id: 'add-non-residential-placement',
+                children: [
+                  {
+                    title: 'Паркинг',
+                    id: 'parking',
+                  },
+                  {
+                    title: 'Техническое помещение',
+                    id: 'technical-placement',
+                  },
+                  {
+                    title: 'Тепловой пункт',
+                    id: 'heating-point',
+                  },
+                  {
+                    title: 'Коммерческое помещение',
+                    id: 'commercial-placement',
+                  },
+                  {
+                    title: 'Подвал',
+                    id: 'basement',
+                  },
+                  {
+                    title: 'Чердак',
+                    id: 'attic',
+                  },
+                ],
+              },
+            ]}
           />
         </Header>
         <Blueprint></Blueprint>

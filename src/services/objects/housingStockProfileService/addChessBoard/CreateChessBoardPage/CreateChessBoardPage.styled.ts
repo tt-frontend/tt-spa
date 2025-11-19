@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import backgorund from './background.svg';
+import backgorund from './assets/background.svg';
 
 export const Wrapper = styled.div`
   position: relative;
