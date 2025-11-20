@@ -90,13 +90,13 @@ export const CalculatorProfile: FC<CalculatorProfileProps> = ({
           {
             key: 'Дата поверки прибора',
             value: calculator?.lastCheckingDate
-              ? dayjs(calculator.lastCheckingDate).format('DD.MM.YYYY HH:mm')
+              ? dayjs(calculator.lastCheckingDate).format('DD.MM.YYYY')
               : null,
           },
           {
             key: 'Дата следующей поверки прибора',
             value: calculator?.futureCheckingDate
-              ? dayjs(calculator.futureCheckingDate).format('DD.MM.YYYY HH:mm')
+              ? dayjs(calculator.futureCheckingDate).format('DD.MM.YYYY')
               : null,
           },
           {

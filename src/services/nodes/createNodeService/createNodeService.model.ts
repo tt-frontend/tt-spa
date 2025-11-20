@@ -6,6 +6,7 @@ import {
   CalculatorIntoHousingStockResponse,
   CreatePipeNodeRequest,
   EHouseCategory,
+  EPipeNodeConfig,
   EPipeNodeValidationMessageStringDictionaryItem,
   HousingStockResponse,
   NodeServiceZoneListResponse,
@@ -82,6 +83,10 @@ const closeConfiramtionModal = createEvent();
 const handleDeleteServiceZone = createEvent<NodeServiceZoneResponse | null>();
 const handleFinallyDeleteServiceZone = createEvent<number>();
 
+const setConfigurationConstructorOpen = createEvent<boolean>();
+
+const setConfigurationType = createEvent<EPipeNodeConfig>();
+
 const validateNode = createEvent();
 const validateNodeFx = createEffect<
   CreatePipeNodeRequest,
@@ -139,7 +144,7 @@ const $calculatorsList = createStore<
 
 const $isConfirmationModalOpen = createStore(false)
   .on(openConfiramtionModal, () => true)
-  .reset(closeConfiramtionModal);
+  .reset(closeConfiramtionModal, CreateNodeGate.close);
 
 const $nodeServiceZones = createStore<NodeServiceZoneListResponse | null>(null)
   .on(fetchNodeServiceZonesFx.doneData, (_, zones) => zones)
@@ -150,6 +155,14 @@ const $deletingServiceZone = createStore<NodeServiceZoneResponse | null>(null)
   .reset(CreateNodeGate.close);
 
 const $isDialogOpen = $deletingServiceZone.map(Boolean);
+
+const $isConfigurationConstructorOpen = createStore<boolean>(true)
+  .on(setConfigurationConstructorOpen, (_, value) => value)
+  .reset(CreateNodeGate.close);
+
+const $configurationType = createStore<EPipeNodeConfig | null>(null)
+  .on(setConfigurationType, (_, data) => data)
+  .reset(CreateNodeGate.close);
 
 sample({
   clock: CreateNodeGate.open,
@@ -259,7 +272,7 @@ const handlePipeNodeCreated = createPipeNodeFx.doneData;
 
 sample({
   clock: handlePipeNodeCreated,
-  target: closeConfiramtionModal,
+  target: [closeConfiramtionModal],
 });
 
 sample({
@@ -300,6 +313,8 @@ export const createNodeService = {
     handleDeleteServiceZone,
     handleFinallyDeleteServiceZone,
     successDeleteServiceZone,
+    setConfigurationConstructorOpen,
+    setConfigurationType,
   },
   outputs: {
     $building,
@@ -319,6 +334,8 @@ export const createNodeService = {
     $isDialogOpen,
     $deletingServiceZone,
     $deletingServiceZoneCount,
+    $isConfigurationConstructorOpen,
+    $configurationType,
   },
   gates: {
     CreateNodeGate,

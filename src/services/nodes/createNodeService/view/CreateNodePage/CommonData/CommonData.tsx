@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo } from 'react';
+import React, { FC, ReactNode, useCallback, useEffect, useMemo } from 'react';
 import { Button } from 'ui-kit/Button';
 import { FormItem } from 'ui-kit/FormItem';
 import { Input } from 'ui-kit/Input';
@@ -16,12 +16,13 @@ import {
   Divider,
   ButtonSC,
   ZoneOption,
+  SchemeWrapper,
 } from './CommonData.styled';
 import { CommonDataProps } from './CommonData.types';
 import { useFormik } from 'formik';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
 import { configNamesLookup } from 'utils/configNamesLookup';
-import { ENodeRegistrationType } from 'api/types';
+import { ENodeRegistrationType, EPipeNodeConfig } from 'api/types';
 import { ChangeNodeStatusForm } from 'services/nodes/changeNodeStatusService/view/ChangeNodeStatusForm';
 import { getChangeNodeStatusPayload } from 'services/nodes/changeNodeStatusService/changeNodeStatusService.utils';
 import { ChangeNodeStatusFormPayload } from 'services/nodes/changeNodeStatusService/changeNodeStatusService.types';
@@ -33,8 +34,37 @@ import {
 import { ConfiguratePipe } from './ConfiguratePipe';
 import { CreateNodeFormPayload } from 'services/nodes/createNodeService/createNodeService.types';
 import { TrashIconGrey } from 'ui-kit/icons';
+import {
+  ColdWaterNoDeviceScheme,
+  ColdWaterSupplyScheme,
+  HeatNoHousingMeteringDeviceScheme,
+  HeatNoRechargeScheme,
+  HeatWithRechargeScheme,
+  HotWaterNoDeviceScheme,
+  HotWaterSupplyNoBackflowScheme,
+  HotWaterSupplyWithBackflowScheme,
+} from '../Assets';
 
 const { inputs } = createNodeServiceZoneService;
+
+export const configurationSchemes: {
+  [key in keyof typeof EPipeNodeConfig]: ReactNode;
+} = {
+  [EPipeNodeConfig.ColdWaterNoDevice]: <ColdWaterNoDeviceScheme />,
+  [EPipeNodeConfig.ColdWaterSupply]: <ColdWaterSupplyScheme />,
+  [EPipeNodeConfig.HeatNoHousingMeteringDevice]: (
+    <HeatNoHousingMeteringDeviceScheme />
+  ),
+  [EPipeNodeConfig.HeatNoRecharge]: <HeatNoRechargeScheme />,
+  [EPipeNodeConfig.HeatWithRecharge]: <HeatWithRechargeScheme />,
+  [EPipeNodeConfig.HotWaterNoDevice]: <HotWaterNoDeviceScheme />,
+  [EPipeNodeConfig.HotWaterSupplyNoBackflow]: (
+    <HotWaterSupplyNoBackflowScheme />
+  ),
+  [EPipeNodeConfig.HotWaterSupplyWithBackflow]: (
+    <HotWaterSupplyWithBackflowScheme />
+  ),
+};
 
 export const CommonData: FC<CommonDataProps> = ({
   goPrevStep,
@@ -44,6 +74,7 @@ export const CommonData: FC<CommonDataProps> = ({
   updateRequestPayload,
   handleDeleteServiceZone,
   successDeleteServiceZone,
+  setConfigurationType,
 }) => {
   const { values, handleChange, setFieldValue, errors, handleSubmit } =
     useFormik({
@@ -179,7 +210,10 @@ export const CommonData: FC<CommonDataProps> = ({
           <Select
             placeholder="Выберите"
             value={values.configuration || undefined}
-            onChange={(value) => setFieldValue('configuration', value)}
+            onChange={(value) => {
+              setFieldValue('configuration', value);
+              setConfigurationType(value as EPipeNodeConfig);
+            }}
           >
             {Object.entries(configNamesLookup).map(([configuration, text]) => (
               <Select.Option key={configuration} value={configuration}>
@@ -245,6 +279,14 @@ export const CommonData: FC<CommonDataProps> = ({
           </LinkButton>
         </CreateNewZoneButtonWrapper>
       </SecondLineWrapper>
+
+      {values.configuration && (
+        <SchemeWrapper>
+          {configurationSchemes[values.configuration]}
+          Предпросмотр конфигурации. Вы сможете настроить приборы на следующем
+          шаге.
+        </SchemeWrapper>
+      )}
 
       {Boolean(values.communicationPipes.length) && <Divider />}
 

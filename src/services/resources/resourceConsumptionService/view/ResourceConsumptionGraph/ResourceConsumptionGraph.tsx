@@ -52,6 +52,8 @@ export const ResourceConsumptionGraph: FC<ResourceConsumptionGraphProps> = ({
 }) => {
   const [width, setWidth] = useState(0);
 
+  console.log(startOfMonth);
+
   const additionalAddressConsumptionData =
     consumptionData?.additionalAddress || null;
 
@@ -83,6 +85,8 @@ export const ResourceConsumptionGraph: FC<ResourceConsumptionGraphProps> = ({
         const isCurrentMonthHousingData =
           typeOfData === ResourceConsumptionGraphDataType.currentMonthData &&
           key === ResourceConsumptionGraphType.Housing;
+
+        console.log(data);
 
         if (
           isLineChecked[key as ResourceConsumptionGraphType] &&

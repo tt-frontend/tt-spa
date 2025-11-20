@@ -7,18 +7,18 @@ import { notification, message } from 'antd';
 import { cancellableUrl } from 'services/cancelRequestService/cancelRequestService.constants';
 import { cancelRequestService } from 'services/cancelRequestService';
 import { isUndefined } from 'lodash/fp';
-
-export const isDevMode = false;
+import { isDevMode } from 'constants/devMode';
+import { prodUrl } from 'constants/apiUrl';
 
 let refreshPromise: null | Promise<unknown> = null;
 const clearPromise = () => (refreshPromise = null);
 
-axios.defaults.baseURL = apiService.outputs.$devUrl.getState();
+axios.defaults.baseURL = isDevMode
+  ? apiService.outputs.$devUrl.getState()
+  : prodUrl;
 
 apiService.outputs.$devUrl.watch((url) => {
-  axios.defaults.baseURL = url;
-
-  if (url) localStorage.setItem('dev-api-url', url);
+  if (isDevMode) axios.defaults.baseURL = url;
 });
 
 axios.interceptors.request.use((req) => {

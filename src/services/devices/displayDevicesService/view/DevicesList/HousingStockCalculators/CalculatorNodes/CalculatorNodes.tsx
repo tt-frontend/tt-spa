@@ -24,8 +24,7 @@ import { DateRange } from 'ui-kit/shared/DateRange';
 import { EConnectionStatusType } from 'api/types';
 import { Tooltip } from 'ui-kit/shared/Tooltip';
 import { ContextMenuButton } from 'ui-kit/ContextMenuButton';
-import { getCountText } from 'utils/getCountText';
-import { devicesCountTexts } from 'services/nodes/createNodeService/view/CreateNodePage/ConnectedDevices/CommunicationPipeListItem/CommunicationPipeListItem.constants';
+import { getDeviceWordForm } from 'services/nodes/createNodeService/view/CreateNodePage/ConnectedDevices/CommunicationPipeListItem/CommunicationPipeListItem.utils';
 
 export const CalculatorNodes: FC<CalculatorNodesProps> = ({ devices }) => {
   const calculator = devices[0].calculator;
@@ -99,7 +98,7 @@ export const CalculatorNodes: FC<CalculatorNodesProps> = ({ devices }) => {
         />
 
         <NodeScore>
-          {devices.length} {getCountText(devices.length, devicesCountTexts)}
+          {devices.length} {getDeviceWordForm(devices.length)}
         </NodeScore>
 
         <ContextMenuButton size="small" />

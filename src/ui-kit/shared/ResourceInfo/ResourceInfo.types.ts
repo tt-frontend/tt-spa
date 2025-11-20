@@ -4,4 +4,5 @@ import { CSSProperties } from 'react';
 export type ResourceInfoProps = {
   resource: EActResourceType | EResourceType | ResourceType;
   style?: CSSProperties;
+  bold?: boolean;
 };

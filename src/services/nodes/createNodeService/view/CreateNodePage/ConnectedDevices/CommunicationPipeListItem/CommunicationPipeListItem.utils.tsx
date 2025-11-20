@@ -1,11 +1,18 @@
-import { devicesCountTexts } from './CommunicationPipeListItem.constants';
+export function getDeviceWordForm(count: number) {
+  const lastDigit = count % 10;
+  const lastTwoDigits = count % 100;
 
-export function getDevicesCountText(devicesLength: number) {
-  const nodesLengthLastDigit = devicesLength % 10;
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+    return 'приборов';
+  }
 
-  const devicesText = devicesCountTexts.find(({ digits }) =>
-    digits.includes(nodesLengthLastDigit),
-  )?.text;
+  if (lastDigit === 1) {
+    return 'прибор';
+  }
 
-  return devicesText;
+  if (lastDigit >= 2 && lastDigit <= 4) {
+    return 'прибора';
+  }
+
+  return 'приборов';
 }

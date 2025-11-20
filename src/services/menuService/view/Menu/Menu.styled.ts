@@ -11,6 +11,7 @@ export const Footer = styled.div`
 export const ExitButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const MenuItemWrapper = styled.div`
@@ -51,4 +52,11 @@ export const UserGuideLink = styled.a`
   &:hover {
     color: rgb(24, 158, 233);
   }
+`;
+
+export const Badge = styled.div`
+  color: #b1b9cd;
+  font-size: 13px;
+  font-weight: 300;
+  font-family: monospace !important;
 `;

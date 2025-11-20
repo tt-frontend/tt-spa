@@ -1,15 +1,17 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { ExitButton } from './ExitButton';
 import { MenuProps } from './Menu.types';
 import { MenuItemComponent } from './MenuItemComponent';
 import {
+  Badge,
   DevSettingsButton,
   ExitButtonWrapper,
   Footer,
   MenuItemWrapper,
   UserGuideLink,
 } from './Menu.styled';
-import { isDevMode } from 'api/axios';
+import { APP_VERSION } from 'constants/version';
+import { isDevMode } from 'constants/devMode';
 
 export const Menu: FC<MenuProps> = ({
   menuItems,
@@ -35,6 +37,7 @@ export const Menu: FC<MenuProps> = ({
               🛠️ dev
             </DevSettingsButton>
           )}
+          {!isDevMode && isOpen && <Badge>{APP_VERSION}</Badge>}
         </ExitButtonWrapper>
         {isOpen && (
           <UserGuideLink target="_blank" href="https://ttplatform.ru/help">

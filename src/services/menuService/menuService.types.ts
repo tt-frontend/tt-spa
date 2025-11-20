@@ -23,6 +23,7 @@ export enum MenuType {
   DisabledResourcesDispatcher = 'DisabledResourcesDispatcher',
   WorkWithReadings = 'WorkWithReadings',
   SupervisorAnalytics = 'SupervisorAnalytics',
+  Main = 'Main',
 }
 
 type Icon = React.FunctionComponent<

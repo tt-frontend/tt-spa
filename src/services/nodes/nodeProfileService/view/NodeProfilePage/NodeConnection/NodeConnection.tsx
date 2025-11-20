@@ -33,11 +33,11 @@ export const NodeConnection: FC<NodeConnectionProps> = ({
 
   const lastCheckingDateText = lastCheckingDate
     ? dayjs(lastCheckingDate).format('DD.MM.YYYY')
-    : 'Дата поверки не указана';
+    : '—';
 
   const futureCheckingDateText = futureCheckingDate
     ? dayjs(futureCheckingDate).format('DD.MM.YYYY')
-    : 'Следующая Дата поверки не указана';
+    : '—';
 
   return (
     <Wrapper>

@@ -22,12 +22,12 @@ export const AddCommonDeviceForm: FC<AddCommonDeviceFormProps> = ({
         configuration={configuration}
         updateRequestPayload={updateRequestPayload}
         requestPayload={requestPayload}
+        communicationPipes={communicationPipes}
       />
     ),
     1: (
       <DeviceStep
         formId={formId}
-        communicationPipes={communicationPipes}
         updateRequestPayload={updateRequestPayload}
         requestPayload={requestPayload}
       />

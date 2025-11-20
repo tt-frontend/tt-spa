@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useUnit } from 'effector-react';
 import { developmentSettingsService } from 'services/developmentSettings/developmentSettings.models';
-import { isDevMode } from 'api/axios';
+import { isDevMode } from 'constants/devMode';
 
 export function useApp() {
   const { resetFeatureToggles } = useUnit({
