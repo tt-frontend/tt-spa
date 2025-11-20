@@ -3,6 +3,9 @@ FROM node:20.18.0-alpine AS builder
 
 WORKDIR /app
 COPY . .
+
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 RUN yarn install --frozen-lockfile
 RUN yarn build
 
