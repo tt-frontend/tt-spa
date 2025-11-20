@@ -58,7 +58,9 @@ export default defineConfig(() => {
     },
     build: {
       outDir: 'build',
-      sourcemap:  "inline" ,
+      sourcemap: false,
+      minify: 'esbuild',
+      chunkSizeWarningLimit: 2000,
     },
     assetsInclude: ['/sb-preview/runtime.js'],
   };
