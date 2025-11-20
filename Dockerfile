@@ -1,5 +1,5 @@
 # Stage 1: Build фронта
-FROM node:20.18.0-alpine AS builder
+FROM node:20-bullseye AS builder
 
 WORKDIR /app
 COPY . .
