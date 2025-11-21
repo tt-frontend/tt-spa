@@ -5,6 +5,8 @@ import { useUnit } from 'effector-react';
 import { buildingQuery } from './addChessBoardService.api';
 
 const {
+  inputs,
+  outputs,
   gates: { ChessBoardGate },
 } = addChessBoardService;
 
@@ -16,12 +18,21 @@ export const AddChessBoardContainer = () => {
     isLoadingBuilding: buildingQuery.$pending,
   });
 
+  const { handleAddEntrance, closeAddEntrancePanel, isAddEntrancePanelOpen } =
+    useUnit({
+      ...inputs,
+      isAddEntrancePanelOpen: outputs.$isAddEntrancePanelOpen,
+    });
+
   return (
     <>
       <ChessBoardGate buildingId={Number(buildingId)} />
       <CreateChessBoardPage
         building={building}
         isLoadingBuilding={isLoadingBuilding}
+        handleAddEntrance={handleAddEntrance}
+        closeAddEntrancePanel={closeAddEntrancePanel}
+        isAddEntrancePanelOpen={isAddEntrancePanelOpen}
       />
     </>
   );

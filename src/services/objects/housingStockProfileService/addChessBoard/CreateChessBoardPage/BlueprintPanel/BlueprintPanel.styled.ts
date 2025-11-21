@@ -29,8 +29,9 @@ export const Header = styled.div`
 
 export const Content = styled.div<{ isTitle: boolean }>`
   padding: 16px;
-  ${({ isTitle }) => (isTitle ? 'margin-top: 0;' : '')}
+  ${({ isTitle }) => (isTitle ? 'padding-top: 0;' : '')}
   height: 100%;
+  overflow-y: auto;
 `;
 
 export const Footer = styled.div`

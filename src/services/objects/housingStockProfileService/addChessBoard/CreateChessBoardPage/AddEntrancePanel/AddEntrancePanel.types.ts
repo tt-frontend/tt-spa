@@ -1,1 +1,3 @@
-export type Props = object;
+export type Props = {
+  closeAddEntrancePanel: () => void;
+};

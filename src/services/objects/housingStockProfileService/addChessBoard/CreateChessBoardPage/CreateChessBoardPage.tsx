@@ -20,6 +20,9 @@ import { AddEntrancePanel } from './AddEntrancePanel';
 export const CreateChessBoardPage: FC<Props> = ({
   building,
   isLoadingBuilding,
+  isAddEntrancePanelOpen,
+  handleAddEntrance,
+  closeAddEntrancePanel,
 }) => {
   return (
     <>
@@ -41,6 +44,7 @@ export const CreateChessBoardPage: FC<Props> = ({
                   {
                     title: 'Подъезд',
                     id: 'entrance',
+                    onClick: handleAddEntrance,
                   },
                   {
                     title: 'Жилой этаж',
@@ -84,7 +88,9 @@ export const CreateChessBoardPage: FC<Props> = ({
           />
         </Header>
         <Blueprint>
-          <AddEntrancePanel />
+          {isAddEntrancePanelOpen && (
+            <AddEntrancePanel closeAddEntrancePanel={closeAddEntrancePanel} />
+          )}
         </Blueprint>
         <StickyPanel>
           <Button size="s" type="ghost">

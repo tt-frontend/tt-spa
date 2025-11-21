@@ -1,4 +1,4 @@
-import { sample } from 'effector';
+import { createEvent, createStore, sample } from 'effector';
 import { createGate } from 'effector-react';
 import { buildingQuery } from './addChessBoardService.api';
 
@@ -10,8 +10,15 @@ sample({
   target: buildingQuery.start,
 });
 
+const handleAddEntrance = createEvent();
+const closeAddEntrancePanel = createEvent();
+
+const $isAddEntrancePanelOpen = createStore(false)
+  .on(handleAddEntrance, () => true)
+  .reset(closeAddEntrancePanel);
+
 export const addChessBoardService = {
-  inputs: {},
-  outputs: {},
+  inputs: { handleAddEntrance, closeAddEntrancePanel },
+  outputs: { $isAddEntrancePanelOpen },
   gates: { ChessBoardGate },
 };
