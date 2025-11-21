@@ -19,6 +19,7 @@ export type ContextMenuButtonProps = {
   size?: SizeType;
   isVisible?: boolean;
   children?: (isOpen: boolean) => ReactNode;
+  icon?: ReactNode;
 };
 
 export type ContextMenuElement = {
@@ -28,4 +29,6 @@ export type ContextMenuElement = {
   color?: ContextMenuButtonColor;
   id?: string;
   children?: ContextMenuElement[];
+  icon?: ReactNode;
+  strong?: boolean;
 };

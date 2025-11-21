@@ -16,4 +16,5 @@ export type ButtonProps = {
   htmlType?: 'submit' | 'button';
   className?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  wide?: boolean;
 };

@@ -21,6 +21,7 @@ export const Button = ({
   children,
   className,
   onClick,
+  wide,
 }: ButtonProps) => {
   const rightElement = useMemo(() => {
     if (isLoading) {
@@ -34,6 +35,7 @@ export const Button = ({
     <ButtonAntd
       className={cx('root', className, `size-${size}`, type, {
         'is-floating': floating,
+        'is-wide': wide,
       })}
       disabled={disabled || isLoading}
       form={htmlForm}

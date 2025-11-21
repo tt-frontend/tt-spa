@@ -1,15 +1,11 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  @media screen and (max-width: 1600px) {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: 1fr;
-  }
-
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(2, 1fr);
+
+  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+  align-items: stretch;
 `;
 
 export const ManeWrapper = styled.div`

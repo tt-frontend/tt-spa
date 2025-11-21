@@ -13,6 +13,9 @@ import {
   ResourceDisconnectionLoaderItem,
   ResourcePanel,
   ResourcePanelItem,
+  TooltionObects,
+  TooltipDates,
+  TooltipWrapper,
 } from './ResourceDisconnectingGanttChart.styled';
 import dayjs from 'dayjs';
 import { EResourceType } from 'api/types';
@@ -76,7 +79,17 @@ export const ResourceDisconnectingGanttChart: FC<Props> = ({
                   // --- ОСНОВНОЙ КОНТЕНТ ---
                   diconnectionData[resource]?.map((item) => (
                     <Tooltip
-                      title={`${dayjs(item.startDate).format('D')} – ${dayjs(item.endDate).format('D MMMM')}`}
+                      title={
+                        <TooltipWrapper>
+                          <TooltipDates>
+                            {dayjs(item.startDate).format('D')} –
+                            {dayjs(item.endDate).format('D MMMM')}
+                          </TooltipDates>
+                          <TooltionObects>
+                            Объекты: {item.objectsCount?.toLocaleString()}
+                          </TooltionObects>
+                        </TooltipWrapper>
+                      }
                       key={`${item.startDate}${item.endDate}${item.resourceType}`}
                     >
                       <ResourceDisconnectionItem
