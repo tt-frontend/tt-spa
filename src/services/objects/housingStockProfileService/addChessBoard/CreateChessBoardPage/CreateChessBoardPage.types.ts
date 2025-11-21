@@ -1,10 +1,10 @@
 import { BuildingShortResponse } from 'api/types';
+import { EditChessBoardPanelType } from '../addChessBoardService.types';
 
 export type Props = {
   building: BuildingShortResponse | null;
   isLoadingBuilding: boolean;
-  // add entrance
-  isAddEntrancePanelOpen: boolean;
-  closeAddEntrancePanel: () => void;
-  handleAddEntrance: () => void;
+  handleEditChessboard: (payload: EditChessBoardPanelType) => void;
+  openPanel: EditChessBoardPanelType | null;
+  closeEditChessboardPanel: () => void;
 };

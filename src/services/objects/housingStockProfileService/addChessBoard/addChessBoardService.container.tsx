@@ -18,11 +18,12 @@ export const AddChessBoardContainer = () => {
     isLoadingBuilding: buildingQuery.$pending,
   });
 
-  const { handleAddEntrance, closeAddEntrancePanel, isAddEntrancePanelOpen } =
-    useUnit({
+  const { closeEditChessboardPanel, handleEditChessboard, openPanel } = useUnit(
+    {
       ...inputs,
-      isAddEntrancePanelOpen: outputs.$isAddEntrancePanelOpen,
-    });
+      openPanel: outputs.$openPanel,
+    },
+  );
 
   return (
     <>
@@ -30,9 +31,9 @@ export const AddChessBoardContainer = () => {
       <CreateChessBoardPage
         building={building}
         isLoadingBuilding={isLoadingBuilding}
-        handleAddEntrance={handleAddEntrance}
-        closeAddEntrancePanel={closeAddEntrancePanel}
-        isAddEntrancePanelOpen={isAddEntrancePanelOpen}
+        handleEditChessboard={handleEditChessboard}
+        closeEditChessboardPanel={closeEditChessboardPanel}
+        openPanel={openPanel}
       />
     </>
   );

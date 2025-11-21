@@ -1,6 +1,7 @@
 import { createEvent, createStore, sample } from 'effector';
 import { createGate } from 'effector-react';
 import { buildingQuery } from './addChessBoardService.api';
+import { EditChessBoardPanelType } from './addChessBoardService.types';
 
 const ChessBoardGate = createGate<{ buildingId: number }>();
 
@@ -10,15 +11,15 @@ sample({
   target: buildingQuery.start,
 });
 
-const handleAddEntrance = createEvent();
-const closeAddEntrancePanel = createEvent();
+const handleEditChessboard = createEvent<EditChessBoardPanelType>();
+const closeEditChessboardPanel = createEvent();
 
-const $isAddEntrancePanelOpen = createStore(false)
-  .on(handleAddEntrance, () => true)
-  .reset(closeAddEntrancePanel);
+const $openPanel = createStore<EditChessBoardPanelType | null>(null)
+  .on(handleEditChessboard, (_, type) => type)
+  .reset(closeEditChessboardPanel);
 
 export const addChessBoardService = {
-  inputs: { handleAddEntrance, closeAddEntrancePanel },
-  outputs: { $isAddEntrancePanelOpen },
+  inputs: { handleEditChessboard, closeEditChessboardPanel },
+  outputs: { $openPanel },
   gates: { ChessBoardGate },
 };
