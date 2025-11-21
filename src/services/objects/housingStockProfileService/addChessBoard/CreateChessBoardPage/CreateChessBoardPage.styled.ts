@@ -16,6 +16,7 @@ export const Blueprint = styled.div`
   background-image: url(${backgorund});
   background-size: 80%;
   height: calc(100% - 128px);
+  position: relative;
 `;
 
 export const Header = styled.div`

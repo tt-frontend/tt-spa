@@ -15,6 +15,7 @@ import { getBuildingAddress } from 'utils/getBuildingAddress';
 import { Skeleton } from 'antd';
 import { ApartmentIcon } from './assets/ApartmentIcon';
 import { ParkingIcon } from './assets/ParkingIcon';
+import { AddEntrancePanel } from './AddEntrancePanel';
 
 export const CreateChessBoardPage: FC<Props> = ({
   building,
@@ -82,7 +83,9 @@ export const CreateChessBoardPage: FC<Props> = ({
             ]}
           />
         </Header>
-        <Blueprint></Blueprint>
+        <Blueprint>
+          <AddEntrancePanel />
+        </Blueprint>
         <StickyPanel>
           <Button size="s" type="ghost">
             Очистить
@@ -91,7 +94,7 @@ export const CreateChessBoardPage: FC<Props> = ({
             <Button size="s" type="ghost">
               Отмена
             </Button>
-            <Button size="s" wide>
+            <Button size="s" wide disabled>
               Сохранить
             </Button>
           </ButtonsWrapper>
