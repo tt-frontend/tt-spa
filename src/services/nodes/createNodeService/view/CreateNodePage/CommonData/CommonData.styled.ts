@@ -21,7 +21,7 @@ export const Divider = styled.div`
 
 export const CreateNewZoneButtonWrapper = styled.div`
   display: flex;
-  margin: 45px 0 0 25px;
+  margin: 15px 0 0 10px;
 `;
 
 export const SelectOptionWithIconWrapper = styled.div`
