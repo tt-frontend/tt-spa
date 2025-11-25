@@ -13,17 +13,21 @@ const {
 export const AddChessBoardContainer = () => {
   const { buildingId } = useParams<{ buildingId: string }>();
 
-  const { building, isLoadingBuilding } = useUnit({
+  const {
+    closeEditChessboardPanel,
+    handleEditChessboard,
+
+    building,
+    isLoadingBuilding,
+    openPanel,
+    chessboardCreateData,
+  } = useUnit({
+    ...inputs,
     building: buildingQuery.$data,
     isLoadingBuilding: buildingQuery.$pending,
+    openPanel: outputs.$openPanel,
+    chessboardCreateData: outputs.$chessboardCreateData,
   });
-
-  const { closeEditChessboardPanel, handleEditChessboard, openPanel } = useUnit(
-    {
-      ...inputs,
-      openPanel: outputs.$openPanel,
-    },
-  );
 
   return (
     <>
@@ -34,6 +38,7 @@ export const AddChessBoardContainer = () => {
         handleEditChessboard={handleEditChessboard}
         closeEditChessboardPanel={closeEditChessboardPanel}
         openPanel={openPanel}
+        chessboardCreateData={chessboardCreateData}
       />
     </>
   );

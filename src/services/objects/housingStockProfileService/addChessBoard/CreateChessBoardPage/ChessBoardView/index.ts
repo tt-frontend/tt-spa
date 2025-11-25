@@ -1,0 +1,1 @@
+export { ChessBoardView } from './ChessBoardView';

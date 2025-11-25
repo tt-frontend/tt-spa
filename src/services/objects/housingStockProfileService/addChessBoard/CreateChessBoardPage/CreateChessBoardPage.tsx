@@ -16,6 +16,7 @@ import { Skeleton } from 'antd';
 import { ApartmentIcon } from './assets/ApartmentIcon';
 import { ParkingIcon } from './assets/ParkingIcon';
 import { AddEntrancePanel } from './AddEntrancePanel';
+import { ChessBoardView } from './ChessBoardView';
 
 export const CreateChessBoardPage: FC<Props> = ({
   building,
@@ -23,6 +24,7 @@ export const CreateChessBoardPage: FC<Props> = ({
   openPanel,
   closeEditChessboardPanel,
   handleEditChessboard,
+  chessboardCreateData,
 }) => {
   return (
     <>
@@ -93,6 +95,7 @@ export const CreateChessBoardPage: FC<Props> = ({
               closeAddEntrancePanel={closeEditChessboardPanel}
             />
           )}
+          <ChessBoardView chessboardCreateData={chessboardCreateData} />
         </Blueprint>
         <StickyPanel>
           <Button size="s" type="ghost">

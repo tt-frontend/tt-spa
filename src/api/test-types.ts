@@ -2732,7 +2732,7 @@ export interface FloorCreateModel {
   sectionId?: number;
   /** @format int32 */
   floorNumber?: number;
-  s;
+
   apartmentNumbers?: string[] | null;
 }
 
