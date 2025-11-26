@@ -1,6 +1,11 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import React, { useEffect, useMemo, useState } from 'react';
-import { DrawerSC, Layout, PageWrapper } from './Router.styled';
+import {
+  DrawerSC,
+  Layout,
+  PageWrapper,
+  PageWrapperRelativeLayout,
+} from './Router.styled';
 import { Panel } from 'App/Panel';
 import {
   ESecuredIdentityRoleName,
@@ -138,9 +143,11 @@ function RouterWrapper() {
         onMouseEnter={() => !isOpen && setIsDrawerOpen(true)}
       />
       <div />
-      <PageWrapper>
-        <Outlet />
-      </PageWrapper>
+      <PageWrapperRelativeLayout>
+        <PageWrapper>
+          <Outlet />
+        </PageWrapper>
+      </PageWrapperRelativeLayout>
     </Layout>
   );
 }

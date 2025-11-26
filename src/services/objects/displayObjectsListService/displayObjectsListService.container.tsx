@@ -7,9 +7,11 @@ import { HeaderInject } from '../objectsProfileService/view/ObjectsProfile/Objec
 import { getBuildingsQuery } from './displayObjectsListService.api';
 import {
   ListWrapper,
-  PaginationSC,
+  PaginationWrapper,
   StickyPanel,
+  Wrapper,
 } from './view/ObjectsList/ObjectsList.styled';
+import { Pagination } from 'ui-kit/Pagination';
 
 const { HousingStocksGate } = displayObjectsListService.gates;
 
@@ -33,8 +35,9 @@ export const ObjectsListContainer: FC<HeaderInject> = ({ Header }) => {
   const isNotEmpty = (housingStocks?.length || 0) > 0;
 
   return (
-    <div>
+    <Wrapper>
       <HousingStocksGate />
+
       <Header>
         <SearchObjects
           handleSearch={handleSearch}
@@ -49,18 +52,21 @@ export const ObjectsListContainer: FC<HeaderInject> = ({ Header }) => {
           isBuildingFetched={isBuildingFetched}
         />
       </ListWrapper>
+
       {isNotEmpty && !isLoading && (
         <StickyPanel>
-          <PaginationSC
-            showSizeChanger={false}
-            defaultCurrent={1}
-            current={pagedHousingStocks?.pageNumber}
-            onChange={handlePageNumberChanged}
-            total={pagedHousingStocks?.totalItems}
-            pageSize={pagedHousingStocks?.pageSize}
-          />
+          <PaginationWrapper>
+            <Pagination
+              showSizeChanger={false}
+              defaultCurrent={1}
+              current={pagedHousingStocks?.pageNumber}
+              onChange={handlePageNumberChanged}
+              total={pagedHousingStocks?.totalItems}
+              pageSize={pagedHousingStocks?.pageSize}
+            />
+          </PaginationWrapper>
         </StickyPanel>
       )}
-    </div>
+    </Wrapper>
   );
 };

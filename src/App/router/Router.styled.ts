@@ -6,6 +6,9 @@ export const Layout = styled.div<{ isMenuOpen: boolean }>`
   display: grid;
   grid-template-columns: ${({ isMenuOpen }) =>
       isMenuOpen ? '208px' : '48px'} 1fr;
+`;
+
+export const PageWrapperRelativeLayout = styled.div`
   position: relative;
 `;
 
