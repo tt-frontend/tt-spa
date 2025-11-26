@@ -6,8 +6,8 @@ export const Wrapper = styled.div`
   position: fixed;
   height: 100vh;
   top: 0;
-  left: 208px;
-  width: calc(100% - 208px);
+  width: calc(100% - 52px);
+  transform: translateX(-52px);
 `;
 
 export const Blueprint = styled.div`
@@ -17,6 +17,12 @@ export const Blueprint = styled.div`
   background-size: 80%;
   height: calc(100% - 128px);
   position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 0;
 `;
 
 export const Header = styled.div`
@@ -26,6 +32,10 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 56px;
+
+  background: white;
+
+  z-index: 5;
 `;
 
 export const StickyPanel = styled.div`
