@@ -2,8 +2,8 @@ import { FC } from 'react';
 import {
   Blueprint,
   ButtonsWrapper,
-  Header,
-  StickyPanel,
+  headerStyles,
+  stickyPanelStyles,
   Wrapper,
 } from './CreateChessBoardPage.styled';
 import { Props } from './CreateChessBoardPage.types';
@@ -17,6 +17,7 @@ import { ApartmentIcon } from './assets/ApartmentIcon';
 import { ParkingIcon } from './assets/ParkingIcon';
 import { AddEntrancePanel } from './AddEntrancePanel';
 import { ChessBoardView } from './ChessBoardView';
+import { StickyPanel } from 'ui-kit/shared/StickyPanel';
 
 export const CreateChessBoardPage: FC<Props> = ({
   building,
@@ -29,67 +30,67 @@ export const CreateChessBoardPage: FC<Props> = ({
 }) => {
   return (
     <>
+      <StickyPanel css={headerStyles}>
+        <GoBack />
+        {isLoadingBuilding && <Skeleton.Input active size="small" />}
+        {!isLoadingBuilding && getBuildingAddress(building, true)}
+        <ContextMenuButton
+          size="small"
+          icon={<PlusIcon style={{ transform: 'scale(0.8)' }} />}
+          menuButtons={[
+            {
+              title: 'Добавить элемент подъезда',
+              icon: <ApartmentIcon />,
+              strong: true,
+              id: 'add-entrance-element',
+              children: [
+                {
+                  title: 'Подъезд',
+                  id: 'entrance',
+                  onClick: () => handleEditChessboard('add-entrance'),
+                },
+                {
+                  title: 'Жилой этаж',
+                  id: 'residential-floor',
+                },
+              ],
+            },
+            {
+              title: 'Добавить нежилое помещение',
+              icon: <ParkingIcon />,
+              strong: true,
+              id: 'add-non-residential-placement',
+              children: [
+                {
+                  title: 'Паркинг',
+                  id: 'parking',
+                },
+                {
+                  title: 'Техническое помещение',
+                  id: 'technical-placement',
+                },
+                {
+                  title: 'Тепловой пункт',
+                  id: 'heating-point',
+                },
+                {
+                  title: 'Коммерческое помещение',
+                  id: 'commercial-placement',
+                },
+                {
+                  title: 'Подвал',
+                  id: 'basement',
+                },
+                {
+                  title: 'Чердак',
+                  id: 'attic',
+                },
+              ],
+            },
+          ]}
+        />
+      </StickyPanel>
       <Wrapper>
-        <Header>
-          <GoBack />
-          {isLoadingBuilding && <Skeleton.Input active size="small" />}
-          {!isLoadingBuilding && getBuildingAddress(building, true)}
-          <ContextMenuButton
-            size="small"
-            icon={<PlusIcon style={{ transform: 'scale(0.8)' }} />}
-            menuButtons={[
-              {
-                title: 'Добавить элемент подъезда',
-                icon: <ApartmentIcon />,
-                strong: true,
-                id: 'add-entrance-element',
-                children: [
-                  {
-                    title: 'Подъезд',
-                    id: 'entrance',
-                    onClick: () => handleEditChessboard('add-entrance'),
-                  },
-                  {
-                    title: 'Жилой этаж',
-                    id: 'residential-floor',
-                  },
-                ],
-              },
-              {
-                title: 'Добавить нежилое помещение',
-                icon: <ParkingIcon />,
-                strong: true,
-                id: 'add-non-residential-placement',
-                children: [
-                  {
-                    title: 'Паркинг',
-                    id: 'parking',
-                  },
-                  {
-                    title: 'Техническое помещение',
-                    id: 'technical-placement',
-                  },
-                  {
-                    title: 'Тепловой пункт',
-                    id: 'heating-point',
-                  },
-                  {
-                    title: 'Коммерческое помещение',
-                    id: 'commercial-placement',
-                  },
-                  {
-                    title: 'Подвал',
-                    id: 'basement',
-                  },
-                  {
-                    title: 'Чердак',
-                    id: 'attic',
-                  },
-                ],
-              },
-            ]}
-          />
-        </Header>
         <Blueprint>
           {openPanel === 'add-entrance' && (
             <AddEntrancePanel
@@ -99,20 +100,20 @@ export const CreateChessBoardPage: FC<Props> = ({
           )}
           <ChessBoardView chessboardCreateData={chessboardCreateData} />
         </Blueprint>
-        <StickyPanel>
-          <Button size="s" type="ghost">
-            Очистить
-          </Button>
-          <ButtonsWrapper>
-            <Button size="s" type="ghost">
-              Отмена
-            </Button>
-            <Button size="s" wide disabled>
-              Сохранить
-            </Button>
-          </ButtonsWrapper>
-        </StickyPanel>
       </Wrapper>
+      <StickyPanel css={stickyPanelStyles}>
+        <Button size="s" type="ghost">
+          Очистить
+        </Button>
+        <ButtonsWrapper>
+          <Button size="s" type="ghost">
+            Отмена
+          </Button>
+          <Button size="s" wide disabled>
+            Сохранить
+          </Button>
+        </ButtonsWrapper>
+      </StickyPanel>
     </>
   );
 };

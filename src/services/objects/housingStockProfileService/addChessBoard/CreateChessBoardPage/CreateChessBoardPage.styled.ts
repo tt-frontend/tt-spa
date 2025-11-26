@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import backgorund from './assets/background.svg';
 
 export const Wrapper = styled.div`
@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Blueprint = styled.div`
+  margin-top: 64px;
   background-color: #f3f5f65a;
   width: 100%;
   background-image: url(${backgorund});
@@ -25,36 +26,27 @@ export const Blueprint = styled.div`
   z-index: 0;
 `;
 
-export const Header = styled.div`
+export const headerStyles = css`
+  top: 0;
+
   height: 64px;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 56px;
 
   background: white;
-
-  z-index: 5;
-`;
-
-export const StickyPanel = styled.div`
-  width: 100%;
-  height: 64px;
-
-  padding: 0 56px;
-  background: #ffffff;
-  box-shadow: 0px -4px 8px 0px rgba(78, 93, 146, 0.16);
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  z-index: 5;
+  z-index: 1;
 `;
 
 export const ButtonsWrapper = styled.div`
   display: flex;
   gap: 12px;
+  align-items: center;
+`;
+
+export const stickyPanelStyles = css`
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 `;

@@ -30,21 +30,6 @@ export const FooterWrapper = styled.div`
   height: 80px;
 `;
 
-export const Panel = styled.div`
-  position: fixed;
-  bottom: 0px;
-  height: 80px;
-  left: 208px;
-  width: calc(100% - 208px);
-  background-color: #ffffff;
-  box-shadow: 0px -4px 8px rgba(78, 93, 146, 0.16);
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 80px;
-`;
-
 export const ButtonsWrapper = styled.div`
   display: flex;
   align-items: center;

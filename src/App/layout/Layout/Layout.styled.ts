@@ -1,11 +1,17 @@
 import { Drawer } from 'antd';
 import styled from 'styled-components';
+import {
+  SIDE_PANEL_CLOSE_WIDTH,
+  SIDE_PANEL_OPEN_WIDTH,
+} from './Layout.constants';
 
 export const Wrapper = styled.div<{ isMenuOpen: boolean }>`
   height: 100vh;
   display: grid;
   grid-template-columns: ${({ isMenuOpen }) =>
-      isMenuOpen ? '208px' : '48px'} 1fr;
+      isMenuOpen
+        ? `${SIDE_PANEL_OPEN_WIDTH}px`
+        : `${SIDE_PANEL_CLOSE_WIDTH}px`} 1fr;
 `;
 
 export const PageWrapperRelativeLayout = styled.div`
