@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   margin-bottom: -16px;
+  min-height: calc(100vh - 32px);
+  position: relative;
 `;
 
 export const StreetGroupWrapper = styled.div`
@@ -14,28 +16,9 @@ export const StreetGroupHeader = styled.div`
   border-bottom: 1px solid #dcdee4;
 `;
 
-export const StickyPanel = styled.div`
-  position: sticky;
-
-  left: 0;
-  bottom: 0;
-
-  width: calc(100% + 108px);
-  transform: translateX(-56px);
-  background: #ffffff;
-  box-shadow: 0px -4px 8px 0px rgba(78, 93, 146, 0.16);
-
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 56px;
-`;
-
 export const PaginationWrapper = styled.div`
   width: 100%;
   max-width: 960px;
-  /* margin-left: 112px; */
-  /* width: 960px; */
   display: flex;
   justify-content: flex-end;
   align-items: center;

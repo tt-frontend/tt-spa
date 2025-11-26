@@ -1,7 +1,7 @@
 import { Drawer } from 'antd';
 import styled from 'styled-components';
 
-export const Layout = styled.div<{ isMenuOpen: boolean }>`
+export const Wrapper = styled.div<{ isMenuOpen: boolean }>`
   height: 100vh;
   display: grid;
   grid-template-columns: ${({ isMenuOpen }) =>

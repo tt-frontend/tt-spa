@@ -1,254 +1,89 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import React, { useEffect, useMemo, useState } from 'react';
+import { ESecuredIdentityRoleNameStringDictionaryItem } from 'api/types';
 import {
-  DrawerSC,
-  Layout,
-  PageWrapper,
-  PageWrapperRelativeLayout,
-} from './Router.styled';
-import { Panel } from 'App/Panel';
-import {
-  ESecuredIdentityRoleName,
-  ESecuredIdentityRoleNameStringDictionaryItem,
-  TaskGroupingFilter,
-} from 'api/types';
-import { HousingStockProfileContainer } from 'services/objects/housingStockProfileService';
-import { DevicesPageContainer } from 'services/devices/devicesPageService';
-import { ChangeODPUContainer } from 'services/devices/сhangeODPUService';
-import { EditElectricNodeContainer } from 'services/devices/editElectricNodeService';
-import { CreateObjectContainer } from 'services/objects/createObjectService';
-import { EditApartmentProfileContainer } from 'services/apartments/editApartmentProfileService';
-import { EmployeeProfileContainer } from 'services/employee/employeeProfileService';
-import { ApartmentProfileContainer } from 'services/apartments/apartmentProfileService';
-import { CreateNodeContainer } from 'services/nodes/createNodeService';
-import { CalculatorProfileContainer } from 'services/calculators/calculatorProfileService';
-import { HousingMeteringDeviceProfileContainer } from 'services/devices/housingMeteringDevices/housingMeteringDeviceProfileService';
-import { EditHousingMeteringDeviceContainer } from 'services/devices/housingMeteringDevices/editHousingMeteringDeviceService';
-import { NodeProfileContainer } from 'services/nodes/nodeProfileService';
-import { MetersContainer } from 'services/meters/metersService';
-import { CompanyProfileContainer } from 'services/company/companyProfileService';
-import { EditEmployeeContainer } from 'services/employee/editEmployeeService';
-import { ReportViewContainer } from 'services/reportsService/reportViewService';
-import { EditCalculatorContainer } from 'services/calculators/editCalculatorService';
-import { StandartWorkingRangeContainer } from 'services/workingRanges/standartWorkingRangeService';
-import { GroupWorkingRangeContainer } from 'services/workingRanges/groupWorkingRangeService';
-import { UniqueWorkingRangeContainer } from 'services/workingRanges/uniqueWorkingRangeService';
-import { EditCompanyContainer } from 'services/company/editCompanyService';
-import { AccessDeniedPage } from 'services/authorizations/AccessDeniedPage';
-import { EditObjectContainer } from 'services/objects/editObjectService';
-import { EditIndividualDeviceContainer } from 'services/meters/editIndividualDeviceService';
-import { LoginContainer } from 'services/authorizations/loginService';
-import { RegistrationContainer } from 'services/authorizations/registrationService';
-import { AddPersonalNumberContainer } from 'services/homeowner/personalNumber/addPersonalNumberService';
-import { EditPersonalNumberContainer } from 'services/homeowner/personalNumber/editPersonalNumberService';
-import { SwitchPersonalNumberContainer } from 'services/homeowner/personalNumber/switchPersonalNumberService';
-import { SplitPersonalNumberContainer } from 'services/homeowner/personalNumber/splitPersonalNumberService';
-import { SettingsPageContainer } from 'services/settings/settingsPageService';
-import { ActsJournalContainer } from 'services/actsJournalService';
-import { ServicesContainer } from 'services/services/servicesService';
-import { NodeArchivePageContainer } from 'services/nodes/nodeArchiveService';
-import { EditNodeContainer } from 'services/nodes/editNodeService';
-import { StatisticsProfileContainer } from 'services/statistics/statisticsProfileService';
-import { AddIndividualDeviceContainer } from 'services/devices/individualDevices/addIndividualDeviceService';
-import { ResourceDisablingScheduleContainer } from 'services/settings/resourcesDisablingScheduleService/ResourceDisablingSchedule.container';
-import { WorkWithIndividualDeviceContainer } from 'services/devices/individualDevices/workWithIndividualDeviceService';
-import { WorkWithIndividualDeviceType } from 'services/devices/individualDevices/workWithIndividualDeviceService/workWithIndividualDeviceService.types';
-import { NonResidentialBuildingProfileContainer } from 'services/objects/nonResidentialBuildingProfileService';
-import { IndividualMeteringDeviceProfileContainer } from 'services/devices/individualMeteringDeviceProfile';
-import { currentUserService } from 'services/currentUser/currentUserService';
-import { ObjectsProfileContainer } from 'services/objects/objectsProfileService';
-import { ReportsContainer } from 'services/reportsService';
-import {
+  AccessDeniedPage,
+  ActsJournalContainer,
+  AddApartmentContainer,
+  AddChessBoardContainer,
+  AddIndividualDeviceContainer,
+  AddPersonalNumberContainer,
+  ApartmentProfileContainer,
+  CalculatorProfileContainer,
+  ChangeODPUContainer,
+  CommonAnalyticsContainer,
+  CompanyProfileContainer,
+  CreateDistrictBorderMapContainer,
+  CreateNodeContainer,
+  CreateObjectContainer,
+  CurrentAnalyticsContainer,
+  CurrentUserEditServiceContainer,
+  DevicesPageContainer,
   DistrictBordersByAddressContainer,
-  districtBordersByAddressService,
-} from 'services/settings/districtBordersService/districtBordersByAddressService';
-import { EditDistrictBordersContainer } from 'services/settings/districtBordersService/editDistrictBordersService';
-import { CreateDistrictBorderMapContainer } from 'services/settings/districtBordersService/createDistrictBorderMapService';
-import { ManageDistrictsMapContainer } from 'services/settings/districtBordersService/manageDistrictsMapService';
-import { TaskProfileContainer } from 'services/tasks/taskProfileService';
-import {
+  EditApartmentProfileContainer,
+  EditCalculatorContainer,
+  EditCompanyContainer,
+  EditDistrictBordersContainer,
+  EditElectricNodeContainer,
+  EditEmployeeContainer,
+  EditHousingMeteringDeviceContainer,
+  EditIndividualDeviceContainer,
+  EditNodeContainer,
+  EditObjectContainer,
+  EditPersonalNumberContainer,
+  EmployeeProfileContainer,
+  GroupWorkingRangeContainer,
+  HousingMeteringDeviceProfileContainer,
+  HousingStockProfileContainer,
+  IndividualMeteringDeviceProfileContainer,
+  LayoutContainer,
+  LoginContainer,
+  MainServiceContainer,
+  ManageDistrictsMapContainer,
+  MetersContainer,
+  Navigate,
+  NodeArchivePageContainer,
+  NodeProfileContainer,
+  NonResidentialBuildingProfileContainer,
+  ObjectsProfileContainer,
+  ReadingReportsArchiveContainer,
+  RegistrationContainer,
+  ReportsContainer,
+  ReportViewContainer,
+  ResourceDisablingScheduleContainer,
+  ServicesContainer,
+  SettingsPageContainer,
+  SplitPersonalNumberContainer,
+  StandartReportContainer,
+  StandartWorkingRangeContainer,
+  StatisticsProfileContainer,
+  SwitchPersonalNumberContainer,
+  TaskProfileContainer,
   TasksProfileContainer,
-  tasksProfileService,
-} from 'services/tasks/tasksProfileService';
-import { currentOrganizationService } from 'services/currentOrganizationService';
-import { useUnit } from 'effector-react';
-import { tokensService } from 'api/tokensService';
-import { UserProfileContainer } from 'services/currentUser/currentUserService/currentUserService.container';
-import { CurrentUserEditServiceContainer } from 'services/currentUser/currentUserEditService';
-import { WorkWithReadingsContainer } from 'services/workWithReadings';
-import { StandartReportContainer } from 'services/workWithReadings/standartReport';
-import { createRunnerService } from 'services/reportsService/createRunnerService/createRunnerService.models';
-import { CurrentAnalyticsContainer } from 'services/supervisor/currentAnalytics';
-import { CommonAnalyticsContainer } from 'services/supervisor/commonAnalytics';
-import { usePermission } from 'hooks/usePermission';
-import { ReadingReportsArchiveContainer } from 'services/workWithReadings/readingReportsArchive';
-import { AddApartmentContainer } from 'services/apartments/addApartment';
-import { resourceConsumptionService } from 'services/resources/resourceConsumptionService';
-import { MainServiceContainer } from 'services/mainService';
-import { AddChessBoardContainer } from 'services/objects/housingStockProfileService/addChessBoard';
-
-const {
-  gates: { CurrentUserGate },
-} = currentUserService;
-const {
-  gates: { CurrentManagingFirmGate },
-} = currentOrganizationService;
-const {
-  gates: { GetLastPollGate },
-} = createRunnerService;
-const {
-  gates: { GetHousingMeteringDevicesGate },
-} = resourceConsumptionService;
-
-const { TasksIsOpen } = tasksProfileService.gates;
-const { DistrictBordersGroupPageGate } = districtBordersByAddressService.gates;
-
-function RouterWrapper() {
-  const [isOpen, setIsOpen] = useState(true);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  useEffect(() => {
-    if (isOpen) setIsDrawerOpen(false);
-  }, [isOpen]);
-
-  return (
-    <Layout isMenuOpen={isOpen}>
-      <CurrentUserGate />
-      <CurrentManagingFirmGate />
-      <GetLastPollGate />
-      <GetHousingMeteringDevicesGate />
-      <DrawerSC
-        open={isDrawerOpen}
-        title={<></>}
-        width={208}
-        closable={false}
-        maskClosable={true}
-        onClose={() => setIsDrawerOpen(false)}
-        style={{ padding: 0 }}
-        headerStyle={{ display: 'none' }}
-        placement="left"
-      >
-        <Panel
-          isChevronOpen={isOpen}
-          isOpen
-          setIsOpen={setIsOpen}
-          onMouseLeave={() => setIsDrawerOpen(false)}
-        />
-      </DrawerSC>
-
-      <Panel
-        isOpen={isOpen}
-        isChevronOpen={isOpen}
-        setIsOpen={setIsOpen}
-        onMouseEnter={() => !isOpen && setIsDrawerOpen(true)}
-      />
-      <div />
-      <PageWrapperRelativeLayout>
-        <PageWrapper>
-          <Outlet />
-        </PageWrapper>
-      </PageWrapperRelativeLayout>
-    </Layout>
-  );
-}
-
-const TasksRouterWrapper = () => {
-  return (
-    <>
-      <TasksIsOpen />
-      <Outlet />
-    </>
-  );
-};
-
-const DistrictBordersRouterWrapper = () => {
-  return (
-    <>
-      <DistrictBordersGroupPageGate />
-      <Outlet />
-    </>
-  );
-};
+  UniqueWorkingRangeContainer,
+  UserProfileContainer,
+  WorkWithIndividualDeviceContainer,
+  WorkWithIndividualDeviceType,
+  WorkWithReadingsContainer,
+} from './router.imports';
+import { useRouterContext } from './router.hooks';
+import {
+  DistrictBordersRouterWrapper,
+  TasksRouterWrapper,
+} from './router.components';
 
 export const useRoutes = (
   currentUserRoles: ESecuredIdentityRoleNameStringDictionaryItem[],
 ) => {
-  const { isAuth } = useUnit({ isAuth: tokensService.outputs.$isAuth });
-
-  const roles = useMemo(() => {
-    return (
-      currentUserRoles?.reduce((acc, { key }) => {
-        if (!key) {
-          return acc;
-        }
-        return [...acc, key];
-      }, [] as ESecuredIdentityRoleName[]) || []
-    );
-  }, [currentUserRoles]);
-
-  const isAdministrator =
-    roles.includes(ESecuredIdentityRoleName.Administrator) ||
-    roles.includes(
-      ESecuredIdentityRoleName.ManagingFirmSpectatingAdministrator,
-    );
-
-  const isSeniorOperator = roles.includes(
-    ESecuredIdentityRoleName.SeniorOperator,
-  );
-
-  const isOperator =
-    roles.includes(ESecuredIdentityRoleName.Operator) || isSeniorOperator;
-
-  const isSupervisor = roles.includes(ESecuredIdentityRoleName.Supervisor);
-
-  const isDispatcher = roles.includes(
-    ESecuredIdentityRoleName.ManagingFirmDispatcher,
-  );
-  const isExecutor = roles.includes(
-    ESecuredIdentityRoleName.ManagingFirmExecutor,
-  );
-
-  const isSpectator = usePermission([
-    ESecuredIdentityRoleName.ManagingFirmSpectator,
-    ESecuredIdentityRoleName.Supervisor,
-  ]);
-
-  const isSpectatingAdministrator = roles.includes(
-    ESecuredIdentityRoleName.ManagingFirmSpectatingAdministrator,
-  );
-
-  const isRescrictedSpectator = roles.includes(
-    ESecuredIdentityRoleName.ManagingFirmSpectatorRestricted,
-  );
-
-  const initialTasksPath = isSpectator
-    ? `/tasks/list/${TaskGroupingFilter.Observing}`
-    : `/tasks/list/${TaskGroupingFilter.Executing}`;
-
-  const redirectRoute = useMemo(() => {
-    if (!isAuth) {
-      return `/login`;
-    }
-
-    if (!roles.length) return '/';
-
-    if (isSupervisor) {
-      return '/supervisor/currentAnalytics';
-    }
-
-    if (isOperator) {
-      return '/meters/apartments';
-    }
-
-    return initialTasksPath;
-  }, [roles.length, isSupervisor, isOperator, initialTasksPath, isAuth]);
-
-  const isShowNodeArchivePage =
-    isAdministrator ||
-    isExecutor ||
-    isSpectator ||
-    isSpectatingAdministrator ||
-    isRescrictedSpectator;
+  const {
+    redirectRoute,
+    initialTasksPath,
+    isDispatcher,
+    isShowNodeArchivePage,
+    isAdministrator,
+    isAuth,
+    isExecutor,
+    isSeniorOperator,
+    isOperator,
+  } = useRouterContext(currentUserRoles);
 
   if (!isAuth) {
     return [
@@ -278,7 +113,7 @@ export const useRoutes = (
     },
     {
       path: '/',
-      element: <RouterWrapper />,
+      element: <LayoutContainer />,
       children: [
         {
           path: '/',

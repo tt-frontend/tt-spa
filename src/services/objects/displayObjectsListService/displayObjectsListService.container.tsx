@@ -1,5 +1,5 @@
 import { useUnit } from 'effector-react';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { displayObjectsListService } from './displayObjectsListService.model';
 import { ObjectsList } from './view/ObjectsList';
 import { SearchObjects } from './view/SearchObjects';
@@ -8,10 +8,10 @@ import { getBuildingsQuery } from './displayObjectsListService.api';
 import {
   ListWrapper,
   PaginationWrapper,
-  StickyPanel,
   Wrapper,
 } from './view/ObjectsList/ObjectsList.styled';
 import { Pagination } from 'ui-kit/Pagination';
+import { StickyPanel } from 'ui-kit/shared/StickyPanel';
 
 const { HousingStocksGate } = displayObjectsListService.gates;
 
@@ -32,7 +32,7 @@ export const ObjectsListContainer: FC<HeaderInject> = ({ Header }) => {
 
   const housingStocks = pagedHousingStocks?.items;
 
-  const isNotEmpty = (housingStocks?.length || 0) > 0;
+  const isNotEmpty = (pagedHousingStocks?.totalPages || 0) > 1;
 
   return (
     <Wrapper>
@@ -53,7 +53,7 @@ export const ObjectsListContainer: FC<HeaderInject> = ({ Header }) => {
         />
       </ListWrapper>
 
-      {isNotEmpty && !isLoading && (
+      {isNotEmpty && !isLoading && pagedHousingStocks?.pageNumber && (
         <StickyPanel>
           <PaginationWrapper>
             <Pagination
