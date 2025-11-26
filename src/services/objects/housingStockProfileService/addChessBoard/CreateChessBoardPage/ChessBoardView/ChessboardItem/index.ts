@@ -1,0 +1,1 @@
+export { ChessboardItem } from './ChessboardItem';

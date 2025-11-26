@@ -103,7 +103,7 @@ export const ResourceDisconnectionItem = styled.div<{
   border-radius: ${getPanelBorderRadius};
   width: ${({ width }) => width}%;
   left: ${({ left }) => left}%;
-  border: 2px solid white;
+  border: 1px solid white;
   box-sizing: border-box;
   cursor: pointer;
   transition: 0.2s;
@@ -158,3 +158,24 @@ function getPanelBorderRadius({
 
   return '6px';
 }
+
+export const TooltipDates = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0%;
+`;
+
+export const TooltionObects = styled.div`
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0%;
+`;
+
+export const TooltipWrapper = styled.div`
+  padding: 6px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;

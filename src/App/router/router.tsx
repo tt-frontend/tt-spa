@@ -80,6 +80,7 @@ import { ReadingReportsArchiveContainer } from 'services/workWithReadings/readin
 import { AddApartmentContainer } from 'services/apartments/addApartment';
 import { resourceConsumptionService } from 'services/resources/resourceConsumptionService';
 import { MainServiceContainer } from 'services/mainService';
+import { AddChessBoardContainer } from 'services/objects/housingStockProfileService/addChessBoard';
 
 const {
   gates: { CurrentUserGate },
@@ -299,6 +300,10 @@ export const useRoutes = (
           ) : (
             <AccessDeniedPage />
           ),
+        },
+        {
+          path: '/buildings/:buildingId/addChessBoard',
+          element: <AddChessBoardContainer />,
         },
         {
           path: '/buildings/:houseCategory/:buildingId/edit',

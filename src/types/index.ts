@@ -90,3 +90,7 @@ export type DistrictColorData = {
   color: string;
   strokeColor: string;
 };
+
+export type MayBeNull<T> = {
+  [K in keyof T]: T[K] | null;
+};

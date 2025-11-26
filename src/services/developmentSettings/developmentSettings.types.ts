@@ -1,5 +1,5 @@
 import { OrganizationUserResponse } from 'api/types';
-import { featureToggles } from 'featureToggles';
+import { featureToggles } from 'constants/featureToggles';
 
 export type DevelopmentSettingsContainerProps = {
   isAuth?: boolean;

@@ -4,7 +4,9 @@ import styled from 'styled-components';
 export const Layout = styled.div<{ isMenuOpen: boolean }>`
   height: 100vh;
   display: grid;
-  grid-template-columns: ${({ isMenuOpen }) => (isMenuOpen ? '208px' : '48px')} 1fr;
+  grid-template-columns: ${({ isMenuOpen }) =>
+      isMenuOpen ? '208px' : '48px'} 1fr;
+  position: relative;
 `;
 
 export const PageWrapper = styled.div`
