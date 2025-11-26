@@ -11,4 +11,5 @@ export const FeatureTogglesTranslates: {
   controllersDistribution: 'Распределение контролёров',
   mvitu: 'Интеграция с ВИС МВИТУ',
   workWithReadings: 'Работа с показаниями',
+  chessboardCreate: 'Шахматка',
 };

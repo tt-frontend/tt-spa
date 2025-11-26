@@ -7,6 +7,8 @@ import { HeaderTitle, HeaderWrapper } from './ApartmentsView.styled';
 import { ApartmentsViewProps, SegmentType } from './ApartmentsView.types';
 import { WithLoader } from 'ui-kit/shared/WithLoader';
 import { AddChessBoardPanel } from './AddChessBoardPanel';
+import { useUnit } from 'effector-react';
+import { developmentSettingsService } from 'services/developmentSettings/developmentSettings.models';
 
 export const ApartmentsView: FC<ApartmentsViewProps> = ({
   apartmentsPagedList,
@@ -19,6 +21,10 @@ export const ApartmentsView: FC<ApartmentsViewProps> = ({
   clearCurrentApartmentId,
 }) => {
   const ViewComponent = components[currentSegment];
+
+  const featureToggles = useUnit(
+    developmentSettingsService.outputs.$featureToggles,
+  );
 
   const isApartmentsListEmpty = apartmentsPagedList?.items?.length === 0;
 
@@ -51,7 +57,7 @@ export const ApartmentsView: FC<ApartmentsViewProps> = ({
             clearCurrentApartmentId={clearCurrentApartmentId}
           />
         )}
-        {isApartmentsListEmpty && (
+        {isApartmentsListEmpty && featureToggles.chessboardCreate && (
           <AddChessBoardPanel buildingId={hosuingStockId} />
         )}
         {!apartmentsPagedList && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
