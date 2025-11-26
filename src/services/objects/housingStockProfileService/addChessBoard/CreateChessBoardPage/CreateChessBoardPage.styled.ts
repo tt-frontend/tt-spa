@@ -1,29 +1,39 @@
 import styled, { css } from 'styled-components';
-import backgorund from './assets/background.svg';
+import { getPanelSize } from 'ui-kit/shared/StickyPanel/StickyPanel.styled';
+import backgorund from './assets/burdocks-01.png';
 
-export const Wrapper = styled.div`
-  position: relative;
+export const Wrapper = styled.div<{ isPanelOpen: boolean }>`
+  margin-top: 64px;
   position: fixed;
-  height: 100vh;
+  height: calc(100vh - 128px);
   top: 0;
-  width: calc(100% - 52px);
-  transform: translateX(-52px);
+  left: ${getPanelSize};
+  width: calc(100% - ${getPanelSize});
+  overflow: auto;
 `;
 
 export const Blueprint = styled.div`
-  margin-top: 64px;
   background-color: #f3f5f65a;
+
   width: 100%;
+  height: 100%;
+
   background-image: url(${backgorund});
-  background-size: 80%;
-  height: calc(100% - 128px);
+  background-size: 25%;
+  background-repeat: repeat;
+  backdrop-filter: blur(10px);
+
+  overflow: auto;
+  overflow-y: scroll;
+
+  box-sizing: border-box;
+  padding: 24px;
+
   position: relative;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  z-index: 0;
 `;
 
 export const headerStyles = css`
