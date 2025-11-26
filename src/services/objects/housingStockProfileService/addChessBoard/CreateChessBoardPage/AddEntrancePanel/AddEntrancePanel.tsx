@@ -11,7 +11,10 @@ import { MayBeNull } from 'types';
 import { AddEntranceFormSchema } from './AddEntrancePanel.constants';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
 
-export const AddEntrancePanel: FC<Props> = ({ closeAddEntrancePanel }) => {
+export const AddEntrancePanel: FC<Props> = ({
+  closeAddEntrancePanel,
+  handleAddEntrance,
+}) => {
   const { values, handleChange, errors, handleSubmit } = useFormik<
     MayBeNull<AddEntranceFormParams>
   >({
@@ -23,7 +26,9 @@ export const AddEntrancePanel: FC<Props> = ({ closeAddEntrancePanel }) => {
     },
     validateOnChange: false,
     validationSchema: AddEntranceFormSchema,
-    onSubmit: () => {},
+    onSubmit: (values) => {
+      handleAddEntrance(values as AddEntranceFormParams);
+    },
   });
 
   return (

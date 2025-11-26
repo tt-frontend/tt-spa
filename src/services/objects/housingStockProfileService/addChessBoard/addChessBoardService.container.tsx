@@ -16,6 +16,7 @@ export const AddChessBoardContainer = () => {
   const {
     closeEditChessboardPanel,
     handleEditChessboard,
+    handleAddEntrance,
 
     building,
     isLoadingBuilding,
@@ -39,6 +40,7 @@ export const AddChessBoardContainer = () => {
         closeEditChessboardPanel={closeEditChessboardPanel}
         openPanel={openPanel}
         chessboardCreateData={chessboardCreateData}
+        handleAddEntrance={handleAddEntrance}
       />
     </>
   );

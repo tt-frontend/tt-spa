@@ -25,6 +25,7 @@ export const CreateChessBoardPage: FC<Props> = ({
   closeEditChessboardPanel,
   handleEditChessboard,
   chessboardCreateData,
+  handleAddEntrance,
 }) => {
   return (
     <>
@@ -93,6 +94,7 @@ export const CreateChessBoardPage: FC<Props> = ({
           {openPanel === 'add-entrance' && (
             <AddEntrancePanel
               closeAddEntrancePanel={closeEditChessboardPanel}
+              handleAddEntrance={handleAddEntrance}
             />
           )}
           <ChessBoardView chessboardCreateData={chessboardCreateData} />

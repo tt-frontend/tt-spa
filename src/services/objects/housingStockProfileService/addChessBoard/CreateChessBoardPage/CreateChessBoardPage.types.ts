@@ -1,5 +1,8 @@
 import { BuildingShortResponse } from 'api/types';
-import { EditChessBoardPanelType } from '../addChessBoardService.types';
+import {
+  AddEntranceFormParams,
+  EditChessBoardPanelType,
+} from '../addChessBoardService.types';
 import { ChessboardCreateModel } from 'api/test-types';
 
 export type Props = {
@@ -9,4 +12,5 @@ export type Props = {
   openPanel: EditChessBoardPanelType | null;
   closeEditChessboardPanel: () => void;
   chessboardCreateData: ChessboardCreateModel;
+  handleAddEntrance: (payload: AddEntranceFormParams) => void;
 };

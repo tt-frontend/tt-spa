@@ -6,7 +6,7 @@ export type ApartmentNumberFormatter = (floor: number, index: number) => string;
 export function toSectionCreateModel(
   params: AddEntranceFormParams,
   formatApartmentNumber: ApartmentNumberFormatter = (_, index) =>
-    String(index + 1), // default format: 1,2,3...
+    String(index + 1), // формат по умолчанию
 ): SectionCreateModel {
   const {
     entranceNumber,
@@ -17,17 +17,21 @@ export function toSectionCreateModel(
 
   const floors: FloorCreateModel[] = [];
 
+  // глобальный счётчик квартир
+  let globalIndex = 0;
+
   for (let floor = 1; floor <= floorsAmount; floor++) {
     const isLiving = floor >= livingQuartersStartFloor;
 
     const apartmentNumbers = isLiving
-      ? Array.from({ length: apartmentsPerFloorAmount }, (_, i) =>
-          formatApartmentNumber(floor, i),
-        )
+      ? Array.from({ length: apartmentsPerFloorAmount }, () => {
+          const number = formatApartmentNumber(floor, globalIndex);
+          globalIndex++;
+          return number;
+        })
       : [];
 
     floors.push({
-      sectionId: entranceNumber,
       floorNumber: floor,
       apartmentNumbers,
     });
