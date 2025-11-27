@@ -23,6 +23,7 @@ export const AddEntrancePanel: FC<Props> = ({
       floorsAmount: null,
       apartmentsPerFloorAmount: null,
       livingQuartersStartFloor: null,
+      apartmentsStartsFrom: null,
     },
     validateOnChange: false,
     validationSchema: AddEntranceFormSchema,
@@ -93,6 +94,18 @@ export const AddEntrancePanel: FC<Props> = ({
             status={errors.apartmentsPerFloorAmount ? 'error' : void 0}
           />
           <ErrorMessage>{errors.apartmentsPerFloorAmount}</ErrorMessage>
+        </FormItem>
+        <FormItem label="Начальный номер квартиры">
+          <Input
+            type="number"
+            small
+            placeholder="Введите"
+            name="apartmentsStartsFrom"
+            value={values.apartmentsStartsFrom ?? ''}
+            onChange={handleChange}
+            status={errors.apartmentsStartsFrom ? 'error' : void 0}
+          />
+          <ErrorMessage>{errors.apartmentsStartsFrom}</ErrorMessage>
         </FormItem>
       </Wrapper>
     </BlueprintPanel>
