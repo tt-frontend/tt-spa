@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { Props } from './ResourceConsamptionGraph.types';
 import {
   AlertTitle,
@@ -42,7 +42,6 @@ export const ResourceConsamptionGraph: FC<Props> = ({
   consumptionData,
   selectedResource,
   resourceForColor,
-  isChartLoading,
 }) => {
   const housing = useMemo(
     () => modelToArray(consumptionData?.resourceConsumption || null),
@@ -53,6 +52,16 @@ export const ResourceConsamptionGraph: FC<Props> = ({
     () => modelToArray(consumptionData?.resourceConsumptionPrevious || null),
     [consumptionData],
   );
+
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handler = () => setScreenWidth(window.innerWidth);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+
+  const isWideScreen = useMemo(() => screenWidth > 1600, [screenWidth]);
 
   const dynamicMinMax: [number, number] = useMemo(() => {
     if (!housing.length && !housingPrev.length) {
@@ -68,9 +77,11 @@ export const ResourceConsamptionGraph: FC<Props> = ({
       [
         hasNoConsecutiveNumbers(housing || []),
         hasNoConsecutiveNumbers(housingPrev || []),
-      ].every(Boolean) && !isChartLoading,
-    [consumptionData, isChartLoading],
+      ].every(Boolean),
+    [consumptionData],
   );
+
+  console.log(isConsumptionDataItemsEmpty);
 
   const isHousingMeteringDevices = useMemo(() => {
     return (
@@ -108,22 +119,20 @@ export const ResourceConsamptionGraph: FC<Props> = ({
             )}
           </AlertWrapper>
           <VictoryChart
-            padding={{ top: 0, bottom: 26, left: -70, right: -100 }}
-            domain={{ y: dynamicMinMax }}
-            style={{
-              parent: {
-                overflow: 'visible',
-                height: height,
-              },
-            }}
+            domain={{ y: [0, 100], x: [-1, 32] }}
+            domainPadding={{ x: [-10, 0] }}
+            padding={{ top: 30, bottom: 30, left: 70, right: 30 }}
             height={height}
-            width={600}
+            width={isWideScreen ? 600 : 700}
             theme={VictoryTheme.material}
             containerComponent={<VictoryVoronoiContainer />}
           >
             <VictoryAxis
               tickValues={tickValues}
               tickFormat={(day) => {
+                if (day === 0) {
+                  return '0';
+                }
                 if (day % 5) {
                   return '';
                 }
@@ -140,109 +149,93 @@ export const ResourceConsamptionGraph: FC<Props> = ({
 
   return (
     <Wrapper>
-      <Wrapper id="graphWrapper">
-        {/* {isOnlyHousingDataEmpty && (
-          <AlertWrapper>
-            <Alert centered type="default" icon="warning">
-              <AlertTitle>Нет данных по общедомовому потреблению.</AlertTitle>
-            </Alert>
-          </AlertWrapper>
-        )} */}
+      <GraphGradient resource={resourceForColor} />
+      <VictoryChart
+        domain={{ y: dynamicMinMax, x: [-1, 32] }}
+        domainPadding={isWideScreen ? { x: [-20, 0] } : { x: [-30, 0] }}
+        padding={{ top: 0, bottom: 30, left: 70, right: 30 }}
+        height={height}
+        width={isWideScreen ? 600 : 700}
+        theme={VictoryTheme.material}
+        containerComponent={<VictoryVoronoiContainer />}
+      >
+        <VictoryAxis
+          tickFormat={(day) => {
+            if (day === 0) {
+              return day;
+            }
+            if (day % 5) {
+              return '';
+            }
+            return day;
+          }}
+          style={horizontalAxisStyle}
+        />
+        <VictoryAxis
+          domain={dynamicMinMax}
+          dependentAxis
+          style={verticalAxisStyle}
+        />
 
-        <GraphGradient resource={resourceForColor} />
-        <VictoryChart
-          domain={{ y: dynamicMinMax, x: [-1, 32] }}
-          padding={{ top: 0, bottom: 26, left: -70, right: -100 }}
-          domainPadding={{ x: [-50, 0] }}
+        <VictoryArea
+          data={housing}
+          x="key"
+          y="value"
+          interpolation="monotoneX"
+          style={getCurrentDataStyle(resourceForColor)}
+          labels={() => ''}
+          labelComponent={
+            <CustomTooltip
+              flyoutStyle={{ fill: 'var(--main-100)' }}
+              style={{ fill: '#fff' }}
+              height={height}
+              flyoutComponent={
+                <ResourceConsumptionGraphTooltip
+                  startOfMonth={startOfMonth}
+                  measure={
+                    ResourceConsumptionGraphColorsMeasure[selectedResource]
+                  }
+                />
+              }
+              minValue={dynamicMinMax[0]}
+              maxValue={dynamicMinMax[1]}
+            />
+          }
+        />
+
+        <VictoryLine
+          data={housing}
+          interpolation="monotoneX"
+          x="key"
+          y="value"
           style={{
-            parent: {
-              overflow: 'visible',
-              height: height,
+            data: {
+              stroke: getGraphTypeColors({
+                resource: resourceForColor,
+                type: ResourceConsumptionGraphType.Housing,
+                isOpacityNeed: true,
+              }),
+              strokeWidth: 2,
             },
           }}
-          height={height}
-          width={600}
-          theme={VictoryTheme.material}
-          containerComponent={<VictoryVoronoiContainer />}
-        >
-          <VictoryAxis
-            tickFormat={(day) => {
-              if (day === 0) {
-                return day;
-              }
-              if (day % 5) {
-                return '';
-              }
-              return day;
-            }}
-            style={horizontalAxisStyle}
-          />
-          <VictoryAxis
-            domain={dynamicMinMax}
-            dependentAxis
-            style={verticalAxisStyle}
-          />
-
-          <VictoryArea
-            data={housing}
-            x="key"
-            y="value"
-            interpolation="monotoneX"
-            style={getCurrentDataStyle(resourceForColor)}
-            labels={() => ''}
-            labelComponent={
-              <CustomTooltip
-                flyoutStyle={{ fill: 'var(--main-100)' }}
-                style={{ fill: '#fff' }}
-                height={height}
-                flyoutComponent={
-                  <ResourceConsumptionGraphTooltip
-                    startOfMonth={startOfMonth}
-                    measure={
-                      ResourceConsumptionGraphColorsMeasure[selectedResource]
-                    }
-                  />
-                }
-                minValue={dynamicMinMax[0]}
-                maxValue={dynamicMinMax[1]}
-              />
-            }
-          />
-
-          <VictoryLine
-            data={housing}
-            interpolation="monotoneX"
-            x="key"
-            y="value"
-            style={{
-              data: {
-                stroke: getGraphTypeColors({
-                  resource: resourceForColor,
-                  type: ResourceConsumptionGraphType.Housing,
-                  isOpacityNeed: true,
-                }),
-                strokeWidth: 2,
-              },
-            }}
-          />
-          <VictoryLine
-            data={housingPrev}
-            interpolation="monotoneX"
-            x="key"
-            y="value"
-            style={{
-              data: {
-                stroke: getGraphTypeColors({
-                  resource: resourceForColor,
-                  type: ResourceConsumptionGraphType.Housing,
-                  isOpacityNeed: false,
-                }),
-                strokeWidth: 1,
-              },
-            }}
-          />
-        </VictoryChart>
-      </Wrapper>
+        />
+        <VictoryLine
+          data={housingPrev}
+          interpolation="monotoneX"
+          x="key"
+          y="value"
+          style={{
+            data: {
+              stroke: getGraphTypeColors({
+                resource: resourceForColor,
+                type: ResourceConsumptionGraphType.Housing,
+                isOpacityNeed: false,
+              }),
+              strokeWidth: 1,
+            },
+          }}
+        />
+      </VictoryChart>
     </Wrapper>
   );
 };

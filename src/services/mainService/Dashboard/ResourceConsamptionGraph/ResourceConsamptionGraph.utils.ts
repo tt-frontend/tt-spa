@@ -8,10 +8,14 @@ export function modelToArray(
   model: DataForHousingConsumptionPlotServiceModel | null,
 ): DateTimeDoubleDictionaryItem[] {
   if (!model?.housingConsumption) return [];
-  return Object.entries(model.housingConsumption).map(([key, value]) => ({
-    key: String(dayjs(key).date()),
-    value: value || undefined,
-  }));
+  const preparedData = Object.entries(model.housingConsumption).map(
+    ([key, value]) => ({
+      key: String(dayjs(key).date()),
+      value: value || undefined,
+    }),
+  );
+
+  return [{ key: '0', value: 0 }, ...preparedData];
 }
 
 export function getDynamicMinMax(
