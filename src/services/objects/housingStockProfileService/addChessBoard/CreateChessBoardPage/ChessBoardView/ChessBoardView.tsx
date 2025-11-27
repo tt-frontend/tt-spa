@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import {
   EntranceWrapper,
-  FloorIndex,
   FloorWrapper,
   Wrapper,
 } from './ChessBoardView.styled';
@@ -13,12 +12,23 @@ export const ChessBoardView: FC<Props> = ({ chessboardCreateData }) => {
     <Wrapper>
       {chessboardCreateData.sections?.map((section) => (
         <EntranceWrapper key={section.sectionNumber}>
+          <FloorWrapper>
+            <ChessboardItem type="empty" />
+            <ChessboardItem wide type="outline">
+              {section.sectionNumber} Подъезд
+            </ChessboardItem>
+          </FloorWrapper>
           {section.floors?.map((floor) => (
             <FloorWrapper key={floor.floorNumber}>
-              <FloorIndex>{floor.floorNumber}</FloorIndex>
+              <ChessboardItem type="empty">{floor.floorNumber}</ChessboardItem>
               {floor.apartmentNumbers?.map((apartment) => (
                 <ChessboardItem key={apartment}>{apartment}</ChessboardItem>
               ))}
+              {floor.apartmentNumbers?.length === 0 && (
+                <ChessboardItem type="flat" wide>
+                  + Добавьте нежилое помещение
+                </ChessboardItem>
+              )}
             </FloorWrapper>
           ))}
         </EntranceWrapper>
