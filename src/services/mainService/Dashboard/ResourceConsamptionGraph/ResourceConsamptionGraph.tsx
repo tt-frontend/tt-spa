@@ -161,10 +161,10 @@ export const ResourceConsamptionGraph: FC<Props> = ({
       <GraphGradient resource={resourceForColor} />
       <VictoryChart
         domain={{ y: dynamicMinMax, x: [-1, 32] }}
-        domainPadding={isWideScreen ? { x: [-20, 0] } : { x: [-40, 0] }}
+        domainPadding={isWideScreen ? { x: [-20, 0] } : { x: [-30, 0] }}
         style={{ parent: { marginTop: -40 } }}
         height={height}
-        width={isWideScreen ? 600 : 800}
+        width={isWideScreen ? 600 : 700}
         theme={VictoryTheme.material}
         containerComponent={<VictoryVoronoiContainer />}
       >
