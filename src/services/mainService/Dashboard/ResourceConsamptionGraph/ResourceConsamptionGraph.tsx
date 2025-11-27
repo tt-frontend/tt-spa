@@ -42,7 +42,6 @@ export const ResourceConsamptionGraph: FC<Props> = ({
   consumptionData,
   selectedResource,
   resourceForColor,
-  isChartLoading,
 }) => {
   const housing = useMemo(
     () => modelToArray(consumptionData?.resourceConsumption || null),
@@ -78,9 +77,11 @@ export const ResourceConsamptionGraph: FC<Props> = ({
       [
         hasNoConsecutiveNumbers(housing || []),
         hasNoConsecutiveNumbers(housingPrev || []),
-      ].every(Boolean) && !isChartLoading,
-    [consumptionData, isChartLoading],
+      ].every(Boolean),
+    [consumptionData],
   );
+
+  console.log(isConsumptionDataItemsEmpty);
 
   const isHousingMeteringDevices = useMemo(() => {
     return (
@@ -118,22 +119,20 @@ export const ResourceConsamptionGraph: FC<Props> = ({
             )}
           </AlertWrapper>
           <VictoryChart
-            padding={{ top: 0, bottom: 26, left: -70, right: -100 }}
-            domain={{ y: dynamicMinMax }}
-            style={{
-              parent: {
-                overflow: 'visible',
-                height: height,
-              },
-            }}
+            domain={{ y: [0, 100], x: [-1, 32] }}
+            domainPadding={{ x: [-10, 0] }}
+            padding={{ top: 30, bottom: 30, left: 70, right: 30 }}
             height={height}
-            width={600}
+            width={isWideScreen ? 600 : 700}
             theme={VictoryTheme.material}
             containerComponent={<VictoryVoronoiContainer />}
           >
             <VictoryAxis
               tickValues={tickValues}
               tickFormat={(day) => {
+                if (day === 0) {
+                  return '0';
+                }
                 if (day % 5) {
                   return '';
                 }
@@ -150,19 +149,11 @@ export const ResourceConsamptionGraph: FC<Props> = ({
 
   return (
     <Wrapper>
-      {/* {isOnlyHousingDataEmpty && (
-          <AlertWrapper>
-            <Alert centered type="default" icon="warning">
-              <AlertTitle>Нет данных по общедомовому потреблению.</AlertTitle>
-            </Alert>
-          </AlertWrapper>
-        )} */}
-
       <GraphGradient resource={resourceForColor} />
       <VictoryChart
         domain={{ y: dynamicMinMax, x: [-1, 32] }}
         domainPadding={isWideScreen ? { x: [-20, 0] } : { x: [-30, 0] }}
-        style={{ parent: { marginTop: -40 } }}
+        padding={{ top: 0, bottom: 30, left: 70, right: 30 }}
         height={height}
         width={isWideScreen ? 600 : 700}
         theme={VictoryTheme.material}

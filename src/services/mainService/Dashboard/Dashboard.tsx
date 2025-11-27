@@ -49,7 +49,6 @@ export const Dashboard: FC<Props> = ({
             consumptionData={chartData || null}
             selectedResource={selectedResource}
             resourceForColor={selectedResourceForColor}
-            isChartLoading={isChartLoading}
           />
         </Panel>
       </Wrapper>
