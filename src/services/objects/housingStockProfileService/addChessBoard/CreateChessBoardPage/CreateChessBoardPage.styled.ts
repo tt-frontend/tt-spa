@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { getPanelSize } from 'ui-kit/shared/StickyPanel/StickyPanel.styled';
-import backgorund from './assets/burdocks-01.png';
+import backgorund from './assets/background-points.svg';
 
 export const Wrapper = styled.div<{ isPanelOpen: boolean }>`
   margin-top: 64px;
@@ -19,7 +19,7 @@ export const Blueprint = styled.div`
   height: 100%;
 
   background-image: url(${backgorund});
-  background-size: 25%;
+  background-size: 100px 100px;
   background-repeat: repeat;
   backdrop-filter: blur(10px);
 
