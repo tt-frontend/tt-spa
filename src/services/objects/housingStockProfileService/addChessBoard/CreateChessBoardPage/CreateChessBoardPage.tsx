@@ -18,6 +18,8 @@ import { ParkingIcon } from './assets/ParkingIcon';
 import { AddEntrancePanel } from './AddEntrancePanel';
 import { ChessBoardView } from './ChessBoardView';
 import { StickyPanel } from 'ui-kit/shared/StickyPanel';
+import { useUnit } from 'effector-react';
+import { layoutService } from 'App/layout/layoutService.models';
 
 export const CreateChessBoardPage: FC<Props> = ({
   building,
@@ -28,6 +30,10 @@ export const CreateChessBoardPage: FC<Props> = ({
   chessboardCreateData,
   handleAddEntrance,
 }) => {
+  const { isPanelOpen } = useUnit({
+    isPanelOpen: layoutService.outputs.$isSidePanelOpen,
+  });
+
   return (
     <>
       <StickyPanel css={headerStyles}>
@@ -90,7 +96,7 @@ export const CreateChessBoardPage: FC<Props> = ({
           ]}
         />
       </StickyPanel>
-      <Wrapper>
+      <Wrapper isPanelOpen={isPanelOpen}>
         <Blueprint>
           {openPanel === 'add-entrance' && (
             <AddEntrancePanel

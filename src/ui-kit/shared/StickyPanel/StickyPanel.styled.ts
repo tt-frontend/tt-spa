@@ -4,7 +4,7 @@ import {
 } from 'App/layout/Layout/Layout.constants';
 import styled, { RuleSet } from 'styled-components';
 
-const getPanelSize = ({ isPanelOpen }: { isPanelOpen: boolean }) =>
+export const getPanelSize = ({ isPanelOpen }: { isPanelOpen: boolean }) =>
   isPanelOpen ? `${SIDE_PANEL_OPEN_WIDTH}px` : `${SIDE_PANEL_CLOSE_WIDTH}px`;
 
 export const Wrapper = styled.div<{

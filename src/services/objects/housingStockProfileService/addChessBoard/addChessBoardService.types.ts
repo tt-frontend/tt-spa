@@ -5,4 +5,5 @@ export interface AddEntranceFormParams {
   floorsAmount: number;
   apartmentsPerFloorAmount: number;
   livingQuartersStartFloor: number;
+  apartmentsStartsFrom: number;
 }
