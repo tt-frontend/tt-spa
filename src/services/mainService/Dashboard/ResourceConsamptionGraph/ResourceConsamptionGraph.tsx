@@ -40,9 +40,9 @@ const height = 360;
 
 export const ResourceConsamptionGraph: FC<Props> = ({
   consumptionData,
-  isDataLoading,
   selectedResource,
   resourceForColor,
+  isChartLoading,
 }) => {
   const housing = useMemo(
     () => modelToArray(consumptionData?.resourceConsumption || null),
@@ -68,8 +68,8 @@ export const ResourceConsamptionGraph: FC<Props> = ({
       [
         hasNoConsecutiveNumbers(housing || []),
         hasNoConsecutiveNumbers(housingPrev || []),
-      ].every(Boolean) && !isDataLoading,
-    [consumptionData, isDataLoading],
+      ].every(Boolean) && !isChartLoading,
+    [consumptionData, isChartLoading],
   );
 
   const isHousingMeteringDevices = useMemo(() => {

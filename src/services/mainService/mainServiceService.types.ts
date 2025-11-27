@@ -5,7 +5,7 @@ export type ManePayload = {
   City?: string | null;
   District?: string | null;
   BuildingIds?: number[] | null;
-  /** @format int32 */
+  HouseManagementId?: string | null;
   ManagementFirmId?: number | null;
   Address?: string | null;
   ResourceType?: ResourceType;

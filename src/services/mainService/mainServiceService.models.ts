@@ -5,6 +5,7 @@ import {
   existingMoDistrictsQuery,
   getMain,
   dashboardOrganizationsQuery,
+  dashboardChartQuery,
 } from './mainServiceService.api';
 import { EffectFailDataAxiosError } from 'types';
 import { createGate } from 'effector-react';
@@ -66,12 +67,12 @@ sample({
 sample({
   clock: PageGate.open,
   source: $filter,
-  target: getMainFx,
+  target: [getMainFx, dashboardChartQuery.start],
 });
 
 sample({
   source: $filter,
-  target: getMainFx,
+  target: [getMainFx, dashboardChartQuery.start],
 });
 
 const $city = $filter.map(({ City }) => City || null);
@@ -83,7 +84,7 @@ sample({
 });
 
 sample({
-  clock: getMainFx.doneData,
+  clock: dashboardChartQuery.finished.success,
   source: $selectedResource,
   target: $selectedResourceForColor,
 });
