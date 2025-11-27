@@ -5,10 +5,10 @@ import { SelectResourcePanel } from 'services/resources/resourceConsumptionServi
 import { EResourceType } from 'api/types';
 
 export const SelectResource: FC<Props> = ({
-  isLoading,
   selectedResource,
   setResource,
   summaryConsumption,
+  isChartLoading,
 }) => {
   return (
     <Wrapper>
@@ -27,7 +27,7 @@ export const SelectResource: FC<Props> = ({
               active={selectedResource === resourceType}
               key={resourceType}
               summary={summary}
-              isSummaryLoading={isLoading}
+              isSummaryLoading={isChartLoading}
             />
           );
         },

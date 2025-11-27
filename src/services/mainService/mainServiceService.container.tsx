@@ -4,6 +4,7 @@ import { Filter } from './Filter';
 import { PageHeader } from 'ui-kit/shared/PageHeader';
 import { Dashboard } from './Dashboard';
 import {
+  dashboardChartQuery,
   dashboardOrganizationsQuery,
   existingMoDistrictsQuery,
 } from './mainServiceService.api';
@@ -26,6 +27,8 @@ export const MainServiceContainer = () => {
     setResource,
     existingMoDistricts,
     organizations,
+    chartData,
+    isChartLoading,
   } = useUnit({
     filter: outputs.$filter,
     setFilter: inputs.setFilter,
@@ -37,6 +40,8 @@ export const MainServiceContainer = () => {
     setResource: inputs.setResource,
     existingMoDistricts: existingMoDistrictsQuery.$data,
     organizations: dashboardOrganizationsQuery.$data,
+    chartData: dashboardChartQuery.$data,
+    isChartLoading: dashboardChartQuery.$pending,
   });
 
   return (
@@ -52,10 +57,12 @@ export const MainServiceContainer = () => {
       />
       <Dashboard
         isLoading={isLoading}
+        isChartLoading={isChartLoading}
         data={data}
         selectedResource={selectedResource}
         selectedResourceForColor={selectedResourceForColor}
         setResource={setResource}
+        chartData={chartData}
       />
     </div>
   );

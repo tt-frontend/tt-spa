@@ -1,8 +1,11 @@
-import { EResourceType, MainDashboardHousingConsumptionModel } from 'api/types';
+import {
+  EResourceType,
+  MainDashboardHousingConsumptionResponse,
+} from 'api/types';
 
 export type Props = {
-  consumptionData: MainDashboardHousingConsumptionModel | null;
+  consumptionData: MainDashboardHousingConsumptionResponse | null;
   selectedResource: EResourceType;
   resourceForColor: EResourceType;
-  isDataLoading: boolean;
+  isChartLoading: boolean;
 };
