@@ -34,10 +34,6 @@ const $filter = createStore<ManePayload>({
   ResourceType: ResourceType.ColdWaterSupply,
 })
   .on(setFilter, (prev, data) => ({ ...prev, ...data }))
-  .on(setResource, (prev, resource) => ({
-    ...prev,
-    ResourceType: resource as unknown as ResourceType,
-  }))
   .reset(resetFilter);
 
 const $mainData = createStore<MainDashboardResponse | null>(null).on(
@@ -68,6 +64,12 @@ sample({
   clock: PageGate.open,
   source: $filter,
   target: [getMainFx, dashboardChartQuery.start],
+});
+
+sample({
+  clock: setResource,
+  source: $filter,
+  target: dashboardChartQuery.start,
 });
 
 sample({
