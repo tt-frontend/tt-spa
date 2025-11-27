@@ -14,9 +14,9 @@ import { createGate } from 'effector-react';
 const StatisticsByHouseGate = createGate();
 
 const setHousingStockAddress = createEvent<Partial<HousingStockAddressForm>>();
-const $housingStockAddress = createStore<Partial<HousingStockAddressForm>>({})
-  .on(setHousingStockAddress, (_, address) => address)
-  .reset(StatisticsByHouseGate.close);
+const $housingStockAddress = createStore<Partial<HousingStockAddressForm>>(
+  {},
+).on(setHousingStockAddress, (_, address) => address);
 
 const $selectedHousingStockId = fetchHousingStockIdQuery.$data;
 
@@ -28,17 +28,15 @@ const $consumptionStatisticsByHouse = createStore<
   SubscriberStatisticsСonsumptionResponse[]
 >([])
   .on(getConsumptionStatisticsByHouseFx.doneData, (_, statistics) => statistics)
-  .reset([
-    getConsumptionStatisticsByHouseFx.failData,
-    StatisticsByHouseGate.close,
-  ]);
+  .reset([getConsumptionStatisticsByHouseFx.failData]);
 
 const setSubscriberStatisticsFilter = createEvent<SubscriberStatisticsForm>();
 
 const $subscriberStatisticsByHouseFilter =
-  createStore<SubscriberStatisticsForm | null>(null)
-    .on(setSubscriberStatisticsFilter, (_, filter) => filter)
-    .reset(StatisticsByHouseGate.close);
+  createStore<SubscriberStatisticsForm | null>(null).on(
+    setSubscriberStatisticsFilter,
+    (_, filter) => filter,
+  );
 
 const $isLoading = getConsumptionStatisticsByHouseFx.pending;
 
@@ -69,11 +67,6 @@ sample({
   filter: (address): address is HousingStockAddressForm =>
     Boolean(address.City && address.Street && address.BuildingNumber),
   target: fetchHousingStockIdQuery.start,
-});
-
-sample({
-  clock: StatisticsByHouseGate.close,
-  target: fetchHousingStockIdQuery.reset,
 });
 
 export const displayStatisticsListByHousesService = {
