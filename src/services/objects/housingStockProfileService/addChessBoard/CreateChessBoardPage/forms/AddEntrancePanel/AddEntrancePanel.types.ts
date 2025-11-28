@@ -1,4 +1,4 @@
-import { AddEntranceFormParams } from '../../addChessBoardService.types';
+import { AddEntranceFormParams } from '../../../addChessBoardService.types';
 
 export type Props = {
   closeAddEntrancePanel: () => void;

@@ -3,6 +3,7 @@ import { createGate } from 'effector-react';
 import { buildingQuery } from './addChessBoardService.api';
 import {
   AddEntranceFormParams,
+  AddParkingFormParams,
   EditChessBoardPanelType,
 } from './addChessBoardService.types';
 import { ChessboardCreateModel } from 'api/test-types';
@@ -26,6 +27,7 @@ const $openPanel = createStore<EditChessBoardPanelType | null>(null)
 const resetChessBoardData = createEvent();
 
 const handleAddEntrance = createEvent<AddEntranceFormParams>();
+const handleAddParking = createEvent<AddParkingFormParams>();
 
 const $chessboardCreateData = createStore<ChessboardCreateModel>({
   sections: [],
@@ -40,10 +42,20 @@ const $chessboardCreateData = createStore<ChessboardCreateModel>({
   })
   .on(resetChessBoardData, () => ({ sections: [] }));
 
-$openPanel.reset([handleAddEntrance]);
+$openPanel.reset([handleAddEntrance, handleAddParking]);
+
+const $entrances = $chessboardCreateData.map(
+  (data) =>
+    data.sections?.map((section) => section.sectionNumber || null) || [],
+);
 
 export const addChessBoardService = {
-  inputs: { handleEditChessboard, closeEditChessboardPanel, handleAddEntrance },
-  outputs: { $openPanel, $chessboardCreateData },
+  inputs: {
+    handleEditChessboard,
+    closeEditChessboardPanel,
+    handleAddEntrance,
+    handleAddParking,
+  },
+  outputs: { $openPanel, $chessboardCreateData, $entrances },
   gates: { ChessBoardGate },
 };

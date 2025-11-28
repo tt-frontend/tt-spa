@@ -15,11 +15,12 @@ import { getBuildingAddress } from 'utils/getBuildingAddress';
 import { Skeleton } from 'antd';
 import { ApartmentIcon } from './assets/ApartmentIcon';
 import { ParkingIcon } from './assets/ParkingIcon';
-import { AddEntrancePanel } from './AddEntrancePanel';
+import { AddEntrancePanel } from './forms/AddEntrancePanel';
 import { ChessBoardView } from './ChessBoardView';
 import { StickyPanel } from 'ui-kit/shared/StickyPanel';
 import { useUnit } from 'effector-react';
 import { layoutService } from 'App/layout/layoutService.models';
+import { AddParking } from './forms/AddParking';
 
 export const CreateChessBoardPage: FC<Props> = ({
   building,
@@ -29,6 +30,8 @@ export const CreateChessBoardPage: FC<Props> = ({
   handleEditChessboard,
   chessboardCreateData,
   handleAddEntrance,
+  handleAddParking,
+  entrances,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
@@ -70,6 +73,7 @@ export const CreateChessBoardPage: FC<Props> = ({
                 {
                   title: 'Паркинг',
                   id: 'parking',
+                  onClick: () => handleEditChessboard('add-parking'),
                 },
                 {
                   title: 'Техническое помещение',
@@ -102,6 +106,13 @@ export const CreateChessBoardPage: FC<Props> = ({
             <AddEntrancePanel
               closeAddEntrancePanel={closeEditChessboardPanel}
               handleAddEntrance={handleAddEntrance}
+            />
+          )}
+          {openPanel === 'add-parking' && (
+            <AddParking
+              closeAddEntrancePanel={closeEditChessboardPanel}
+              handleAddParking={handleAddParking}
+              entrances={entrances}
             />
           )}
           <ChessBoardView chessboardCreateData={chessboardCreateData} />
