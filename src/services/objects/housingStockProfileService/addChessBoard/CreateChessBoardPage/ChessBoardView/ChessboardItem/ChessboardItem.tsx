@@ -10,7 +10,7 @@ export const ChessboardItem: FC<Props> = ({
   menuButtons,
 }) => {
   return (
-    <ContextMenuButton menuButtons={menuButtons}>
+    <ContextMenuButton wide menuButtons={menuButtons}>
       {(isOpen) => (
         <Wrapper type={type} wide={wide} active={isOpen}>
           {children}
