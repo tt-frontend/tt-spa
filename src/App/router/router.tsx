@@ -65,10 +65,7 @@ import {
   WorkWithReadingsContainer,
 } from './router.imports';
 import { useRouterContext } from './router.hooks';
-import {
-  DistrictBordersRouterWrapper,
-  TasksRouterWrapper,
-} from './router.components';
+import { DistrictBordersRouterWrapper, TasksRouterWrapper } from './router.components';
 
 export const useRoutes = (
   currentUserRoles: ESecuredIdentityRoleNameStringDictionaryItem[],

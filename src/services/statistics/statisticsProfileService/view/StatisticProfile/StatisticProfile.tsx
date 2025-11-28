@@ -113,7 +113,14 @@ export const StatisticProfile: FC<StatisticProfileProps> = ({
 
       <TabsSC
         activeKey={grouptype}
-        onChange={(value) => navigate(`/statistics/${value}`)}
+        onChange={(value) => {
+          const suffix =
+            value === StatisticProfileGrouptype.subscribersConsumption
+              ? '/houses'
+              : '';
+
+          navigate(`/statistics/${value}${suffix}`);
+        }}
         items={tabItems}
       />
       {components[grouptype]}
