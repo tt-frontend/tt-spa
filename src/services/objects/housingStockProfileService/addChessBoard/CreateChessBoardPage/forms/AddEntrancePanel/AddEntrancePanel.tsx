@@ -10,25 +10,46 @@ import { AddEntranceFormParams } from '../../../addChessBoardService.types';
 import { MayBeNull } from 'types';
 import { AddEntranceFormSchema } from './AddEntrancePanel.constants';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
+import {
+  getLastApartmentNumber,
+  getNextEntranceNumber,
+  validateEntranceFormValues,
+} from './AddEntrancePanel.utils';
+import { message } from 'antd';
 
 export const AddEntrancePanel: FC<Props> = ({
   closeAddEntrancePanel,
   handleAddEntrance,
+  chessboardCreateData,
 }) => {
   const { values, handleChange, errors, handleSubmit } = useFormik<
     MayBeNull<AddEntranceFormParams>
   >({
     initialValues: {
-      entranceNumber: null,
+      entranceNumber: getNextEntranceNumber(chessboardCreateData),
       floorsAmount: null,
       apartmentsPerFloorAmount: null,
       livingQuartersStartFloor: null,
-      apartmentsStartsFrom: null,
+      apartmentsStartsFrom: getLastApartmentNumber(chessboardCreateData),
     },
     validateOnChange: false,
     validationSchema: AddEntranceFormSchema,
+    enableReinitialize: true,
     onSubmit: (values) => {
-      handleAddEntrance(values as AddEntranceFormParams);
+      const acceptedValues = values as AddEntranceFormParams;
+
+      const validationResult = validateEntranceFormValues(
+        acceptedValues,
+        chessboardCreateData,
+      );
+
+      if (validationResult) {
+        message.error(validationResult);
+
+        return;
+      }
+
+      handleAddEntrance(acceptedValues);
     },
   });
 

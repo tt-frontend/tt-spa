@@ -106,6 +106,7 @@ export const CreateChessBoardPage: FC<Props> = ({
             <AddEntrancePanel
               closeAddEntrancePanel={closeEditChessboardPanel}
               handleAddEntrance={handleAddEntrance}
+              chessboardCreateData={chessboardCreateData}
             />
           )}
           {openPanel === 'add-parking' && (
