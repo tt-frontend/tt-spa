@@ -5,4 +5,12 @@ export interface AddEntranceFormParams {
   floorsAmount: number;
   apartmentsPerFloorAmount: number;
   livingQuartersStartFloor: number;
+  apartmentsStartsFrom: number;
+}
+
+export interface AddParkingFormParams {
+  name: string;
+  floor: number;
+  floorsAmount: number;
+  entrancesNumber: number[];
 }

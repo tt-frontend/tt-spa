@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { Wrapper } from './AddEntrancePanel.styled';
 import { Props } from './AddEntrancePanel.types';
-import { BlueprintPanel } from '../BlueprintPanel';
+import { BlueprintPanel } from '../../BlueprintPanel';
 import { Button } from 'ui-kit/Button';
 import { FormItem } from 'ui-kit/FormItem';
 import { Input } from 'ui-kit/Input';
 import { useFormik } from 'formik';
-import { AddEntranceFormParams } from '../../addChessBoardService.types';
+import { AddEntranceFormParams } from '../../../addChessBoardService.types';
 import { MayBeNull } from 'types';
 import { AddEntranceFormSchema } from './AddEntrancePanel.constants';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
@@ -23,6 +23,7 @@ export const AddEntrancePanel: FC<Props> = ({
       floorsAmount: null,
       apartmentsPerFloorAmount: null,
       livingQuartersStartFloor: null,
+      apartmentsStartsFrom: null,
     },
     validateOnChange: false,
     validationSchema: AddEntranceFormSchema,
@@ -93,6 +94,18 @@ export const AddEntrancePanel: FC<Props> = ({
             status={errors.apartmentsPerFloorAmount ? 'error' : void 0}
           />
           <ErrorMessage>{errors.apartmentsPerFloorAmount}</ErrorMessage>
+        </FormItem>
+        <FormItem label="Начальный номер квартиры">
+          <Input
+            type="number"
+            small
+            placeholder="Введите"
+            name="apartmentsStartsFrom"
+            value={values.apartmentsStartsFrom ?? ''}
+            onChange={handleChange}
+            status={errors.apartmentsStartsFrom ? 'error' : void 0}
+          />
+          <ErrorMessage>{errors.apartmentsStartsFrom}</ErrorMessage>
         </FormItem>
       </Wrapper>
     </BlueprintPanel>

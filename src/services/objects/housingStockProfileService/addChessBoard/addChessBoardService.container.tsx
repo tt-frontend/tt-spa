@@ -17,17 +17,20 @@ export const AddChessBoardContainer = () => {
     closeEditChessboardPanel,
     handleEditChessboard,
     handleAddEntrance,
+    handleAddParking,
 
     building,
     isLoadingBuilding,
     openPanel,
     chessboardCreateData,
+    entrances,
   } = useUnit({
     ...inputs,
     building: buildingQuery.$data,
     isLoadingBuilding: buildingQuery.$pending,
     openPanel: outputs.$openPanel,
     chessboardCreateData: outputs.$chessboardCreateData,
+    entrances: outputs.$entrances,
   });
 
   return (
@@ -41,6 +44,8 @@ export const AddChessBoardContainer = () => {
         openPanel={openPanel}
         chessboardCreateData={chessboardCreateData}
         handleAddEntrance={handleAddEntrance}
+        handleAddParking={handleAddParking}
+        entrances={entrances}
       />
     </>
   );
