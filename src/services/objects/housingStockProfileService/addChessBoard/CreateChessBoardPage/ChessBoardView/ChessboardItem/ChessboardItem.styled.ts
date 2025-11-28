@@ -41,7 +41,11 @@ const typeToStyle = {
   empty: emptyStyle,
 };
 
-export const Wrapper = styled.div<{ type: ChessBoardItemType; wide?: boolean }>`
+export const Wrapper = styled.div<{
+  type: ChessBoardItemType;
+  wide?: boolean;
+  active?: boolean;
+}>`
   box-sizing: border-box;
 
   min-width: 33px;
@@ -69,4 +73,6 @@ export const Wrapper = styled.div<{ type: ChessBoardItemType; wide?: boolean }>`
   &:hover {
     ${hoverStyle}
   }
+
+  ${({ active }) => (active ? hoverStyle : '')}
 `;

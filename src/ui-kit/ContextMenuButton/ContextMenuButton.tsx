@@ -100,7 +100,10 @@ export const ContextMenuButton: FC<ContextMenuButtonProps> = (props) => {
   );
 
   return (
-    <div onClick={(e) => e.stopPropagation()}>
+    <div
+      onClick={(e) => e.stopPropagation()}
+      style={{ width: children ? '100%' : '' }}
+    >
       <Dropdown
         dropdownRender={menu}
         disabled={disabled}
@@ -110,7 +113,10 @@ export const ContextMenuButton: FC<ContextMenuButtonProps> = (props) => {
       >
         <>
           {Boolean(children) && (
-            <div onClick={() => setIsVisible((prev) => !prev)}>
+            <div
+              style={{ width: children ? '100%' : '' }}
+              onClick={() => setIsVisible((prev) => !prev)}
+            >
               {children?.(isVisible)}
             </div>
           )}

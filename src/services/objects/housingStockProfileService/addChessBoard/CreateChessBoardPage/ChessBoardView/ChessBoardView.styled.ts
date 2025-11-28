@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -14,7 +14,12 @@ export const EntranceWrapper = styled.div`
   gap: 8px;
 `;
 
-export const FloorWrapper = styled.div`
+const floorHoverCSS = css`
+  background-color: #189ee929;
+  outline: 4px solid #189ee929;
+`;
+
+export const FloorWrapper = styled.div<{ hideHover?: boolean }>`
   display: flex;
   align-items: center;
   gap: 8px;
@@ -23,8 +28,7 @@ export const FloorWrapper = styled.div`
   outline-color: #189ee929;
 
   &:hover {
-    background-color: #189ee929;
-    outline: 4px solid #189ee929;
+    ${({ hideHover }) => (hideHover ? '' : floorHoverCSS)}
   }
 `;
 

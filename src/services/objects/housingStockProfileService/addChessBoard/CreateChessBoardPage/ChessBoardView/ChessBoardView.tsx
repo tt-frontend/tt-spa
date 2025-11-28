@@ -13,17 +13,44 @@ export const ChessBoardView: FC<Props> = ({ chessboardCreateData }) => {
     <Wrapper>
       {chessboardCreateData.sections?.map((section) => (
         <EntranceWrapper key={section.sectionNumber}>
-          <FloorWrapper>
+          <FloorWrapper hideHover>
             <FloorIndex />
-            <ChessboardItem wide type="outline">
+            <ChessboardItem
+              wide
+              type="outline"
+              menuButtons={[
+                { title: 'Изменить номер подъезда' },
+                { title: 'Дублировать подъезд' },
+                { title: 'Удалить подъезд' },
+              ]}
+            >
               {section.sectionNumber} Подъезд
             </ChessboardItem>
           </FloorWrapper>
           {section.floors?.map((floor) => (
             <FloorWrapper key={floor.floorNumber}>
-              <ChessboardItem type="empty">{floor.floorNumber}</ChessboardItem>
+              <ChessboardItem
+                menuButtons={[
+                  { title: 'Изменить номер этажа' },
+                  { title: 'Дублировать этаж' },
+                  { title: 'Удалить этаж' },
+                ]}
+                type="empty"
+              >
+                {floor.floorNumber}
+              </ChessboardItem>
               {floor.apartmentNumbers?.map((apartment) => (
-                <ChessboardItem key={apartment}>{apartment}</ChessboardItem>
+                <ChessboardItem
+                  key={apartment}
+                  menuButtons={[
+                    { title: 'Изменить номер квартиры' },
+                    { title: 'Добавить квартиру справа' },
+                    { title: 'Добавить квартиру слева' },
+                    { title: 'Удалить квартиру' },
+                  ]}
+                >
+                  {apartment}
+                </ChessboardItem>
               ))}
               {floor.apartmentNumbers?.length === 0 && (
                 <ChessboardItem type="flat" wide>
