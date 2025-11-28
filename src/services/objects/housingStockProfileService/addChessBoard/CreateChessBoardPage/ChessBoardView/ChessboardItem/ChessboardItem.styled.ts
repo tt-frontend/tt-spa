@@ -28,6 +28,12 @@ const emptyStyle = css`
   color: #272f5a;
 `;
 
+const hoverStyle = css`
+  background: #272f5a;
+  color: white;
+  border: none;
+`;
+
 const typeToStyle = {
   shadow: shadowStyle,
   flat: flatStyle,
@@ -36,8 +42,9 @@ const typeToStyle = {
 };
 
 export const Wrapper = styled.div<{ type: ChessBoardItemType; wide?: boolean }>`
-  box-sizing: content-box;
+  box-sizing: border-box;
 
+  min-width: 33px;
   width: ${({ wide }) => (wide ? '100%' : '33px')};
   height: 33px;
 
@@ -58,4 +65,8 @@ export const Wrapper = styled.div<{ type: ChessBoardItemType; wide?: boolean }>`
   white-space: nowrap;
 
   ${({ type }) => typeToStyle[type]}
+
+  &:hover {
+    ${hoverStyle}
+  }
 `;

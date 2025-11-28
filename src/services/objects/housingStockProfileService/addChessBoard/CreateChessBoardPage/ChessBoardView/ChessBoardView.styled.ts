@@ -18,4 +18,18 @@ export const FloorWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: 0.2s;
+  border-radius: 4px;
+  outline-color: #189ee929;
+
+  &:hover {
+    background-color: #189ee929;
+    outline: 4px solid #189ee929;
+  }
+`;
+
+export const FloorIndex = styled.div`
+  min-width: 33px;
+  height: 33px;
+  height: 33px;
 `;

@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import {
   EntranceWrapper,
+  FloorIndex,
   FloorWrapper,
   Wrapper,
 } from './ChessBoardView.styled';
@@ -13,7 +14,7 @@ export const ChessBoardView: FC<Props> = ({ chessboardCreateData }) => {
       {chessboardCreateData.sections?.map((section) => (
         <EntranceWrapper key={section.sectionNumber}>
           <FloorWrapper>
-            <ChessboardItem type="empty" />
+            <FloorIndex />
             <ChessboardItem wide type="outline">
               {section.sectionNumber} Подъезд
             </ChessboardItem>
