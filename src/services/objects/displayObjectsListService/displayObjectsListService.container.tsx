@@ -1,5 +1,5 @@
 import { useUnit } from 'effector-react';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { displayObjectsListService } from './displayObjectsListService.model';
 import { ObjectsList } from './view/ObjectsList';
 import { SearchObjects } from './view/SearchObjects';
@@ -7,9 +7,11 @@ import { HeaderInject } from '../objectsProfileService/view/ObjectsProfile/Objec
 import { getBuildingsQuery } from './displayObjectsListService.api';
 import {
   ListWrapper,
-  PaginationSC,
-  StickyPanel,
+  PaginationWrapper,
+  Wrapper,
 } from './view/ObjectsList/ObjectsList.styled';
+import { Pagination } from 'ui-kit/Pagination';
+import { StickyPanel } from 'ui-kit/shared/StickyPanel';
 
 const { HousingStocksGate } = displayObjectsListService.gates;
 
@@ -30,11 +32,12 @@ export const ObjectsListContainer: FC<HeaderInject> = ({ Header }) => {
 
   const housingStocks = pagedHousingStocks?.items;
 
-  const isNotEmpty = (housingStocks?.length || 0) > 0;
+  const isNotEmpty = (pagedHousingStocks?.totalPages || 0) > 1;
 
   return (
-    <div>
+    <Wrapper>
       <HousingStocksGate />
+
       <Header>
         <SearchObjects
           handleSearch={handleSearch}
@@ -49,18 +52,21 @@ export const ObjectsListContainer: FC<HeaderInject> = ({ Header }) => {
           isBuildingFetched={isBuildingFetched}
         />
       </ListWrapper>
-      {isNotEmpty && !isLoading && (
+
+      {isNotEmpty && !isLoading && pagedHousingStocks?.pageNumber && (
         <StickyPanel>
-          <PaginationSC
-            showSizeChanger={false}
-            defaultCurrent={1}
-            current={pagedHousingStocks?.pageNumber}
-            onChange={handlePageNumberChanged}
-            total={pagedHousingStocks?.totalItems}
-            pageSize={pagedHousingStocks?.pageSize}
-          />
+          <PaginationWrapper>
+            <Pagination
+              showSizeChanger={false}
+              defaultCurrent={1}
+              current={pagedHousingStocks?.pageNumber}
+              onChange={handlePageNumberChanged}
+              total={pagedHousingStocks?.totalItems}
+              pageSize={pagedHousingStocks?.pageSize}
+            />
+          </PaginationWrapper>
         </StickyPanel>
       )}
-    </div>
+    </Wrapper>
   );
 };

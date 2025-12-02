@@ -1,11 +1,14 @@
 import { Empty } from 'antd';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { CellsIcon, ListIcon } from 'ui-kit/icons';
 import { Segmented } from 'ui-kit/Segmented';
 import { components } from './ApartmentsView.constants';
 import { HeaderTitle, HeaderWrapper } from './ApartmentsView.styled';
 import { ApartmentsViewProps, SegmentType } from './ApartmentsView.types';
 import { WithLoader } from 'ui-kit/shared/WithLoader';
+import { AddChessBoardPanel } from './AddChessBoardPanel';
+import { useUnit } from 'effector-react';
+import { developmentSettingsService } from 'services/developmentSettings/developmentSettings.models';
 
 export const ApartmentsView: FC<ApartmentsViewProps> = ({
   apartmentsPagedList,
@@ -18,6 +21,12 @@ export const ApartmentsView: FC<ApartmentsViewProps> = ({
   clearCurrentApartmentId,
 }) => {
   const ViewComponent = components[currentSegment];
+
+  const featureToggles = useUnit(
+    developmentSettingsService.outputs.$featureToggles,
+  );
+
+  const isApartmentsListEmpty = apartmentsPagedList?.items?.length === 0;
 
   return (
     <div>
@@ -39,7 +48,7 @@ export const ApartmentsView: FC<ApartmentsViewProps> = ({
         />
       </HeaderWrapper>
       <WithLoader isLoading={isLoading}>
-        {apartmentsPagedList?.items && (
+        {apartmentsPagedList?.items && !isApartmentsListEmpty && (
           <ViewComponent
             hosuingStockId={hosuingStockId}
             apartments={apartmentsPagedList.items}
@@ -47,6 +56,9 @@ export const ApartmentsView: FC<ApartmentsViewProps> = ({
             currentApartmentId={currentApartmentId}
             clearCurrentApartmentId={clearCurrentApartmentId}
           />
+        )}
+        {isApartmentsListEmpty && featureToggles.chessboardCreate && (
+          <AddChessBoardPanel buildingId={hosuingStockId} />
         )}
         {!apartmentsPagedList && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
       </WithLoader>

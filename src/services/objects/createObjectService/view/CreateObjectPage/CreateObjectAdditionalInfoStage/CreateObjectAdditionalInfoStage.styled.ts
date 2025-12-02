@@ -22,7 +22,7 @@ export const RightButtonBlock = styled.div`
 export const GridContainer = styled.div<{ category?: string }>`
   display: grid;
   grid-template-columns: ${({ category }) =>
-    category === EHouseCategory.NonResidential ? '2fr 3fr' : '1fr 1fr 3fr'};
+    category === EHouseCategory.NonResidential ? '2fr 3fr' : '1fr 1fr 2fr'};
   grid-gap: 4px 20px;
 `;
 

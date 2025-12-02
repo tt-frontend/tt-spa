@@ -36,10 +36,20 @@ const getApartmentId = async (
 
 export const getApartmentQuery = createQuery({
   effect: createEffect<
-    GetApartmentsRequestPayload,
+    GetApartmentsRequestPayload | number,
     ApartmentResponse | null,
     EffectFailDataAxiosError
-  >(async ({ ApartmentId, ...params }) => {
+  >(async (payload) => {
+    if (typeof payload === 'number') {
+      const apartment: ApartmentResponse | null = await axios.get(
+        `/Apartments/${payload}`,
+      );
+
+      return apartment;
+    }
+
+    const { ApartmentId, ...params } = payload;
+
     const id = ApartmentId || (await getApartmentId(params));
 
     if (!id) return null;

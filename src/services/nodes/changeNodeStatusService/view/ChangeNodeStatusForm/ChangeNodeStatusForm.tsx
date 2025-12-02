@@ -124,7 +124,7 @@ export const ChangeNodeStatusForm: FC<ChangeNodeStatusFormProps> = ({
         </FormItem>
 
         {isSeveralDates && (
-          <FormItem label={'Дата окончания действия'}>
+          <FormItem label="Дата окончания действия">
             <DatePicker
               placeholder="Выберите дату"
               format={{ format: 'DD.MM.YYYY', type: 'mask' }}

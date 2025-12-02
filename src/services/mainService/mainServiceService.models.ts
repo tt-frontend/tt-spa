@@ -5,6 +5,7 @@ import {
   existingMoDistrictsQuery,
   getMain,
   dashboardOrganizationsQuery,
+  dashboardChartQuery,
 } from './mainServiceService.api';
 import { EffectFailDataAxiosError } from 'types';
 import { createGate } from 'effector-react';
@@ -30,13 +31,8 @@ const $filter = createStore<ManePayload>({
   BuildingIds: null,
   ManagementFirmId: null,
   Address: null,
-  ResourceType: ResourceType.ColdWaterSupply,
 })
   .on(setFilter, (prev, data) => ({ ...prev, ...data }))
-  .on(setResource, (prev, resource) => ({
-    ...prev,
-    ResourceType: resource as unknown as ResourceType,
-  }))
   .reset(resetFilter);
 
 const $mainData = createStore<MainDashboardResponse | null>(null).on(
@@ -66,12 +62,22 @@ sample({
 sample({
   clock: PageGate.open,
   source: $filter,
-  target: getMainFx,
+  target: [getMainFx, dashboardChartQuery.start],
+});
+
+sample({
+  clock: setResource,
+  source: $filter,
+  fn: (filter, resource) => ({
+    ...filter,
+    ResourceType: resource as unknown as ResourceType,
+  }),
+  target: dashboardChartQuery.start,
 });
 
 sample({
   source: $filter,
-  target: getMainFx,
+  target: [getMainFx, dashboardChartQuery.start],
 });
 
 const $city = $filter.map(({ City }) => City || null);
@@ -83,7 +89,7 @@ sample({
 });
 
 sample({
-  clock: getMainFx.doneData,
+  clock: dashboardChartQuery.finished.success,
   source: $selectedResource,
   target: $selectedResourceForColor,
 });

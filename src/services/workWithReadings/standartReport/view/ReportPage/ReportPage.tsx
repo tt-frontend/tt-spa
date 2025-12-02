@@ -3,7 +3,6 @@ import {
   BillingPeriod,
   Container,
   Date,
-  Footer,
   PanelsList,
   Title,
   Wrapper,
@@ -17,6 +16,7 @@ import { usePanelsList } from './ReportPage.hooks';
 import { PageHeader } from 'ui-kit/shared/PageHeader';
 import { GoBack } from 'ui-kit/shared/GoBack';
 import { CloseDevicesWithReadingsParamsModal } from './CloseDevicesWithReadingsParamsModal';
+import { StickyPanel } from 'ui-kit/shared/StickyPanel';
 
 export const ReportPage: FC<Props> = ({
   closingDevices,
@@ -74,11 +74,11 @@ export const ReportPage: FC<Props> = ({
         </PanelsList>
       </Container>
 
-      <Footer>
+      <StickyPanel>
         <Button size="s" onClick={handleExport}>
           Экспортировать
         </Button>
-      </Footer>
+      </StickyPanel>
 
       <CloseDevicesWithReadingsParamsModal
         isOpen={isCheckingDatePollModalOpen}

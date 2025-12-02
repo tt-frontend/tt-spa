@@ -126,6 +126,7 @@ import DeviceGreyIcon from './svg/deviceGrey.svg?react';
 import PlusBlueIcon from './svg/plusBlue.svg?react';
 import MainIcon from './svg/mainIcon.svg?react';
 import ChevronRightIcon from './svg/chevronRight.svg?react';
+import ApartmentLargeIcon from './svg/apartmentLarge.svg?react';
 
 export {
   FinishIcon,
@@ -256,4 +257,5 @@ export {
   PlusBlueIcon,
   MainIcon,
   ChevronRightIcon,
+  ApartmentLargeIcon,
 };

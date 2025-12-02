@@ -4023,10 +4023,10 @@ export interface MainDashboardCalculatorStatisticsModel {
   noArchiveCount?: number;
 }
 
-export interface MainDashboardHousingConsumptionModel {
-  summaryData?: SummaryHousingConsumptionsByResourcesServiceModel | null;
-  resourceConsumption?: DataForHousingConsumptionPlotServiceModel | null;
-  resourceConsumptionPrevious?: DataForHousingConsumptionPlotServiceModel | null;
+export interface MainDashboardHousingConsumptionResponse {
+  summaryData: SummaryHousingConsumptionsByResourcesServiceModel | null;
+  resourceConsumption: DataForHousingConsumptionPlotServiceModel | null;
+  resourceConsumptionPrevious: DataForHousingConsumptionPlotServiceModel | null;
 }
 
 export interface MainDashboardMalfunctionModel {
@@ -4051,7 +4051,6 @@ export interface MainDashboardResponse {
   calculatorsStatistics: MainDashboardCalculatorStatisticsModel | null;
   resourceDisconnecting: MainDashboardResourceDisconnectingModel[] | null;
   malfunctions: MainDashboardMalfunctionModel[] | null;
-  housingConsumption: MainDashboardHousingConsumptionModel | null;
   summaryData: MainDashboardSummaryModel | null;
 }
 
@@ -9550,6 +9549,8 @@ export class Api<
         BuildingIds?: number[];
         /** @format int32 */
         ManagementFirmId?: number;
+        /** @format uuid */
+        HouseManagementId?: string;
         Address?: string;
         ResourceType?: ResourceType;
       },
@@ -9557,6 +9558,40 @@ export class Api<
     ) =>
       this.request<MainDashboardResponse, ErrorApiResponse>({
         path: `/api/Dashboard/main`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li>
+     *
+     * @tags Dashboard
+     * @name DashboardMainHousingConsumptionList
+     * @summary DashboardMainView
+     * @request GET:/api/Dashboard/main/housingConsumption
+     * @secure
+     */
+    dashboardMainHousingConsumptionList: (
+      query?: {
+        /** @format date-time */
+        Date?: string;
+        City?: string;
+        District?: string;
+        BuildingIds?: number[];
+        /** @format int32 */
+        ManagementFirmId?: number;
+        /** @format uuid */
+        HouseManagementId?: string;
+        Address?: string;
+        ResourceType?: ResourceType;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<MainDashboardHousingConsumptionResponse, ErrorApiResponse>({
+        path: `/api/Dashboard/main/housingConsumption`,
         method: 'GET',
         query: query,
         secure: true,

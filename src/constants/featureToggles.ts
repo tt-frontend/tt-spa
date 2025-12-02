@@ -7,4 +7,5 @@ export const featureToggles = {
   mvitu: false,
   workWithReadings: false,
   dashboardPage: false,
+  chessboardCreate: false,
 };

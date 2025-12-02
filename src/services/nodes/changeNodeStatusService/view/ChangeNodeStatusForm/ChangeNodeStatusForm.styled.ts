@@ -11,10 +11,8 @@ export const GroupWrapper = styled.div<{ isSeveralDates: boolean }>`
   align-items: flex-start;
 
   grid-template-columns: ${({ isSeveralDates }) =>
-    isSeveralDates ? '1.4fr 1fr 1fr' : '1fr 1fr'};
-  grid-gap: 16px;
+    isSeveralDates ? '1.2fr 1.1fr 1.2fr' : '1fr 1fr'};
+  grid-gap: 10px;
 
-  .ant-select-selector {
-    height: 48px !important;
-  }
+  flex-wrap: wrap;
 `;

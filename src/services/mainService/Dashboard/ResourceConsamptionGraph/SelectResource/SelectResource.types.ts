@@ -9,6 +9,6 @@ export type Props = {
     | SummaryHousingConsumptionsByResourcesServiceModel
     | null
     | undefined;
-  isLoading: boolean;
+  isChartLoading: boolean;
   setResource: (payload: EResourceType) => void;
 };

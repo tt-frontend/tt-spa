@@ -1,0 +1,1 @@
+export { CreateChessBoardPage } from './CreateChessBoardPage';

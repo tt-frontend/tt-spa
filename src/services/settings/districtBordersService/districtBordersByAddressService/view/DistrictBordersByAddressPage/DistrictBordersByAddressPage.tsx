@@ -6,7 +6,6 @@ import {
   FooterWrapper,
   GoBackWrapper,
   LinkWrapper,
-  Panel,
   TextWrapper,
   Wrapper,
 } from './DistrictBordersByAddressPage.styled';
@@ -20,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import { addressesCountTexts } from 'services/reportsService/reportViewService/view/ReportViewPage/ReportFiltrationForm/ReportFiltrationForm.constants';
 import { getCountText } from 'utils/getCountText';
 import { WithLoader } from 'ui-kit/shared/WithLoader';
+import { StickyPanel } from 'ui-kit/shared/StickyPanel';
 
 export const DistrictBordersByAddressPage: FC<
   DistrictBordersByAddressPageProps
@@ -79,7 +79,7 @@ export const DistrictBordersByAddressPage: FC<
         ))}
 
         <FooterWrapper>
-          <Panel>
+          <StickyPanel>
             <TextWrapper>
               Всего: {checkedAddressesAmount}{' '}
               {getCountText(checkedAddressesAmount, addressesCountTexts)}
@@ -106,7 +106,7 @@ export const DistrictBordersByAddressPage: FC<
                 Продолжить
               </ButtonSC>
             </ButtonsWrapper>
-          </Panel>
+          </StickyPanel>
         </FooterWrapper>
       </WithLoader>
     </Wrapper>

@@ -14,13 +14,3 @@ export const AddressSearchWrapper = styled.div`
   top: 16px;
   z-index: 10;
 `;
-
-export const HeaderBackgraundWrapper = styled.div`
-  height: 240px;
-  width: 100%;
-
-  background-color: #fff;
-  position: fixed;
-  top: 0px;
-  z-index: 5;
-`;

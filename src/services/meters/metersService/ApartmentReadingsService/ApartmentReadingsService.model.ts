@@ -184,6 +184,13 @@ sample({
 });
 
 sample({
+  clock: ApartmentGate.open,
+  fn: ({ id }) => id!,
+  filter: (params) => Boolean(params?.id),
+  target: getApartmentQuery.start,
+});
+
+sample({
   clock: ApartmentGate.close,
   target: getApartmentQuery.reset,
 });

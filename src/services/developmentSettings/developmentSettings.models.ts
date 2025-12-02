@@ -1,5 +1,5 @@
 import { createEvent, createStore } from 'effector';
-import { featureToggles } from 'featureToggles';
+import { featureToggles } from 'constants/featureToggles';
 import {
   ICredItem,
   FeatureToggles,

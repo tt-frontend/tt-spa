@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { Panel, Wrapper } from './SealBottomPanel.styled';
+import { Wrapper } from './SealBottomPanel.styled';
 import { SealBottomPanelProps } from './SealBottomPanel.types';
 import { Button } from 'ui-kit/Button';
 import { useNavigate } from 'react-router-dom';
+import { StickyPanel } from 'ui-kit/shared/StickyPanel';
 
 export const SealBottomPanel: FC<SealBottomPanelProps> = ({
   apartment,
@@ -14,7 +15,7 @@ export const SealBottomPanel: FC<SealBottomPanelProps> = ({
 
   return (
     <Wrapper>
-      <Panel id="bottomPanel">
+      <StickyPanel id="bottomPanel">
         <Button
           type="ghost"
           size="s"
@@ -49,7 +50,7 @@ export const SealBottomPanel: FC<SealBottomPanelProps> = ({
             </Button>
           </>
         )}
-      </Panel>
+      </StickyPanel>
     </Wrapper>
   );
 };
