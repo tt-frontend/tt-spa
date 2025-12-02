@@ -3,9 +3,9 @@ export function languageDetect(input: string) {
   const hasEnglish = /[a-z]/i.test(input);
 
   if (hasRussian && hasEnglish) {
-    return 'ru-en';
+    return 'ру-en';
   } else if (hasRussian) {
-    return 'ru';
+    return 'ру';
   } else if (hasEnglish) {
     return 'en';
   } else {
