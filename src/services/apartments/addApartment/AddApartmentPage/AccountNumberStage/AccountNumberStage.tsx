@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'ui-kit/Button';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 export const AccountNumberStage: FC<Props> = ({
   buildingId,

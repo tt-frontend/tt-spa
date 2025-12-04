@@ -25,7 +25,7 @@ import {
   ContextMenuButtonColor,
   ContextMenuElement,
 } from 'ui-kit/ContextMenuButton/ContextMenuButton.types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { Switch } from 'antd';
 import { getUserFullName } from 'utils/getUserFullName';
 

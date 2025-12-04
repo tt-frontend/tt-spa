@@ -3,7 +3,7 @@ import {
   HistoryMonthReadingType,
 } from './AccountingNodesReadingsService.types';
 import { HousingMeteringDeviceReadingsIncludingPlacementResponse } from 'api/types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 export function mapToDeviceReadingsHistory(
   nodeReadingsData:

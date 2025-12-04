@@ -20,7 +20,7 @@ import { getReportElemAddress } from '../../ReportViewTable.utils';
 import { Tooltip } from 'ui-kit/shared/Tooltip';
 import { ResourceIconLookup } from 'ui-kit/shared/ResourceIconLookup';
 import { ResourceShortNamesDictionary } from 'dictionaries';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { SortButton } from 'services/actsJournalService/view/ActsJournalProfile/ActsListHeader/SortButton';
 import { useFormik } from 'formik';
 import { EOrderByRule } from 'api/types';

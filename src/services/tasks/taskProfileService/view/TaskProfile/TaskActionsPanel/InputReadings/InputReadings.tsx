@@ -14,7 +14,7 @@ import {
   ReadingInputSC,
   ReadingValuesWrapper,
 } from './InputReadings.styled';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 export const InputReadings: FC<InputReadingsProps> = ({ handleChange }) => {
   const [readings, setReadings] = useState<Reading[]>([]);

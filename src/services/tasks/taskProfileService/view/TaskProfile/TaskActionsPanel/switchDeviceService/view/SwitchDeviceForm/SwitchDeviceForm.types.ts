@@ -2,7 +2,7 @@ import {
   MeteringDeviceResponse,
   SwitchHousingMeteringDeviceRequest,
 } from 'api/types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { CalculatorInfoItem } from 'services/calculators/calculatorsInfoService/calculatorsInfoService.types';
 
 export type SwitchDeviceFormProps = {

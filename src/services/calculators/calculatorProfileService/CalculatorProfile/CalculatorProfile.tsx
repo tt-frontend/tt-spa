@@ -32,7 +32,7 @@ import {
   TaskGroupingFilter,
 } from 'api/types';
 import { Tooltip } from 'ui-kit/shared/Tooltip';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 export const CalculatorProfile: FC<CalculatorProfileProps> = ({
   calculator,

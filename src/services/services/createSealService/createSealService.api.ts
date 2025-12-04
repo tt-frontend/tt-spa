@@ -7,7 +7,7 @@ import {
 } from 'api/types';
 import { GetDistrictAppointmentsRequestPayload } from '../distributeRecordsService/distributeRecordsService.types';
 import { createQuery } from '@farfetched/core';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 export const fetchCreateSeal = (
   payload: AppointmentCreateRequest,
