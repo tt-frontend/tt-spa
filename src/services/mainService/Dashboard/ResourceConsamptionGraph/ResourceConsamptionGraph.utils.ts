@@ -2,7 +2,7 @@ import {
   DataForHousingConsumptionPlotServiceModel,
   DateTimeDoubleDictionaryItem,
 } from 'api/types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 export function modelToArray(
   model: DataForHousingConsumptionPlotServiceModel | null,

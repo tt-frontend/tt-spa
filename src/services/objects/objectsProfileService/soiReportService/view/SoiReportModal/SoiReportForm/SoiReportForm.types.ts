@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { EResourceType, HouseManagementResponse } from 'api/types';
 import { TreeSelectElement } from 'ui-kit/shared/AddressTreeSelect/AddressTreeSelect.types';
 import {

@@ -8,7 +8,7 @@ import {
   ellipse,
 } from './ApartmentActItem.styled';
 import { Props } from './ApartmentActItem.types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { ResourceIconLookup } from 'ui-kit/shared/ResourceIconLookup';
 import { ActTypesNamesLookup } from 'dictionaries';
 import { DocumentResponse } from 'api/types';

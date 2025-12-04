@@ -1,7 +1,7 @@
 import React from 'react';
 import { DateBlock, Pointer, TooltipBlock, Value } from './GraphTooltip.styled';
 import { GraphTooltipProps } from './Graphtooltip.types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 export const GraphTooltip: React.FC<GraphTooltipProps> = (props) => {
   const { datum, x, y, measure } = props;

@@ -7,7 +7,7 @@ import { AddressTreeSelect } from 'ui-kit/shared/AddressTreeSelect';
 import { Tooltip } from 'ui-kit/shared/Tooltip';
 import { StyledMenuButton } from 'ui-kit/ContextMenuButton/ContextMenuButton.styled';
 import { ResetIcon } from 'ui-kit/icons';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 export const Filter: FC<Props> = ({
   filter,
