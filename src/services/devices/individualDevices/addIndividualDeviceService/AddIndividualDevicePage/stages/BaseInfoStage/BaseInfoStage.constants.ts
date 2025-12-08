@@ -2,6 +2,8 @@ import { EIndividualDeviceRateType } from 'api/types';
 import { checkingDateTest } from 'services/devices/individualDevices/workWithIndividualDeviceService/workWithIndividualDeviceService.utils';
 import * as yup from 'yup';
 
+export const dataKey = 'add-individual-base-info';
+
 export const validationSchema = yup.object().shape({
   serialNumber: yup.string().required('Это поле обязательно'),
   lastCheckingDate: yup
