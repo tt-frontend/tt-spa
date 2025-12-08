@@ -29,6 +29,9 @@ export const MainServiceContainer = () => {
     organizations,
     chartData,
     isChartLoading,
+    treeData,
+    selectHouseManagememt,
+    selectCity,
   } = useUnit({
     filter: outputs.$filter,
     setFilter: inputs.setFilter,
@@ -42,6 +45,9 @@ export const MainServiceContainer = () => {
     organizations: dashboardOrganizationsQuery.$data,
     chartData: dashboardChartQuery.$data,
     isChartLoading: dashboardChartQuery.$pending,
+    treeData: outputs.$treeData,
+    selectHouseManagememt: inputs.selectHouseManagememt,
+    selectCity: inputs.selectCity,
   });
 
   return (
@@ -54,6 +60,9 @@ export const MainServiceContainer = () => {
         resetFilter={resetFilter}
         existingMoDistricts={existingMoDistricts}
         organizations={organizations}
+        treeData={treeData}
+        selectHouseManagememt={selectHouseManagememt}
+        selectCity={selectCity}
       />
       <Dashboard
         isLoading={isLoading}

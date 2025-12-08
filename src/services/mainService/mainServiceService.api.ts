@@ -1,5 +1,6 @@
 import { axios } from 'api/axios';
 import {
+  HouseManagementWithStreetsResponse,
   MainDashboardHousingConsumptionResponse,
   MainDashboardResponse,
   OrganizationResponsePagedList,
@@ -37,3 +38,12 @@ export const dashboardChartQuery = createQuery<
   handler: (payload) =>
     axios.get(`/Dashboard/main/housingConsumption`, { params: payload }),
 });
+
+export const fetchAddresses = (
+  City: string,
+): Promise<HouseManagementWithStreetsResponse[]> =>
+  axios.get('Buildings/ExistingStreetsWithBuildingNumbersWithHouseManagement', {
+    params: {
+      City,
+    },
+  });

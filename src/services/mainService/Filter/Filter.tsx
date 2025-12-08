@@ -13,6 +13,9 @@ export const Filter: FC<Props> = ({
   resetFilter,
   existingMoDistricts,
   organizations,
+  selectHouseManagememt,
+  treeData,
+  selectCity,
 }) => {
   const citiesOptions = useMemo(() => {
     if (!filter.District || !existingMoDistricts) return null;
@@ -62,6 +65,7 @@ export const Filter: FC<Props> = ({
             City: value as string,
             ManagementFirmId: null,
           });
+          selectCity(value as string);
         }}
       >
         <Select.Option key={0} value={null}>
@@ -99,7 +103,10 @@ export const Filter: FC<Props> = ({
         small
         allowClear
         value={filter.HouseManagementId}
-        onChange={(value) => setFilter({ HouseManagementId: value as string })}
+        onChange={(value) => {
+          setFilter({ HouseManagementId: value as string });
+          selectHouseManagememt(value as string);
+        }}
       >
         <Select key={0} value={null}>
           Все домоуправления
@@ -113,10 +120,11 @@ export const Filter: FC<Props> = ({
       </Select>
 
       <AddressTreeSelect
+        minWidth="20vw"
         small
         placeholder="Адрес"
         selectedHousingStockIds={filter.BuildingIds || []}
-        treeData={[]}
+        treeData={treeData}
         onChange={(values) => {
           setFilter({ BuildingIds: values });
         }}
