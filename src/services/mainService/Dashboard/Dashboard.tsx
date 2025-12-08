@@ -53,7 +53,7 @@ export const Dashboard: FC<Props> = ({
         </Panel>
       </Wrapper>
 
-      <ManeInfo isLoading={isLoading} />
+      <ManeInfo isLoading={isLoading} data={data?.summaryData || null} />
     </ManeWrapper>
   );
 };

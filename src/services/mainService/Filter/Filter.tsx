@@ -1,13 +1,11 @@
 import { FC, useMemo } from 'react';
 import { Wrapper } from './Filter.styled';
 import { Props } from './Filter.types';
-import { DatePicker } from 'ui-kit/DatePicker';
 import { Select } from 'ui-kit/Select';
 import { AddressTreeSelect } from 'ui-kit/shared/AddressTreeSelect';
 import { Tooltip } from 'ui-kit/shared/Tooltip';
 import { StyledMenuButton } from 'ui-kit/ContextMenuButton/ContextMenuButton.styled';
 import { ResetIcon } from 'ui-kit/icons';
-import dayjs from 'dayjs';
 
 export const Filter: FC<Props> = ({
   filter,
@@ -28,15 +26,10 @@ export const Filter: FC<Props> = ({
     return ditrict.subjects.map((elem) => elem.name);
   }, [filter, existingMoDistricts]);
 
+  console.log(organizations);
+
   return (
     <Wrapper>
-      <DatePicker
-        small
-        format="DD.MM.YYYY"
-        value={filter.Date ? dayjs(filter.Date, 'DD.MM.YYYY') : undefined}
-        onChange={(_, dateString) => setFilter({ Date: dateString as string })}
-      />
-
       <Select
         placeholder="Округ"
         small
@@ -49,6 +42,9 @@ export const Filter: FC<Props> = ({
           })
         }
       >
+        <Select.Option key={0} value={null}>
+          Все округа
+        </Select.Option>
         {existingMoDistricts?.items?.map((item) => (
           <Select.Option key={item.name} value={item.name}>
             {item.name} ({item.type})
@@ -68,6 +64,10 @@ export const Filter: FC<Props> = ({
           });
         }}
       >
+        <Select.Option key={0} value={null}>
+          Все города
+        </Select.Option>
+
         {citiesOptions &&
           citiesOptions.map((city) => (
             <Select.Option key={city} value={city}>
@@ -83,12 +83,35 @@ export const Filter: FC<Props> = ({
         value={filter.ManagementFirmId}
         onChange={(value) => setFilter({ ManagementFirmId: value as number })}
       >
+        <Select key={0} value={null}>
+          Все УК
+        </Select>
+
         {organizations?.items?.map((elem) => (
           <Select key={elem.id} value={elem.id}>
             {elem.name}
           </Select>
         ))}
       </Select>
+
+      <Select
+        placeholder="Домоуправление"
+        small
+        allowClear
+        value={filter.HouseManagementId}
+        onChange={(value) => setFilter({ HouseManagementId: value as string })}
+      >
+        <Select key={0} value={null}>
+          Все домоуправления
+        </Select>
+
+        {organizations?.items?.map((elem) => (
+          <Select key={elem.id} value={elem.id}>
+            {elem.name}
+          </Select>
+        ))}
+      </Select>
+
       <AddressTreeSelect
         small
         placeholder="Адрес"
