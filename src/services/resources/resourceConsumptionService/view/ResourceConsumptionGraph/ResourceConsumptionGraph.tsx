@@ -49,6 +49,7 @@ export const ResourceConsumptionGraph: FC<ResourceConsumptionGraphProps> = ({
   isDataLoading,
   isOnlyHousingDataEmpty,
   isHousingMeteringDevices,
+  isHousingMeteringDevicesLoading,
 }) => {
   const [width, setWidth] = useState(0);
 
@@ -153,7 +154,7 @@ export const ResourceConsumptionGraph: FC<ResourceConsumptionGraphProps> = ({
     [consumptionData, isDataLoading],
   );
 
-  if (isConsumptionDataItemsEmpty) {
+  if (isConsumptionDataItemsEmpty && !isHousingMeteringDevicesLoading) {
     return (
       <>
         <Wrapper id="graphWrapper">
