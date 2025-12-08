@@ -1,8 +1,9 @@
-import { createEvent, createStore } from 'effector';
+import { createEffect, createEvent, createStore } from 'effector';
 import { combine, sample } from 'effector';
 import {
   EResourceType,
   HouseManagementWithStreetsResponse,
+  HousingMeteringDeviceIncludingReadingsResponsePagedList,
   StreetWithBuildingNumbersResponse,
 } from 'api/types';
 import {
@@ -10,10 +11,19 @@ import {
   prepareAddressesWithParentsForTreeSelect,
 } from 'ui-kit/shared/AddressTreeSelect/AddressTreeSelect.utils';
 import { getAddressSearchData } from '../resourceConsumptionService.utils';
-import { getAddressesFx } from './resourceConsumptionFilterService.api';
+import {
+  fetchHousingMeteringDevices,
+  getAddressesFx,
+} from './resourceConsumptionFilterService.api';
 import dayjs from 'api/dayjs';
 import { resourceConsumptionService } from '../resourceConsumptionService.model';
-import { ConsumptionDataFilter } from './resourceConsumptionFilterService.types';
+import {
+  ConsumptionDataFilter,
+  FetchHousingMeteringDevicesPayload,
+} from './resourceConsumptionFilterService.types';
+import { createGate } from 'effector-react';
+
+const GetHousingMeteringDevicesGate = createGate();
 
 const clearFilter = createEvent();
 
@@ -41,6 +51,25 @@ const $selectedResource = createStore<EResourceType>(
 
 const $selectedResourceForColor = createStore<EResourceType>(
   EResourceType.ColdWaterSupply,
+);
+
+const fetchHousingMeteringDevicesFx = createEffect<
+  FetchHousingMeteringDevicesPayload,
+  HousingMeteringDeviceIncludingReadingsResponsePagedList
+>(fetchHousingMeteringDevices);
+
+sample({
+  clock: [GetHousingMeteringDevicesGate.open, $selectedResource],
+  source: $selectedResource,
+  fn: (selectedResource) => ({ Resource: selectedResource }),
+  target: fetchHousingMeteringDevicesFx,
+});
+
+const $isHousingMeteringDevicesLoading = fetchHousingMeteringDevicesFx.pending;
+
+const $isHousingMeteringDevices = createStore<boolean | null>(null).on(
+  fetchHousingMeteringDevicesFx.doneData,
+  (_, data) => Boolean(data.totalItems),
 );
 
 const setFilter = createEvent<ConsumptionDataFilter>();
@@ -117,5 +146,8 @@ export const resourceConsumptionFilterService = {
     $resourceConsumptionFilter,
     $selectedResource,
     $selectedResourceForColor,
+    $isHousingMeteringDevices,
+    $isHousingMeteringDevicesLoading,
   },
+  gates: { GetHousingMeteringDevicesGate },
 };
