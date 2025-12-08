@@ -1,7 +1,7 @@
 import { createQuery } from '@farfetched/core';
 import { axios } from 'api/axios';
 import { TasksPagedList } from 'api/types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { createEffect } from 'effector';
 import { ExportTasksListRequestPayload } from 'services/tasks/exportTasksListService/exportTasksListService.types';
 import { GetTasksListRequestPayload } from 'services/tasks/tasksProfileService/tasksProfileService.types';

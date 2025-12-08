@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { downloadURI } from 'utils/downloadByURL';
 import { DownloadTaskDocumentRequestPayload } from './distributeRecordsService.types';
 

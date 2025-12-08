@@ -17,7 +17,7 @@ import {
   TooltipDates,
   TooltipWrapper,
 } from './ResourceDisconnectingGanttChart.styled';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { EResourceType } from 'api/types';
 import { ResourceInfo } from 'ui-kit/shared/ResourceInfo';
 import { prepareDisconnectionsData } from './ResourceDisconnectingGanttChart.utils';

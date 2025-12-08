@@ -7,7 +7,7 @@ import { StyledMenuButton } from 'ui-kit/ContextMenuButton/ContextMenuButton.sty
 import { ResetIcon } from 'ui-kit/icons';
 import { Tooltip } from 'antd';
 import { AddressTreeSelect } from 'ui-kit/shared/AddressTreeSelect';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { useUnit } from 'effector-react';
 import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
 import { Segmented } from 'ui-kit/Segmented';

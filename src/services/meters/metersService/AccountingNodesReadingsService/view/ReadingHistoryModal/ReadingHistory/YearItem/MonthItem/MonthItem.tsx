@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react';
 import { MonthName, ReadingDate, Wrapper } from './MonthItem.styled';
 import { Props } from './MonthItem.types';
 import { getLatestUploadTimeItem } from './MonthItem.utils';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { getMonthName } from 'services/meters/readingsHistoryService/utils';
 
 export const MonthItem: FC<Props> = ({ monthData }) => {

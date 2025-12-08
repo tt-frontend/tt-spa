@@ -3,7 +3,7 @@ import { ExportResourceDisconnectingParams } from './exportResourceDisconnection
 import { exportResourceDisconnectionsQuery } from './exportResourceDisconnectionsService.api';
 import { saveAs } from 'file-saver';
 import { message } from 'antd';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 const saveFileFx = createEffect<File, void>((file) => {
   saveAs(

@@ -6,7 +6,7 @@ import {
   Title,
   Date,
 } from '../../view/ReportPage/ReportPage.styled';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { capitalize } from 'lodash';
 import { PollStatusWrapper } from '../../view/ReportPage/PanelItem/PanelItem.styled';
 import {

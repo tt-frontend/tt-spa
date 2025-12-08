@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { HistoryMonthReadingType } from 'services/meters/metersService/AccountingNodesReadingsService/AccountingNodesReadingsService.types';
 
 export function getLatestUploadTimeItem(

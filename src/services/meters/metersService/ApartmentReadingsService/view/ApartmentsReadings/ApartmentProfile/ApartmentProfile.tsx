@@ -19,7 +19,7 @@ import confirm from 'antd/lib/modal/confirm';
 import { TypeAddressToStart } from 'ui-kit/shared/TypeToStart';
 import { EApartmentStatus } from 'api/types';
 import { NothingFound } from 'ui-kit/shared/NothingFound';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { ApartmentReadingsActsJournalContainer } from './apartmentReadingsActsJournal';
 import { apartmentReadingsService } from '../../../ApartmentReadingsService.model';
 

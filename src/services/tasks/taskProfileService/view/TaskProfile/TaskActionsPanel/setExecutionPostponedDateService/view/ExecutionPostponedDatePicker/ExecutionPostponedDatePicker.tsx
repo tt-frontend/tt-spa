@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { ExecutionPostponedDatePickerProps } from './ExecutionPostponedDatePicker.types';
 import { FormItem } from 'ui-kit/FormItem';
 import { DatePicker } from 'ui-kit/DatePicker';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 export const ExecutionPostponedDatePicker: FC<
   ExecutionPostponedDatePickerProps

@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { CalculatorIcon } from 'ui-kit/icons';
 import { StatusBar } from 'ui-kit/shared/IndividualDeviceInfo/DeviceStatus/DeviceStatus.styled';
 import { getBuildingAddress } from 'utils/getBuildingAddress';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { ContextMenuButton } from 'ui-kit/ContextMenuButton';
 
 export const CalculatorInfo: FC<Props> = ({ device, handlePing }) => {
