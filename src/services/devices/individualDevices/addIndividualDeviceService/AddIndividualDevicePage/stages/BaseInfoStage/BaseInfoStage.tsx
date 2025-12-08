@@ -23,16 +23,16 @@ import {
   EIndividualDeviceRateType,
   EResourceType,
 } from 'api/types';
-import { DatePickerNative } from 'ui-kit/shared/DatePickerNative';
+import { DatePickerNative, fromEnter } from 'ui-kit/shared/DatePickerNative';
 import { getIndividualDeviceRateNumByName } from 'utils/getIndividualDeviceRateNumByName';
 import dayjs from 'api/dayjs';
 import { getBitDepthAndScaleFactor } from 'utils/getBitDepthAndScaleFactor';
 import { addIndividualDeviceService } from '../../../addIndividualDeviceService.model';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from 'ui-kit/Button';
-import { validationSchema } from './BaseInfoStage.constants';
+import { dataKey, validationSchema } from './BaseInfoStage.constants';
 import { languageDetect } from 'utils/languageDetect';
-import { useEnterToTab } from 'hooks/useEnterAsTab';
+import { useSwitchInputOnEnter } from 'hooks/useSwitchInputOnEnter';
 
 const {
   gates: { ContractorsGate, IndividualDeviceMountPlacesGate },
@@ -112,6 +112,14 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
     },
   });
 
+  const next = useSwitchInputOnEnter(dataKey, true);
+
+  const inputList: NodeListOf<HTMLInputElement> = document.querySelectorAll(
+    `[data-reading-input="${dataKey}"]`,
+  );
+
+  console.log({ inputList });
+
   const [language, setLanguage] = useState('unknown');
 
   const { id } = useParams<{ id: string }>();
@@ -157,6 +165,9 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
             setFieldValue('futureCheckingDate', formattedNextCheckingDate);
           }}
           value={values.lastCheckingDate}
+          onKeyDown={fromEnter(() => {
+            next(1);
+          })}
         />
         <ErrorMessage>{errors.lastCheckingDate}</ErrorMessage>
       </FormItem>
@@ -169,6 +180,9 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
             )
           }
           value={values.futureCheckingDate}
+          onKeyDown={fromEnter(() => {
+            next(2);
+          })}
         />
         <ErrorMessage>{errors.futureCheckingDate}</ErrorMessage>
       </FormItem>
@@ -214,8 +228,6 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
     </>
   );
 
-  useEnterToTab();
-
   return (
     <Wrap>
       <IndividualDeviceMountPlacesGate apartmentId={Number(id)} />
@@ -236,6 +248,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
 
               setFieldValue('bitDepth', bitDepth);
               setFieldValue('scaleFactor', scaleFactor);
+
+              next(1);
             }}
             resource={values.resource}
           />
@@ -255,6 +269,9 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
               setLanguage(languageDetect(value as string));
             }}
             options={modelNames?.map((elem) => ({ value: elem })) || []}
+            onKeyDown={fromEnter(() => {
+              next(2);
+            })}
           />
           <ErrorMessage>{errors.model}</ErrorMessage>
         </FormItem>
