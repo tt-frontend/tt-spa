@@ -4,7 +4,7 @@ import {
   DashboardResourceChartItemModel,
   DashboardResourceDetailChartItemModel,
 } from 'api/types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { ChartType } from './StatisticItem.types';
 import { EDateRange } from 'services/supervisor/AnalyticsSearch/AnalyticsSearch.types';
 

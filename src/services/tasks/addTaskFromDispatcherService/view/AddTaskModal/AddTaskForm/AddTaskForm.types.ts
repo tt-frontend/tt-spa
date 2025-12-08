@@ -5,7 +5,7 @@ import {
   ErpTaskReasonGroupResponse,
   ResourceDisconnectingResponse,
 } from 'api/types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { Event } from 'effector';
 import {
   ExistingApartmentNumberType,

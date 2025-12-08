@@ -1,6 +1,6 @@
 import { AssignmentResponse, ControllerResponse } from 'api/types';
 import { DownloadControllerWorkFileRequestPayload } from '../appointmentsJournalService.types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 export type Props = {
   assignmentslist: AssignmentResponse[] | null;

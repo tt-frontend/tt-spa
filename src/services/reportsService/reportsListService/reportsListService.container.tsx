@@ -1,7 +1,7 @@
 import { Pagination } from 'ui-kit/Pagination';
 import { useUnit } from 'effector-react';
 import React, { useEffect, useMemo } from 'react';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { useNavigate } from 'react-router-dom';
 import { PAGE_SIZE } from './reportsListService.constants';
 import { reportsListService } from './reportsListService.model';

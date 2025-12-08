@@ -3,7 +3,7 @@ import { individualSealAssignmentsQuery } from './appointmentsJournalService.api
 import { createGate } from 'effector-react';
 import { individualSealControllersQuery } from '../distributeRecordsService/distributeRecordsService.api';
 import { FormType } from './AppointmentsJournalPage/AppointmentsJournalPage.types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 const AssignmentsJournalGate = createGate();
 

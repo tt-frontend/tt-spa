@@ -11,7 +11,7 @@ import {
   dashboardPiperuptersQuery,
   dashboardResourcedisconnectsQuery,
 } from './commonAnalyticsService.api';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import {
   DashboardTaskMalfunctionResponse,
   DashboardTaskResourceResponse,

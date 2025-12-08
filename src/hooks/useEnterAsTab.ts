@@ -3,7 +3,19 @@ import { useEffect } from 'react';
 export function useEnterToTab() {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key !== 'Enter') return;
+      const key = e.key;
+      const code = e.code; // code может быть undefined в старых реализациях
+      const keyCode =
+        (e as unknown as { keyCode?: number }).keyCode ?? (e.which || 0);
+
+      const isEnter =
+        key === 'Enter' ||
+        code === 'Enter' ||
+        code === 'NumpadEnter' ||
+        keyCode === 13 ||
+        keyCode === 108;
+
+      if (!isEnter) return;
 
       e.preventDefault();
 

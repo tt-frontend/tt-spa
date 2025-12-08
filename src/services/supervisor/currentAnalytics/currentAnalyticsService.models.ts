@@ -13,7 +13,7 @@ import {
   DashboardDataType,
   DashboardQueryParams,
 } from './currentAnalyticsService.types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { BuildingsPageSegment } from 'services/objects/objectsProfileService/view/ObjectsProfile/ObjectsProfile.types';
 
 const CurrentAnalyticsGate = createGate();

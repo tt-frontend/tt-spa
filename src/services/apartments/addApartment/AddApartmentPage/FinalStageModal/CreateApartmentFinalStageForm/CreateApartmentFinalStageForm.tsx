@@ -9,7 +9,7 @@ import {
 import { Props } from './CreateApartmentFinalStageForm.types';
 import { Form } from 'antd';
 import { SpaceLine } from 'ui-kit/SpaceLine';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 export const CreateApartmentFinalStageForm: FC<Props> = ({
   formId,

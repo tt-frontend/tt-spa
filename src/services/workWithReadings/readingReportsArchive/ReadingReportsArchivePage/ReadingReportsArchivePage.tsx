@@ -4,7 +4,7 @@ import { Props } from './ReadingReportsArchivePage.types';
 import { PageHeader } from 'ui-kit/shared/PageHeader';
 import { GoBack } from 'ui-kit/shared/GoBack';
 import { Table } from 'ui-kit/Table';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { PollActionTypeLookup } from './ReadingReportsArchivePage.constansts';
 import { Pagination } from 'ui-kit/Pagination';
 import { downloadReportFile } from '../readingReportsArchiveService.api';

@@ -8,7 +8,7 @@ import {
   Wrapper,
 } from './ReportPage.styled';
 import { Props } from './ReportPage.types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { capitalize } from 'lodash';
 import { Button } from 'ui-kit/Button';
 import { PanelItem } from './PanelItem';

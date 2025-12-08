@@ -6,7 +6,7 @@ import {
   sample,
 } from 'effector';
 import { createGate } from 'effector-react';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { message } from 'antd';
 import _ from 'lodash';
 import {
@@ -341,7 +341,7 @@ sample({
     ({
       TaskReasonId: selectedTaskReasonOption?.id,
       TaskType: selectedTaskType || undefined,
-    } as DeadlineRequest),
+    }) as DeadlineRequest,
   target: getErpTaskDeadlineFx,
 });
 
@@ -402,7 +402,7 @@ sample({
     ({
       homeownerAccountId: sourceData[1],
       requestPayload: { phoneNumber: sourceData[0] },
-    } as ReplaceAllPhonesRequestType),
+    }) as ReplaceAllPhonesRequestType,
   target: replaceAllPhonesFx,
 });
 
