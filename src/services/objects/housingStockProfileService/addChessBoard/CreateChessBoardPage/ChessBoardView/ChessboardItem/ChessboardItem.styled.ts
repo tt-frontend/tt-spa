@@ -50,6 +50,7 @@ export const Wrapper = styled.div<{
 
   min-width: 33px;
   width: ${({ wide }) => (wide ? '100%' : '33px')};
+  max-width: ${({ wide }) => (wide ? '100%' : '33px')};
   height: 33px;
 
   border-radius: 4px;
