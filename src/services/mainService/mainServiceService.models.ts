@@ -87,27 +87,6 @@ const $houseManagements = createStore<HouseManagementWithStreetsResponse[]>([])
   .on(getAddressesFx.doneData, (_, houseManagements) => houseManagements)
   .reset(PageGate.close);
 
-// const $addressesList = combine(
-//   $houseManagements,
-//   $selectedHouseManagement,
-//   (houseManagements, selectedHouseManagement) => {
-//     if (!selectedHouseManagement) {
-//       const streets = houseManagements.reduce(
-//         (acc, houseManagement) => [...acc, ...(houseManagement.streets || [])],
-//         [] as StreetWithBuildingNumbersResponse[],
-//       );
-
-//       return getAddressSearchData(streets);
-//     }
-
-//     const requiredHouseManagements = houseManagements.find(
-//       (houseManagement) => houseManagement.id === selectedHouseManagement,
-//     );
-
-//     return getAddressSearchData(requiredHouseManagements?.streets || []);
-//   },
-// );
-
 const $treeData = combine(
   $houseManagements,
   $selectedHouseManagement,
@@ -158,6 +137,15 @@ sample({
 
 sample({
   source: $filter,
+  fn: (filter) => {
+    const BuildingIds = filter.BuildingIds || [];
+
+    if (BuildingIds.length) {
+      return { BuildingIds };
+    } else {
+      return filter;
+    }
+  },
   target: [getMainFx, dashboardChartQuery.start],
 });
 

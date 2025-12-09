@@ -64,6 +64,7 @@ export const Filter: FC<Props> = ({
           setFilter({
             City: value as string,
             ManagementFirmId: null,
+            BuildingIds: null,
           });
           selectCity(value as string);
         }}

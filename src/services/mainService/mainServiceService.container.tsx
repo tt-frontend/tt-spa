@@ -54,6 +54,7 @@ export const MainServiceContainer = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <PageHeader title="УК «Лесные озёра»" />
       <PageGate />
+
       <Filter
         filter={filter}
         setFilter={setFilter}
@@ -64,6 +65,7 @@ export const MainServiceContainer = () => {
         selectHouseManagememt={selectHouseManagememt}
         selectCity={selectCity}
       />
+
       <Dashboard
         isLoading={isLoading}
         isChartLoading={isChartLoading}
