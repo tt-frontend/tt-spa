@@ -32,13 +32,15 @@ const handleAddParking = createEvent<AddParkingFormParams>();
 
 // entrance funtions
 const handleDeleteEntrance = createEvent<number>();
+const handleDuplicateEntrance = createEvent<number>();
 
 const $chessboardCreateData = createStore<ChessboardCreateModel>({
   sections: [],
 })
   .on(handleAddEntrance, chessboardModel.addEntrance)
   .on(resetChessBoardData, chessboardModel.resetChessboard)
-  .on(handleDeleteEntrance, entranceModel.deleteEntrance);
+  .on(handleDeleteEntrance, entranceModel.deleteEntrance)
+  .on(handleDuplicateEntrance, entranceModel.dubplicateEntrance);
 
 $openPanel.reset([handleAddEntrance, handleAddParking]);
 
@@ -54,6 +56,7 @@ export const addChessBoardService = {
     handleAddEntrance,
     handleAddParking,
     handleDeleteEntrance,
+    handleDuplicateEntrance,
   },
   outputs: { $openPanel, $chessboardCreateData, $entrances },
   gates: { ChessBoardGate },

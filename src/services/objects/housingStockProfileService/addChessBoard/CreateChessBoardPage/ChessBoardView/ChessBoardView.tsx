@@ -11,6 +11,7 @@ import { ChessboardItem } from './ChessboardItem';
 export const ChessBoardView: FC<Props> = ({
   chessboardCreateData,
   handleDeleteEntrance,
+  handleDuplicateEntrance,
 }) => {
   return (
     <Wrapper>
@@ -23,7 +24,12 @@ export const ChessBoardView: FC<Props> = ({
               type="outline"
               menuButtons={[
                 { title: 'Изменить номер подъезда' },
-                { title: 'Дублировать подъезд' },
+                {
+                  title: 'Дублировать подъезд',
+                  onClick: () =>
+                    section.sectionNumber &&
+                    handleDuplicateEntrance(section.sectionNumber),
+                },
                 {
                   title: 'Удалить подъезд',
                   onClick: () =>
