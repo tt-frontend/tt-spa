@@ -25,4 +25,5 @@ export type ResourceConsumptionGraphProps = {
   isDataLoading: boolean;
   isOnlyHousingDataEmpty: boolean;
   isHousingMeteringDevices: boolean | null;
+  isHousingMeteringDevicesLoading: boolean;
 };

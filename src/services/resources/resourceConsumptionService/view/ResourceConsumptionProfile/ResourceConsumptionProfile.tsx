@@ -35,6 +35,7 @@ export const ResourceConsumptionProfile: FC<
   isAllDataLoading,
   isDataLoading,
   isHousingMeteringDevices,
+  isHousingMeteringDevicesLoading,
 }) => {
   const [selectedAddresses, setSelectedAddresses] = useState<SelectedAddresses>(
     initialSelectedAddresses,
@@ -67,6 +68,7 @@ export const ResourceConsumptionProfile: FC<
             isDataLoading={isDataLoading}
             isOnlyHousingDataEmpty={isOnlyHousingDataEmpty}
             isHousingMeteringDevices={isHousingMeteringDevices}
+            isHousingMeteringDevicesLoading={isHousingMeteringDevicesLoading}
           />
 
           <SelectResourceConsumptionType

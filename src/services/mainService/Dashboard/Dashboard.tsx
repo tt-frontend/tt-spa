@@ -17,6 +17,8 @@ export const Dashboard: FC<Props> = ({
   setResource,
   chartData,
   isChartLoading,
+  isHousingMeteringDevices,
+  isHousingMeteringDevicesLoading,
 }) => {
   return (
     <ManeWrapper>
@@ -49,6 +51,9 @@ export const Dashboard: FC<Props> = ({
             consumptionData={chartData || null}
             selectedResource={selectedResource}
             resourceForColor={selectedResourceForColor}
+            isHousingMeteringDevices={isHousingMeteringDevices}
+            isHousingMeteringDevicesLoading={isHousingMeteringDevicesLoading}
+            isChartLoading={isChartLoading}
           />
         </Panel>
       </Wrapper>
