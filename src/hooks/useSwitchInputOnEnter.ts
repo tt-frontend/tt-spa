@@ -50,10 +50,6 @@ export const useSwitchInputOnEnter = (
 
       const currentNode = inputList[index];
 
-      console.log(inputList);
-      console.log(currentNode);
-      console.log(nextNode);
-
       if (nextNode) {
         handleFocus(nextNode);
         return;
