@@ -42,6 +42,9 @@ export const ResourceConsamptionGraph: FC<Props> = ({
   consumptionData,
   selectedResource,
   resourceForColor,
+  isHousingMeteringDevices,
+  isHousingMeteringDevicesLoading,
+  isChartLoading,
 }) => {
   const housing = useMemo(
     () => modelToArray(consumptionData?.resourceConsumption || null),
@@ -81,15 +84,6 @@ export const ResourceConsamptionGraph: FC<Props> = ({
     [consumptionData],
   );
 
-  console.log(isConsumptionDataItemsEmpty);
-
-  const isHousingMeteringDevices = useMemo(() => {
-    return (
-      Boolean(consumptionData?.resourceConsumption) ||
-      Boolean(consumptionData?.resourceConsumptionPrevious)
-    );
-  }, [consumptionData]);
-
   const startOfMonth = useMemo(() => {
     const obj = consumptionData?.resourceConsumption?.housingConsumption;
 
@@ -100,17 +94,27 @@ export const ResourceConsamptionGraph: FC<Props> = ({
     return firstKey;
   }, [consumptionData]);
 
+  const isRedBannerNeeded =
+    isHousingMeteringDevices &&
+    !isHousingMeteringDevicesLoading &&
+    !isChartLoading;
+
+  const isBlueBannerNeeded =
+    !isHousingMeteringDevices &&
+    !isHousingMeteringDevicesLoading &&
+    !isChartLoading;
+
   if (isConsumptionDataItemsEmpty) {
     return (
       <>
         <Wrapper id="graphWrapper">
           <AlertWrapper>
-            {isHousingMeteringDevices && (
+            {isRedBannerNeeded && (
               <Alert centered type="danger" icon="warning">
                 <AlertTitle>Нет данных за выбранный период</AlertTitle>
               </Alert>
             )}
-            {!isHousingMeteringDevices && (
+            {isBlueBannerNeeded && (
               <Alert centered type="default" icon="info">
                 <AlertTitle>
                   Опрос домовых приборов учета еще не подключен
