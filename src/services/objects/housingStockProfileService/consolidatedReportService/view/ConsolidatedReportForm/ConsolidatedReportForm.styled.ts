@@ -5,3 +5,9 @@ export const PeriodSelection = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 `;
+
+export const AddressContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;

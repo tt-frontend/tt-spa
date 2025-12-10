@@ -11,6 +11,7 @@ import {
 } from './mainServiceService.api';
 import { currentOrganizationService } from 'services/currentOrganizationService';
 import { useMemo } from 'react';
+import { ConsolidatedReportContainer } from 'services/objects/housingStockProfileService/consolidatedReportService';
 
 const {
   inputs,
@@ -69,6 +70,8 @@ export const MainServiceContainer = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <PageHeader title={currentManagingFirm?.name} />
       <PageGate />
+
+      <ConsolidatedReportContainer />
 
       <Filter
         filter={filter}

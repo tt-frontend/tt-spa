@@ -15,6 +15,9 @@ import { MalfunctionsTasksCountPanel } from './MalfunctionsTasksCountPanel';
 import { SelectResource } from './ResourceConsamptionGraph/SelectResource';
 import { Panel } from './Panel';
 import { ManeInfo } from './ManeInfo';
+import { ContextMenuButton } from 'ui-kit/ContextMenuButton';
+import { useUnit } from 'effector-react';
+import { consolidatedReportService } from 'services/objects/housingStockProfileService/consolidatedReportService';
 
 export const Dashboard: FC<Props> = ({
   data,
@@ -27,6 +30,11 @@ export const Dashboard: FC<Props> = ({
   isHousingMeteringDevices,
   isHousingMeteringDevicesLoading,
 }) => {
+  const { openConsolidatedReportModal } = useUnit({
+    openConsolidatedReportModal:
+      consolidatedReportService.inputs.openConsolidatedReportModal,
+  });
+
   return (
     <ManeWrapper>
       <Wrapper>
@@ -68,9 +76,24 @@ export const Dashboard: FC<Props> = ({
       <LeftBlock>
         <ButtonWrapper>
           <ButtonSC>Выгрузка архива</ButtonSC>
-          <ButtonSC type="ghost">
-            Отчеты по ОДПУ <ChevronIconSC />
-          </ButtonSC>
+          <ContextMenuButton
+            menuButtons={[
+              {
+                title: 'Сводный отчет',
+                onClick: openConsolidatedReportModal,
+              },
+              { title: 'Сводный отчет по ИПУ', onClick: () => {} },
+              { title: 'Групповой отчет', onClick: () => {} },
+              { title: 'Отчет по СОИ', onClick: () => {} },
+              { title: 'Отчет о недопоставках ГВС', onClick: () => {} },
+            ]}
+          >
+            {() => (
+              <ButtonSC type="ghost">
+                Отчеты по ОДПУ <ChevronIconSC />
+              </ButtonSC>
+            )}
+          </ContextMenuButton>
         </ButtonWrapper>
         <ManeInfo isLoading={isLoading} data={data?.summaryData || null} />
       </LeftBlock>

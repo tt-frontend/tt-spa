@@ -1,7 +1,13 @@
 import queryString from 'query-string';
 import { axios } from 'api/axios';
-import { CalculatorIntoHousingStockResponse } from 'api/types';
-import { GetConsolidatedReport } from './consolidatedReportService.types';
+import {
+  BuildingListResponsePagedList,
+  CalculatorIntoHousingStockResponse,
+} from 'api/types';
+import {
+  GetBuildingPayload,
+  GetConsolidatedReport,
+} from './consolidatedReportService.types';
 import { downloadURI } from 'utils/downloadByURL';
 
 export const getConsolidatedReport = async ({
@@ -26,4 +32,10 @@ export const getConsolidatedReport = async ({
   const url = window.URL.createObjectURL(new Blob([res]));
 
   downloadURI(url, Name);
+};
+
+export const getBuilding = (
+  payload: GetBuildingPayload,
+): Promise<BuildingListResponsePagedList> => {
+  return axios.get('Buildings', { params: payload });
 };
