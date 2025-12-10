@@ -7,7 +7,7 @@ import {
   EditChessBoardPanelType,
 } from './addChessBoardService.types';
 import { ChessboardCreateModel } from 'api/test-types';
-import { toSectionCreateModel } from './addChessBoardService.utils';
+import { chessboardModel, entranceModel } from './addChessBoardService.utils';
 
 const ChessBoardGate = createGate<{ buildingId: number }>();
 
@@ -26,21 +26,19 @@ const $openPanel = createStore<EditChessBoardPanelType | null>(null)
 
 const resetChessBoardData = createEvent();
 
+// chessboard functions
 const handleAddEntrance = createEvent<AddEntranceFormParams>();
 const handleAddParking = createEvent<AddParkingFormParams>();
+
+// entrance funtions
+const handleDeleteEntrance = createEvent<number>();
 
 const $chessboardCreateData = createStore<ChessboardCreateModel>({
   sections: [],
 })
-  .on(handleAddEntrance, (prev, payload) => {
-    const newSection = toSectionCreateModel(payload);
-
-    return {
-      ...prev,
-      sections: [...(prev.sections || []), newSection],
-    };
-  })
-  .on(resetChessBoardData, () => ({ sections: [] }));
+  .on(handleAddEntrance, chessboardModel.addEntrance)
+  .on(resetChessBoardData, chessboardModel.resetChessboard)
+  .on(handleDeleteEntrance, entranceModel.deleteEntrance);
 
 $openPanel.reset([handleAddEntrance, handleAddParking]);
 
@@ -55,6 +53,7 @@ export const addChessBoardService = {
     closeEditChessboardPanel,
     handleAddEntrance,
     handleAddParking,
+    handleDeleteEntrance,
   },
   outputs: { $openPanel, $chessboardCreateData, $entrances },
   gates: { ChessBoardGate },

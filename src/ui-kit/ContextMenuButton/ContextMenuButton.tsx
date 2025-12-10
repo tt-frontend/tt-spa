@@ -64,7 +64,14 @@ const getMenuButtons = (props: {
 };
 
 export const ContextMenuButton: FC<ContextMenuButtonProps> = (props) => {
-  const { menuButtons, disabled, size, children = null, icon = null } = props;
+  const {
+    menuButtons,
+    disabled,
+    size,
+    children = null,
+    icon = null,
+    wide,
+  } = props;
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -100,7 +107,10 @@ export const ContextMenuButton: FC<ContextMenuButtonProps> = (props) => {
   );
 
   return (
-    <div onClick={(e) => e.stopPropagation()}>
+    <div
+      onClick={(e) => e.stopPropagation()}
+      style={{ width: wide ? '100%' : '' }}
+    >
       <Dropdown
         dropdownRender={menu}
         disabled={disabled}
@@ -110,7 +120,10 @@ export const ContextMenuButton: FC<ContextMenuButtonProps> = (props) => {
       >
         <>
           {Boolean(children) && (
-            <div onClick={() => setIsVisible((prev) => !prev)}>
+            <div
+              style={{ width: wide ? '100%' : '' }}
+              onClick={() => setIsVisible((prev) => !prev)}
+            >
               {children?.(isVisible)}
             </div>
           )}
