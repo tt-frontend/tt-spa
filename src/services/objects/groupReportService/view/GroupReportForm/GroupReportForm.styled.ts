@@ -38,28 +38,11 @@ export const TreeSelectMultiple = styled(TreeSelect)`
     top: -10px !important;
   }
 
-  /* .ant-select-selection-item {
-    min-height: 24px;
-    height: auto;
-    border: none;
-    background: rgba(24, 158, 233, 0.16);
-  } */
-
-  /* .ant-select-selection-item-content {
+  .ant-select-selection-item-content {
     line-height: initial;
     display: flex;
     align-items: center;
-  } */
-
-  /* .ant-select-selection-item-remove {
-    transform: translateY(2px);
-  } */
-
-  /* .ant-select-selection-item-remove {
-    display: flex;
-    align-items: center;
-    padding-left: 4px;
-  } */
+  }
 
   * {
     font-size: 16px !important;
@@ -75,23 +58,9 @@ export const TreeSelectMultiple = styled(TreeSelect)`
   }
 
   .ant-select-item {
-    margin: 0 !important;
-    padding: 0 !important;
-
     &:hover {
       background: #189ee9 !important;
       color: white;
-    }
-
-    .ant-select-item-option-content {
-      background: white;
-      padding: 8px 24px !important;
-      /* margin: 0 !important; */
-
-      &:hover {
-        background: #189ee9 !important;
-        color: white;
-      }
     }
   }
 `;
