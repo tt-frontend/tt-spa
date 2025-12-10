@@ -8,6 +8,7 @@ import {
   dashboardOrganizationsQuery,
   existingMoDistrictsQuery,
 } from './mainServiceService.api';
+import { currentOrganizationService } from 'services/currentOrganizationService';
 
 const {
   inputs,
@@ -32,6 +33,7 @@ export const MainServiceContainer = () => {
     treeData,
     selectHouseManagememt,
     selectCity,
+    currentManagingFirm,
   } = useUnit({
     filter: outputs.$filter,
     setFilter: inputs.setFilter,
@@ -48,11 +50,13 @@ export const MainServiceContainer = () => {
     treeData: outputs.$treeData,
     selectHouseManagememt: inputs.selectHouseManagememt,
     selectCity: inputs.selectCity,
+    currentManagingFirm:
+      currentOrganizationService.outputs.$currentManagingFirm,
   });
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <PageHeader title="УК «Лесные озёра»" />
+      <PageHeader title={currentManagingFirm?.name} />
       <PageGate />
 
       <Filter
