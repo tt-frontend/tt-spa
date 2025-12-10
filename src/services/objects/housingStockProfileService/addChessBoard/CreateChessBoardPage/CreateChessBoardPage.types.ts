@@ -16,4 +16,5 @@ export type Props = {
   handleAddEntrance: (payload: AddEntranceFormParams) => void;
   handleAddParking: (payload: AddParkingFormParams) => void;
   entrances: (number | null)[];
+  handleDeleteEntrance: (payload: number) => void;
 };

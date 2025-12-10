@@ -8,7 +8,10 @@ import {
 import { Props } from './ChessBoardView.types';
 import { ChessboardItem } from './ChessboardItem';
 
-export const ChessBoardView: FC<Props> = ({ chessboardCreateData }) => {
+export const ChessBoardView: FC<Props> = ({
+  chessboardCreateData,
+  handleDeleteEntrance,
+}) => {
   return (
     <Wrapper>
       {chessboardCreateData.sections?.map((section) => (
@@ -21,7 +24,12 @@ export const ChessBoardView: FC<Props> = ({ chessboardCreateData }) => {
               menuButtons={[
                 { title: 'Изменить номер подъезда' },
                 { title: 'Дублировать подъезд' },
-                { title: 'Удалить подъезд' },
+                {
+                  title: 'Удалить подъезд',
+                  onClick: () =>
+                    section.sectionNumber &&
+                    handleDeleteEntrance(section.sectionNumber),
+                },
               ]}
             >
               {section.sectionNumber} Подъезд

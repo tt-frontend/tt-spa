@@ -1,9 +1,13 @@
-import { FloorCreateModel, SectionCreateModel } from 'api/test-types';
+import {
+  ChessboardCreateModel,
+  FloorCreateModel,
+  SectionCreateModel,
+} from 'api/test-types';
 import { AddEntranceFormParams } from './addChessBoardService.types';
 
 export type ApartmentNumberFormatter = (floor: number, index: number) => string;
 
-export function toSectionCreateModel(
+function toSectionCreateModel(
   params: AddEntranceFormParams,
   formatApartmentNumber: ApartmentNumberFormatter = (_, index) => String(index),
 ): SectionCreateModel {
@@ -42,3 +46,34 @@ export function toSectionCreateModel(
     floors,
   };
 }
+
+const addEntrance = (
+  prev: ChessboardCreateModel,
+  payload: AddEntranceFormParams,
+) => {
+  const newSection = toSectionCreateModel(payload);
+
+  return {
+    ...prev,
+    sections: [...(prev.sections || []), newSection],
+  };
+};
+
+const resetChessboard = () => ({ sections: [] });
+
+const deleteEntrance = (prev: ChessboardCreateModel, payload: number) => {
+  return {
+    ...prev,
+    sections:
+      prev.sections?.filter((elem) => elem.sectionNumber !== payload) || [],
+  };
+};
+
+export const chessboardModel = {
+  addEntrance,
+  resetChessboard,
+};
+
+export const entranceModel = {
+  deleteEntrance,
+};

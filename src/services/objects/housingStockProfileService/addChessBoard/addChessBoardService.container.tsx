@@ -24,6 +24,7 @@ export const AddChessBoardContainer = () => {
     openPanel,
     chessboardCreateData,
     entrances,
+    handleDeleteEntrance,
   } = useUnit({
     ...inputs,
     building: buildingQuery.$data,
@@ -46,6 +47,7 @@ export const AddChessBoardContainer = () => {
         handleAddEntrance={handleAddEntrance}
         handleAddParking={handleAddParking}
         entrances={entrances}
+        handleDeleteEntrance={handleDeleteEntrance}
       />
     </>
   );

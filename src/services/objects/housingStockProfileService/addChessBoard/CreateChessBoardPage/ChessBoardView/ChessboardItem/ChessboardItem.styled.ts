@@ -53,6 +53,8 @@ export const Wrapper = styled.div<{
   max-width: ${({ wide }) => (wide ? '100%' : '33px')};
   height: 33px;
 
+  padding: 0 8px;
+
   border-radius: 4px;
   cursor: pointer;
 
