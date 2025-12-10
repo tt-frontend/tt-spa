@@ -23,16 +23,16 @@ import {
   EIndividualDeviceRateType,
   EResourceType,
 } from 'api/types';
-import { DatePickerNative } from 'ui-kit/shared/DatePickerNative';
+import { DatePickerNative, fromEnter } from 'ui-kit/shared/DatePickerNative';
 import { getIndividualDeviceRateNumByName } from 'utils/getIndividualDeviceRateNumByName';
 import dayjs from 'api/dayjs';
 import { getBitDepthAndScaleFactor } from 'utils/getBitDepthAndScaleFactor';
 import { addIndividualDeviceService } from '../../../addIndividualDeviceService.model';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from 'ui-kit/Button';
-import { validationSchema } from './BaseInfoStage.constants';
+import { dataKey, validationSchema } from './BaseInfoStage.constants';
 import { languageDetect } from 'utils/languageDetect';
-import { useEnterToTab } from 'hooks/useEnterAsTab';
+import { useSwitchInputOnEnter } from 'hooks/useSwitchInputOnEnter';
 
 const {
   gates: { ContractorsGate, IndividualDeviceMountPlacesGate },
@@ -135,10 +135,52 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
 
   const rateNum = getIndividualDeviceRateNumByName(values.rateType);
 
+  const getNextMap = (rateNum: number) => {
+    return {
+      resource: -1,
+      model: 0,
+      serialNumber: 1,
+      mountPlaceId: 2,
+      bitDepth: 3,
+      rateType: 4,
+
+      startupReadings1: 5,
+      startupReadings2: rateNum >= 2 ? 6 : 5,
+      startupReadings3: 7,
+
+      // текущие показания
+      defaultReadings1: rateNum === 1 ? 6 : rateNum === 2 ? 7 : 8,
+      defaultReadings2: rateNum === 2 ? 8 : 9,
+      defaultReadings3: 10,
+
+      openingDate: rateNum === 1 ? 7 : rateNum === 2 ? 9 : 11,
+
+      lastCheckingDate: rateNum === 1 ? 8 : rateNum === 2 ? 10 : 12,
+      futureCheckingDate: rateNum === 1 ? 9 : rateNum === 2 ? 11 : 13,
+
+      sealNumber: rateNum === 1 ? 10 : rateNum === 2 ? 12 : 14,
+      sealInstallationDate: rateNum === 1 ? 11 : rateNum === 2 ? 13 : 15,
+    };
+  };
+
+  const handleEnter =
+    (field: keyof ReturnType<typeof getNextMap>) =>
+    (
+      e: React.KeyboardEvent<HTMLInputElement | HTMLDivElement | HTMLElement>,
+    ) => {
+      const map = getNextMap(rateNum); // получаем актуальный map с учетом rateNum
+      const nextIndex = map[field]; // берем индекс следующего поля
+      if (nextIndex !== undefined) {
+        fromEnter(() => next(nextIndex))(e);
+      }
+    };
+
   const bottomDateFields = (
     <>
       <FormItem label="Дата последней поверки прибора">
         <DatePickerNative
+          dataKey={dataKey}
+          onKeyDown={handleEnter('lastCheckingDate')}
           onChange={(incomingValue: string) => {
             const value = dayjs(incomingValue);
 
@@ -162,6 +204,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
       </FormItem>
       <FormItem label="Дата следующей поверки прибора">
         <DatePickerNative
+          dataKey={dataKey}
+          onKeyDown={handleEnter('futureCheckingDate')}
           onChange={(value) =>
             setFieldValue(
               'futureCheckingDate',
@@ -181,6 +225,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
         label={`Текущие показания прибора${rateNum !== 1 ? ' (День)' : ''}`}
       >
         <Input
+          data-reading-input={dataKey}
+          onKeyDown={handleEnter('defaultReadings1')}
           type="number"
           placeholder="Введите текущие показания"
           onChange={onChangeDefaultReadings(1)}
@@ -192,6 +238,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
       {rateNum >= 2 && (
         <FormItem label="Текущие показания прибора (Ночь)">
           <Input
+            data-reading-input={dataKey}
+            onKeyDown={handleEnter('defaultReadings2')}
             type="number"
             placeholder="Введите текущие показания"
             onChange={onChangeDefaultReadings(2)}
@@ -203,6 +251,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
       {rateNum >= 3 && (
         <FormItem>
           <Input
+            data-reading-input={dataKey}
+            onKeyDown={handleEnter('defaultReadings3')}
             type="number"
             placeholder="Введите текущие показания"
             onChange={onChangeDefaultReadings(3)}
@@ -214,7 +264,7 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
     </>
   );
 
-  useEnterToTab();
+  const next = useSwitchInputOnEnter(dataKey, false);
 
   return (
     <Wrap>
@@ -226,6 +276,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
       <FormWrap>
         <FormItem label="Тип ресурса">
           <ResourceSelect
+            data-reading-input={dataKey}
+            onKeyDown={handleEnter('resource')}
             onChange={(value) => {
               setFieldValue('resource', value);
 
@@ -245,6 +297,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
 
         <FormItem label="Модель прибора">
           <AutoComplete
+            data-reading-input={dataKey}
+            onKeyDown={handleEnter('model')}
             prefix={language !== 'unknown' && <Language>{language}</Language>}
             size="large"
             value={values.model}
@@ -261,6 +315,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
 
         <FormItem label="Серийный номер">
           <Input
+            data-reading-input={dataKey}
+            onKeyDown={handleEnter('serialNumber')}
             small={false}
             placeholder="Введите серийный номер прибора"
             onChange={(value) =>
@@ -284,6 +340,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
 
         <FormItem label="Место установки">
           <Select
+            data-reading-input={dataKey}
+            onKeyDown={handleEnter('mountPlaceId')}
             placeholder="Выберите место установки"
             value={values.mountPlaceId || undefined}
             onChange={(value) => setFieldValue('mountPlaceId', value)}
@@ -299,6 +357,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
 
         <FormItem label="Разрядность">
           <Input
+            data-reading-input={dataKey}
+            onKeyDown={handleEnter('bitDepth')}
             type="number"
             placeholder="Введите разрядность прибора"
             name="bitDepth"
@@ -311,6 +371,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
 
       <FormItem label="Тариф прибора">
         <Select
+          data-reading-input={dataKey}
+          onKeyDown={handleEnter('rateType')}
           placeholder="Выберите тариф прибора"
           value={values.rateType}
           onChange={(value) => setFieldValue('rateType', value)}
@@ -332,6 +394,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
           label={`Первичные показания прибора${rateNum !== 1 ? ' (День)' : ''}`}
         >
           <Input
+            data-reading-input={dataKey}
+            onKeyDown={handleEnter('startupReadings1')}
             type="number"
             placeholder="Введите первичные показания"
             onChange={onChangeStartupReadings(1)}
@@ -343,6 +407,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
         {rateNum >= 2 && (
           <FormItem label="Первичные показания прибора (Ночь)">
             <Input
+              data-reading-input={dataKey}
+              onKeyDown={handleEnter('startupReadings2')}
               type="number"
               placeholder="Введите первичные показания"
               onChange={onChangeStartupReadings(2)}
@@ -354,6 +420,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
         {rateNum >= 3 && (
           <FormItem>
             <Input
+              data-reading-input={dataKey}
+              onKeyDown={handleEnter('startupReadings3')}
               type="number"
               placeholder="Введите первичные показания"
               onChange={onChangeStartupReadings(3)}
@@ -370,6 +438,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
 
       <FormItem label="Дата ввода в эксплуатацию">
         <DatePickerNative
+          dataKey={dataKey}
+          onKeyDown={handleEnter('openingDate')}
           onChange={(value) =>
             setFieldValue('openingDate', dayjs(value).format('YYYY-MM-DD'))
           }
@@ -391,6 +461,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
       <FormWrap>
         <FormItem label="Пломба">
           <Input
+            data-reading-input={dataKey}
+            onKeyDown={handleEnter('sealNumber')}
             placeholder="Номер пломбы"
             value={values.sealNumber || undefined}
             onChange={(value) =>
@@ -402,6 +474,8 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
 
         <FormItem label="Дата установки пломбы">
           <DatePickerNative
+            dataKey={dataKey}
+            onKeyDown={handleEnter('sealInstallationDate')}
             onChange={(value) =>
               setFieldValue(
                 'sealInstallationDate',
@@ -415,6 +489,7 @@ export const BaseInfoStage: FC<BaseInfoStageProps> = ({
 
       <FormItem label="Монтажная организация">
         <Select
+          data-reading-input={dataKey}
           onChange={(value) => setFieldValue('contractorId', value)}
           value={values.contractorId || void 0}
           placeholder="Выберите монтажную организацию"
