@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Tooltip } from 'antd';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { IndividualDeviceLastReadingBarProps } from './IndividualDeviceLastReadingBar.types';
 import {
   DeviceInfoWrapper,

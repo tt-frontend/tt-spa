@@ -55,7 +55,9 @@ export const prepareAddressesTreeData = (
               value: address.buildingId,
               key: address.buildingId,
               title: address.number
-                ? `${street.street}, ${address.number}`
+                ? address.corpus
+                  ? `${street.street}, ${address.number}, к.${address.corpus}`
+                  : `${street.street}, ${address.number}`
                 : '',
             })) || [],
         })) || [],

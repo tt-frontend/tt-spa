@@ -21,7 +21,7 @@ import {
   WorkWithAppoitnmentPayload,
 } from './createSealService.types';
 import { GetDistrictAppointmentsRequestPayload } from '../distributeRecordsService/distributeRecordsService.types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 
 const workWithAppointment = createEvent<WorkWithAppoitnmentPayload>();
 

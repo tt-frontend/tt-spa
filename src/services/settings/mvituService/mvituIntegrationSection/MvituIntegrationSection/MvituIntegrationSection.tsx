@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { Switch, Tooltip } from 'antd';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import {
   DateWrapper,
   IntegrationPanel,

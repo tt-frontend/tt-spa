@@ -6,4 +6,5 @@ export type ResourceSelectProps = {
   disabled?: boolean;
   onChange?: (resource: EResourceType | null) => void;
   small?: boolean;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
 };

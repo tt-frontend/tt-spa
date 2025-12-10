@@ -12,4 +12,6 @@ export type Props = {
   selectedResourceForColor: EResourceType;
   setResource: (payload: EResourceType) => void;
   chartData: MainDashboardHousingConsumptionResponse | null;
+  isHousingMeteringDevices: boolean;
+  isHousingMeteringDevicesLoading: boolean;
 };

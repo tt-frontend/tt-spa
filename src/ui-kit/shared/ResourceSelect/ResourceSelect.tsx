@@ -12,6 +12,7 @@ export const ResourceSelect: FC<ResourceSelectProps> = ({
   disabled,
   onChange,
   small = false,
+  onKeyDown,
 }) => {
   const resources = Object.values(EResourceType).filter(
     (resource) => !exclude.includes(resource),
@@ -24,6 +25,7 @@ export const ResourceSelect: FC<ResourceSelectProps> = ({
       onChange={(value) =>
         onChange && onChange((value || null) as EResourceType | null)
       }
+      onKeyDown={onKeyDown}
       disabled={disabled}
       placeholder="Выберите"
     >

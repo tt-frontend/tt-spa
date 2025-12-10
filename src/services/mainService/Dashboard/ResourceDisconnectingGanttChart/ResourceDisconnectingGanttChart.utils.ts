@@ -1,5 +1,5 @@
 import { MainDashboardResourceDisconnectingModel } from 'api/types';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import _ from 'lodash';
 import { round } from 'utils/round';
 

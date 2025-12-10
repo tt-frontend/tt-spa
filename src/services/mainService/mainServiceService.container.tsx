@@ -7,8 +7,10 @@ import {
   dashboardChartQuery,
   dashboardOrganizationsQuery,
   existingMoDistrictsQuery,
+  fetchHousingMeteringDevicesQuery,
 } from './mainServiceService.api';
 import { currentOrganizationService } from 'services/currentOrganizationService';
+import { useMemo } from 'react';
 
 const {
   inputs,
@@ -34,6 +36,8 @@ export const MainServiceContainer = () => {
     selectHouseManagememt,
     selectCity,
     currentManagingFirm,
+    housingMeteringDevices,
+    isHousingMeteringDevicesLoading,
   } = useUnit({
     filter: outputs.$filter,
     setFilter: inputs.setFilter,
@@ -52,7 +56,14 @@ export const MainServiceContainer = () => {
     selectCity: inputs.selectCity,
     currentManagingFirm:
       currentOrganizationService.outputs.$currentManagingFirm,
+    housingMeteringDevices: fetchHousingMeteringDevicesQuery.$data,
+    isHousingMeteringDevicesLoading: fetchHousingMeteringDevicesQuery.$pending,
   });
+
+  const isHousingMeteringDevices = useMemo(
+    () => Boolean(housingMeteringDevices?.totalItems),
+    [housingMeteringDevices],
+  );
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -78,6 +89,8 @@ export const MainServiceContainer = () => {
         selectedResourceForColor={selectedResourceForColor}
         setResource={setResource}
         chartData={chartData}
+        isHousingMeteringDevices={isHousingMeteringDevices}
+        isHousingMeteringDevicesLoading={isHousingMeteringDevicesLoading}
       />
     </div>
   );

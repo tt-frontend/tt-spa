@@ -17,7 +17,7 @@ import {
 import { Button } from 'ui-kit/Button';
 import { LinkChevron } from 'ui-kit/shared/ListOpeningChevron/ListOpeningChevron';
 import { Link } from 'react-router-dom';
-import dayjs from 'dayjs';
+import dayjs from 'api/dayjs';
 import { Tooltip } from 'ui-kit/shared/Tooltip';
 import { EPollState } from 'api/types';
 

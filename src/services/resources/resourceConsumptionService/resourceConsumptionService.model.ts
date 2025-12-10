@@ -3,10 +3,7 @@ import { combine, sample } from 'effector';
 import { createGate } from 'effector-react';
 import dayjs from 'api/dayjs';
 import axios, { CancelTokenSource } from 'axios';
-import {
-  GetSummaryHousingConsumptionsByResourcesResponse,
-  HousingMeteringDeviceIncludingReadingsResponsePagedList,
-} from 'api/types';
+import { GetSummaryHousingConsumptionsByResourcesResponse } from 'api/types';
 import { initialSelectedGraphTypes } from './resourceConsumptionService.constants';
 import {
   CancelTokens,
@@ -23,7 +20,6 @@ import { addressSearchService } from 'services/addressSearchService/addressSearc
 import { getAddressesFx } from './resourceConsumptionFilterService/resourceConsumptionFilterService.api';
 import {
   fetchHousingConsumptionPlot,
-  fetchHousingMeteringDevices,
   fetchNormativeAndSubscriberConsumptionData,
   fetchSummaryHousingConsumptions,
 } from './resourceConsumptionService.api';
@@ -114,23 +110,6 @@ const getAdditionalNormativeAndSubscriberConsumptionDataFx = createEffect<
   },
   EffectFailDataAxiosError
 >(fetchNormativeAndSubscriberConsumptionData);
-
-const fetchHousingMeteringDevicesFx = createEffect<
-  void,
-  HousingMeteringDeviceIncludingReadingsResponsePagedList
->(fetchHousingMeteringDevices);
-
-const GetHousingMeteringDevicesGate = createGate();
-
-sample({
-  clock: GetHousingMeteringDevicesGate.open,
-  target: fetchHousingMeteringDevicesFx,
-});
-
-const $isHousingMeteringDevices = createStore<boolean | null>(null).on(
-  fetchHousingMeteringDevicesFx.doneData,
-  (_, data) => Boolean(data.totalItems),
-);
 
 const $isFirstDataCame = createStore(false).reset(fetchConsumptionData);
 
@@ -491,7 +470,6 @@ export const resourceConsumptionService = {
     $isOnlyHousingDataEmpty,
     $isAllDataLoading,
     $isDataLoading,
-    $isHousingMeteringDevices,
   },
-  gates: { ResourceConsumptionGate, GetHousingMeteringDevicesGate },
+  gates: { ResourceConsumptionGate },
 };

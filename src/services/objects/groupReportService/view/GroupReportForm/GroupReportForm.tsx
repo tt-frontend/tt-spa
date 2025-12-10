@@ -224,6 +224,10 @@ export const GroupReportForm: FC<GroupReportFormProps> = ({
         {values.exportType === ExportReportType.Address && (
           <FormItem label="Адрес">
             <TreeSelectMultiple
+              dropdownStyle={{
+                overflowY: 'auto',
+              }}
+              open
               multiple
               treeData={addressesTreeData}
               placeholder="Выберите адрес"

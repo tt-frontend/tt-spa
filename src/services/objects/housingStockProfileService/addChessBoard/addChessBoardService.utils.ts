@@ -1,11 +1,15 @@
-import { FloorCreateModel, SectionCreateModel } from 'api/test-types';
+import {
+  ChessboardCreateModel,
+  FloorCreateModel,
+  SectionCreateModel,
+} from 'api/test-types';
 import { AddEntranceFormParams } from './addChessBoardService.types';
 
 export type ApartmentNumberFormatter = (floor: number, index: number) => string;
 
-export function toSectionCreateModel(
+function toSectionCreateModel(
   params: AddEntranceFormParams,
-  formatApartmentNumber: ApartmentNumberFormatter = (_, index) => String(index), // формат по умолчанию
+  formatApartmentNumber: ApartmentNumberFormatter = (_, index) => String(index),
 ): SectionCreateModel {
   const {
     entranceNumber,
@@ -17,19 +21,16 @@ export function toSectionCreateModel(
 
   const floors: FloorCreateModel[] = [];
 
-  // как было
-  let globalIndex = 0;
+  // номер квартиры (НЕ индекс)
+  let currentApartmentNumber = apartmentsStartsFrom;
 
   for (let floor = 1; floor <= floorsAmount; floor++) {
     const isLiving = floor >= livingQuartersStartFloor;
 
     const apartmentNumbers = isLiving
       ? Array.from({ length: apartmentsPerFloorAmount }, () => {
-          const number = formatApartmentNumber(
-            floor,
-            apartmentsStartsFrom + globalIndex,
-          );
-          globalIndex++;
+          const number = formatApartmentNumber(floor, currentApartmentNumber);
+          currentApartmentNumber++;
           return number;
         })
       : [];
@@ -45,3 +46,34 @@ export function toSectionCreateModel(
     floors,
   };
 }
+
+const addEntrance = (
+  prev: ChessboardCreateModel,
+  payload: AddEntranceFormParams,
+) => {
+  const newSection = toSectionCreateModel(payload);
+
+  return {
+    ...prev,
+    sections: [...(prev.sections || []), newSection],
+  };
+};
+
+const resetChessboard = () => ({ sections: [] });
+
+const deleteEntrance = (prev: ChessboardCreateModel, payload: number) => {
+  return {
+    ...prev,
+    sections:
+      prev.sections?.filter((elem) => elem.sectionNumber !== payload) || [],
+  };
+};
+
+export const chessboardModel = {
+  addEntrance,
+  resetChessboard,
+};
+
+export const entranceModel = {
+  deleteEntrance,
+};
