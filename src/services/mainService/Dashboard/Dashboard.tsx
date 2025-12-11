@@ -21,6 +21,7 @@ import { consolidatedReportService } from 'services/objects/housingStockProfileS
 import { heatIndividualDevicesReportService } from 'services/objects/objectsProfileService/heatIndividualDevicesReportService';
 import { groupReportService } from 'services/objects/groupReportService';
 import { soiReportService } from 'services/objects/objectsProfileService/soiReportService';
+import { uploadArchiveService } from './uploadArchive/uploadArchiveService.models';
 
 export const Dashboard: FC<Props> = ({
   data,
@@ -38,6 +39,7 @@ export const Dashboard: FC<Props> = ({
     openIndividualDevicesReportModal,
     openGroupReportModal,
     openSoiReportModal,
+    handleOpenArchive,
   } = useUnit({
     openConsolidatedReportModal:
       consolidatedReportService.inputs.openConsolidatedReportModal,
@@ -45,6 +47,7 @@ export const Dashboard: FC<Props> = ({
       heatIndividualDevicesReportService.inputs.openModal,
     openGroupReportModal: groupReportService.inputs.openModal,
     openSoiReportModal: soiReportService.inputs.openSoiReportModal,
+    handleOpenArchive: uploadArchiveService.inputs.handleOpen,
   });
 
   return (
@@ -87,7 +90,7 @@ export const Dashboard: FC<Props> = ({
 
       <LeftBlock>
         <ButtonWrapper>
-          <ButtonSC>Выгрузка архива</ButtonSC>
+          <ButtonSC onClick={handleOpenArchive}>Выгрузка архива</ButtonSC>
           <ContextMenuButton
             menuButtons={[
               {

@@ -15,12 +15,18 @@ import { ConsolidatedReportContainer } from 'services/objects/housingStockProfil
 import { HeatIndividualDevicesReportContainer } from 'services/objects/objectsProfileService/heatIndividualDevicesReportService';
 import { GroupReportContainer } from 'services/objects/groupReportService';
 import { SoiReportContainer } from 'services/objects/objectsProfileService/soiReportService';
+import { UploadArchiveContainer } from './Dashboard/uploadArchive';
+import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
+import { getCalculatorQuery } from './Dashboard/uploadArchive/uploadArchiveService.api';
+import { ConsumptionReportCalculatorContainer } from 'services/calculators/consumptionReportCalculatorService';
 
 const {
   inputs,
   outputs,
   gates: { PageGate },
 } = mainServiceService;
+
+const ExistingCitiesGate = addressSearchService.gates.ExistingCitiesGate;
 
 export const MainServiceContainer = () => {
   const {
@@ -42,6 +48,7 @@ export const MainServiceContainer = () => {
     currentManagingFirm,
     housingMeteringDevices,
     isHousingMeteringDevicesLoading,
+    calculator,
   } = useUnit({
     filter: outputs.$filter,
     setFilter: inputs.setFilter,
@@ -62,6 +69,7 @@ export const MainServiceContainer = () => {
       currentOrganizationService.outputs.$currentManagingFirm,
     housingMeteringDevices: fetchHousingMeteringDevicesQuery.$data,
     isHousingMeteringDevicesLoading: fetchHousingMeteringDevicesQuery.$pending,
+    calculator: getCalculatorQuery.$data,
   });
 
   const isHousingMeteringDevices = useMemo(
@@ -73,11 +81,15 @@ export const MainServiceContainer = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <PageHeader title={currentManagingFirm?.name} />
       <PageGate />
+      <ExistingCitiesGate />
 
       <ConsolidatedReportContainer />
       <HeatIndividualDevicesReportContainer />
       <GroupReportContainer />
       <SoiReportContainer />
+      <UploadArchiveContainer />
+
+      <ConsumptionReportCalculatorContainer calculator={calculator} />
 
       <Filter
         filter={filter}

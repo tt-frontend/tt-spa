@@ -82,27 +82,6 @@ export const ConsolidatedReportForm: FC<ConsolidatedReportFormProps> = ({
         });
     },
   });
-  // const {
-  //   // values: addressValues,
-  //   setValues: setAddressValues,
-  //   handleSubmit: handleAddressSearch,
-  //   resetForm: resetAddressForm,
-  // } = useFormik({
-  //   initialValues: { City: '', Street: '', BuildingNumber: '', Corpus: '' },
-
-  //   onSubmit: ({ City, Corpus, BuildingNumber, Street }) => {
-  //     const valuesArray = [City, BuildingNumber, Street];
-
-  //     if (valuesArray.some((e) => !e)) return;
-
-  //     handleSearcheBuilding({
-  //       City,
-  //       Street,
-  //       BuildingNumber,
-  //       Corpus,
-  //     });
-  //   },
-  // });
 
   return (
     <Form id={formId} onSubmitCapture={handleSubmitForm}>
