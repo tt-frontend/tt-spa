@@ -12,6 +12,9 @@ import {
 import { currentOrganizationService } from 'services/currentOrganizationService';
 import { useMemo } from 'react';
 import { ConsolidatedReportContainer } from 'services/objects/housingStockProfileService/consolidatedReportService';
+import { HeatIndividualDevicesReportContainer } from 'services/objects/objectsProfileService/heatIndividualDevicesReportService';
+import { GroupReportContainer } from 'services/objects/groupReportService';
+import { SoiReportContainer } from 'services/objects/objectsProfileService/soiReportService';
 
 const {
   inputs,
@@ -72,6 +75,9 @@ export const MainServiceContainer = () => {
       <PageGate />
 
       <ConsolidatedReportContainer />
+      <HeatIndividualDevicesReportContainer />
+      <GroupReportContainer />
+      <SoiReportContainer />
 
       <Filter
         filter={filter}

@@ -18,6 +18,9 @@ import { ManeInfo } from './ManeInfo';
 import { ContextMenuButton } from 'ui-kit/ContextMenuButton';
 import { useUnit } from 'effector-react';
 import { consolidatedReportService } from 'services/objects/housingStockProfileService/consolidatedReportService';
+import { heatIndividualDevicesReportService } from 'services/objects/objectsProfileService/heatIndividualDevicesReportService';
+import { groupReportService } from 'services/objects/groupReportService';
+import { soiReportService } from 'services/objects/objectsProfileService/soiReportService';
 
 export const Dashboard: FC<Props> = ({
   data,
@@ -30,9 +33,18 @@ export const Dashboard: FC<Props> = ({
   isHousingMeteringDevices,
   isHousingMeteringDevicesLoading,
 }) => {
-  const { openConsolidatedReportModal } = useUnit({
+  const {
+    openConsolidatedReportModal,
+    openIndividualDevicesReportModal,
+    openGroupReportModal,
+    openSoiReportModal,
+  } = useUnit({
     openConsolidatedReportModal:
       consolidatedReportService.inputs.openConsolidatedReportModal,
+    openIndividualDevicesReportModal:
+      heatIndividualDevicesReportService.inputs.openModal,
+    openGroupReportModal: groupReportService.inputs.openModal,
+    openSoiReportModal: soiReportService.inputs.openSoiReportModal,
   });
 
   return (
@@ -82,10 +94,13 @@ export const Dashboard: FC<Props> = ({
                 title: 'Сводный отчет',
                 onClick: openConsolidatedReportModal,
               },
-              { title: 'Сводный отчет по ИПУ', onClick: () => {} },
-              { title: 'Групповой отчет', onClick: () => {} },
-              { title: 'Отчет по СОИ', onClick: () => {} },
-              { title: 'Отчет о недопоставках ГВС', onClick: () => {} },
+              {
+                title: 'Сводный отчет по ИПУ',
+                onClick: openIndividualDevicesReportModal,
+              },
+              { title: 'Групповой отчет', onClick: openGroupReportModal },
+              { title: 'Отчет по СОИ', onClick: openSoiReportModal },
+              // { title: 'Отчет о недопоставках ГВС', onClick: () => {} },
             ]}
           >
             {() => (
