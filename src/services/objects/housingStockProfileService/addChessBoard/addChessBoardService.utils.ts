@@ -1,5 +1,6 @@
 import {
   AddEntranceFormParams,
+  DeleteAapartmentPayload,
   DeleteFloorPayload,
   DuplicateFloorPayload,
 } from './addChessBoardService.types';
@@ -68,11 +69,6 @@ const addEntrance = (
 };
 
 const resetChessboard = () => ({ sections: [] });
-
-export const chessboardModel = {
-  addEntrance,
-  resetChessboard,
-};
 
 const deleteEntrance = (prev: PremiseLocationCreateModel, payload: number) => {
   return {
@@ -155,11 +151,6 @@ const dubplicateEntrance = (
   };
 };
 
-export const entranceModel = {
-  deleteEntrance,
-  dubplicateEntrance,
-};
-
 const deleteFloor = (
   prev: PremiseLocationCreateModel,
   payload: DeleteFloorPayload,
@@ -216,4 +207,54 @@ const duplicateFloor = (
   };
 };
 
+const deleteApartment = (
+  prev: PremiseLocationCreateModel,
+  payload: DeleteAapartmentPayload,
+) => {
+  if (
+    !payload.floorNumber ||
+    !payload.sectionNumber ||
+    !payload.apartmentNumber
+  ) {
+    return prev;
+  }
+
+  return {
+    ...prev,
+    sections: prev.sections?.map((section) =>
+      section.number === payload.sectionNumber
+        ? {
+            ...section,
+            floors:
+              section.floors?.map((floor) =>
+                floor.number === payload.floorNumber
+                  ? {
+                      ...floor,
+                      premises: floor.premises?.filter(
+                        (apartment) =>
+                          apartment.number !== payload.apartmentNumber,
+                      ),
+                    }
+                  : floor,
+              ) || [],
+          }
+        : section,
+    ),
+  };
+};
+
+// models
+
+export const chessboardModel = {
+  addEntrance,
+  resetChessboard,
+};
+
+export const entranceModel = {
+  deleteEntrance,
+  dubplicateEntrance,
+};
+
 export const floorModel = { deleteFloor, duplicateFloor };
+
+export const apartmentModel = { deleteApartment };

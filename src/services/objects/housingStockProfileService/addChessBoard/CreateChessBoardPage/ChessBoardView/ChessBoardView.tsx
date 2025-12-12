@@ -16,6 +16,7 @@ export const ChessBoardView: FC<Props> = ({
   handleDuplicateEntrance,
   handleDeleteFloor,
   handleDuplicateFloor,
+  handleDeleteApartmnet,
 }) => {
   useEnterToTab();
 
@@ -83,6 +84,12 @@ export const ChessBoardView: FC<Props> = ({
                     {
                       title: 'Удалить квартиру',
                       color: ContextMenuButtonColor.danger,
+                      onClick: () =>
+                        handleDeleteApartmnet({
+                          sectionNumber: section.number,
+                          floorNumber: floor.number,
+                          apartmentNumber: apartment.number,
+                        }),
                     },
                   ]}
                 >

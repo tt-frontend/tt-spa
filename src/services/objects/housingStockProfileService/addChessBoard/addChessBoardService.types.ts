@@ -24,3 +24,9 @@ export type DuplicateFloorPayload = {
   floorNumber?: number;
   sectionNumber?: number;
 };
+
+export type DeleteAapartmentPayload = {
+  floorNumber?: number | null;
+  sectionNumber?: number | null;
+  apartmentNumber?: string | null;
+};
