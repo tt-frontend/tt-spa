@@ -34,6 +34,7 @@ export const CreateChessBoardPage: FC<Props> = ({
   handleAddParking,
   handleDeleteEntrance,
   handleDuplicateEntrance,
+  handleDeleteFloor,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
@@ -122,6 +123,7 @@ export const CreateChessBoardPage: FC<Props> = ({
             chessboardCreateData={chessboardCreateData}
             handleDeleteEntrance={handleDeleteEntrance}
             handleDuplicateEntrance={handleDuplicateEntrance}
+            handleDeleteFloor={handleDeleteFloor}
           />
         </Blueprint>
       </Wrapper>

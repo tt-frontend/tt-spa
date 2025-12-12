@@ -1,4 +1,7 @@
-import { AddEntranceFormParams } from './addChessBoardService.types';
+import {
+  AddEntranceFormParams,
+  DeleteFloorPayload,
+} from './addChessBoardService.types';
 import { insertAfter } from 'utils/insertAfter';
 import {
   FloorCreateModel,
@@ -155,3 +158,24 @@ export const entranceModel = {
   deleteEntrance,
   dubplicateEntrance,
 };
+
+const deleteFloor = (
+  prev: PremiseLocationCreateModel,
+  payload: DeleteFloorPayload,
+) => {
+  return {
+    ...prev,
+    sections: prev.sections?.map((section) =>
+      section.number === payload.sectionNumber
+        ? {
+            ...section,
+            floors: section.floors?.filter(
+              (floor) => floor.number !== payload.floorNumber,
+            ),
+          }
+        : section,
+    ),
+  };
+};
+
+export const floorModel = { deleteFloor };

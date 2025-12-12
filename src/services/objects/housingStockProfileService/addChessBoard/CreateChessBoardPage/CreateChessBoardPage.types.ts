@@ -2,6 +2,7 @@ import { BuildingShortResponse, PremiseLocationCreateModel } from 'api/types';
 import {
   AddEntranceFormParams,
   AddParkingFormParams,
+  DeleteFloorPayload,
   EditChessBoardPanelType,
 } from '../addChessBoardService.types';
 
@@ -17,4 +18,5 @@ export type Props = {
   entrances: (number | null)[];
   handleDeleteEntrance: (payload: number) => void;
   handleDuplicateEntrance: (payload: number) => void;
+  handleDeleteFloor: (payload: DeleteFloorPayload) => void;
 };

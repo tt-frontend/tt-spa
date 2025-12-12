@@ -7,11 +7,13 @@ import {
 } from './ChessBoardView.styled';
 import { Props } from './ChessBoardView.types';
 import { ChessboardItem } from './ChessboardItem';
+import { ContextMenuButtonColor } from 'ui-kit/ContextMenuButton/ContextMenuButton.types';
 
 export const ChessBoardView: FC<Props> = ({
   chessboardCreateData,
   handleDeleteEntrance,
   handleDuplicateEntrance,
+  handleDeleteFloor,
 }) => {
   return (
     <Wrapper>
@@ -33,6 +35,7 @@ export const ChessBoardView: FC<Props> = ({
                   title: 'Удалить подъезд',
                   onClick: () =>
                     section.number && handleDeleteEntrance(section.number),
+                  color: ContextMenuButtonColor.danger,
                 },
               ]}
             >
@@ -44,8 +47,18 @@ export const ChessBoardView: FC<Props> = ({
               <ChessboardItem
                 menuButtons={[
                   { title: 'Изменить номер этажа' },
-                  { title: 'Дублировать этаж' },
-                  { title: 'Удалить этаж' },
+                  {
+                    title: 'Дублировать этаж',
+                  },
+                  {
+                    title: 'Удалить этаж',
+                    onClick: () =>
+                      handleDeleteFloor({
+                        floorNumber: floor.number,
+                        sectionNumber: section.number,
+                      }),
+                    color: ContextMenuButtonColor.danger,
+                  },
                 ]}
                 type="empty"
               >
@@ -58,7 +71,10 @@ export const ChessBoardView: FC<Props> = ({
                     { title: 'Изменить номер квартиры' },
                     { title: 'Добавить квартиру справа' },
                     { title: 'Добавить квартиру слева' },
-                    { title: 'Удалить квартиру' },
+                    {
+                      title: 'Удалить квартиру',
+                      color: ContextMenuButtonColor.danger,
+                    },
                   ]}
                 >
                   {apartment.number}
