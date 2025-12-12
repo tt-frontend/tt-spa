@@ -8,13 +8,17 @@ import {
 import { Props } from './ChessBoardView.types';
 import { ChessboardItem } from './ChessboardItem';
 import { ContextMenuButtonColor } from 'ui-kit/ContextMenuButton/ContextMenuButton.types';
+import { useEnterToTab } from 'hooks/useEnterAsTab';
 
 export const ChessBoardView: FC<Props> = ({
   chessboardCreateData,
   handleDeleteEntrance,
   handleDuplicateEntrance,
   handleDeleteFloor,
+  handleDuplicateFloor,
 }) => {
+  useEnterToTab();
+
   return (
     <Wrapper>
       {chessboardCreateData.sections?.map((section) => (
@@ -49,6 +53,11 @@ export const ChessBoardView: FC<Props> = ({
                   { title: 'Изменить номер этажа' },
                   {
                     title: 'Дублировать этаж',
+                    onClick: () =>
+                      handleDuplicateFloor({
+                        floorNumber: floor.number,
+                        sectionNumber: section.number,
+                      }),
                   },
                   {
                     title: 'Удалить этаж',

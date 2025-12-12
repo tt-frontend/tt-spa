@@ -27,6 +27,7 @@ export const AddChessBoardContainer = () => {
     handleDeleteEntrance,
     handleDuplicateEntrance,
     handleDeleteFloor,
+    handleDuplicateFloor,
   } = useUnit({
     ...inputs,
     building: buildingQuery.$data,
@@ -52,6 +53,7 @@ export const AddChessBoardContainer = () => {
         handleDeleteEntrance={handleDeleteEntrance}
         handleDuplicateEntrance={handleDuplicateEntrance}
         handleDeleteFloor={handleDeleteFloor}
+        handleDuplicateFloor={handleDuplicateFloor}
       />
     </>
   );

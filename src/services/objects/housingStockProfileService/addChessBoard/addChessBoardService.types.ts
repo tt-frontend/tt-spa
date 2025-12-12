@@ -15,4 +15,12 @@ export interface AddParkingFormParams {
   entrancesNumber: number[];
 }
 
-export type DeleteFloorPayload = { floorNumber?: number; sectionNumber?: number };
+export type DeleteFloorPayload = {
+  floorNumber?: number;
+  sectionNumber?: number;
+};
+
+export type DuplicateFloorPayload = {
+  floorNumber?: number;
+  sectionNumber?: number;
+};

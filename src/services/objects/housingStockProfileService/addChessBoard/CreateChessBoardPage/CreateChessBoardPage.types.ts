@@ -3,6 +3,7 @@ import {
   AddEntranceFormParams,
   AddParkingFormParams,
   DeleteFloorPayload,
+  DuplicateFloorPayload,
   EditChessBoardPanelType,
 } from '../addChessBoardService.types';
 
@@ -19,4 +20,5 @@ export type Props = {
   handleDeleteEntrance: (payload: number) => void;
   handleDuplicateEntrance: (payload: number) => void;
   handleDeleteFloor: (payload: DeleteFloorPayload) => void;
+  handleDuplicateFloor: (payload: DuplicateFloorPayload) => void;
 };

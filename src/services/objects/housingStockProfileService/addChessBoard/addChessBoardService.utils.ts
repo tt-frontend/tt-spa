@@ -1,6 +1,7 @@
 import {
   AddEntranceFormParams,
   DeleteFloorPayload,
+  DuplicateFloorPayload,
 } from './addChessBoardService.types';
 import { insertAfter } from 'utils/insertAfter';
 import {
@@ -178,4 +179,41 @@ const deleteFloor = (
   };
 };
 
-export const floorModel = { deleteFloor };
+const duplicateFloor = (
+  prev: PremiseLocationCreateModel,
+  payload: DuplicateFloorPayload,
+): PremiseLocationCreateModel => {
+  const section = prev.sections?.find(
+    (elem) => elem.number === payload.sectionNumber,
+  );
+  const floor = section?.floors?.find(
+    (elem) => elem.number === payload.floorNumber,
+  );
+
+  if (!floor || !floor.number) return prev;
+
+  const newFloor = {
+    ...floor,
+    number: floor.number + 1,
+  };
+
+  const updatedSections = prev.sections?.map((section) => {
+    return section.number === payload.sectionNumber
+      ? {
+          ...section,
+          floors: insertAfter(
+            section.floors || [],
+            newFloor,
+            (floor) => floor.number === payload.floorNumber,
+          ),
+        }
+      : section;
+  });
+
+  return {
+    ...prev,
+    sections: updatedSections,
+  };
+};
+
+export const floorModel = { deleteFloor, duplicateFloor };

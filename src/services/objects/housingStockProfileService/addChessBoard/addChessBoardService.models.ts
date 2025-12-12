@@ -5,6 +5,7 @@ import {
   AddEntranceFormParams,
   AddParkingFormParams,
   DeleteFloorPayload,
+  DuplicateFloorPayload,
   EditChessBoardPanelType,
 } from './addChessBoardService.types';
 import {
@@ -41,6 +42,7 @@ const handleDuplicateEntrance = createEvent<number>();
 
 // floor fuctions
 const handleDeleteFloor = createEvent<DeleteFloorPayload>();
+const handleDuplicateFloor = createEvent<DuplicateFloorPayload>();
 
 const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
   sections: [],
@@ -49,7 +51,8 @@ const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
   .on(resetChessBoardData, chessboardModel.resetChessboard)
   .on(handleDeleteEntrance, entranceModel.deleteEntrance)
   .on(handleDuplicateEntrance, entranceModel.dubplicateEntrance)
-  .on(handleDeleteFloor, floorModel.deleteFloor);
+  .on(handleDeleteFloor, floorModel.deleteFloor)
+  .on(handleDuplicateFloor, floorModel.duplicateFloor);
 
 $openPanel.reset([handleAddEntrance, handleAddParking]);
 
@@ -66,6 +69,7 @@ export const addChessBoardService = {
     handleDeleteEntrance,
     handleDuplicateEntrance,
     handleDeleteFloor,
+    handleDuplicateFloor,
   },
   outputs: { $openPanel, $chessboardCreateData, $entrances },
   gates: { ChessBoardGate },
