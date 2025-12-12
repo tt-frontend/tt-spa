@@ -9,13 +9,24 @@ import {
   existingMoDistrictsQuery,
   fetchHousingMeteringDevicesQuery,
 } from './mainServiceService.api';
+import { currentOrganizationService } from 'services/currentOrganizationService';
 import { useMemo } from 'react';
+import { ConsolidatedReportContainer } from 'services/objects/housingStockProfileService/consolidatedReportService';
+import { HeatIndividualDevicesReportContainer } from 'services/objects/objectsProfileService/heatIndividualDevicesReportService';
+import { GroupReportContainer } from 'services/objects/groupReportService';
+import { SoiReportContainer } from 'services/objects/objectsProfileService/soiReportService';
+import { UploadArchiveContainer } from './Dashboard/uploadArchive';
+import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
+import { getCalculatorQuery } from './Dashboard/uploadArchive/uploadArchiveService.api';
+import { ConsumptionReportCalculatorContainer } from 'services/calculators/consumptionReportCalculatorService';
 
 const {
   inputs,
   outputs,
   gates: { PageGate },
 } = mainServiceService;
+
+const ExistingCitiesGate = addressSearchService.gates.ExistingCitiesGate;
 
 export const MainServiceContainer = () => {
   const {
@@ -31,8 +42,13 @@ export const MainServiceContainer = () => {
     organizations,
     chartData,
     isChartLoading,
+    treeData,
+    selectHouseManagememt,
+    selectCity,
+    currentManagingFirm,
     housingMeteringDevices,
     isHousingMeteringDevicesLoading,
+    calculator,
   } = useUnit({
     filter: outputs.$filter,
     setFilter: inputs.setFilter,
@@ -46,8 +62,14 @@ export const MainServiceContainer = () => {
     organizations: dashboardOrganizationsQuery.$data,
     chartData: dashboardChartQuery.$data,
     isChartLoading: dashboardChartQuery.$pending,
+    treeData: outputs.$treeData,
+    selectHouseManagememt: inputs.selectHouseManagememt,
+    selectCity: inputs.selectCity,
+    currentManagingFirm:
+      currentOrganizationService.outputs.$currentManagingFirm,
     housingMeteringDevices: fetchHousingMeteringDevicesQuery.$data,
     isHousingMeteringDevicesLoading: fetchHousingMeteringDevicesQuery.$pending,
+    calculator: getCalculatorQuery.$data,
   });
 
   const isHousingMeteringDevices = useMemo(
@@ -57,15 +79,29 @@ export const MainServiceContainer = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <PageHeader title="УК  «Лесные озёра» !!!!!!!" />
+      <PageHeader title={currentManagingFirm?.name} />
       <PageGate />
+      <ExistingCitiesGate />
+
+      <ConsolidatedReportContainer />
+      <HeatIndividualDevicesReportContainer />
+      <GroupReportContainer />
+      <SoiReportContainer />
+      <UploadArchiveContainer />
+
+      <ConsumptionReportCalculatorContainer calculator={calculator} />
+
       <Filter
         filter={filter}
         setFilter={setFilter}
         resetFilter={resetFilter}
         existingMoDistricts={existingMoDistricts}
         organizations={organizations}
+        treeData={treeData}
+        selectHouseManagememt={selectHouseManagememt}
+        selectCity={selectCity}
       />
+
       <Dashboard
         isLoading={isLoading}
         isChartLoading={isChartLoading}

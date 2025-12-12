@@ -10,11 +10,22 @@ const { inputs, outputs } = consolidatedReportService;
 const formId = 'consolidated-report-form';
 
 export const ConsolidatedReportContainer: FC<Props> = ({ building }) => {
-  const { closeModal, handleSubmit, isLoading, isModalOpen } = useUnit({
+  const {
+    closeModal,
+    handleSubmit,
+    isLoading,
+    isModalOpen,
+    searchedBuilding,
+    handleSearcheBuilding,
+    resetBuilding,
+  } = useUnit({
     closeModal: inputs.closeConsolidatedReportModal,
     handleSubmit: inputs.handleSubmit,
     isModalOpen: outputs.$isModalOpen,
     isLoading: outputs.$isLoading,
+    searchedBuilding: outputs.$searchedBuilding,
+    handleSearcheBuilding: inputs.handleSearcheBuilding,
+    resetBuilding: inputs.resetBuilding,
   });
 
   return (
@@ -30,6 +41,9 @@ export const ConsolidatedReportContainer: FC<Props> = ({ building }) => {
           handleSubmit={handleSubmit}
           building={building}
           formId={formId}
+          searchedBuilding={searchedBuilding}
+          handleSearcheBuilding={handleSearcheBuilding}
+          resetBuilding={resetBuilding}
         />
       }
     />

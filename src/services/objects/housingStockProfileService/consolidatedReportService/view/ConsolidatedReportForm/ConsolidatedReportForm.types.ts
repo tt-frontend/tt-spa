@@ -3,16 +3,22 @@ import {
   HousingStockResponse,
   NonResidentialBuildingResponse,
 } from 'api/types';
-import { GetConsolidatedReport } from '../../consolidatedReportService.types';
+import {
+  GetBuildingPayload,
+  GetConsolidatedReport,
+} from '../../consolidatedReportService.types';
 import dayjs from 'api/dayjs';
 
 export type ConsolidatedReportFormProps = {
   formId: string;
-  building:
+  building?:
     | HousingStockResponse
     | NonResidentialBuildingResponse
     | BuildingListResponse;
   handleSubmit: (payload: GetConsolidatedReport) => void;
+  searchedBuilding: BuildingListResponse | null;
+  handleSearcheBuilding: (payload: GetBuildingPayload) => void;
+  resetBuilding: () => void;
 };
 
 export enum ArchiveType {

@@ -1,5 +1,6 @@
 import { axios } from 'api/axios';
 import {
+  HouseManagementWithStreetsResponse,
   HousingMeteringDeviceIncludingReadingsResponsePagedList,
   MainDashboardHousingConsumptionResponse,
   MainDashboardResponse,
@@ -15,6 +16,12 @@ import queryString from 'query-string';
 export const getMain = (payload: ManePayload): Promise<MainDashboardResponse> =>
   axios.get('Dashboard/main', {
     params: payload,
+    paramsSerializer: (params) => {
+      return queryString.stringify(params, {
+        skipNull: true, // убрать null
+        skipEmptyString: true, // убрать ''
+      });
+    },
   });
 
 export const existingMoDistrictsQuery = createQuery<
@@ -40,6 +47,15 @@ export const dashboardChartQuery = createQuery<
   handler: (payload) =>
     axios.get(`/Dashboard/main/housingConsumption`, { params: payload }),
 });
+
+export const fetchAddresses = (
+  City: string,
+): Promise<HouseManagementWithStreetsResponse[]> =>
+  axios.get('Buildings/ExistingStreetsWithBuildingNumbersWithHouseManagement', {
+    params: {
+      City,
+    },
+  });
 
 export const fetchHousingMeteringDevicesQuery = createQuery<
   [FetchHousingMeteringDevicesPayload],

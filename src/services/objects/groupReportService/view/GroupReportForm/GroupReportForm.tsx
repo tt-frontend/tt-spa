@@ -227,7 +227,6 @@ export const GroupReportForm: FC<GroupReportFormProps> = ({
               dropdownStyle={{
                 overflowY: 'auto',
               }}
-              open
               multiple
               treeData={addressesTreeData}
               placeholder="Выберите адрес"

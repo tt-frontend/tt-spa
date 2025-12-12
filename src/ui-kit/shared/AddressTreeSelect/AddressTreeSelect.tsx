@@ -26,6 +26,7 @@ export const AddressTreeSelect: FC<AddressTreeSelectProps> = ({
   disabled = false,
   small = false,
   placement,
+  minWidth,
 }) => {
   const isAllPrevious = useRef(false);
   const [expandedNodes, setExpandedNodes] = useState<TreeKey[]>([]);
@@ -108,6 +109,7 @@ export const AddressTreeSelect: FC<AddressTreeSelectProps> = ({
 
   return (
     <TreeSelectSC
+      minWidth={minWidth}
       small={small}
       showSearch
       value={treeSelectValues}

@@ -6,7 +6,7 @@ import {
 } from 'api/types';
 
 export type Props = {
-  building:
+  building?:
     | HousingStockResponse
     | NonResidentialBuildingResponse
     | BuildingListResponse;
@@ -18,4 +18,11 @@ export type GetConsolidatedReport = {
   ReportType: EReportType;
   From: string;
   To: string;
+};
+
+export type GetBuildingPayload = {
+  City: string;
+  Street: string;
+  BuildingNumber: string;
+  Corpus: string;
 };

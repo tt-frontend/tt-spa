@@ -93,6 +93,7 @@ export const SoiReportForm: FC<SoiReportFormProps> = ({
             onChange={(city) => {
               setSelectedCity(city as string);
               setFieldValue('HousingStockId', null);
+              setFieldValue('HouseManagementId', null);
             }}
             placeholder="Выберите город"
           >
