@@ -34,4 +34,5 @@ export const MalfunctionIcons: { [key in ManagingFirmTaskType]: ReactNode } = {
   [ManagingFirmTaskType.ResourceDisconnecting]: <CalculatorIcon />,
   [ManagingFirmTaskType.RiserNoReadings]: <CalculatorIcon />,
   [ManagingFirmTaskType.TemperatureNormativeDeviation]: <CalculatorIcon />,
+  [ManagingFirmTaskType.HeatSupplyQualityCheck]: <CalculatorIcon />,
 };

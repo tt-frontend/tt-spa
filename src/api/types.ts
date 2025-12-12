@@ -122,6 +122,7 @@ export enum ManagingFirmTaskType {
   CurrentApplicationUnassigned = 'CurrentApplicationUnassigned',
   EmergencyApplicationUnassigned = 'EmergencyApplicationUnassigned',
   TemperatureNormativeDeviation = 'TemperatureNormativeDeviation',
+  HeatSupplyQualityCheck = 'HeatSupplyQualityCheck',
 }
 
 export enum IPStatus {
@@ -258,6 +259,7 @@ export enum ETaskCreateType {
   CurrentApplication = 'CurrentApplication',
   ResourceDisconnecting = 'ResourceDisconnecting',
   TemperatureNormativeDeviation = 'TemperatureNormativeDeviation',
+  HeatSupplyQualityCheck = 'HeatSupplyQualityCheck',
 }
 
 export enum ETaskConfirmationType {
@@ -267,6 +269,7 @@ export enum ETaskConfirmationType {
   PipeRuptureNotConfirmPowerMalfunction = 'PipeRuptureNotConfirm_PowerMalfunction',
   ResourceDisconnectingNotConfirm = 'ResourceDisconnectingNotConfirm',
   FeedBackFlowTemperatureErrorNoted = 'FeedBackFlowTemperatureErrorNoted',
+  FeedFlowTemperatureErrorNoted = 'FeedFlowTemperatureErrorNoted',
 }
 
 export enum ETaskClosingStatus {
@@ -533,6 +536,7 @@ export enum EManagingFirmTaskType {
   CurrentApplicationUnassigned = 'CurrentApplicationUnassigned',
   EmergencyApplicationUnassigned = 'EmergencyApplicationUnassigned',
   TemperatureNormativeDeviation = 'TemperatureNormativeDeviation',
+  HeatSupplyQualityCheck = 'HeatSupplyQualityCheck',
 }
 
 export enum EManagingFirmTaskFilterType {
@@ -549,6 +553,7 @@ export enum EManagingFirmTaskFilterType {
   CurrentApplication = 'CurrentApplication',
   ResourceDisconnecting = 'ResourceDisconnecting',
   TemperatureNormativeDeviation = 'TemperatureNormativeDeviation',
+  HeatSupplyQualityCheck = 'HeatSupplyQualityCheck',
 }
 
 export enum EManagementFirmEventType {
@@ -2073,6 +2078,17 @@ export interface CreateIndividualDeviceRequest {
   defaultReadings?: BaseIndividualDeviceReadingsCreateRequest | null;
 }
 
+export interface CreateMeteringDeviceNetSettingsRequest {
+  providerName?: string | null;
+  modemModel?: string | null;
+  /** @minLength 1 */
+  modemNumber: string;
+  /** @minLength 1 */
+  simNumber: string;
+  /** @minLength 1 */
+  simImei: string;
+}
+
 export interface CreateNodeCheckRequest {
   /** @format date-time */
   checkingDate: string;
@@ -2715,6 +2731,18 @@ export interface FeatureTogglesResponse {
   mvituService: boolean;
 }
 
+export interface FloorCreateModel {
+  /** @format int32 */
+  number?: number;
+  premises?: PremiseCreateModel[] | null;
+}
+
+export interface FloorResponse {
+  /** @format int32 */
+  number: number | null;
+  premises: PremiseResponse[] | null;
+}
+
 export interface FullAddressResponse {
   /** @format int32 */
   id: number;
@@ -3347,10 +3375,6 @@ export interface HousingStockCreateRequest {
   /** @format uuid */
   houseManagementId?: string | null;
   livingHouseType?: ELivingHouseType | null;
-  /** @format int32 */
-  numberOfEntrances?: number | null;
-  /** @format int32 */
-  numberOfFloors?: number | null;
   isThereElevator?: boolean | null;
   /**
    * @minLength 6
@@ -4234,6 +4258,20 @@ export interface MeteringDeviceListResponsePagedList {
   items: MeteringDeviceListResponse[] | null;
 }
 
+export interface MeteringDeviceNetSettingsResponse {
+  /** @format int32 */
+  id: number;
+  /** @format int32 */
+  meteringDeviceId: number;
+  providerName: string | null;
+  modemModel: string | null;
+  modemNumber: string | null;
+  simNumber: string | null;
+  simImei: string | null;
+  /** @format date-time */
+  createdAt: string;
+}
+
 export interface MeteringDeviceResponse {
   /** @format int32 */
   id: number;
@@ -4983,6 +5021,29 @@ export interface PollResponsePagedList {
   items: PollResponse[] | null;
 }
 
+export interface PremiseCreateModel {
+  number?: string | null;
+  isNonResidential?: boolean;
+}
+
+export interface PremiseLocationCreateModel {
+  sections?: SectionCreateModel[] | null;
+}
+
+export interface PremiseLocationResponse {
+  sections: SectionResponse[] | null;
+}
+
+export interface PremiseResponse {
+  /** @format int32 */
+  id: number | null;
+  number: string | null;
+  /** @format int32 */
+  numberOfTasks: number;
+  homeownerName: string | null;
+  personalAccountNumber: string | null;
+}
+
 export interface ProblemDetails {
   type?: string | null;
   title?: string | null;
@@ -5157,6 +5218,18 @@ export interface ResourceDisconnectingUpdateRequest {
   sender?: string | null;
   /** @format int32 */
   documentId?: number | null;
+}
+
+export interface SectionCreateModel {
+  /** @format int32 */
+  number?: number;
+  floors?: FloorCreateModel[] | null;
+}
+
+export interface SectionResponse {
+  /** @format int32 */
+  number: number | null;
+  floors: FloorResponse[] | null;
 }
 
 export interface SendGroupReportRequest {
@@ -5900,6 +5973,16 @@ export interface UpdateInspectorOnBuildingRequest {
   inspectorId: number;
   /** @format int32 */
   inspectedDay?: number | null;
+}
+
+export interface UpdateMeteringDeviceNetSettingsRequest {
+  /** @format int32 */
+  id: number;
+  providerName?: string | null;
+  modemModel?: string | null;
+  modemNumber?: string | null;
+  simNumber?: string | null;
+  simImei?: string | null;
 }
 
 export interface UpdateNodeCheckRequest {
@@ -12596,6 +12679,95 @@ export class Api<
       }),
 
     /**
+     * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li>
+     *
+     * @tags MeteringDevices
+     * @name MeteringDevicesNetsettingsList
+     * @summary MeteringDevicesNetSettingsRead
+     * @request GET:/api/MeteringDevices/{meteringDeviceId}/netsettings
+     * @secure
+     */
+    meteringDevicesNetsettingsList: (
+      meteringDeviceId: number,
+      params: RequestParams = {},
+    ) =>
+      this.request<MeteringDeviceNetSettingsResponse, ErrorApiResponse>({
+        path: `/api/MeteringDevices/${meteringDeviceId}/netsettings`,
+        method: 'GET',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Администратор УК без назначений задач</li><li>Контролёр</li>
+     *
+     * @tags MeteringDevices
+     * @name MeteringDevicesNetsettingsCreate
+     * @summary MeteringDevicesNetSettingsCreate
+     * @request POST:/api/MeteringDevices/{meteringDeviceId}/netsettings
+     * @secure
+     */
+    meteringDevicesNetsettingsCreate: (
+      meteringDeviceId: number,
+      data: CreateMeteringDeviceNetSettingsRequest,
+      params: RequestParams = {},
+    ) =>
+      this.request<MeteringDeviceNetSettingsResponse, ErrorApiResponse>({
+        path: `/api/MeteringDevices/${meteringDeviceId}/netsettings`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Администратор УК без назначений задач</li><li>Контролёр</li>
+     *
+     * @tags MeteringDevices
+     * @name MeteringDevicesNetsettingsPartialUpdate
+     * @summary MeteringDevicesNetSettingsUpdate
+     * @request PATCH:/api/MeteringDevices/{meteringDeviceId}/netsettings
+     * @secure
+     */
+    meteringDevicesNetsettingsPartialUpdate: (
+      meteringDeviceId: number,
+      data: UpdateMeteringDeviceNetSettingsRequest,
+      params: RequestParams = {},
+    ) =>
+      this.request<MeteringDeviceNetSettingsResponse, ErrorApiResponse>({
+        path: `/api/MeteringDevices/${meteringDeviceId}/netsettings`,
+        method: 'PATCH',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Администратор УК без назначений задач</li><li>Контролёр</li>
+     *
+     * @tags MeteringDevices
+     * @name MeteringDevicesNetsettingsDelete
+     * @summary MeteringDevicesNetSettingsDelete
+     * @request DELETE:/api/MeteringDevices/{meteringDeviceId}/netsettings
+     * @secure
+     */
+    meteringDevicesNetsettingsDelete: (
+      meteringDeviceId: number,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, ErrorApiResponse>({
+        path: `/api/MeteringDevices/${meteringDeviceId}/netsettings`,
+        method: 'DELETE',
+        secure: true,
+        ...params,
+      }),
+
+    /**
      * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Супервайзер</li>
      *
      * @tags Nodes
@@ -13965,6 +14137,100 @@ export class Api<
         path: `/api/PipeNodes/${pipeNodeId}/Pipes`,
         method: 'GET',
         secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Администратор УК без назначений задач</li>
+     *
+     * @tags PremiseLocations
+     * @name PremiseLocationsDetail
+     * @summary HousingStocksUpdate
+     * @request GET:/api/PremiseLocations/{housingStockId}
+     * @secure
+     */
+    premiseLocationsDetail: (
+      housingStockId: number,
+      params: RequestParams = {},
+    ) =>
+      this.request<PremiseLocationResponse, ErrorApiResponse>({
+        path: `/api/PremiseLocations/${housingStockId}`,
+        method: 'GET',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Администратор УК без назначений задач</li>
+     *
+     * @tags PremiseLocations
+     * @name PremiseLocationsCreate
+     * @summary HousingStocksUpdate
+     * @request POST:/api/PremiseLocations/{housingStockId}
+     * @secure
+     */
+    premiseLocationsCreate: (
+      housingStockId: number,
+      data: PremiseLocationCreateModel,
+      params: RequestParams = {},
+    ) =>
+      this.request<PremiseLocationResponse, ErrorApiResponse>({
+        path: `/api/PremiseLocations/${housingStockId}`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Администратор УК без назначений задач</li>
+     *
+     * @tags PremiseLocations
+     * @name PremiseLocationsFloorsCreate
+     * @summary HousingStocksUpdate
+     * @request POST:/api/PremiseLocations/{housingStockId}/{sectionNumber}/floors
+     * @secure
+     */
+    premiseLocationsFloorsCreate: (
+      housingStockId: number,
+      sectionNumber: number,
+      data: FloorCreateModel,
+      params: RequestParams = {},
+    ) =>
+      this.request<PremiseLocationResponse, ErrorApiResponse>({
+        path: `/api/PremiseLocations/${housingStockId}/${sectionNumber}/floors`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Старший оператор</li><li>Оператор</li><li>Администратор УК без назначений задач</li>
+     *
+     * @tags PremiseLocations
+     * @name PremiseLocationsSectionsCreate
+     * @summary HousingStocksUpdate
+     * @request POST:/api/PremiseLocations/{housingStockId}/sections
+     * @secure
+     */
+    premiseLocationsSectionsCreate: (
+      housingStockId: number,
+      data: SectionCreateModel,
+      params: RequestParams = {},
+    ) =>
+      this.request<PremiseLocationResponse, ErrorApiResponse>({
+        path: `/api/PremiseLocations/${housingStockId}/sections`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         format: 'json',
         ...params,
       }),
