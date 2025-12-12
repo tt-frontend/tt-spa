@@ -1,7 +1,7 @@
-import { ChessboardCreateModel } from 'api/test-types';
+import { PremiseLocationCreateModel } from 'api/types';
 
 export type Props = {
-  chessboardCreateData: ChessboardCreateModel;
+  chessboardCreateData: PremiseLocationCreateModel;
   handleDeleteEntrance: (entranceNumber: number) => void;
   handleDuplicateEntrance: (payload: number) => void;
 };

@@ -98,7 +98,7 @@ sample({
         objectCategory,
         livingHouseType,
         floors,
-        entrances,
+        // entrances,
         elevator,
         constructionYear,
         hasIndividualHeatingStation,
@@ -131,7 +131,7 @@ sample({
         livingHouseType: livingHouseType || null,
         nonResidentialHouseType: nonResidentialHouseType || null,
         numberOfFloors: Number(floors) || null,
-        numberOfEntrances: Number(entrances) || null,
+        // numberOfEntrances: Number(entrances) || null,
         isThereElevator: elevator
           ? IsElevatorDictionaryBoolean[elevator]
           : null,

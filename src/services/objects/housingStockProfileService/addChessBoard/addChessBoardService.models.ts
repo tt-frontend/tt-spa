@@ -6,8 +6,8 @@ import {
   AddParkingFormParams,
   EditChessBoardPanelType,
 } from './addChessBoardService.types';
-import { ChessboardCreateModel } from 'api/test-types';
 import { chessboardModel, entranceModel } from './addChessBoardService.utils';
+import { PremiseLocationCreateModel } from 'api/types';
 
 const ChessBoardGate = createGate<{ buildingId: number }>();
 
@@ -34,7 +34,7 @@ const handleAddParking = createEvent<AddParkingFormParams>();
 const handleDeleteEntrance = createEvent<number>();
 const handleDuplicateEntrance = createEvent<number>();
 
-const $chessboardCreateData = createStore<ChessboardCreateModel>({
+const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
   sections: [],
 })
   .on(handleAddEntrance, chessboardModel.addEntrance)
@@ -45,8 +45,7 @@ const $chessboardCreateData = createStore<ChessboardCreateModel>({
 $openPanel.reset([handleAddEntrance, handleAddParking]);
 
 const $entrances = $chessboardCreateData.map(
-  (data) =>
-    data.sections?.map((section) => section.sectionNumber || null) || [],
+  (data) => data.sections?.map((section) => section.number || null) || [],
 );
 
 export const addChessBoardService = {

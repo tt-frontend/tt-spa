@@ -1,10 +1,11 @@
-import {
-  ChessboardCreateModel,
-  FloorCreateModel,
-  SectionCreateModel,
-} from 'api/test-types';
 import { AddEntranceFormParams } from './addChessBoardService.types';
 import { insertAfter } from 'utils/insertAfter';
+import {
+  FloorCreateModel,
+  PremiseCreateModel,
+  PremiseLocationCreateModel,
+  SectionCreateModel,
+} from 'api/types';
 
 export type ApartmentNumberFormatter = (floor: number, index: number) => string;
 
@@ -32,24 +33,26 @@ function toSectionCreateModel(
       ? Array.from({ length: apartmentsPerFloorAmount }, () => {
           const number = formatApartmentNumber(floor, currentApartmentNumber);
           currentApartmentNumber++;
-          return number;
+          const apart: PremiseCreateModel = { number, isNonResidential: false };
+
+          return apart;
         })
       : [];
 
     floors.push({
-      floorNumber: floor,
-      apartmentNumbers,
+      number: floor,
+      premises: apartmentNumbers,
     });
   }
 
   return {
-    sectionNumber: entranceNumber,
+    number: entranceNumber,
     floors,
   };
 }
 
 const addEntrance = (
-  prev: ChessboardCreateModel,
+  prev: PremiseLocationCreateModel,
   payload: AddEntranceFormParams,
 ) => {
   const newSection = toSectionCreateModel(payload);
@@ -67,11 +70,10 @@ export const chessboardModel = {
   resetChessboard,
 };
 
-const deleteEntrance = (prev: ChessboardCreateModel, payload: number) => {
+const deleteEntrance = (prev: PremiseLocationCreateModel, payload: number) => {
   return {
     ...prev,
-    sections:
-      prev.sections?.filter((elem) => elem.sectionNumber !== payload) || [],
+    sections: prev.sections?.filter((elem) => elem.number !== payload) || [],
   };
 };
 
@@ -84,19 +86,19 @@ export function fromSectionModelForEntrance(
 
   // первый этаж, где появились квартиры
   const livingQuartersStartFloor =
-    floors.find((f) => (f.apartmentNumbers?.length ?? 0) > 0)?.floorNumber ??
+    floors.find((f) => (f.premises?.length ?? 0) > 0)?.number ??
     floorsAmount + 1;
 
   // максимальное количество квартир на жилом этаже
   const apartmentsPerFloorAmount = Math.max(
-    ...floors.map((f) => f.apartmentNumbers?.length ?? 0),
+    ...floors.map((f) => f.premises?.length ?? 0),
     0,
   );
 
   // собираем все номера квартир и определяем стартовое значение
-  const allApartmentNumbers = floors.flatMap((f) => f.apartmentNumbers ?? []);
+  const allApartmentNumbers = floors.flatMap((f) => f.premises ?? []);
   const numericApartmentNumbers = allApartmentNumbers
-    .map((a) => Number(a))
+    .map((a) => Number(a.number))
     .filter((n) => !isNaN(n));
 
   const apartmentsStartsFrom =
@@ -115,7 +117,7 @@ export function fromSectionModelForEntrance(
 
 export const getLastApartmentNumber = (section: SectionCreateModel) => {
   const lastApartment =
-    Number(section.floors?.at(-1)?.apartmentNumbers?.at(-1)) || null;
+    Number(section.floors?.at(-1)?.premises?.at(-1)?.number) || null;
 
   const apartmentsStartsFrom = lastApartment ? lastApartment + 1 : null;
 
@@ -123,10 +125,10 @@ export const getLastApartmentNumber = (section: SectionCreateModel) => {
 };
 
 const dubplicateEntrance = (
-  prev: ChessboardCreateModel,
+  prev: PremiseLocationCreateModel,
   payload: number,
-): ChessboardCreateModel => {
-  const section = prev.sections?.find((elem) => elem.sectionNumber === payload);
+): PremiseLocationCreateModel => {
+  const section = prev.sections?.find((elem) => elem.number === payload);
 
   if (!section) return prev;
 
@@ -144,7 +146,7 @@ const dubplicateEntrance = (
         apartmentsStartsFrom,
         entranceNumber: params.entranceNumber + 1,
       }),
-      (item) => item.sectionNumber === payload,
+      (item) => item.number === payload,
     ),
   };
 };

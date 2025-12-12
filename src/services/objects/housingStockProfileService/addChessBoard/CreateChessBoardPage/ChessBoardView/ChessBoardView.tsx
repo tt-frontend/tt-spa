@@ -16,7 +16,7 @@ export const ChessBoardView: FC<Props> = ({
   return (
     <Wrapper>
       {chessboardCreateData.sections?.map((section) => (
-        <EntranceWrapper key={section.sectionNumber}>
+        <EntranceWrapper key={section.number}>
           <FloorWrapper hideHover>
             <FloorIndex />
             <ChessboardItem
@@ -27,22 +27,20 @@ export const ChessBoardView: FC<Props> = ({
                 {
                   title: 'Дублировать подъезд',
                   onClick: () =>
-                    section.sectionNumber &&
-                    handleDuplicateEntrance(section.sectionNumber),
+                    section.number && handleDuplicateEntrance(section.number),
                 },
                 {
                   title: 'Удалить подъезд',
                   onClick: () =>
-                    section.sectionNumber &&
-                    handleDeleteEntrance(section.sectionNumber),
+                    section.number && handleDeleteEntrance(section.number),
                 },
               ]}
             >
-              {section.sectionNumber} Подъезд
+              {section.number} Подъезд
             </ChessboardItem>
           </FloorWrapper>
           {section.floors?.map((floor) => (
-            <FloorWrapper key={floor.floorNumber}>
+            <FloorWrapper key={floor.number}>
               <ChessboardItem
                 menuButtons={[
                   { title: 'Изменить номер этажа' },
@@ -51,11 +49,11 @@ export const ChessBoardView: FC<Props> = ({
                 ]}
                 type="empty"
               >
-                {floor.floorNumber}
+                {floor.number}
               </ChessboardItem>
-              {floor.apartmentNumbers?.map((apartment) => (
+              {floor.premises?.map((apartment) => (
                 <ChessboardItem
-                  key={apartment}
+                  key={apartment.number}
                   menuButtons={[
                     { title: 'Изменить номер квартиры' },
                     { title: 'Добавить квартиру справа' },
@@ -63,10 +61,10 @@ export const ChessBoardView: FC<Props> = ({
                     { title: 'Удалить квартиру' },
                   ]}
                 >
-                  {apartment}
+                  {apartment.number}
                 </ChessboardItem>
               ))}
-              {floor.apartmentNumbers?.length === 0 && (
+              {floor.premises?.length === 0 && (
                 <ChessboardItem type="flat" wide>
                   + Добавьте нежилое помещение
                 </ChessboardItem>
