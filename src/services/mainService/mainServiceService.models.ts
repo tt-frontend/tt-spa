@@ -146,6 +146,7 @@ sample({
       return filter;
     }
   },
+
   target: [getMainFx, dashboardChartQuery.start],
 });
 

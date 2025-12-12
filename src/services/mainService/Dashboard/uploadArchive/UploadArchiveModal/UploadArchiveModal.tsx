@@ -33,6 +33,7 @@ export const UploadArchiveModal: FC<Props> = ({
       addressSearch: '',
       calculatorId: '',
     },
+    validateOnChange: false,
     validationSchema: yup.object().shape({
       calculatorId: yup.string().required('Это поле обязательно'),
     }),

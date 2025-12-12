@@ -16,6 +16,12 @@ import queryString from 'query-string';
 export const getMain = (payload: ManePayload): Promise<MainDashboardResponse> =>
   axios.get('Dashboard/main', {
     params: payload,
+    paramsSerializer: (params) => {
+      return queryString.stringify(params, {
+        skipNull: true, // убрать null
+        skipEmptyString: true, // убрать ''
+      });
+    },
   });
 
 export const existingMoDistrictsQuery = createQuery<
@@ -50,6 +56,7 @@ export const fetchAddresses = (
       City,
     },
   });
+
 export const fetchHousingMeteringDevicesQuery = createQuery<
   [FetchHousingMeteringDevicesPayload],
   HousingMeteringDeviceIncludingReadingsResponsePagedList

@@ -29,19 +29,19 @@ export const Filter: FC<Props> = ({
     return ditrict.subjects.map((elem) => elem.name);
   }, [filter, existingMoDistricts]);
 
-  console.log(organizations);
-
   return (
     <Wrapper>
       <Select
         placeholder="Округ"
         small
-        allowClear
         value={filter.District}
         onChange={(value) =>
           setFilter({
             District: value as string | null,
             City: null,
+            ManagementFirmId: null,
+
+            BuildingIds: null,
           })
         }
       >
@@ -59,11 +59,11 @@ export const Filter: FC<Props> = ({
         placeholder="Город"
         small
         value={filter.City}
-        allowClear
         onChange={(value) => {
           setFilter({
             City: value as string,
             ManagementFirmId: null,
+            HouseManagementId: null,
             BuildingIds: null,
           });
           selectCity(value as string);
@@ -84,9 +84,14 @@ export const Filter: FC<Props> = ({
       <Select
         placeholder="УК"
         small
-        allowClear
         value={filter.ManagementFirmId}
-        onChange={(value) => setFilter({ ManagementFirmId: value as number })}
+        onChange={(value) =>
+          setFilter({
+            ManagementFirmId: value as number,
+            HouseManagementId: null,
+            BuildingIds: null,
+          })
+        }
       >
         <Select key={0} value={null}>
           Все УК
@@ -105,7 +110,7 @@ export const Filter: FC<Props> = ({
         allowClear
         value={filter.HouseManagementId}
         onChange={(value) => {
-          setFilter({ HouseManagementId: value as string });
+          setFilter({ HouseManagementId: value as string, BuildingIds: null });
           selectHouseManagememt(value as string);
         }}
       >

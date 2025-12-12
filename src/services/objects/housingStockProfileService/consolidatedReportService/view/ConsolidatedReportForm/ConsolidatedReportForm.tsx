@@ -53,6 +53,7 @@ export const ConsolidatedReportForm: FC<ConsolidatedReportFormProps> = ({
     validationSchema: yup.object().shape({
       name: yup.string().required('Введите название отчёта'),
     }),
+    enableReinitialize: true,
     onSubmit: (values) => {
       const period = getDatePeriod(values.archiveType, values.period);
 
