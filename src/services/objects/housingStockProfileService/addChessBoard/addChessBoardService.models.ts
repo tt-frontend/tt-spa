@@ -4,10 +4,18 @@ import { buildingQuery } from './addChessBoardService.api';
 import {
   AddEntranceFormParams,
   AddParkingFormParams,
+  DeleteAapartmentPayload,
+  DeleteFloorPayload,
+  DuplicateFloorPayload,
   EditChessBoardPanelType,
 } from './addChessBoardService.types';
-import { ChessboardCreateModel } from 'api/test-types';
-import { chessboardModel, entranceModel } from './addChessBoardService.utils';
+import {
+  apartmentModel,
+  chessboardModel,
+  entranceModel,
+  floorModel,
+} from './addChessBoardService.utils';
+import { PremiseLocationCreateModel } from 'api/types';
 
 const ChessBoardGate = createGate<{ buildingId: number }>();
 
@@ -32,19 +40,30 @@ const handleAddParking = createEvent<AddParkingFormParams>();
 
 // entrance funtions
 const handleDeleteEntrance = createEvent<number>();
+const handleDuplicateEntrance = createEvent<number>();
 
-const $chessboardCreateData = createStore<ChessboardCreateModel>({
+// floor fuctions
+const handleDeleteFloor = createEvent<DeleteFloorPayload>();
+const handleDuplicateFloor = createEvent<DuplicateFloorPayload>();
+
+// apartment functions
+const handleDeleteApartmnet = createEvent<DeleteAapartmentPayload>();
+
+const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
   sections: [],
 })
   .on(handleAddEntrance, chessboardModel.addEntrance)
   .on(resetChessBoardData, chessboardModel.resetChessboard)
-  .on(handleDeleteEntrance, entranceModel.deleteEntrance);
+  .on(handleDeleteEntrance, entranceModel.deleteEntrance)
+  .on(handleDuplicateEntrance, entranceModel.dubplicateEntrance)
+  .on(handleDeleteFloor, floorModel.deleteFloor)
+  .on(handleDuplicateFloor, floorModel.duplicateFloor)
+  .on(handleDeleteApartmnet, apartmentModel.deleteApartment);
 
 $openPanel.reset([handleAddEntrance, handleAddParking]);
 
 const $entrances = $chessboardCreateData.map(
-  (data) =>
-    data.sections?.map((section) => section.sectionNumber || null) || [],
+  (data) => data.sections?.map((section) => section.number || null) || [],
 );
 
 export const addChessBoardService = {
@@ -54,6 +73,10 @@ export const addChessBoardService = {
     handleAddEntrance,
     handleAddParking,
     handleDeleteEntrance,
+    handleDuplicateEntrance,
+    handleDeleteFloor,
+    handleDuplicateFloor,
+    handleDeleteApartmnet,
   },
   outputs: { $openPanel, $chessboardCreateData, $entrances },
   gates: { ChessBoardGate },
