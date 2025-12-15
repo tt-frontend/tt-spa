@@ -7,7 +7,6 @@ import { AutoComplete, Form } from 'antd';
 import { SearchIconSc } from 'services/tasks/addTaskFromDispatcherService/view/AddTaskModal/AddTaskForm/AddTaskForm.styled';
 import { Input } from 'ui-kit/Input';
 import { autocompleteAddress } from 'services/tasks/addTaskFromDispatcherService/view/AddTaskModal/AddTaskForm/AddTaskForm.utils';
-import { getPreparedStreetsOptions } from 'services/objects/createObjectService/view/CreateObjectPage/CreateObjectAddressStage/CreateObjectAddressStage.utils';
 import { useFormik } from 'formik';
 import { AddressContainer } from './UploadArchiveModal.styled';
 import * as yup from 'yup';
@@ -48,10 +47,10 @@ export const UploadArchiveModal: FC<Props> = ({
     return handleResetForm.watch(() => resetForm()).unsubscribe;
   }, [handleResetForm]);
 
-  const preparedExistingCities = getPreparedStreetsOptions(
-    values.city || '',
-    existingCities || [],
-  );
+  const preparedExistingCities =
+    existingCities?.map((city) => ({
+      value: city,
+    })) || [];
 
   const preparedCalculators = useMemo(() => {
     if (!calculators) {

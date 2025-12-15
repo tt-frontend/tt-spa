@@ -2,24 +2,22 @@ import { createEffect, createEvent, createStore } from 'effector';
 import { sample } from 'effector';
 import { message } from 'antd';
 import { EffectFailDataAxiosError } from 'types';
+import { GetConsolidatedReport } from './consolidatedReportService.types';
 import {
-  GetBuildingPayload,
-  GetConsolidatedReport,
-} from './consolidatedReportService.types';
-import {
-  getBuilding,
   getConsolidatedReport,
+  searchBuildingQuery,
 } from './consolidatedReportService.api';
-import { BuildingListResponse, BuildingListResponsePagedList } from 'api/types';
+import { PreparedAddress } from 'services/tasks/addTaskFromDispatcherService/addTaskFromDispatcherService.types';
+import { prepareAddressesForTreeSelect } from 'services/tasks/addTaskFromDispatcherService/addTaskFromDispatcherService.utils';
 
 const openConsolidatedReportModal = createEvent();
 const closeConsolidatedReportModal = createEvent();
 
 const handleSubmit = createEvent<GetConsolidatedReport>();
 
-const handleSearcheBuilding = createEvent<GetBuildingPayload>();
-
 const resetBuilding = createEvent();
+
+const handleChangeCity = createEvent<string>();
 
 const downloadConsolidatedReportFx = createEffect<
   GetConsolidatedReport,
@@ -27,27 +25,21 @@ const downloadConsolidatedReportFx = createEffect<
   EffectFailDataAxiosError
 >(getConsolidatedReport);
 
-const getBuildingFx = createEffect<
-  GetBuildingPayload,
-  BuildingListResponsePagedList,
-  EffectFailDataAxiosError
->(getBuilding);
-
 sample({
   clock: handleSubmit,
   target: downloadConsolidatedReportFx,
 });
 
 sample({
-  clock: handleSearcheBuilding,
-  target: getBuildingFx,
+  clock: handleChangeCity,
+  fn: (city) => ({ City: city }),
+  target: searchBuildingQuery.start,
 });
 
-const $searchedBuilding = createStore<BuildingListResponse | null>(null)
-  .on(getBuildingFx.doneData, (_, data) =>
-    data.items?.length ? data?.items[0] : null,
-  )
-  .reset([closeConsolidatedReportModal, resetBuilding]);
+const $preparedForOptionsAddresses = createStore<PreparedAddress[]>([]).on(
+  searchBuildingQuery.$data,
+  (_, data) => prepareAddressesForTreeSelect(data?.items || []),
+);
 
 downloadConsolidatedReportFx.failData.watch((error) => {
   return message.error(
@@ -66,8 +58,12 @@ export const consolidatedReportService = {
     openConsolidatedReportModal,
     closeConsolidatedReportModal,
     handleSubmit,
-    handleSearcheBuilding,
     resetBuilding,
+    handleChangeCity,
   },
-  outputs: { $isModalOpen, $isLoading, $searchedBuilding },
+  outputs: {
+    $isModalOpen,
+    $isLoading,
+    $preparedForOptionsAddresses,
+  },
 };

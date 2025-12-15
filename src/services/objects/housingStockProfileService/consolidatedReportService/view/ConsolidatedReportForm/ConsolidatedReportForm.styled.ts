@@ -6,8 +6,14 @@ export const PeriodSelection = styled.div`
   gap: 16px;
 `;
 
-export const AddressContainer = styled.div`
+export const SelectedAddressContainer = styled.div`
   display: flex;
   align-items: center;
+  gap: 16px;
+`;
+
+export const AddressContainer = styled.div`
+  display: grid;
+  grid-template-columns: 0.4fr 0.6fr;
   gap: 16px;
 `;

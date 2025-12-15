@@ -1,14 +1,13 @@
 import queryString from 'query-string';
 import { axios } from 'api/axios';
 import {
-  BuildingListResponsePagedList,
   CalculatorIntoHousingStockResponse,
+  StreetWithBuildingNumbersResponsePagedList,
 } from 'api/types';
-import {
-  GetBuildingPayload,
-  GetConsolidatedReport,
-} from './consolidatedReportService.types';
+import { GetConsolidatedReport } from './consolidatedReportService.types';
 import { downloadURI } from 'utils/downloadByURL';
+import { createQuery } from '@farfetched/core';
+import { GetAddressesRequest } from 'services/tasks/addTaskFromDispatcherService/addTaskFromDispatcherService.types';
 
 export const getConsolidatedReport = async ({
   Name,
@@ -34,8 +33,10 @@ export const getConsolidatedReport = async ({
   downloadURI(url, Name);
 };
 
-export const getBuilding = (
-  payload: GetBuildingPayload,
-): Promise<BuildingListResponsePagedList> => {
-  return axios.get('Buildings', { params: payload });
-};
+export const searchBuildingQuery = createQuery<
+  [GetAddressesRequest],
+  StreetWithBuildingNumbersResponsePagedList
+>({
+  handler: (params): Promise<StreetWithBuildingNumbersResponsePagedList> =>
+    axios.get('Buildings/ExistingStreetsWithBuildingNumbers', { params }),
+});

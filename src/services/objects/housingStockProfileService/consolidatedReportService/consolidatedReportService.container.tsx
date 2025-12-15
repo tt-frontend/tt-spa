@@ -4,6 +4,7 @@ import { FormModal } from 'ui-kit/Modals/FormModal';
 import { consolidatedReportService } from './consolidatedReportService.model';
 import { ConsolidatedReportForm } from './view/ConsolidatedReportForm';
 import { Props } from './consolidatedReportService.types';
+import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
 
 const { inputs, outputs } = consolidatedReportService;
 
@@ -15,17 +16,19 @@ export const ConsolidatedReportContainer: FC<Props> = ({ building }) => {
     handleSubmit,
     isLoading,
     isModalOpen,
-    searchedBuilding,
-    handleSearcheBuilding,
     resetBuilding,
+    preparedForOptionsAddresses,
+    existingCities,
+    handleChangeCity,
   } = useUnit({
     closeModal: inputs.closeConsolidatedReportModal,
     handleSubmit: inputs.handleSubmit,
     isModalOpen: outputs.$isModalOpen,
     isLoading: outputs.$isLoading,
-    searchedBuilding: outputs.$searchedBuilding,
-    handleSearcheBuilding: inputs.handleSearcheBuilding,
     resetBuilding: inputs.resetBuilding,
+    preparedForOptionsAddresses: outputs.$preparedForOptionsAddresses,
+    existingCities: addressSearchService.outputs.$existingCities,
+    handleChangeCity: inputs.handleChangeCity,
   });
 
   return (
@@ -41,9 +44,10 @@ export const ConsolidatedReportContainer: FC<Props> = ({ building }) => {
           handleSubmit={handleSubmit}
           building={building}
           formId={formId}
-          searchedBuilding={searchedBuilding}
-          handleSearcheBuilding={handleSearcheBuilding}
           resetBuilding={resetBuilding}
+          preparedForOptionsAddresses={preparedForOptionsAddresses}
+          existingCities={existingCities}
+          handleChangeCity={handleChangeCity}
         />
       }
     />
