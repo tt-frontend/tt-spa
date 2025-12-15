@@ -15,8 +15,6 @@ const closeConsolidatedReportModal = createEvent();
 
 const handleSubmit = createEvent<GetConsolidatedReport>();
 
-const resetBuilding = createEvent();
-
 const handleChangeCity = createEvent<string>();
 
 const downloadConsolidatedReportFx = createEffect<
@@ -58,7 +56,6 @@ export const consolidatedReportService = {
     openConsolidatedReportModal,
     closeConsolidatedReportModal,
     handleSubmit,
-    resetBuilding,
     handleChangeCity,
   },
   outputs: {

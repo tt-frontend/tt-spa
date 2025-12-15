@@ -23,9 +23,6 @@ import {
 } from './ConsolidatedReportForm.utils';
 import * as yup from 'yup';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
-import { Tooltip } from 'ui-kit/shared/Tooltip';
-import { StyledMenuButton } from 'ui-kit/ContextMenuButton/ContextMenuButton.styled';
-import { ResetIcon } from 'ui-kit/icons';
 import { Select } from 'ui-kit/Select';
 import { SearchIconSc } from 'services/tasks/addTaskFromDispatcherService/view/AddTaskModal/AddTaskForm/AddTaskForm.styled';
 
@@ -33,7 +30,6 @@ export const ConsolidatedReportForm: FC<ConsolidatedReportFormProps> = ({
   formId,
   building,
   handleSubmit,
-  resetBuilding,
   preparedForOptionsAddresses,
   existingCities,
   handleChangeCity,
@@ -114,19 +110,6 @@ export const ConsolidatedReportForm: FC<ConsolidatedReportFormProps> = ({
         <FormItem label="Адрес">
           <SelectedAddressContainer>
             <Input value={addressString || ''} disabled />
-
-            {!building && (
-              <Tooltip title="Сбросить фильтры">
-                <StyledMenuButton
-                  size="middle"
-                  onClick={() => {
-                    resetBuilding();
-                  }}
-                >
-                  <ResetIcon />
-                </StyledMenuButton>
-              </Tooltip>
-            )}
           </SelectedAddressContainer>
         </FormItem>
       ) : (
@@ -152,8 +135,10 @@ export const ConsolidatedReportForm: FC<ConsolidatedReportFormProps> = ({
               onChange={(value) => {
                 setFieldValue('addressSearch', value);
               }}
-              onSelect={(_, option) => {
+              onSelect={(value, option) => {
                 setFieldValue('selectedBuildingId', option.id);
+
+                setFieldValue('name', `Сводный_отчёт_${value}`);
               }}
               options={preparedAddressOptions}
             >

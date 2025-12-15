@@ -16,7 +16,6 @@ export const ConsolidatedReportContainer: FC<Props> = ({ building }) => {
     handleSubmit,
     isLoading,
     isModalOpen,
-    resetBuilding,
     preparedForOptionsAddresses,
     existingCities,
     handleChangeCity,
@@ -25,7 +24,6 @@ export const ConsolidatedReportContainer: FC<Props> = ({ building }) => {
     handleSubmit: inputs.handleSubmit,
     isModalOpen: outputs.$isModalOpen,
     isLoading: outputs.$isLoading,
-    resetBuilding: inputs.resetBuilding,
     preparedForOptionsAddresses: outputs.$preparedForOptionsAddresses,
     existingCities: addressSearchService.outputs.$existingCities,
     handleChangeCity: inputs.handleChangeCity,
@@ -44,7 +42,6 @@ export const ConsolidatedReportContainer: FC<Props> = ({ building }) => {
           handleSubmit={handleSubmit}
           building={building}
           formId={formId}
-          resetBuilding={resetBuilding}
           preparedForOptionsAddresses={preparedForOptionsAddresses}
           existingCities={existingCities}
           handleChangeCity={handleChangeCity}

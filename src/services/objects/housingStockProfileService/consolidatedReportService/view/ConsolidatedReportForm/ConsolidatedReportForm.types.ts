@@ -14,7 +14,6 @@ export type ConsolidatedReportFormProps = {
     | NonResidentialBuildingResponse
     | BuildingListResponse;
   handleSubmit: (payload: GetConsolidatedReport) => void;
-  resetBuilding: () => void;
   preparedForOptionsAddresses: PreparedAddress[];
   existingCities: string[] | null;
   handleChangeCity: (payload: string) => void;
