@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { Form, Radio, Space, message } from 'antd';
+import React, { FC, useMemo } from 'react';
+import { AutoComplete, Form, Radio, Space, message } from 'antd';
 import { FormItem } from 'ui-kit/FormItem';
 import { Input } from 'ui-kit/Input';
 import { useFormik } from 'formik';
@@ -9,21 +9,33 @@ import {
   ConsolidatedReportFormProps,
   DatePeriod,
 } from './ConsolidatedReportForm.types';
-import { PeriodSelection } from './ConsolidatedReportForm.styled';
+import {
+  AddressContainer,
+  PeriodSelection,
+  SelectedAddressContainer,
+} from './ConsolidatedReportForm.styled';
 import { SpaceLine } from 'ui-kit/SpaceLine';
 import { RangePicker } from 'ui-kit/RangePicker';
 import { getBuildingAddress } from 'utils/getBuildingAddress';
-import { getDatePeriod } from './ConsolidatedReportForm.utils';
+import {
+  autocompleteAddress,
+  getDatePeriod,
+} from './ConsolidatedReportForm.utils';
 import * as yup from 'yup';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
+import { Select } from 'ui-kit/Select';
+import { SearchIconSc } from 'services/tasks/addTaskFromDispatcherService/view/AddTaskModal/AddTaskForm/AddTaskForm.styled';
 
 export const ConsolidatedReportForm: FC<ConsolidatedReportFormProps> = ({
   formId,
   building,
   handleSubmit,
+  preparedForOptionsAddresses,
+  existingCities,
+  handleChangeCity,
 }) => {
-  const address = building.address?.mainAddress;
-  const addressString = getBuildingAddress(building, true);
+  const addressFromBuilding = building?.address?.mainAddress;
+  const addressString = getBuildingAddress(building || null, true);
 
   const {
     values,
@@ -33,14 +45,19 @@ export const ConsolidatedReportForm: FC<ConsolidatedReportFormProps> = ({
     errors,
   } = useFormik({
     initialValues: {
-      name: `Сводный_отчёт_${address?.street}_${address?.number}`,
+      name: `Сводный_отчёт_${addressFromBuilding?.street || ''}_${addressFromBuilding?.number || ''}`,
       reportType: EReportType.Daily,
       period: [null, null] as DatePeriod,
       archiveType: ArchiveType.StartOfMonth,
+
+      city: '',
+      addressSearch: '',
+      selectedBuildingId: null,
     },
     validationSchema: yup.object().shape({
       name: yup.string().required('Введите название отчёта'),
     }),
+    enableReinitialize: true,
     onSubmit: (values) => {
       const period = getDatePeriod(values.archiveType, values.period);
 
@@ -53,13 +70,28 @@ export const ConsolidatedReportForm: FC<ConsolidatedReportFormProps> = ({
 
       handleSubmit({
         Name: values.name,
-        BuildingId: building.id,
+        BuildingId:
+          building?.id || (values.selectedBuildingId as unknown as number),
         ReportType: values.reportType,
         From,
         To,
       });
     },
   });
+
+  const preparedExistingCities =
+    existingCities?.map((city) => ({
+      value: city,
+    })) || [];
+
+  const preparedAddressOptions = useMemo(
+    () =>
+      autocompleteAddress(
+        values.addressSearch,
+        preparedForOptionsAddresses || [],
+      ),
+    [values.addressSearch, preparedForOptionsAddresses],
+  );
 
   return (
     <Form id={formId} onSubmitCapture={handleSubmitForm}>
@@ -73,9 +105,54 @@ export const ConsolidatedReportForm: FC<ConsolidatedReportFormProps> = ({
         />
         <ErrorMessage>{errors.name}</ErrorMessage>
       </FormItem>
-      <FormItem label="Адрес">
-        <Input value={addressString || ''} disabled />
-      </FormItem>
+
+      {building ? (
+        <FormItem label="Адрес">
+          <SelectedAddressContainer>
+            <Input value={addressString || ''} disabled />
+          </SelectedAddressContainer>
+        </FormItem>
+      ) : (
+        <AddressContainer>
+          <FormItem label="Город">
+            <Select
+              onChange={(value) => {
+                setFieldValue('city', value);
+                handleChangeCity(value as string);
+              }}
+              value={values.city || undefined}
+              placeholder="Выберите из списка"
+              options={preparedExistingCities}
+            />
+          </FormItem>
+
+          <FormItem label="Адрес">
+            <AutoComplete
+              defaultActiveFirstOption
+              showSearch
+              allowClear
+              value={values.addressSearch}
+              onChange={(value) => {
+                setFieldValue('addressSearch', value);
+              }}
+              onSelect={(value, option) => {
+                setFieldValue('selectedBuildingId', option.id);
+
+                setFieldValue('name', `Сводный_отчёт_${value}`);
+              }}
+              options={preparedAddressOptions}
+            >
+              <Input
+                prefix={<SearchIconSc />}
+                onChange={(e) => setFieldValue('addressSearch', e.target.value)}
+                value={values.addressSearch}
+                placeholder="Начните вводить"
+              />
+            </AutoComplete>
+          </FormItem>
+        </AddressContainer>
+      )}
+
       <PeriodSelection>
         <FormItem label="Тип архива">
           <Radio.Group

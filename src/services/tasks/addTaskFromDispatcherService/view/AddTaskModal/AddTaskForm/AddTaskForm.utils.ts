@@ -52,7 +52,10 @@ export function autocompleteAddress(
   }));
 }
 
-function filterAddressBySimilarity(search: string, streets: PreparedAddress[]) {
+export function filterAddressBySimilarity(
+  search: string,
+  streets: PreparedAddress[],
+) {
   return streets
     .filter((street) =>
       street.address
