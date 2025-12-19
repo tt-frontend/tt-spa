@@ -22,8 +22,8 @@ export const ChessBoardView: FC<Props> = ({
 
   return (
     <Wrapper>
-      {chessboardCreateData.sections?.map((section) => (
-        <EntranceWrapper key={section.number}>
+      {chessboardCreateData.sections?.map((section, index) => (
+        <EntranceWrapper key={String(section.number) + index}>
           <FloorWrapper hideHover>
             <FloorIndex />
             <ChessboardItem
@@ -47,8 +47,8 @@ export const ChessBoardView: FC<Props> = ({
               {section.number} Подъезд
             </ChessboardItem>
           </FloorWrapper>
-          {section.floors?.map((floor) => (
-            <FloorWrapper key={floor.number}>
+          {section.floors?.map((floor, index) => (
+            <FloorWrapper key={String(floor.number) + index}>
               <ChessboardItem
                 menuButtons={[
                   { title: 'Изменить номер этажа' },
@@ -74,9 +74,9 @@ export const ChessBoardView: FC<Props> = ({
               >
                 {floor.number}
               </ChessboardItem>
-              {floor.premises?.map((apartment) => (
+              {floor.premises?.map((apartment, index) => (
                 <ChessboardItem
-                  key={apartment.number}
+                  key={String(apartment.number) + index}
                   menuButtons={[
                     { title: 'Изменить номер квартиры' },
                     { title: 'Добавить квартиру справа' },

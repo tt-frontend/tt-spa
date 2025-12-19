@@ -30,3 +30,10 @@ export type DeleteAapartmentPayload = {
   sectionNumber?: number | null;
   apartmentNumber?: string | null;
 };
+
+export type AddAapartmentPayload = {
+  floorNumber?: number | null;
+  sectionNumber?: number | null;
+  apartmentNumber?: string | null;
+  side: 'left' | 'right';
+};
