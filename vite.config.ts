@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 import svgr from 'vite-plugin-svgr';
 import fixReactVirtualized from 'esbuild-plugin-react-virtualized';
-import eslint from 'vite-plugin-eslint';
+// import eslint from 'vite-plugin-eslint';
 import { visualizer } from 'rollup-plugin-visualizer';
 import dotenv from 'dotenv';
 
@@ -29,7 +29,7 @@ export default defineConfig(() => {
       svgr({
         include: '**/*.svg?react',
       }),
-      eslint(),
+      // eslint(),
       isAnalyze &&
         visualizer({
           filename: 'build/stats.html',

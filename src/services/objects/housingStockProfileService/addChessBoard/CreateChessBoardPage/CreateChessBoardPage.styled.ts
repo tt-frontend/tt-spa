@@ -27,7 +27,6 @@ export const Blueprint = styled.div`
   overflow-y: scroll;
 
   box-sizing: border-box;
-  padding: 24px;
 
   position: relative;
 

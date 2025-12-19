@@ -1,11 +1,23 @@
 import styled, { css } from 'styled-components';
 
+export const Scroll = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+`;
+
+export const Inner = styled.div`
+  display: flex;
+  justify-content: center;
+  min-width: fit-content;
+  padding: 24px;
+`;
+
 export const Wrapper = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
   gap: 24px;
-  padding: 24px;
 `;
 
 export const EntranceWrapper = styled.div`
