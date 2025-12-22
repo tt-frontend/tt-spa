@@ -1,4 +1,5 @@
 import {
+  AddAapartmentPayload,
   AddEntranceFormParams,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
@@ -185,7 +186,7 @@ const duplicateFloor = (
 
   const newFloor = {
     ...floor,
-    number: floor.number + 1,
+    number: floor.number,
   };
 
   const updatedSections = prev.sections?.map((section) => {
@@ -243,6 +244,65 @@ const deleteApartment = (
   };
 };
 
+const duplicateApartment = (
+  prev: PremiseLocationCreateModel,
+  payload: AddAapartmentPayload,
+): PremiseLocationCreateModel => {
+  const { sectionNumber, floorNumber, apartmentNumber, side } = payload;
+
+  if (!sectionNumber || !floorNumber || !apartmentNumber) {
+    return prev;
+  }
+
+  const baseNumber = Number(apartmentNumber);
+  if (Number.isNaN(baseNumber)) {
+    return prev;
+  }
+
+  return {
+    ...prev,
+    sections: prev.sections?.map((section) => {
+      if (section.number !== sectionNumber) return section;
+
+      return {
+        ...section,
+        floors: section.floors?.map((floor) => {
+          if (floor.number !== floorNumber || !floor.premises) {
+            return floor;
+          }
+
+          const index = floor.premises.findIndex(
+            (p) => p.number === apartmentNumber,
+          );
+
+          if (index === -1) return floor;
+
+          const duplicated: PremiseCreateModel = {
+            ...floor.premises[index],
+            number: String(side === 'right' ? baseNumber + 1 : baseNumber - 1),
+          };
+
+          const premises =
+            side === 'right'
+              ? insertAfter(floor.premises, duplicated, (_, i) => i === index)
+              : index === 0
+                ? [duplicated, ...floor.premises]
+                : insertAfter(
+                    floor.premises,
+                    duplicated,
+                    (_, i) => i === index - 1,
+                  );
+
+          return {
+            ...floor,
+            premises,
+          };
+        }),
+      };
+    }),
+  };
+};
+
 // models
 
 export const chessboardModel = {
@@ -257,4 +317,4 @@ export const entranceModel = {
 
 export const floorModel = { deleteFloor, duplicateFloor };
 
-export const apartmentModel = { deleteApartment };
+export const apartmentModel = { deleteApartment, duplicateApartment };

@@ -1,5 +1,6 @@
 import { PremiseLocationCreateModel } from 'api/types';
 import {
+  AddAapartmentPayload,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
   DuplicateFloorPayload,
@@ -12,4 +13,5 @@ export type Props = {
   handleDeleteFloor: (payload: DeleteFloorPayload) => void;
   handleDuplicateFloor: (payload: DuplicateFloorPayload) => void;
   handleDeleteApartmnet: (payload: DeleteAapartmentPayload) => void;
+  handleDuplicateApartment: (payload: AddAapartmentPayload) => void;
 };

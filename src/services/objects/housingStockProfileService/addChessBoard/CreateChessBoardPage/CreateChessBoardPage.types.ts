@@ -1,5 +1,6 @@
 import { BuildingShortResponse, PremiseLocationCreateModel } from 'api/types';
 import {
+  AddAapartmentPayload,
   AddEntranceFormParams,
   AddParkingFormParams,
   DeleteAapartmentPayload,
@@ -23,4 +24,5 @@ export type Props = {
   handleDeleteFloor: (payload: DeleteFloorPayload) => void;
   handleDuplicateFloor: (payload: DuplicateFloorPayload) => void;
   handleDeleteApartmnet: (payload: DeleteAapartmentPayload) => void;
+  handleDuplicateApartment: (payload: AddAapartmentPayload) => void;
 };

@@ -2,6 +2,7 @@ import { createEvent, createStore, sample } from 'effector';
 import { createGate } from 'effector-react';
 import { buildingQuery } from './addChessBoardService.api';
 import {
+  AddAapartmentPayload,
   AddEntranceFormParams,
   AddParkingFormParams,
   DeleteAapartmentPayload,
@@ -48,6 +49,7 @@ const handleDuplicateFloor = createEvent<DuplicateFloorPayload>();
 
 // apartment functions
 const handleDeleteApartmnet = createEvent<DeleteAapartmentPayload>();
+const handleDuplicateApartment = createEvent<AddAapartmentPayload>();
 
 const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
   sections: [],
@@ -58,7 +60,8 @@ const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
   .on(handleDuplicateEntrance, entranceModel.dubplicateEntrance)
   .on(handleDeleteFloor, floorModel.deleteFloor)
   .on(handleDuplicateFloor, floorModel.duplicateFloor)
-  .on(handleDeleteApartmnet, apartmentModel.deleteApartment);
+  .on(handleDeleteApartmnet, apartmentModel.deleteApartment)
+  .on(handleDuplicateApartment, apartmentModel.duplicateApartment);
 
 $openPanel.reset([handleAddEntrance, handleAddParking]);
 
@@ -77,6 +80,7 @@ export const addChessBoardService = {
     handleDeleteFloor,
     handleDuplicateFloor,
     handleDeleteApartmnet,
+    handleDuplicateApartment,
   },
   outputs: { $openPanel, $chessboardCreateData, $entrances },
   gates: { ChessBoardGate },
