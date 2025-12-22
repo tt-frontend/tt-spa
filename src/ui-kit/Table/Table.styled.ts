@@ -13,17 +13,7 @@ const stickyWrapperCss = css`
   flex-direction: column;
 `;
 
-export const Wrapper = styled.div<{
-  floating: boolean;
-  isSticky?: boolean;
-  maxWidth?: string;
-}>`
-  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1200px')};
-  overflow-x: auto;
-
-  width: ${({ floating }) => (floating ? '100%' : 'min-content')};
-  ${({ isSticky }) => (isSticky ? stickyWrapperCss : '')}
-
+export const beautyScrollCSS = css`
   &::-webkit-scrollbar {
     height: 26px;
     width: 26px;
@@ -91,6 +81,20 @@ export const Wrapper = styled.div<{
     width: 0px;
     display: none;
   }
+`;
+
+export const Wrapper = styled.div<{
+  floating: boolean;
+  isSticky?: boolean;
+  maxWidth?: string;
+}>`
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1200px')};
+  overflow-x: auto;
+
+  width: ${({ floating }) => (floating ? '100%' : 'min-content')};
+  ${({ isSticky }) => (isSticky ? stickyWrapperCss : '')}
+
+  ${beautyScrollCSS}
 `;
 
 const stickyHeaderCss = css`

@@ -1,9 +1,12 @@
 import styled, { css } from 'styled-components';
+import { beautyScrollCSS } from 'ui-kit/Table/Table.styled';
 
 export const Scroll = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
+
+  ${beautyScrollCSS}
 `;
 
 export const Inner = styled.div`
