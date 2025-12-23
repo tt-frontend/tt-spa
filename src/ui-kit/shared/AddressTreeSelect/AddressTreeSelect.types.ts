@@ -10,6 +10,7 @@ export type AddressTreeSelectProps = {
   disabled?: boolean;
   placeholder?: string;
   placement?: TreeSelectProps['placement'];
+  minWidth?: string;
 };
 
 export type TreeSelectElement = {
