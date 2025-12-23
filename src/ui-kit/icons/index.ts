@@ -127,6 +127,7 @@ import PlusBlueIcon from './svg/plusBlue.svg?react';
 import MainIcon from './svg/mainIcon.svg?react';
 import ChevronRightIcon from './svg/chevronRight.svg?react';
 import ApartmentLargeIcon from './svg/apartmentLarge.svg?react';
+import DotIcon from './svg/dotIcon.svg?react';
 
 export {
   FinishIcon,
@@ -258,4 +259,5 @@ export {
   MainIcon,
   ChevronRightIcon,
   ApartmentLargeIcon,
+  DotIcon,
 };

@@ -5,11 +5,14 @@ export const IsConnectedText = styled.div`
   font-weight: 400;
   margin-left: 16px;
   color: #272f5ae5;
+
+  cursor: pointer;
 `;
 
 export const SwitchWrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 16px;
 `;
 
 export const GridContainer = styled.div`

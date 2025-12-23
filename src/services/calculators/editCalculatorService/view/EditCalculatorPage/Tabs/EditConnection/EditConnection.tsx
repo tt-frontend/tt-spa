@@ -21,6 +21,7 @@ export const EditConnection: FC<EditConnectionProps> = ({
   isModalOpen,
 }) => {
   const connection = calculator?.connection;
+  const netSettings = calculator?.netSettings;
 
   const { values, setFieldValue, errors, handleSubmit } = useFormik({
     initialValues: {
@@ -31,11 +32,11 @@ export const EditConnection: FC<EditConnectionProps> = ({
       },
       isConnected: calculator?.isConnected || undefined,
 
-      providerName: '',
-      modemModel: '',
-      modemNumber: '',
-      simNumber: '',
-      simImei: '',
+      providerName: netSettings?.providerName || '',
+      modemModel: netSettings?.modemModel || '',
+      modemNumber: netSettings?.modemNumber || '',
+      simNumber: netSettings?.simNumber || '',
+      simImei: netSettings?.simImei || '',
     },
     validationSchema: yup.object().shape({
       connection: yup.object().shape({
@@ -48,7 +49,15 @@ export const EditConnection: FC<EditConnectionProps> = ({
     validateOnChange: false,
     enableReinitialize: true,
     onSubmit: (data) => {
-      const { connection, isConnected } = data;
+      const {
+        connection,
+        isConnected,
+        modemModel,
+        modemNumber,
+        providerName,
+        simImei,
+        simNumber,
+      } = data;
 
       const convertedData: UpdateCalculatorRequest = {
         isConnected,
@@ -57,6 +66,13 @@ export const EditConnection: FC<EditConnectionProps> = ({
           port: Number(connection?.port),
           deviceAddress: Number(connection?.deviceAddress),
         } as MeteringDeviceConnection,
+        netSettings: {
+          modemModel,
+          modemNumber,
+          providerName,
+          simImei,
+          simNumber,
+        },
       };
 
       onSubmit(convertedData);
@@ -136,7 +152,6 @@ export const EditConnection: FC<EditConnectionProps> = ({
 
         <FormItem label="Провайдер">
           <Input
-            type="number"
             placeholder="Укажите провайдера"
             value={values.providerName || undefined}
             onChange={(value) => {
@@ -165,7 +180,7 @@ export const EditConnection: FC<EditConnectionProps> = ({
             />
             <ErrorMessage>{err?.deviceAddress}</ErrorMessage>
           </FormItem>
-          <FormItem label="EMEI сим-карты">
+          <FormItem label="IMEI сим-карты">
             <Input
               value={values.simImei || undefined}
               onChange={(value) => {
