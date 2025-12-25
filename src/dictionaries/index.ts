@@ -237,4 +237,5 @@ export const MalfunctionTypeDictionary: {
   [ManagingFirmTaskType.ResourceDisconnecting]: '',
   [ManagingFirmTaskType.RiserNoReadings]: '',
   [ManagingFirmTaskType.TemperatureNormativeDeviation]: '',
+  [ManagingFirmTaskType.HeatSupplyQualityCheck]: '',
 };

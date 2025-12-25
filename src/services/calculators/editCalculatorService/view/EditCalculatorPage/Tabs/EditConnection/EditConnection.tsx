@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { SwitchText, Wrapper } from './EditConnection.styled';
+import { GridContainer, SwitchText, Wrapper } from './EditConnection.styled';
 import { EditConnectionProps } from './EditConnection.types';
 import { FormItem } from 'ui-kit/FormItem';
 import { Switch } from 'antd';
@@ -21,6 +21,7 @@ export const EditConnection: FC<EditConnectionProps> = ({
   isModalOpen,
 }) => {
   const connection = calculator?.connection;
+  const netSettings = calculator?.netSettings;
 
   const { values, setFieldValue, errors, handleSubmit } = useFormik({
     initialValues: {
@@ -30,6 +31,12 @@ export const EditConnection: FC<EditConnectionProps> = ({
         deviceAddress: String(connection?.deviceAddress).trim(),
       },
       isConnected: calculator?.isConnected || undefined,
+
+      providerName: netSettings?.providerName || '',
+      modemModel: netSettings?.modemModel || '',
+      modemNumber: netSettings?.modemNumber || '',
+      simNumber: netSettings?.simNumber || '',
+      simImei: netSettings?.simImei || '',
     },
     validationSchema: yup.object().shape({
       connection: yup.object().shape({
@@ -42,7 +49,15 @@ export const EditConnection: FC<EditConnectionProps> = ({
     validateOnChange: false,
     enableReinitialize: true,
     onSubmit: (data) => {
-      const { connection, isConnected } = data;
+      const {
+        connection,
+        isConnected,
+        modemModel,
+        modemNumber,
+        providerName,
+        simImei,
+        simNumber,
+      } = data;
 
       const convertedData: UpdateCalculatorRequest = {
         isConnected,
@@ -51,6 +66,13 @@ export const EditConnection: FC<EditConnectionProps> = ({
           port: Number(connection?.port),
           deviceAddress: Number(connection?.deviceAddress),
         } as MeteringDeviceConnection,
+        netSettings: {
+          modemModel,
+          modemNumber,
+          providerName,
+          simImei,
+          simNumber,
+        },
       };
 
       onSubmit(convertedData);
@@ -81,35 +103,37 @@ export const EditConnection: FC<EditConnectionProps> = ({
           <SwitchText>Опрашивать вычислитель</SwitchText>
         </FormItem>
 
-        <FormItem label="IP адрес вычислителя">
-          <Input
-            placeholder="Укажите IP-адрес устройства, например 192.168.0.1"
-            type="text"
-            value={values.connection?.ipV4 || undefined}
-            onChange={(value) => {
-              setFieldValue('connection', {
-                ...values.connection,
-                ipV4: value.target.value,
-              });
-            }}
-          />
-          <ErrorMessage>{err?.ipV4}</ErrorMessage>
-        </FormItem>
+        <GridContainer>
+          <FormItem label="IP адрес вычислителя">
+            <Input
+              placeholder="Укажите IP-адрес устройства, например 192.168.0.1"
+              type="text"
+              value={values.connection?.ipV4 || undefined}
+              onChange={(value) => {
+                setFieldValue('connection', {
+                  ...values.connection,
+                  ipV4: value.target.value,
+                });
+              }}
+            />
+            <ErrorMessage>{err?.ipV4}</ErrorMessage>
+          </FormItem>
 
-        <FormItem label="Порт">
-          <Input
-            type="number"
-            placeholder="Укажите порт устройства (например, 1234)"
-            value={values.connection?.port || undefined}
-            onChange={(value) => {
-              setFieldValue('connection', {
-                ...values.connection,
-                port: value.target.value,
-              });
-            }}
-          />
-          <ErrorMessage>{err?.port}</ErrorMessage>
-        </FormItem>
+          <FormItem label="Порт">
+            <Input
+              type="number"
+              placeholder="Укажите порт устройства (например, 1234)"
+              value={values.connection?.port || undefined}
+              onChange={(value) => {
+                setFieldValue('connection', {
+                  ...values.connection,
+                  port: value.target.value,
+                });
+              }}
+            />
+            <ErrorMessage>{err?.port}</ErrorMessage>
+          </FormItem>
+        </GridContainer>
 
         <FormItem label="Адрес прибора">
           <Input
@@ -125,6 +149,56 @@ export const EditConnection: FC<EditConnectionProps> = ({
           />
           <ErrorMessage>{err?.deviceAddress}</ErrorMessage>
         </FormItem>
+
+        <FormItem label="Провайдер">
+          <Input
+            placeholder="Укажите провайдера"
+            value={values.providerName || undefined}
+            onChange={(value) => {
+              setFieldValue('providerName', value.target.value);
+            }}
+          />
+          <ErrorMessage>{err?.deviceAddress}</ErrorMessage>
+        </FormItem>
+
+        <GridContainer>
+          <FormItem label="Марка модема">
+            <Input
+              value={values.modemModel || undefined}
+              onChange={(value) => {
+                setFieldValue('modemModel', value.target.value);
+              }}
+            />
+            <ErrorMessage>{err?.deviceAddress}</ErrorMessage>
+          </FormItem>
+          <FormItem label="Номер модема">
+            <Input
+              value={values.modemNumber || undefined}
+              onChange={(value) => {
+                setFieldValue('modemNumber', value.target.value);
+              }}
+            />
+            <ErrorMessage>{err?.deviceAddress}</ErrorMessage>
+          </FormItem>
+          <FormItem label="IMEI сим-карты">
+            <Input
+              value={values.simImei || undefined}
+              onChange={(value) => {
+                setFieldValue('simImei', value.target.value);
+              }}
+            />
+            <ErrorMessage>{err?.deviceAddress}</ErrorMessage>
+          </FormItem>
+          <FormItem label="Номер сим-карты">
+            <Input
+              value={values.simNumber || undefined}
+              onChange={(value) => {
+                setFieldValue('simNumber', value.target.value);
+              }}
+            />
+            <ErrorMessage>{err?.deviceAddress}</ErrorMessage>
+          </FormItem>
+        </GridContainer>
 
         <Footer>
           <Button type="ghost" onClick={onCancel}>

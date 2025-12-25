@@ -41,7 +41,6 @@ export const EditCalculatorPage: FC<EditCalculatorPageProps> = ({
     () => [
       { label: 'Общие данные', key: EditCalculatorTabs.CommonInfo },
       { label: 'Настройки соединения', key: EditCalculatorTabs.Connection },
-      { label: 'Документы', key: EditCalculatorTabs.Documents },
     ],
     [],
   );
