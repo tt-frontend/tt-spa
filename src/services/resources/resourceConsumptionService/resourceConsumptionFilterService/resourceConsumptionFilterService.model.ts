@@ -85,8 +85,6 @@ const $resourceConsumptionFilter = createStore<ConsumptionDataFilter>({
   }))
   .reset(clearFilter);
 
-  $resourceConsumptionFilter.watch((data)=> console.log(data))
-
 const $addressesList = combine(
   $houseManagements,
   $selectedHouseManagement,
