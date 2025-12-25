@@ -17,6 +17,7 @@ export type ApartmentsViewProps = {
   currentApartmentId: number | null;
   clearCurrentApartmentId: () => void;
   apartmentPremises: PremiseLocationResponse | null;
+  isPremisesLoading: boolean;
 };
 
 export type ListComponentProps = {

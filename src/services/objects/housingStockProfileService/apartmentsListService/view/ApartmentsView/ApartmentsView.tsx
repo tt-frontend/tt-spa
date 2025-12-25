@@ -21,6 +21,7 @@ export const ApartmentsView: FC<ApartmentsViewProps> = ({
   currentApartmentId,
   clearCurrentApartmentId,
   apartmentPremises,
+  isPremisesLoading,
 }) => {
   const ViewComponent = components[currentSegment];
 
@@ -54,7 +55,7 @@ export const ApartmentsView: FC<ApartmentsViewProps> = ({
         />
       </HeaderWrapper>
       {!showChessboardView && (
-        <WithLoader isLoading={isLoading}>
+        <WithLoader isLoading={isLoading || isPremisesLoading}>
           {apartmentsPagedList?.items && !isApartmentsListEmpty && (
             <ViewComponent
               hosuingStockId={hosuingStockId}

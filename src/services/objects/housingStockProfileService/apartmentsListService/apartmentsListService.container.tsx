@@ -20,6 +20,7 @@ export const ApartmentsListContainer = () => {
     setCurrentApartmentId,
     setCurrentSegment,
     apartmentPremises,
+    isPremisesLoading,
   } = useUnit({
     apartmentsPagedList: outputs.$apartmentsPagedList,
     isLoading: outputs.$isLoading,
@@ -29,6 +30,7 @@ export const ApartmentsListContainer = () => {
     setCurrentApartmentId: inputs.setCurrentApartmentId,
     clearCurrentApartmentId: inputs.clearCurrentApartmentId,
     apartmentPremises: apartmentPremisesQuery.$data,
+    isPremisesLoading: apartmentPremisesQuery.$pending,
   });
 
   return (
@@ -44,6 +46,7 @@ export const ApartmentsListContainer = () => {
         currentApartmentId={currentApartmentId}
         clearCurrentApartmentId={() => clearCurrentApartmentId()}
         apartmentPremises={apartmentPremises}
+        isPremisesLoading={isPremisesLoading}
       />
     </>
   );
