@@ -38,6 +38,8 @@ export const CreateChessBoardPage: FC<Props> = ({
   handleDuplicateFloor,
   handleDeleteApartmnet,
   handleDuplicateApartment,
+  handleSaveChessboard,
+  isLoadingCreate,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
@@ -141,7 +143,13 @@ export const CreateChessBoardPage: FC<Props> = ({
           <Button size="s" type="ghost">
             Отмена
           </Button>
-          <Button size="s" wide disabled>
+          <Button
+            size="s"
+            wide
+            disabled={isLoadingCreate || isLoadingBuilding}
+            onClick={handleSaveChessboard}
+            isLoading={isLoadingCreate}
+          >
             Сохранить
           </Button>
         </ButtonsWrapper>

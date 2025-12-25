@@ -1,4 +1,10 @@
+import { PremiseLocationCreateModel } from 'api/types';
+
 export type EditChessBoardPanelType = 'add-entrance' | 'add-parking';
+
+export type CreateChessboardQueryParams = PremiseLocationCreateModel & {
+  housingStockId: number;
+};
 
 export interface AddEntranceFormParams {
   entranceNumber: number;

@@ -25,4 +25,6 @@ export type Props = {
   handleDuplicateFloor: (payload: DuplicateFloorPayload) => void;
   handleDeleteApartmnet: (payload: DeleteAapartmentPayload) => void;
   handleDuplicateApartment: (payload: AddAapartmentPayload) => void;
+  handleSaveChessboard(): void;
+  isLoadingCreate: boolean;
 };
