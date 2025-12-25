@@ -137,17 +137,17 @@ export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
               <div className="analysis-info-value">{data.successCount}</div>
             </DeviceAnalysisInfoItem>
             <DeviceAnalysisInfoItem>
-              <Point color="#E2B104" />
+              <Point color="#E7EAEC" />
               <div className="analysis-info-name">Не опрашивается</div>
               <div className="analysis-info-value">{data.notPollingCount}</div>
             </DeviceAnalysisInfoItem>
             <DeviceAnalysisInfoItem>
-              <Point color="#ED3B45" />
+              <Point color="#E2B104" />
               <div className="analysis-info-name">С ошибкой</div>
               <div className="analysis-info-value">{data.errorCount}</div>
             </DeviceAnalysisInfoItem>
             <DeviceAnalysisInfoItem>
-              <Point color="#E7EAEC" />
+              <Point color="#ED3B45" />
               <div className="analysis-info-name">Нет архивов</div>
               <div className="analysis-info-value">{data.noArchiveCount}</div>
             </DeviceAnalysisInfoItem>
