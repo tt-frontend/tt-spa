@@ -12,7 +12,6 @@ import {
   CreateBuildingResponse,
   ObjectCreateSubmitData,
 } from './createObjectService.types';
-import { IsElevatorDictionaryBoolean } from './view/CreateObjectPage/CreateObjectFinalStageModal/CreateObjectFinalStageModal.constants';
 
 const goBackStage = createEvent();
 
@@ -98,8 +97,6 @@ sample({
         objectCategory,
         livingHouseType,
         floors,
-        entrances,
-        elevator,
         constructionYear,
         hasIndividualHeatingStation,
         nonResidentialHouseType,
@@ -131,10 +128,6 @@ sample({
         livingHouseType: livingHouseType || null,
         nonResidentialHouseType: nonResidentialHouseType || null,
         numberOfFloors: Number(floors) || null,
-        numberOfEntrances: Number(entrances) || null,
-        isThereElevator: elevator
-          ? IsElevatorDictionaryBoolean[elevator]
-          : null,
         constructionYear: Number(constructionYear) || null,
         hasIndividualHeatingStation: hasIndividualHeatingStation,
         objectCategory,

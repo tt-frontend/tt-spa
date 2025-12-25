@@ -62,7 +62,7 @@ sample({
         payload.devicePassport?.id,
         payload.deviceTestCertificates?.id,
       ].filter((documentId): documentId is number => Boolean(documentId)),
-    } as CreateCalculatorRequest),
+    }) as CreateCalculatorRequest,
   clock: handleSubmitForm,
   target: createCalculatorFx,
 });

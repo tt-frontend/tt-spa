@@ -11,7 +11,7 @@ export const CreateCalculatorButtonWrapper = styled.div`
   width: 50%;
   display: flex;
   justify-content: center;
-  margin-top: 45px;
+  margin-top: 15px;
   transform: translateX(-10px);
 `;
 
