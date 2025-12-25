@@ -19,6 +19,8 @@ import { TaskProfileHeader } from './TaskProfileHeader';
 import { TaskStages } from './TaskStages';
 import { ApplicationInfoContainer } from '../../applicationInfoService';
 import { EManagingFirmTaskType } from 'api/types';
+import { TaskResourceConsumption } from './TaskResourceConsumption';
+import { TemperatureGraphDetail } from './TemperatureGraphDetail';
 
 export const TaskProfile: FC<TaskProfileProps> = ({
   task,
@@ -54,6 +56,8 @@ export const TaskProfile: FC<TaskProfileProps> = ({
     canBeReverted,
   } = task;
 
+  console.log(task);
+
   const apartmemtId = apartment?.id || 0;
 
   const timeline = useMemo(() => createTimelineForTaskHeader(task), [task]);
@@ -82,6 +86,9 @@ export const TaskProfile: FC<TaskProfileProps> = ({
 
     return currentUser?.id ? perpetratorsId.includes(currentUser.id) : false;
   }, [stages, currentUser]);
+
+  const isHeatSupplyQualityCheck =
+    task.type === EManagingFirmTaskType.HeatSupplyQualityCheck;
 
   return (
     <Wrapper>
@@ -149,6 +156,12 @@ export const TaskProfile: FC<TaskProfileProps> = ({
                   {pipeNode && <TaskPipeNodeInfo pipeNode={pipeNode} />}
                   {relatedPipeNode && (
                     <TaskPipeNodeInfo pipeNode={relatedPipeNode} />
+                  )}
+                  {isHeatSupplyQualityCheck && (
+                    <>
+                      <TaskResourceConsumption buildingId={task.buildingId} />
+                      <TemperatureGraphDetail />
+                    </>
                   )}
                 </>
               )}
