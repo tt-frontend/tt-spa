@@ -2,9 +2,12 @@ import styled, { css } from 'styled-components';
 import { getPanelSize } from 'ui-kit/shared/StickyPanel/StickyPanel.styled';
 import backgorund from './assets/background-points.svg';
 
+export const blueprintBackground = backgorund;
+
 export const Wrapper = styled.div<{ isPanelOpen: boolean }>`
   margin-top: 64px;
   position: fixed;
+
   height: calc(100vh - 128px);
   top: 0;
   left: ${getPanelSize};
