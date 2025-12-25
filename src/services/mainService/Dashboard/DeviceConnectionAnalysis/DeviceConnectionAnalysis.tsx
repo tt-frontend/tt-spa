@@ -65,7 +65,7 @@ export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
               </div>
             </DeviceAnalysisInfoItem>
             <DeviceAnalysisInfoItem>
-              <Point color="#E2B104" />
+              <Point color="#E7EAEC" />
               <div className="analysis-info-name">Не опрашивается</div>
               <div className="analysis-info-value">
                 <Skeleton.Button
@@ -76,7 +76,7 @@ export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
               </div>
             </DeviceAnalysisInfoItem>
             <DeviceAnalysisInfoItem>
-              <Point color="#ED3B45" />
+              <Point color="#E2B104" />
               <div className="analysis-info-name">С ошибкой</div>
               <div className="analysis-info-value">
                 <Skeleton.Button
@@ -87,7 +87,7 @@ export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
               </div>
             </DeviceAnalysisInfoItem>
             <DeviceAnalysisInfoItem>
-              <Point color="#E7EAEC" />
+              <Point color="#ED3B45" />
               <div className="analysis-info-name">Нет архивов</div>
               <div className="analysis-info-value">
                 <Skeleton.Button
@@ -115,7 +115,7 @@ export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
                 labelRadius={150}
                 cornerRadius={4}
                 theme={VictoryTheme.clean}
-                colorScale={['#17B45A', '#E2B104', '#ED3B45', '#E7EAEC']}
+                colorScale={['#17B45A', '#E7EAEC', '#E2B104', '#ED3B45']}
                 animate={{
                   duration: 1000,
                   easing: 'exp',
