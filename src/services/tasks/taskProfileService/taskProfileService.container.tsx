@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import { taskProfileService } from '.';
 import { TaskProfile } from './view/TaskProfile';
 import { applicationInfoService } from './applicationInfoService';
+import { tasksProfileService } from '../tasksProfileService';
+import { tasksMapService } from '../tasksMapService';
 
 const { gates, outputs, inputs } = taskProfileService;
 const { TaskIdGate, RelatedNodeIdGate } = gates;
@@ -34,6 +36,9 @@ export const TaskProfileContainer = () => {
     closeDeleteDocumentModal,
     pushStageRequestPayload,
     handleFetchApplicationInfo,
+    setTasksPageSegment,
+    handleSetCoordinates,
+    handleSetZoom,
   } = useUnit({
     task: outputs.$task,
     pipeNode: outputs.$pipeNode,
@@ -56,6 +61,10 @@ export const TaskProfileContainer = () => {
     pushStageRequestPayload: outputs.$pushStageRequestPayload,
     handleFetchApplicationInfo:
       applicationInfoService.inputs.handleFetchApplicationInfo,
+
+    setTasksPageSegment: tasksProfileService.inputs.setTasksPageSegment,
+    handleSetCoordinates: tasksMapService.inputs.handleSetCoordinates,
+    handleSetZoom: tasksMapService.inputs.handleSetZoom,
   });
 
   const device = task && task.device;
@@ -105,6 +114,9 @@ export const TaskProfileContainer = () => {
           pushStageRequestPayload={pushStageRequestPayload}
           isApplication={isApplication}
           currentUser={currentUser}
+          setTasksPageSegment={setTasksPageSegment}
+          handleSetCoordinates={handleSetCoordinates}
+          handleSetZoom={handleSetZoom}
         />
       )}
     </>

@@ -28,6 +28,8 @@ const clearTask = createEvent();
 
 const handleSetCoordinates = createEvent<[number, number]>();
 
+const handleSetZoom = createEvent<number>();
+
 const fetchHousingStocksWithTasksFx = createEffect<
   GetHousingStocksWithTasksRequestPayload,
   BuildingWithTasksResponse[]
@@ -41,6 +43,11 @@ const $housingStocksWithTasks = createStore<BuildingWithTasksResponse[]>([]).on(
 const $coordinates = createStore<[number, number] | null>(null).on(
   handleSetCoordinates,
   (_, coordinates) => coordinates,
+);
+
+const $zoom = createStore<number | null>(null).on(
+  handleSetZoom,
+  (_, zoom) => zoom,
 );
 
 const fetchTaskFx = createEffect<number, TaskResponse>(getTask);
@@ -99,6 +106,7 @@ export const tasksMapService = {
     handleClickTask,
     clearTask,
     handleSetCoordinates,
+    handleSetZoom,
   },
   outputs: {
     $taskTypes,
@@ -111,5 +119,6 @@ export const tasksMapService = {
     $organizationUsers: tasksProfileService.outputs.$organizationUsers,
     $organizationCoordinates,
     $coordinates,
+    $zoom,
   },
 };

@@ -13,7 +13,12 @@ import { TaskDeviceInfo } from './TaskDeviceInfo';
 import { TaskDocumentsList } from './TaskDocumentsList';
 import { TaskIndividualDevicesList } from './TaskIndividualDevicesList';
 import { TaskPipeNodeInfo } from './TaskPipeNodeInfo';
-import { TaskInfoWrapper, TaskWrapper, Wrapper } from './TaskProfile.styled';
+import {
+  MapLinkWrapper,
+  TaskInfoWrapper,
+  TaskWrapper,
+  Wrapper,
+} from './TaskProfile.styled';
 import { TaskProfileProps } from './TaskProfile.types';
 import { TaskProfileHeader } from './TaskProfileHeader';
 import { TaskStages } from './TaskStages';
@@ -21,6 +26,8 @@ import { ApplicationInfoContainer } from '../../applicationInfoService';
 import { EManagingFirmTaskType } from 'api/types';
 import { TaskResourceConsumption } from './TaskResourceConsumption';
 import { TemperatureGraphDetail } from './TemperatureGraphDetail';
+import { useNavigate } from 'react-router-dom';
+import { EyeIcon } from 'ui-kit/icons';
 
 export const TaskProfile: FC<TaskProfileProps> = ({
   task,
@@ -44,6 +51,9 @@ export const TaskProfile: FC<TaskProfileProps> = ({
   pushStageRequestPayload,
   isApplication,
   currentUser,
+  setTasksPageSegment,
+  handleSetCoordinates,
+  handleSetZoom,
 }) => {
   const {
     individualDevices,
@@ -54,11 +64,15 @@ export const TaskProfile: FC<TaskProfileProps> = ({
     pipeNode,
     comments,
     canBeReverted,
+    buildingCoordinates,
   } = task;
 
-  console.log(task);
+  const navigate = useNavigate();
 
   const apartmemtId = apartment?.id || 0;
+
+  const latitude = buildingCoordinates?.latitude;
+  const longitude = buildingCoordinates?.longitude;
 
   const timeline = useMemo(() => createTimelineForTaskHeader(task), [task]);
   const timer = useMemo(() => createTimerForTaskHeader(task), [task]);
@@ -152,6 +166,20 @@ export const TaskProfile: FC<TaskProfileProps> = ({
                       apartmentId={apartmemtId}
                     />
                   )}
+
+                  {latitude && longitude && (
+                    <MapLinkWrapper
+                      onClick={() => {
+                        navigate('/tasks/list/Executing');
+                        setTasksPageSegment('map');
+                        handleSetCoordinates([latitude, longitude]);
+                        handleSetZoom(20);
+                      }}
+                    >
+                      <EyeIcon /> Показать задачу на карте
+                    </MapLinkWrapper>
+                  )}
+
                   {device && <TaskDeviceInfo device={device} />}
                   {pipeNode && <TaskPipeNodeInfo pipeNode={pipeNode} />}
                   {relatedPipeNode && (

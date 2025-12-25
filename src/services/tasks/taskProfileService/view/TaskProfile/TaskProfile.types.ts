@@ -1,5 +1,6 @@
 import { OrganizationUserResponse, StagePushRequest } from 'api/types';
 import { DocumentResponse, PipeNodeResponse, TaskResponse } from 'api/types';
+import { TasksPageSegment } from 'services/tasks/tasksProfileService/view/TasksProfile/TasksProfile.types';
 
 export type TaskProfileProps = {
   task: TaskResponse;
@@ -25,4 +26,7 @@ export type TaskProfileProps = {
   pushStageRequestPayload: StagePushRequest;
   isApplication: boolean;
   currentUser: OrganizationUserResponse | null;
+  setTasksPageSegment: (payload: TasksPageSegment) => void;
+  handleSetCoordinates: (payload: [number, number]) => void;
+  handleSetZoom: (payload: number) => void;
 };
