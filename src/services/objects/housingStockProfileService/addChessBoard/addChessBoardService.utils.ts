@@ -7,6 +7,7 @@ import {
 } from './addChessBoardService.types';
 import { insertAfter } from 'utils/insertAfter';
 import {
+  EPremiseCategory,
   FloorCreateModel,
   PremiseCreateModel,
   PremiseLocationCreateModel,
@@ -39,7 +40,10 @@ function toSectionCreateModel(
       ? Array.from({ length: apartmentsPerFloorAmount }, () => {
           const number = formatApartmentNumber(floor, currentApartmentNumber);
           currentApartmentNumber++;
-          const apart: PremiseCreateModel = { number, isNonResidential: false };
+          const apart: PremiseCreateModel = {
+            number,
+            category: EPremiseCategory.Apartment,
+          };
 
           return apart;
         })

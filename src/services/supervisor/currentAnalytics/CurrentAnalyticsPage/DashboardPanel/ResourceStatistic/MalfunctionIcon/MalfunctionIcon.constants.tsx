@@ -2,6 +2,7 @@ import { ManagingFirmTaskType } from 'api/types';
 import { ReactNode } from 'react';
 import {
   CalculatorIcon,
+  HeatIcon,
   IndividualDeviceSmallIcon,
   MeasurementSmallIcon,
   NoConnectionIcon,
@@ -34,4 +35,5 @@ export const MalfunctionIcons: { [key in ManagingFirmTaskType]: ReactNode } = {
   [ManagingFirmTaskType.ResourceDisconnecting]: <CalculatorIcon />,
   [ManagingFirmTaskType.RiserNoReadings]: <CalculatorIcon />,
   [ManagingFirmTaskType.TemperatureNormativeDeviation]: <CalculatorIcon />,
+  [ManagingFirmTaskType.HeatSupplyQualityCheck]: <HeatIcon />,
 };
