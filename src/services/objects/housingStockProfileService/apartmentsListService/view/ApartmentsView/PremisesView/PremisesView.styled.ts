@@ -74,10 +74,7 @@ export const Blueprint = styled.div`
   align-items: stretch;
   justify-content: flex-start;
 
-  //
-
   margin-top: 24px;
   border-radius: 24px;
-  padding: 16px;
   max-height: 65vh;
 `;
