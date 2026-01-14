@@ -33,6 +33,13 @@ export const CreateChessBoardPage: FC<Props> = ({
   handleAddEntrance,
   handleAddParking,
   handleDeleteEntrance,
+  handleDuplicateEntrance,
+  handleDeleteFloor,
+  handleDuplicateFloor,
+  handleDeleteApartmnet,
+  handleDuplicateApartment,
+  handleSaveChessboard,
+  isLoadingCreate,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
@@ -120,6 +127,11 @@ export const CreateChessBoardPage: FC<Props> = ({
           <ChessBoardView
             chessboardCreateData={chessboardCreateData}
             handleDeleteEntrance={handleDeleteEntrance}
+            handleDuplicateEntrance={handleDuplicateEntrance}
+            handleDeleteFloor={handleDeleteFloor}
+            handleDuplicateFloor={handleDuplicateFloor}
+            handleDeleteApartmnet={handleDeleteApartmnet}
+            handleDuplicateApartment={handleDuplicateApartment}
           />
         </Blueprint>
       </Wrapper>
@@ -131,7 +143,13 @@ export const CreateChessBoardPage: FC<Props> = ({
           <Button size="s" type="ghost">
             Отмена
           </Button>
-          <Button size="s" wide disabled>
+          <Button
+            size="s"
+            wide
+            disabled={isLoadingCreate || isLoadingBuilding}
+            onClick={handleSaveChessboard}
+            isLoading={isLoadingCreate}
+          >
             Сохранить
           </Button>
         </ButtonsWrapper>

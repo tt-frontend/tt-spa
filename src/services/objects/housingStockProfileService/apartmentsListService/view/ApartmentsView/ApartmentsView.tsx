@@ -3,12 +3,13 @@ import { FC } from 'react';
 import { CellsIcon, ListIcon } from 'ui-kit/icons';
 import { Segmented } from 'ui-kit/Segmented';
 import { components } from './ApartmentsView.constants';
-import { HeaderTitle, HeaderWrapper } from './ApartmentsView.styled';
+import { HeaderTitle, HeaderWrapper, Wrapper } from './ApartmentsView.styled';
 import { ApartmentsViewProps, SegmentType } from './ApartmentsView.types';
 import { WithLoader } from 'ui-kit/shared/WithLoader';
 import { AddChessBoardPanel } from './AddChessBoardPanel';
 import { useUnit } from 'effector-react';
 import { developmentSettingsService } from 'services/developmentSettings/developmentSettings.models';
+import { PremisesView } from './PremisesView';
 
 export const ApartmentsView: FC<ApartmentsViewProps> = ({
   apartmentsPagedList,
@@ -19,6 +20,8 @@ export const ApartmentsView: FC<ApartmentsViewProps> = ({
   setCurrentApartmentId,
   currentApartmentId,
   clearCurrentApartmentId,
+  apartmentPremises,
+  isPremisesLoading,
 }) => {
   const ViewComponent = components[currentSegment];
 
@@ -27,6 +30,10 @@ export const ApartmentsView: FC<ApartmentsViewProps> = ({
   );
 
   const isApartmentsListEmpty = apartmentsPagedList?.items?.length === 0;
+
+  const showChessboardView =
+    typeof apartmentPremises?.sections?.[0]?.number === 'number' &&
+    currentSegment === 'cells';
 
   return (
     <div>
@@ -47,21 +54,30 @@ export const ApartmentsView: FC<ApartmentsViewProps> = ({
           onChange={setCurrentSegment}
         />
       </HeaderWrapper>
-      <WithLoader isLoading={isLoading}>
-        {apartmentsPagedList?.items && !isApartmentsListEmpty && (
-          <ViewComponent
-            hosuingStockId={hosuingStockId}
-            apartments={apartmentsPagedList.items}
-            setCurrentApartmentId={setCurrentApartmentId}
-            currentApartmentId={currentApartmentId}
-            clearCurrentApartmentId={clearCurrentApartmentId}
-          />
-        )}
-        {isApartmentsListEmpty && featureToggles.chessboardCreate && (
-          <AddChessBoardPanel buildingId={hosuingStockId} />
-        )}
-        {!apartmentsPagedList && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-      </WithLoader>
+      {!showChessboardView && (
+        <WithLoader isLoading={isLoading || isPremisesLoading}>
+          {apartmentsPagedList?.items && !isApartmentsListEmpty && (
+            <ViewComponent
+              hosuingStockId={hosuingStockId}
+              apartments={apartmentsPagedList.items}
+              setCurrentApartmentId={setCurrentApartmentId}
+              currentApartmentId={currentApartmentId}
+              clearCurrentApartmentId={clearCurrentApartmentId}
+            />
+          )}
+          {isApartmentsListEmpty && featureToggles.chessboardCreate && (
+            <AddChessBoardPanel buildingId={hosuingStockId} />
+          )}
+          {!apartmentsPagedList && (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
+        </WithLoader>
+      )}
+      {showChessboardView && (
+        <Wrapper>
+          <PremisesView apartmentPremises={apartmentPremises} />
+        </Wrapper>
+      )}
     </div>
   );
 };

@@ -10,3 +10,7 @@ export const HeaderTitle = styled.div`
   font-size: 24px;
   line-height: 32px;
 `;
+
+export const Wrapper = styled.div`
+  max-width: 60vw;
+`;

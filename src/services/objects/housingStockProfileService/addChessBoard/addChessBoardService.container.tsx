@@ -1,8 +1,13 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { addChessBoardService } from './addChessBoardService.models';
 import { CreateChessBoardPage } from './CreateChessBoardPage';
 import { useUnit } from 'effector-react';
-import { buildingQuery } from './addChessBoardService.api';
+import {
+  buildingQuery,
+  createChessBoardMutation,
+} from './addChessBoardService.api';
+import { useEffect } from 'react';
+import { message } from 'antd';
 
 const {
   inputs,
@@ -12,6 +17,8 @@ const {
 
 export const AddChessBoardContainer = () => {
   const { buildingId } = useParams<{ buildingId: string }>();
+
+  const navigate = useNavigate();
 
   const {
     closeEditChessboardPanel,
@@ -25,6 +32,14 @@ export const AddChessBoardContainer = () => {
     chessboardCreateData,
     entrances,
     handleDeleteEntrance,
+    handleDuplicateEntrance,
+    handleDeleteFloor,
+    handleDuplicateFloor,
+    handleDeleteApartmnet,
+    handleDuplicateApartment,
+
+    createChessboard,
+    isLoadingCreate,
   } = useUnit({
     ...inputs,
     building: buildingQuery.$data,
@@ -32,7 +47,23 @@ export const AddChessBoardContainer = () => {
     openPanel: outputs.$openPanel,
     chessboardCreateData: outputs.$chessboardCreateData,
     entrances: outputs.$entrances,
+    createChessboard: createChessBoardMutation.start,
+    isLoadingCreate: createChessBoardMutation.$pending,
   });
+
+  function handleSaveChessboard() {
+    createChessboard({
+      ...chessboardCreateData,
+      housingStockId: Number(buildingId),
+    });
+  }
+
+  useEffect(() => {
+    return createChessBoardMutation.finished.success.watch(() => {
+      message.success('Шахматка успешно создана!');
+      navigate(-1);
+    }).unsubscribe;
+  }, []);
 
   return (
     <>
@@ -48,6 +79,13 @@ export const AddChessBoardContainer = () => {
         handleAddParking={handleAddParking}
         entrances={entrances}
         handleDeleteEntrance={handleDeleteEntrance}
+        handleDuplicateEntrance={handleDuplicateEntrance}
+        handleDeleteFloor={handleDeleteFloor}
+        handleDuplicateFloor={handleDuplicateFloor}
+        handleDeleteApartmnet={handleDeleteApartmnet}
+        handleDuplicateApartment={handleDuplicateApartment}
+        handleSaveChessboard={handleSaveChessboard}
+        isLoadingCreate={isLoadingCreate}
       />
     </>
   );

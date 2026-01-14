@@ -3,6 +3,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { apartmentsListService } from './apartmentsListService.model';
 import { ApartmentsView } from './view/ApartmentsView';
+import { apartmentPremisesQuery } from './apartmentsListService.api';
 
 const { outputs, inputs, gates } = apartmentsListService;
 const { ApartmentsListGate } = gates;
@@ -18,6 +19,8 @@ export const ApartmentsListContainer = () => {
     isLoading,
     setCurrentApartmentId,
     setCurrentSegment,
+    apartmentPremises,
+    isPremisesLoading,
   } = useUnit({
     apartmentsPagedList: outputs.$apartmentsPagedList,
     isLoading: outputs.$isLoading,
@@ -26,6 +29,8 @@ export const ApartmentsListContainer = () => {
     setCurrentSegment: inputs.setCurrentSegment,
     setCurrentApartmentId: inputs.setCurrentApartmentId,
     clearCurrentApartmentId: inputs.clearCurrentApartmentId,
+    apartmentPremises: apartmentPremisesQuery.$data,
+    isPremisesLoading: apartmentPremisesQuery.$pending,
   });
 
   return (
@@ -40,6 +45,8 @@ export const ApartmentsListContainer = () => {
         setCurrentApartmentId={setCurrentApartmentId}
         currentApartmentId={currentApartmentId}
         clearCurrentApartmentId={() => clearCurrentApartmentId()}
+        apartmentPremises={apartmentPremises}
+        isPremisesLoading={isPremisesLoading}
       />
     </>
   );

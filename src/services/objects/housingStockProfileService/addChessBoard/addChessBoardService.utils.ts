@@ -1,9 +1,18 @@
 import {
-  ChessboardCreateModel,
+  AddAapartmentPayload,
+  AddEntranceFormParams,
+  DeleteAapartmentPayload,
+  DeleteFloorPayload,
+  DuplicateFloorPayload,
+} from './addChessBoardService.types';
+import { insertAfter } from 'utils/insertAfter';
+import {
+  EPremiseCategory,
   FloorCreateModel,
+  PremiseCreateModel,
+  PremiseLocationCreateModel,
   SectionCreateModel,
-} from 'api/test-types';
-import { AddEntranceFormParams } from './addChessBoardService.types';
+} from 'api/types';
 
 export type ApartmentNumberFormatter = (floor: number, index: number) => string;
 
@@ -31,24 +40,29 @@ function toSectionCreateModel(
       ? Array.from({ length: apartmentsPerFloorAmount }, () => {
           const number = formatApartmentNumber(floor, currentApartmentNumber);
           currentApartmentNumber++;
-          return number;
+          const apart: PremiseCreateModel = {
+            number,
+            category: EPremiseCategory.Apartment,
+          };
+
+          return apart;
         })
       : [];
 
     floors.push({
-      floorNumber: floor,
-      apartmentNumbers,
+      number: floor,
+      premises: apartmentNumbers,
     });
   }
 
   return {
-    sectionNumber: entranceNumber,
+    number: entranceNumber,
     floors,
   };
 }
 
 const addEntrance = (
-  prev: ChessboardCreateModel,
+  prev: PremiseLocationCreateModel,
   payload: AddEntranceFormParams,
 ) => {
   const newSection = toSectionCreateModel(payload);
@@ -61,13 +75,239 @@ const addEntrance = (
 
 const resetChessboard = () => ({ sections: [] });
 
-const deleteEntrance = (prev: ChessboardCreateModel, payload: number) => {
+const deleteEntrance = (prev: PremiseLocationCreateModel, payload: number) => {
   return {
     ...prev,
-    sections:
-      prev.sections?.filter((elem) => elem.sectionNumber !== payload) || [],
+    sections: prev.sections?.filter((elem) => elem.number !== payload) || [],
   };
 };
+
+export function fromSectionModelForEntrance(
+  section: SectionCreateModel,
+  entranceNumber: number,
+): AddEntranceFormParams | null {
+  const floors = section.floors ?? [];
+  const floorsAmount = floors.length;
+
+  // первый этаж, где появились квартиры
+  const livingQuartersStartFloor =
+    floors.find((f) => (f.premises?.length ?? 0) > 0)?.number ??
+    floorsAmount + 1;
+
+  // максимальное количество квартир на жилом этаже
+  const apartmentsPerFloorAmount = Math.max(
+    ...floors.map((f) => f.premises?.length ?? 0),
+    0,
+  );
+
+  // собираем все номера квартир и определяем стартовое значение
+  const allApartmentNumbers = floors.flatMap((f) => f.premises ?? []);
+  const numericApartmentNumbers = allApartmentNumbers
+    .map((a) => Number(a.number))
+    .filter((n) => !isNaN(n));
+
+  const apartmentsStartsFrom =
+    numericApartmentNumbers.length > 0
+      ? Math.min(...numericApartmentNumbers)
+      : 0;
+
+  return {
+    entranceNumber,
+    floorsAmount,
+    apartmentsPerFloorAmount,
+    livingQuartersStartFloor,
+    apartmentsStartsFrom,
+  };
+}
+
+export const getLastApartmentNumber = (section: SectionCreateModel) => {
+  const lastApartment =
+    Number(section.floors?.at(-1)?.premises?.at(-1)?.number) || null;
+
+  const apartmentsStartsFrom = lastApartment ? lastApartment + 1 : null;
+
+  return apartmentsStartsFrom;
+};
+
+const dubplicateEntrance = (
+  prev: PremiseLocationCreateModel,
+  payload: number,
+): PremiseLocationCreateModel => {
+  const section = prev.sections?.find((elem) => elem.number === payload);
+
+  if (!section) return prev;
+
+  const params = fromSectionModelForEntrance(section, payload);
+  const apartmentsStartsFrom = getLastApartmentNumber(section);
+
+  if (!params || !apartmentsStartsFrom) return prev;
+
+  return {
+    ...prev,
+    sections: insertAfter(
+      prev.sections || [],
+      toSectionCreateModel({
+        ...params,
+        apartmentsStartsFrom,
+        entranceNumber: params.entranceNumber + 1,
+      }),
+      (item) => item.number === payload,
+    ),
+  };
+};
+
+const deleteFloor = (
+  prev: PremiseLocationCreateModel,
+  payload: DeleteFloorPayload,
+) => {
+  return {
+    ...prev,
+    sections: prev.sections?.map((section) =>
+      section.number === payload.sectionNumber
+        ? {
+            ...section,
+            floors: section.floors?.filter(
+              (floor) => floor.number !== payload.floorNumber,
+            ),
+          }
+        : section,
+    ),
+  };
+};
+
+const duplicateFloor = (
+  prev: PremiseLocationCreateModel,
+  payload: DuplicateFloorPayload,
+): PremiseLocationCreateModel => {
+  const section = prev.sections?.find(
+    (elem) => elem.number === payload.sectionNumber,
+  );
+  const floor = section?.floors?.find(
+    (elem) => elem.number === payload.floorNumber,
+  );
+
+  if (!floor || !floor.number) return prev;
+
+  const newFloor = {
+    ...floor,
+    number: floor.number,
+  };
+
+  const updatedSections = prev.sections?.map((section) => {
+    return section.number === payload.sectionNumber
+      ? {
+          ...section,
+          floors: insertAfter(
+            section.floors || [],
+            newFloor,
+            (floor) => floor.number === payload.floorNumber,
+          ),
+        }
+      : section;
+  });
+
+  return {
+    ...prev,
+    sections: updatedSections,
+  };
+};
+
+const deleteApartment = (
+  prev: PremiseLocationCreateModel,
+  payload: DeleteAapartmentPayload,
+) => {
+  if (
+    !payload.floorNumber ||
+    !payload.sectionNumber ||
+    !payload.apartmentNumber
+  ) {
+    return prev;
+  }
+
+  return {
+    ...prev,
+    sections: prev.sections?.map((section) =>
+      section.number === payload.sectionNumber
+        ? {
+            ...section,
+            floors:
+              section.floors?.map((floor) =>
+                floor.number === payload.floorNumber
+                  ? {
+                      ...floor,
+                      premises: floor.premises?.filter(
+                        (apartment) =>
+                          apartment.number !== payload.apartmentNumber,
+                      ),
+                    }
+                  : floor,
+              ) || [],
+          }
+        : section,
+    ),
+  };
+};
+
+const duplicateApartment = (
+  prev: PremiseLocationCreateModel,
+  payload: AddAapartmentPayload,
+): PremiseLocationCreateModel => {
+  const { sectionNumber, floorNumber, apartmentNumber, side } = payload;
+
+  if (!sectionNumber || !floorNumber || !apartmentNumber) {
+    return prev;
+  }
+
+  const baseNumber = Number(apartmentNumber);
+  if (Number.isNaN(baseNumber)) {
+    return prev;
+  }
+
+  return {
+    ...prev,
+    sections: prev.sections?.map((section) => {
+      if (section.number !== sectionNumber) return section;
+
+      return {
+        ...section,
+        floors: section.floors?.map((floor) => {
+          if (floor.number !== floorNumber || !floor.premises) {
+            return floor;
+          }
+
+          const index = floor.premises.findIndex(
+            (p) => p.number === apartmentNumber,
+          );
+
+          if (index === -1) return floor;
+
+          const duplicated: PremiseCreateModel = {
+            ...floor.premises[index],
+            number: String(side === 'right' ? baseNumber + 1 : baseNumber - 1),
+          };
+
+          const premises =
+            side === 'right'
+              ? insertAfter(floor.premises, duplicated, (_, i) => i === index)
+              : index === 0
+                ? [duplicated, ...floor.premises]
+                : insertAfter(
+                    floor.premises,
+                    duplicated,
+                    (_, i) => i === index - 1,
+                  );
+
+          return {
+            ...floor,
+            premises,
+          };
+        }),
+      };
+    }),
+  };
+};
+
+// models
 
 export const chessboardModel = {
   addEntrance,
@@ -76,4 +316,9 @@ export const chessboardModel = {
 
 export const entranceModel = {
   deleteEntrance,
+  dubplicateEntrance,
 };
+
+export const floorModel = { deleteFloor, duplicateFloor };
+
+export const apartmentModel = { deleteApartment, duplicateApartment };

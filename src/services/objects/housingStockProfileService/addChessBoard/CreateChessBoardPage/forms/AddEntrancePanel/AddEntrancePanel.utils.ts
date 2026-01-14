@@ -1,15 +1,13 @@
-import { ChessboardCreateModel } from 'api/test-types';
 import { AddEntranceFormParams } from '../../../addChessBoardService.types';
+import { PremiseLocationCreateModel } from 'api/types';
 
 export const getLastApartmentNumber = (
-  chessboardCreateData: ChessboardCreateModel,
+  chessboardCreateData: PremiseLocationCreateModel,
 ) => {
   const lastApartment =
     Number(
-      chessboardCreateData.sections
-        ?.at(-1)
-        ?.floors?.at(-1)
-        ?.apartmentNumbers?.at(-1),
+      chessboardCreateData.sections?.at(-1)?.floors?.at(-1)?.premises?.at(-1)
+        ?.number,
     ) || null;
 
   const apartmentsStartsFrom = lastApartment ? lastApartment + 1 : null;
@@ -18,11 +16,11 @@ export const getLastApartmentNumber = (
 };
 
 export const getNextEntranceNumber = (
-  chessboardCreateData: ChessboardCreateModel,
+  chessboardCreateData: PremiseLocationCreateModel,
 ) => {
   if (chessboardCreateData.sections?.length) {
     const lastEntrance =
-      Number(chessboardCreateData.sections?.at(-1)?.sectionNumber) || null;
+      Number(chessboardCreateData.sections?.at(-1)?.number) || null;
 
     return lastEntrance ? lastEntrance + 1 : null;
   }
@@ -32,13 +30,11 @@ export const getNextEntranceNumber = (
 
 export const validateEntranceFormValues = (
   values: AddEntranceFormParams,
-  data: ChessboardCreateModel,
+  data: PremiseLocationCreateModel,
 ) => {
   if (
     values.entranceNumber &&
-    data.sections?.some(
-      (section) => section.sectionNumber === values.entranceNumber,
-    )
+    data.sections?.some((section) => section.number === values.entranceNumber)
   ) {
     return 'Номера подъездов не должны повторяться';
   }

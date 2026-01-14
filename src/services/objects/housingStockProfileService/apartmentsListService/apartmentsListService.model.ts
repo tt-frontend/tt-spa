@@ -2,7 +2,10 @@ import { createEffect, createEvent, createStore } from 'effector';
 import { combine, sample } from 'effector';
 import { createGate } from 'effector-react';
 import { ApartmentListResponsePagedList } from 'api/types';
-import { getApartmentsList } from './apartmentsListService.api';
+import {
+  apartmentPremisesQuery,
+  getApartmentsList,
+} from './apartmentsListService.api';
 import { SegmentType } from './view/ApartmentsView/ApartmentsView.types';
 
 const fetchApartmentsList = createEffect<
@@ -49,6 +52,17 @@ sample({
     },
   }),
   target: fetchApartmentsList,
+});
+
+sample({
+  clock: ApartmentsListGate.open,
+  fn: ({ housingStockId }) => housingStockId!,
+  target: apartmentPremisesQuery.start,
+});
+
+sample({
+  clock: ApartmentsListGate.close,
+  target: apartmentPremisesQuery.reset,
 });
 
 const $isLoading = fetchApartmentsList.pending;
