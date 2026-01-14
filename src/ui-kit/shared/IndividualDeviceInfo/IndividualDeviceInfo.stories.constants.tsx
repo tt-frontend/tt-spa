@@ -252,4 +252,5 @@ export const Device: IndividualDeviceResponse = {
   hasActiveTasks: false,
   bitDepth: 5,
   scaleFactor: 1,
+  netSettings: null,
 };

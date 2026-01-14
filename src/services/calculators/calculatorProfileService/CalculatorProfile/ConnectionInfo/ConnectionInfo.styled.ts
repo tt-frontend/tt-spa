@@ -12,3 +12,9 @@ export const NoConnection = styled.div`
   border-left: 2px solid #189ee9;
   box-shadow: 0 4px 4px rgba(0, 0, 20, 0.16);
 `;
+
+export const ModemContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;

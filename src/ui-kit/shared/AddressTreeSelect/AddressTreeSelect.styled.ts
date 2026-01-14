@@ -33,6 +33,12 @@ const TreeSelectSmallStyles = css`
   }
 `;
 
-export const TreeSelectSC = styled(TreeSelect)<{ small: boolean }>`
+export const TreeSelectSC = styled(TreeSelect)<{
+  small: boolean;
+  minWidth?: string;
+}>`
   ${({ small }) => small && TreeSelectSmallStyles}
+  .ant-select-selector {
+    min-width: ${({ minWidth }) => minWidth};
+  }
 `;
