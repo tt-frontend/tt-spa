@@ -17,7 +17,6 @@ export const Device: IndividualDeviceResponse = {
     apartmentNumber: '114',
     comment: 'план ук от 30,05,22.  план ук от .01,02,,2020',
   },
-  netSettings: null,
   resource: EResourceType.HotWaterSupply,
   mountPlace: 'Toilet',
   deviceMountPlace: { id: 1309703, name: 'Toilet', description: 'Туалет' },

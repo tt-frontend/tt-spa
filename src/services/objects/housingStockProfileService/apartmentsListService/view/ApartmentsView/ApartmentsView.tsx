@@ -33,7 +33,8 @@ export const ApartmentsView: FC<ApartmentsViewProps> = ({
 
   const showChessboardView =
     typeof apartmentPremises?.sections?.[0]?.number === 'number' &&
-    currentSegment === 'cells';
+    currentSegment === 'cells' &&
+    featureToggles.chessboardCreate;
 
   return (
     <div>
