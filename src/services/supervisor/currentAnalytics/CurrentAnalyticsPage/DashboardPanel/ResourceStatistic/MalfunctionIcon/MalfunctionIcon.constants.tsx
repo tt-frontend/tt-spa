@@ -2,7 +2,6 @@ import { ManagingFirmTaskType } from 'api/types';
 import { ReactNode } from 'react';
 import {
   CalculatorIcon,
-  HeatIcon,
   IndividualDeviceSmallIcon,
   MeasurementSmallIcon,
   NoConnectionIcon,
