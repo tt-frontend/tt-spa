@@ -12,5 +12,5 @@ export const HeaderTitle = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  max-width: 70vw;
+  max-width: 60vw;
 `;

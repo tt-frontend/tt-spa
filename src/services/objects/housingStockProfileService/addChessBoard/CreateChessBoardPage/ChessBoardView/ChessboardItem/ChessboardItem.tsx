@@ -9,6 +9,13 @@ export const ChessboardItem: FC<Props> = ({
   wide,
   menuButtons,
 }) => {
+  if (!menuButtons)
+    return (
+      <Wrapper type={type} wide={wide}>
+        {children}
+      </Wrapper>
+    );
+
   return (
     <ContextMenuButton wide={wide} menuButtons={menuButtons}>
       {(isOpen) => (
