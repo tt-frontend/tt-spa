@@ -1,4 +1,4 @@
-import { BuildingShortResponse, PremiseLocationCreateModel } from 'api/types';
+import { HousingStockResponse, PremiseLocationCreateModel } from 'api/types';
 import {
   AddAapartmentPayload,
   AddEntranceFormParams,
@@ -10,7 +10,7 @@ import {
 } from '../addChessBoardService.types';
 
 export type Props = {
-  building: BuildingShortResponse | null;
+  building: HousingStockResponse | null;
   isLoadingBuilding: boolean;
   handleEditChessboard: (payload: EditChessBoardPanelType) => void;
   openPanel: EditChessBoardPanelType | null;
