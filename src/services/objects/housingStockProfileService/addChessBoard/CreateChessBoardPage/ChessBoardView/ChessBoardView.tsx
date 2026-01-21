@@ -20,6 +20,7 @@ export const ChessBoardView: FC<Props> = ({
   handleDuplicateFloor,
   handleDeleteApartmnet,
   handleDuplicateApartment,
+  openEditApartmentModal,
 }) => {
   useEnterToTab();
 
@@ -27,8 +28,8 @@ export const ChessBoardView: FC<Props> = ({
     <Scroll>
       <Inner>
         <Wrapper>
-          {chessboardCreateData.sections?.map((section, index) => (
-            <EntranceWrapper key={String(section.number) + index}>
+          {chessboardCreateData.sections?.map((section, sectionIndex) => (
+            <EntranceWrapper key={String(section.number) + sectionIndex}>
               <FloorWrapper hideHover>
                 <FloorIndex />
                 <ChessboardItem
@@ -45,7 +46,7 @@ export const ChessBoardView: FC<Props> = ({
                     {
                       title: 'Удалить подъезд',
                       onClick: () =>
-                        section.number && handleDeleteEntrance(index),
+                        section.number && handleDeleteEntrance(sectionIndex),
                       color: ContextMenuButtonColor.danger,
                     },
                   ]}
@@ -53,8 +54,8 @@ export const ChessBoardView: FC<Props> = ({
                   {section.number} Подъезд
                 </ChessboardItem>
               </FloorWrapper>
-              {section.floors?.map((floor, index) => (
-                <FloorWrapper key={String(floor.number) + index}>
+              {section.floors?.map((floor, floorIndex) => (
+                <FloorWrapper key={String(floor.number) + floorIndex}>
                   <ChessboardItem
                     menuButtons={[
                       { title: 'Изменить номер этажа' },
@@ -72,7 +73,7 @@ export const ChessBoardView: FC<Props> = ({
                           handleDeleteFloor({
                             floorNumber: floor.number,
                             sectionNumber: section.number,
-                            index,
+                            index: floorIndex,
                           }),
                         color: ContextMenuButtonColor.danger,
                       },
@@ -81,11 +82,19 @@ export const ChessBoardView: FC<Props> = ({
                   >
                     {floor.number}
                   </ChessboardItem>
-                  {floor.premises?.map((apartment, index) => (
+                  {floor.premises?.map((apartment, apartmentIndex) => (
                     <ChessboardItem
-                      key={String(apartment.number) + index}
+                      key={String(apartment.number) + apartmentIndex}
                       menuButtons={[
-                        { title: 'Изменить номер квартиры' },
+                        {
+                          title: 'Изменить номер квартиры',
+                          onClick: () =>
+                            openEditApartmentModal({
+                              sectionIndex: sectionIndex,
+                              floorIndex: floorIndex,
+                              apartmentIndex: apartmentIndex,
+                            }),
+                        },
                         {
                           title: 'Добавить квартиру слева',
                           onClick: () =>
@@ -114,7 +123,7 @@ export const ChessBoardView: FC<Props> = ({
                               sectionNumber: section.number,
                               floorNumber: floor.number,
                               apartmentNumber: apartment.number,
-                              index,
+                              index: apartmentIndex,
                             }),
                         },
                       ]}

@@ -25,7 +25,6 @@ export const AddChessBoardContainer = () => {
     handleEditChessboard,
     handleAddEntrance,
     handleAddParking,
-
     building,
     isLoadingBuilding,
     openPanel,
@@ -37,9 +36,12 @@ export const AddChessBoardContainer = () => {
     handleDuplicateFloor,
     handleDeleteApartmnet,
     handleDuplicateApartment,
-
+    openEditApartmentModal,
+    handleCloseDownModal,
     createChessboard,
     isLoadingCreate,
+    editApartmentModalState,
+    handleSaveApartmentChanges,
   } = useUnit({
     ...inputs,
     building: buildingQuery.$data,
@@ -49,6 +51,7 @@ export const AddChessBoardContainer = () => {
     entrances: outputs.$entrances,
     createChessboard: createChessBoardMutation.start,
     isLoadingCreate: createChessBoardMutation.$pending,
+    editApartmentModalState: outputs.$editApartmentModalState,
   });
 
   function handleSaveChessboard() {
@@ -86,6 +89,10 @@ export const AddChessBoardContainer = () => {
         handleDuplicateApartment={handleDuplicateApartment}
         handleSaveChessboard={handleSaveChessboard}
         isLoadingCreate={isLoadingCreate}
+        editApartmentModalState={editApartmentModalState}
+        openEditApartmentModal={openEditApartmentModal}
+        handleCloseDownModal={handleCloseDownModal}
+        handleSaveApartmentChanges={handleSaveApartmentChanges}
       />
     </>
   );

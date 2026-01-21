@@ -21,15 +21,16 @@ import { StickyPanel } from 'ui-kit/shared/StickyPanel';
 import { useUnit } from 'effector-react';
 import { layoutService } from 'App/layout/layoutService.models';
 import { AddParking } from './forms/AddParking';
+import { EditApartment } from './forms/EditApartment';
 
 export const CreateChessBoardPage: FC<Props> = ({
+  chessboardCreateData,
   building,
   entrances,
   isLoadingBuilding,
   openPanel,
   closeEditChessboardPanel,
   handleEditChessboard,
-  chessboardCreateData,
   handleAddEntrance,
   handleAddParking,
   handleDeleteEntrance,
@@ -40,6 +41,10 @@ export const CreateChessBoardPage: FC<Props> = ({
   handleDuplicateApartment,
   handleSaveChessboard,
   isLoadingCreate,
+  openEditApartmentModal,
+  editApartmentModalState,
+  handleCloseDownModal,
+  handleSaveApartmentChanges,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
@@ -125,6 +130,14 @@ export const CreateChessBoardPage: FC<Props> = ({
               entrances={entrances}
             />
           )}
+          {editApartmentModalState && (
+            <EditApartment
+              editApartmentModalState={editApartmentModalState}
+              handleCloseDownModal={handleCloseDownModal}
+              handleSaveApartmentChanges={handleSaveApartmentChanges}
+              chessboardCreateData={chessboardCreateData}
+            />
+          )}
           <ChessBoardView
             chessboardCreateData={chessboardCreateData}
             handleDeleteEntrance={handleDeleteEntrance}
@@ -133,6 +146,7 @@ export const CreateChessBoardPage: FC<Props> = ({
             handleDuplicateFloor={handleDuplicateFloor}
             handleDeleteApartmnet={handleDeleteApartmnet}
             handleDuplicateApartment={handleDuplicateApartment}
+            openEditApartmentModal={openEditApartmentModal}
           />
         </Blueprint>
       </Wrapper>

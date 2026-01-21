@@ -4,6 +4,7 @@ import {
   DeleteAapartmentPayload,
   DeleteFloorPayload,
   DuplicateFloorPayload,
+  OpenEditApartmentModalPayload,
 } from '../../addChessBoardService.types';
 
 export type Props = {
@@ -14,4 +15,5 @@ export type Props = {
   handleDuplicateFloor: (payload: DuplicateFloorPayload) => void;
   handleDeleteApartmnet: (payload: DeleteAapartmentPayload) => void;
   handleDuplicateApartment: (payload: AddAapartmentPayload) => void;
+  openEditApartmentModal: (payload: OpenEditApartmentModalPayload) => void;
 };

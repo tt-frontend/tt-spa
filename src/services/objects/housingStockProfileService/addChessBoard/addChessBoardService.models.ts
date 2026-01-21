@@ -8,7 +8,9 @@ import {
   DeleteAapartmentPayload,
   DeleteFloorPayload,
   DuplicateFloorPayload,
+  EditApartmentPayload,
   EditChessBoardPanelType,
+  OpenEditApartmentModalPayload,
 } from './addChessBoardService.types';
 import {
   apartmentModel,
@@ -50,6 +52,17 @@ const handleDuplicateFloor = createEvent<DuplicateFloorPayload>();
 // apartment functions
 const handleDeleteApartmnet = createEvent<DeleteAapartmentPayload>();
 const handleDuplicateApartment = createEvent<AddAapartmentPayload>();
+const openEditApartmentModal = createEvent<OpenEditApartmentModalPayload>();
+const handleSaveApartmentChanges = createEvent<EditApartmentPayload>();
+
+const handleCloseDownModal = createEvent();
+
+const closeDownModalsList = [
+  handleEditChessboard,
+  handleCloseDownModal,
+  closeEditChessboardPanel,
+  handleSaveApartmentChanges,
+];
 
 const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
   sections: [],
@@ -61,7 +74,14 @@ const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
   .on(handleDeleteFloor, floorModel.deleteFloor)
   .on(handleDuplicateFloor, floorModel.duplicateFloor)
   .on(handleDeleteApartmnet, apartmentModel.deleteApartment)
-  .on(handleDuplicateApartment, apartmentModel.duplicateApartment);
+  .on(handleDuplicateApartment, apartmentModel.duplicateApartment)
+  .on(handleSaveApartmentChanges, apartmentModel.editApartment);
+
+// apartment state
+const $editApartmentModalState =
+  createStore<OpenEditApartmentModalPayload | null>(null)
+    .on(openEditApartmentModal, (_, payload) => payload)
+    .reset(closeDownModalsList);
 
 $openPanel.reset([handleAddEntrance, handleAddParking]);
 
@@ -81,7 +101,15 @@ export const addChessBoardService = {
     handleDuplicateFloor,
     handleDeleteApartmnet,
     handleDuplicateApartment,
+    openEditApartmentModal,
+    handleCloseDownModal,
+    handleSaveApartmentChanges,
   },
-  outputs: { $openPanel, $chessboardCreateData, $entrances },
+  outputs: {
+    $openPanel,
+    $chessboardCreateData,
+    $entrances,
+    $editApartmentModalState,
+  },
   gates: { ChessBoardGate },
 };

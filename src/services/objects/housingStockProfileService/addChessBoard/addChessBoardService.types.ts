@@ -45,3 +45,16 @@ export type AddAapartmentPayload = {
   apartmentNumber?: string | null;
   side: 'left' | 'right';
 };
+
+export type OpenEditApartmentModalPayload = {
+  floorIndex: number;
+  sectionIndex: number;
+  apartmentIndex: number;
+};
+
+export type EditApartmentPayload = {
+  number: string;
+  sectionIndex: number;
+  floorIndex: number;
+  apartmentIndex: number;
+};

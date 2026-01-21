@@ -4,6 +4,7 @@ import {
   DeleteAapartmentPayload,
   DeleteFloorPayload,
   DuplicateFloorPayload,
+  EditApartmentPayload,
 } from './addChessBoardService.types';
 import { insertAfter } from 'utils/insertAfter';
 import {
@@ -306,6 +307,36 @@ const duplicateApartment = (
   };
 };
 
+const editApartment = (
+  prev: PremiseLocationCreateModel,
+  payload: EditApartmentPayload,
+) => {
+  const { sectionIndex, floorIndex, apartmentIndex, number } = payload;
+
+  return {
+    ...prev,
+    sections: prev.sections?.map((section, sIdx) =>
+      sIdx === sectionIndex
+        ? {
+            ...section,
+            floors: section.floors?.map((floor, fIdx) =>
+              fIdx === floorIndex
+                ? {
+                    ...floor,
+                    premises: floor.premises?.map((premise, pIdx) =>
+                      pIdx === apartmentIndex
+                        ? { ...premise, number }
+                        : premise,
+                    ),
+                  }
+                : floor,
+            ),
+          }
+        : section,
+    ),
+  };
+};
+
 // models
 
 export const chessboardModel = {
@@ -320,4 +351,8 @@ export const entranceModel = {
 
 export const floorModel = { deleteFloor, duplicateFloor };
 
-export const apartmentModel = { deleteApartment, duplicateApartment };
+export const apartmentModel = {
+  deleteApartment,
+  duplicateApartment,
+  editApartment,
+};
