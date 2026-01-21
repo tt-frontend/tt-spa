@@ -78,7 +78,7 @@ const resetChessboard = () => ({ sections: [] });
 const deleteEntrance = (prev: PremiseLocationCreateModel, payload: number) => {
   return {
     ...prev,
-    sections: prev.sections?.filter((elem) => elem.number !== payload) || [],
+    sections: prev.sections?.filter((_, index) => index !== payload) || [],
   };
 };
 

@@ -45,7 +45,7 @@ export const ChessBoardView: FC<Props> = ({
                     {
                       title: 'Удалить подъезд',
                       onClick: () =>
-                        section.number && handleDeleteEntrance(section.number),
+                        section.number && handleDeleteEntrance(index),
                       color: ContextMenuButtonColor.danger,
                     },
                   ]}
