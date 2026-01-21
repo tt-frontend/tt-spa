@@ -167,7 +167,7 @@ const deleteFloor = (
         ? {
             ...section,
             floors: section.floors?.filter(
-              (floor) => floor.number !== payload.floorNumber,
+              (_, index) => index !== payload.index,
             ),
           }
         : section,
@@ -236,8 +236,7 @@ const deleteApartment = (
                   ? {
                       ...floor,
                       premises: floor.premises?.filter(
-                        (apartment) =>
-                          apartment.number !== payload.apartmentNumber,
+                        (_, index) => index !== payload.index,
                       ),
                     }
                   : floor,
