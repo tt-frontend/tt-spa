@@ -72,6 +72,7 @@ export const ChessBoardView: FC<Props> = ({
                           handleDeleteFloor({
                             floorNumber: floor.number,
                             sectionNumber: section.number,
+                            index,
                           }),
                         color: ContextMenuButtonColor.danger,
                       },
@@ -113,6 +114,7 @@ export const ChessBoardView: FC<Props> = ({
                               sectionNumber: section.number,
                               floorNumber: floor.number,
                               apartmentNumber: apartment.number,
+                              index,
                             }),
                         },
                       ]}

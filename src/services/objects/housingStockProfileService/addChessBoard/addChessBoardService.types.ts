@@ -24,6 +24,7 @@ export interface AddParkingFormParams {
 export type DeleteFloorPayload = {
   floorNumber?: number;
   sectionNumber?: number;
+  index: number;
 };
 
 export type DuplicateFloorPayload = {
@@ -35,6 +36,7 @@ export type DeleteAapartmentPayload = {
   floorNumber?: number | null;
   sectionNumber?: number | null;
   apartmentNumber?: string | null;
+  index: number;
 };
 
 export type AddAapartmentPayload = {
