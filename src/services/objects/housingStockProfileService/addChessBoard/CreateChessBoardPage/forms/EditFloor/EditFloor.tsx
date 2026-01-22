@@ -1,51 +1,51 @@
 import { FC, useMemo } from 'react';
-import { Wrapper } from './EditApartment.styled';
-import { Props } from './EditApartment.types';
+
 import { BlueprintPanel } from '../../BlueprintPanel';
 import { Button } from 'ui-kit/Button';
 import { Input } from 'ui-kit/Input';
 import { FormItem } from 'ui-kit/FormItem';
 import { useFormik } from 'formik';
-import { EditApartmentSchema } from './EditApartment.constants';
+import { Props } from './EditFloor.types';
+import { Wrapper } from './EditFloor.styled';
+import { EditFloorFormSchema } from './EditFloor.constants';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
 
-export const EditApartment: FC<Props> = ({
-  handleCloseDownModal,
-  editApartmentModalState,
+export const EditFloor: FC<Props> = ({
   chessboardCreateData,
-  handleSaveApartmentChanges,
+  editFloorModalState,
+  handleCloseDownModal,
+  handleSaveFloorChanges,
 }) => {
   const address = useMemo(() => {
     const section = chessboardCreateData.sections?.find(
-      (_, index) => index === editApartmentModalState.sectionIndex,
+      (_, index) => index === editFloorModalState.sectionIndex,
     );
 
     const floor = section?.floors?.find(
-      (_, index) => index === editApartmentModalState.floorIndex,
+      (_, index) => index === editFloorModalState.floorIndex,
     );
 
-    const apartment = floor?.premises?.find(
-      (_, index) => index === editApartmentModalState.apartmentIndex,
-    );
-
-    return { section, floor, apartment };
-  }, [chessboardCreateData, editApartmentModalState]);
+    return { section, floor };
+  }, [chessboardCreateData, editFloorModalState]);
 
   const { values, handleChange, handleSubmit, errors } = useFormik({
     initialValues: {
-      number: address.apartment?.number || '',
+      number: String(address.floor?.number) || '',
     },
-    validationSchema: EditApartmentSchema,
     onSubmit: (values) => {
-      handleSaveApartmentChanges({ ...values, ...editApartmentModalState });
+      handleSaveFloorChanges({
+        ...editFloorModalState,
+        ...values,
+      });
     },
+    validationSchema: EditFloorFormSchema,
   });
 
   return (
     <BlueprintPanel
       title={
         <span>
-          <span>Квартира №{address.apartment?.number}</span>{' '}
+          <span>Этаж №{address.floor?.number}</span>{' '}
           <span
             style={{
               color: 'gray',
@@ -53,7 +53,7 @@ export const EditApartment: FC<Props> = ({
               fontSize: 11,
             }}
           >
-            П - {address.section?.number}, Э - {address.floor?.number}
+            П - {address.section?.number}
           </span>
         </span>
       }
@@ -69,7 +69,7 @@ export const EditApartment: FC<Props> = ({
       }
     >
       <Wrapper>
-        <FormItem label="Номер квартиры">
+        <FormItem label="Номер этажа">
           <Input
             small
             value={values.number}

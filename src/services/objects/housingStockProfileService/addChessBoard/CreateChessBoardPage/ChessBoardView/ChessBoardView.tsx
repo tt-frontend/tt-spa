@@ -21,6 +21,7 @@ export const ChessBoardView: FC<Props> = ({
   handleDeleteApartmnet,
   handleDuplicateApartment,
   openEditApartmentModal,
+  openEditFloorModal,
 }) => {
   useEnterToTab();
 
@@ -58,7 +59,14 @@ export const ChessBoardView: FC<Props> = ({
                 <FloorWrapper key={String(floor.number) + floorIndex}>
                   <ChessboardItem
                     menuButtons={[
-                      { title: 'Изменить номер этажа' },
+                      {
+                        title: 'Изменить номер этажа',
+                        onClick: () =>
+                          openEditFloorModal({
+                            sectionIndex: sectionIndex,
+                            floorIndex: floorIndex,
+                          }),
+                      },
                       {
                         title: 'Дублировать этаж',
                         onClick: () =>

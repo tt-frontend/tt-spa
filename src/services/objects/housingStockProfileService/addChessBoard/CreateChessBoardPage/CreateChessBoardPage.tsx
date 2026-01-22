@@ -22,6 +22,7 @@ import { useUnit } from 'effector-react';
 import { layoutService } from 'App/layout/layoutService.models';
 import { AddParking } from './forms/AddParking';
 import { EditApartment } from './forms/EditApartment';
+import { EditFloor } from './forms/EditFloor';
 
 export const CreateChessBoardPage: FC<Props> = ({
   chessboardCreateData,
@@ -45,6 +46,9 @@ export const CreateChessBoardPage: FC<Props> = ({
   editApartmentModalState,
   handleCloseDownModal,
   handleSaveApartmentChanges,
+  openEditFloorModal,
+  handleSaveFloorChanges,
+  editFloorModalState,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
@@ -138,6 +142,14 @@ export const CreateChessBoardPage: FC<Props> = ({
               chessboardCreateData={chessboardCreateData}
             />
           )}
+          {editFloorModalState && (
+            <EditFloor
+              editFloorModalState={editFloorModalState}
+              handleCloseDownModal={handleCloseDownModal}
+              handleSaveFloorChanges={handleSaveFloorChanges}
+              chessboardCreateData={chessboardCreateData}
+            />
+          )}
           <ChessBoardView
             chessboardCreateData={chessboardCreateData}
             handleDeleteEntrance={handleDeleteEntrance}
@@ -147,6 +159,7 @@ export const CreateChessBoardPage: FC<Props> = ({
             handleDeleteApartmnet={handleDeleteApartmnet}
             handleDuplicateApartment={handleDuplicateApartment}
             openEditApartmentModal={openEditApartmentModal}
+            openEditFloorModal={openEditFloorModal}
           />
         </Blueprint>
       </Wrapper>

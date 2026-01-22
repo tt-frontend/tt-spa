@@ -58,3 +58,14 @@ export type EditApartmentPayload = {
   floorIndex: number;
   apartmentIndex: number;
 };
+
+export type OpenEditFloorModalPayload = {
+  floorIndex: number;
+  sectionIndex: number;
+};
+
+export type EditFloorPayload = {
+  number: string;
+  sectionIndex: number;
+  floorIndex: number;
+};
