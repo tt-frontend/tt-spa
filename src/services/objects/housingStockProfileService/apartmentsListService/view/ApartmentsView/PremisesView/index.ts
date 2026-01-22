@@ -1,0 +1,1 @@
+export { PremisesView } from './PremisesView';

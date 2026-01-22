@@ -24,6 +24,7 @@ import { AddParking } from './forms/AddParking';
 
 export const CreateChessBoardPage: FC<Props> = ({
   building,
+  entrances,
   isLoadingBuilding,
   openPanel,
   closeEditChessboardPanel,
@@ -31,7 +32,14 @@ export const CreateChessBoardPage: FC<Props> = ({
   chessboardCreateData,
   handleAddEntrance,
   handleAddParking,
-  entrances,
+  handleDeleteEntrance,
+  handleDuplicateEntrance,
+  handleDeleteFloor,
+  handleDuplicateFloor,
+  handleDeleteApartmnet,
+  handleDuplicateApartment,
+  handleSaveChessboard,
+  isLoadingCreate,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
@@ -106,6 +114,7 @@ export const CreateChessBoardPage: FC<Props> = ({
             <AddEntrancePanel
               closeAddEntrancePanel={closeEditChessboardPanel}
               handleAddEntrance={handleAddEntrance}
+              chessboardCreateData={chessboardCreateData}
             />
           )}
           {openPanel === 'add-parking' && (
@@ -115,7 +124,15 @@ export const CreateChessBoardPage: FC<Props> = ({
               entrances={entrances}
             />
           )}
-          <ChessBoardView chessboardCreateData={chessboardCreateData} />
+          <ChessBoardView
+            chessboardCreateData={chessboardCreateData}
+            handleDeleteEntrance={handleDeleteEntrance}
+            handleDuplicateEntrance={handleDuplicateEntrance}
+            handleDeleteFloor={handleDeleteFloor}
+            handleDuplicateFloor={handleDuplicateFloor}
+            handleDeleteApartmnet={handleDeleteApartmnet}
+            handleDuplicateApartment={handleDuplicateApartment}
+          />
         </Blueprint>
       </Wrapper>
       <StickyPanel css={stickyPanelStyles}>
@@ -126,7 +143,13 @@ export const CreateChessBoardPage: FC<Props> = ({
           <Button size="s" type="ghost">
             Отмена
           </Button>
-          <Button size="s" wide disabled>
+          <Button
+            size="s"
+            wide
+            disabled={isLoadingCreate || isLoadingBuilding}
+            onClick={handleSaveChessboard}
+            isLoading={isLoadingCreate}
+          >
             Сохранить
           </Button>
         </ButtonsWrapper>

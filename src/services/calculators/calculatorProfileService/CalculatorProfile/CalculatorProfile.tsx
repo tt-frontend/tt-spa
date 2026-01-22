@@ -160,12 +160,14 @@ export const CalculatorProfile: FC<CalculatorProfileProps> = ({
   const contentComponents: {
     [key in CalculatorProfileGrouptype]: ReactElement;
   } = useMemo(() => {
-    const { documents, nodes, connection, isConnected } = calculator;
+    const { documents, nodes, connection, isConnected, netSettings } =
+      calculator;
     return {
       [CalculatorProfileGrouptype.Common]: <>{commonInfo}</>,
       [CalculatorProfileGrouptype.Connection]: (
         <ConnectionInfo
           connection={connection}
+          netSettings={netSettings}
           isConnected={isConnected || false}
         />
       ),

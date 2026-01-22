@@ -1,6 +1,7 @@
 import {
   ApartmentListResponse,
   ApartmentListResponsePagedList,
+  PremiseLocationResponse,
 } from 'api/types';
 import { FC } from 'react';
 
@@ -15,6 +16,8 @@ export type ApartmentsViewProps = {
   setCurrentApartmentId: (id: number) => void;
   currentApartmentId: number | null;
   clearCurrentApartmentId: () => void;
+  apartmentPremises: PremiseLocationResponse | null;
+  isPremisesLoading: boolean;
 };
 
 export type ListComponentProps = {

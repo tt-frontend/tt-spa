@@ -40,6 +40,7 @@ export const MalfunctionIcons: { [key in ManagingFirmTaskType]: ReactNode } = {
   [ManagingFirmTaskType.ResourceDisconnecting]: <CalculatorIcon />,
   [ManagingFirmTaskType.RiserNoReadings]: <CalculatorIcon />,
   [ManagingFirmTaskType.TemperatureNormativeDeviation]: <CalculatorIcon />,
+  [ManagingFirmTaskType.HeatSupplyQualityCheck]: <CalculatorIcon />,
 };
 
 export const MalfunctionWhiteIcons: {
@@ -73,6 +74,7 @@ export const MalfunctionWhiteIcons: {
   [ManagingFirmTaskType.ResourceDisconnecting]: <CalculatorIconSC />,
   [ManagingFirmTaskType.RiserNoReadings]: <CalculatorIconSC />,
   [ManagingFirmTaskType.TemperatureNormativeDeviation]: <CalculatorIconSC />,
+  [ManagingFirmTaskType.HeatSupplyQualityCheck]: <CalculatorIconSC />,
 };
 
 export const MalfunctionDescription: { [key: string]: string } = {

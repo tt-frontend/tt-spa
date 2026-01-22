@@ -1,5 +1,11 @@
 import dayjs from 'api/dayjs';
-import { ArchiveType, DatePeriod } from './ConsolidatedReportForm.types';
+import {
+  AddressOption,
+  ArchiveType,
+  DatePeriod,
+} from './ConsolidatedReportForm.types';
+import { filterAddressBySimilarity } from 'services/tasks/addTaskFromDispatcherService/view/AddTaskModal/AddTaskForm/AddTaskForm.utils';
+import { PreparedAddress } from 'services/tasks/addTaskFromDispatcherService/addTaskFromDispatcherService.types';
 
 export const getDatePeriod = (
   archiveType: ArchiveType,
@@ -23,3 +29,18 @@ export const getDatePeriod = (
 
   return { From, To };
 };
+
+export function autocompleteAddress(
+  street: string | null,
+  streets: PreparedAddress[],
+): AddressOption[] {
+  if (!street) {
+    return [];
+  }
+
+  return filterAddressBySimilarity(street, streets).map((elem) => ({
+    value: elem.address,
+    id: elem.id,
+    key: elem.id,
+  }));
+}

@@ -1,4 +1,10 @@
+import { PremiseLocationCreateModel } from 'api/types';
+
 export type EditChessBoardPanelType = 'add-entrance' | 'add-parking';
+
+export type CreateChessboardQueryParams = PremiseLocationCreateModel & {
+  housingStockId: number;
+};
 
 export interface AddEntranceFormParams {
   entranceNumber: number;
@@ -14,3 +20,28 @@ export interface AddParkingFormParams {
   floorsAmount: number;
   entrancesNumber: number[];
 }
+
+export type DeleteFloorPayload = {
+  floorNumber?: number;
+  sectionNumber?: number;
+  index: number;
+};
+
+export type DuplicateFloorPayload = {
+  floorNumber?: number;
+  sectionNumber?: number;
+};
+
+export type DeleteAapartmentPayload = {
+  floorNumber?: number | null;
+  sectionNumber?: number | null;
+  apartmentNumber?: string | null;
+  index: number;
+};
+
+export type AddAapartmentPayload = {
+  floorNumber?: number | null;
+  sectionNumber?: number | null;
+  apartmentNumber?: string | null;
+  side: 'left' | 'right';
+};
