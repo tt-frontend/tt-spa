@@ -4,8 +4,9 @@ import styled from 'styled-components';
 export const TreeSelect = styled(TreeSelectAntd)`
   height: 48px;
 
-  * {
-    font-size: 16px !important;
+  .ant-select-selection-item,
+  .ant-select-selection-placeholder {
+    font-size: 16px;
     line-height: 32px;
     caret-color: rgba(0, 0, 0, 0);
   }
