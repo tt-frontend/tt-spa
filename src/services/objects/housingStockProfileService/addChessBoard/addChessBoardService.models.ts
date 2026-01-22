@@ -10,8 +10,10 @@ import {
   DuplicateFloorPayload,
   EditApartmentPayload,
   EditChessBoardPanelType,
+  EditEntrancePayload,
   EditFloorPayload,
   OpenEditApartmentModalPayload,
+  OpenEditEntranceModalPayload,
   OpenEditFloorModalPayload,
 } from './addChessBoardService.types';
 import {
@@ -46,6 +48,8 @@ const handleAddParking = createEvent<AddParkingFormParams>();
 // entrance funtions
 const handleDeleteEntrance = createEvent<number>();
 const handleDuplicateEntrance = createEvent<number>();
+const openEditEntranceModal = createEvent<OpenEditEntranceModalPayload>();
+const handleSaveEntranceChanges = createEvent<EditEntrancePayload>();
 
 // floor fuctions
 const handleDeleteFloor = createEvent<DeleteFloorPayload>();
@@ -67,6 +71,7 @@ const closeDownModalsList = [
   closeEditChessboardPanel,
   handleSaveApartmentChanges,
   handleSaveFloorChanges,
+  handleSaveEntranceChanges,
 ];
 
 const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
@@ -81,7 +86,8 @@ const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
   .on(handleDeleteApartmnet, apartmentModel.deleteApartment)
   .on(handleDuplicateApartment, apartmentModel.duplicateApartment)
   .on(handleSaveApartmentChanges, apartmentModel.editApartment)
-  .on(handleSaveFloorChanges, floorModel.editFloor);
+  .on(handleSaveFloorChanges, floorModel.editFloor)
+  .on(handleSaveEntranceChanges, entranceModel.editEntrance);
 
 // apartment state
 const $editApartmentModalState =
@@ -93,6 +99,11 @@ const $editApartmentModalState =
 const $editFloorModalState = createStore<OpenEditFloorModalPayload | null>(null)
   .on(openEditFloorModal, (_, payload) => payload)
   .reset(closeDownModalsList);
+
+const $editEntranceModalState =
+  createStore<OpenEditEntranceModalPayload | null>(null)
+    .on(openEditEntranceModal, (_, payload) => payload)
+    .reset(closeDownModalsList);
 
 $openPanel.reset([handleAddEntrance, handleAddParking]);
 
@@ -117,6 +128,8 @@ export const addChessBoardService = {
     handleSaveApartmentChanges,
     openEditFloorModal,
     handleSaveFloorChanges,
+    openEditEntranceModal,
+    handleSaveEntranceChanges,
   },
   outputs: {
     $openPanel,
@@ -124,6 +137,7 @@ export const addChessBoardService = {
     $entrances,
     $editApartmentModalState,
     $editFloorModalState,
+    $editEntranceModalState,
   },
   gates: { ChessBoardGate },
 };

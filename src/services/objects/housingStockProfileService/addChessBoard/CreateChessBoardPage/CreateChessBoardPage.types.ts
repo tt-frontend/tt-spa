@@ -8,8 +8,10 @@ import {
   DuplicateFloorPayload,
   EditApartmentPayload,
   EditChessBoardPanelType,
+  EditEntrancePayload,
   EditFloorPayload,
   OpenEditApartmentModalPayload,
+  OpenEditEntranceModalPayload,
   OpenEditFloorModalPayload,
 } from '../addChessBoardService.types';
 
@@ -38,4 +40,7 @@ export type Props = {
   openEditFloorModal: (payload: OpenEditFloorModalPayload) => void;
   handleSaveFloorChanges: (payload: EditFloorPayload) => void;
   editFloorModalState: OpenEditFloorModalPayload | null;
+  openEditEntranceModal: (payload: OpenEditEntranceModalPayload) => void;
+  handleSaveEntranceChanges: (payload: EditEntrancePayload) => void;
+  editEntranceModalState: OpenEditEntranceModalPayload | null;
 };

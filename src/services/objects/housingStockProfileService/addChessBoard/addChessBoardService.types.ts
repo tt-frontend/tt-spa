@@ -69,3 +69,12 @@ export type EditFloorPayload = {
   sectionIndex: number;
   floorIndex: number;
 };
+
+export type OpenEditEntranceModalPayload = {
+  sectionIndex: number;
+};
+
+export type EditEntrancePayload = {
+  number: string;
+  sectionIndex: number;
+};

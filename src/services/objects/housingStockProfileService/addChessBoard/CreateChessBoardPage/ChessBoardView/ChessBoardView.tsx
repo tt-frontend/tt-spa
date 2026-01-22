@@ -22,6 +22,7 @@ export const ChessBoardView: FC<Props> = ({
   handleDuplicateApartment,
   openEditApartmentModal,
   openEditFloorModal,
+  openEditEntranceModal,
 }) => {
   useEnterToTab();
 
@@ -37,7 +38,13 @@ export const ChessBoardView: FC<Props> = ({
                   wide
                   type="outline"
                   menuButtons={[
-                    { title: 'Изменить номер подъезда' },
+                    {
+                      title: 'Изменить номер подъезда',
+                      onClick: () =>
+                        openEditEntranceModal({
+                          sectionIndex: sectionIndex,
+                        }),
+                    },
                     {
                       title: 'Дублировать подъезд',
                       onClick: () =>
