@@ -88,10 +88,10 @@ export const ExportTasksListContainer = () => {
                   }
                 >
                   {taskTypes
-                    ?.filter((elem) => elem.key)
+                    ?.filter((elem) => elem.taskType)
                     ?.map((elem) => (
-                      <Select.Option key={elem.key} value={elem.key}>
-                        {elem.value}
+                      <Select.Option key={elem.taskType} value={elem.taskType}>
+                        {elem.typeName}
                       </Select.Option>
                     ))}
                 </Select>
@@ -104,8 +104,9 @@ export const ExportTasksListContainer = () => {
                 items={[
                   {
                     key: 'Тип задач',
-                    value: taskTypes?.find((elem) => elem.key === tasksType)
-                      ?.value,
+                    value: taskTypes?.find(
+                      (elem) => elem.taskType === tasksType,
+                    )?.typeName,
                   },
                   {
                     key: 'Количество задач',

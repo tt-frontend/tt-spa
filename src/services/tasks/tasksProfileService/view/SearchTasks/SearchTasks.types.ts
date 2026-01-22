@@ -1,6 +1,6 @@
 import {
-  EManagingFirmTaskFilterTypeNullableStringDictionaryItem,
   GuidStringDictionaryItem,
+  ManagingTaskTypeFilterWithCount,
   OrganizationUserListResponse,
   TaskGroupingFilter,
 } from 'api/types';
@@ -8,7 +8,7 @@ import { GetTasksListRequestPayload } from '../../tasksProfileService.types';
 
 export type SearchTasksProps = {
   onSubmit: (formFilter: GetTasksListRequestPayload) => void;
-  taskTypes: EManagingFirmTaskFilterTypeNullableStringDictionaryItem[] | null;
+  taskTypes: ManagingTaskTypeFilterWithCount[] | null;
   currentFilter: GetTasksListRequestPayload | null;
   isExtendedSearchOpen: boolean;
   closeExtendedSearch: () => void;

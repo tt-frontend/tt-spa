@@ -1,6 +1,6 @@
 import {
-  EManagingFirmTaskFilterTypeNullableStringDictionaryItem,
   GuidStringDictionaryItem,
+  ManagingTaskTypeFilterWithCount,
   OrganizationUserListResponse,
   TaskGroupingFilter,
   TasksPagedList,
@@ -14,7 +14,7 @@ import { TaskType } from '../TasksListItem/TasksListItem.types';
 export type TasksProfileProps = {
   handleExportTasksList: () => void;
   grouptype: string;
-  taskTypes: EManagingFirmTaskFilterTypeNullableStringDictionaryItem[] | null;
+  taskTypes: ManagingTaskTypeFilterWithCount[] | null;
   handleSearch: (formFilter: GetTasksListRequestPayload) => void;
   changePageNumber: (PageNumber: number) => void;
   tasks: TaskType[];
