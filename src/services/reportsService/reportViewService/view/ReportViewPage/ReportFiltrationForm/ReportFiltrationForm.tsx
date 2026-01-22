@@ -398,6 +398,7 @@ export const ReportFiltrationForm: FC<ReportFiltrationFormProps> = ({
           {values.exportType === ExportReportType.Address && (
             <FormItem label="Адрес">
               <TreeSelect
+                virtual={false}
                 treeData={addressesTreeData}
                 placeholder="Выберите адрес"
                 showCheckedStrategy="SHOW_CHILD"
@@ -406,6 +407,7 @@ export const ReportFiltrationForm: FC<ReportFiltrationFormProps> = ({
                 onChange={(housingStocksId) => {
                   setFieldValue('housingStockId', housingStocksId);
                 }}
+                getPopupContainer={() => document.body}
               />
             </FormItem>
           )}
