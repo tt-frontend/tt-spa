@@ -24,7 +24,6 @@ export const AddChessBoardContainer = () => {
     closeEditChessboardPanel,
     handleEditChessboard,
     handleAddEntrance,
-    handleAddParking,
     building,
     isLoadingBuilding,
     openPanel,
@@ -48,6 +47,8 @@ export const AddChessBoardContainer = () => {
     openEditEntranceModal,
     handleSaveEntranceChanges,
     editEntranceModalState,
+    openAddNonLivingPremisesState,
+    openAddNonLivingPremisesPanel,
   } = useUnit({
     ...inputs,
     building: buildingQuery.$data,
@@ -60,6 +61,7 @@ export const AddChessBoardContainer = () => {
     editApartmentModalState: outputs.$editApartmentModalState,
     editFloorModalState: outputs.$editFloorModalState,
     editEntranceModalState: outputs.$editEntranceModalState,
+    openAddNonLivingPremisesState: outputs.$openAddNonLivingPremisesState,
   });
 
   function handleSaveChessboard() {
@@ -87,7 +89,6 @@ export const AddChessBoardContainer = () => {
         openPanel={openPanel}
         chessboardCreateData={chessboardCreateData}
         handleAddEntrance={handleAddEntrance}
-        handleAddParking={handleAddParking}
         entrances={entrances}
         handleDeleteEntrance={handleDeleteEntrance}
         handleDuplicateEntrance={handleDuplicateEntrance}
@@ -107,6 +108,8 @@ export const AddChessBoardContainer = () => {
         openEditEntranceModal={openEditEntranceModal}
         handleSaveEntranceChanges={handleSaveEntranceChanges}
         editEntranceModalState={editEntranceModalState}
+        openAddNonLivingPremisesState={openAddNonLivingPremisesState}
+        openAddNonLivingPremisesPanel={openAddNonLivingPremisesPanel}
       />
     </>
   );

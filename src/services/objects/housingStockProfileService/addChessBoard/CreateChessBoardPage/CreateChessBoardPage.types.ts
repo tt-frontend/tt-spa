@@ -2,7 +2,6 @@ import { HousingStockResponse, PremiseLocationCreateModel } from 'api/types';
 import {
   AddAapartmentPayload,
   AddEntranceFormParams,
-  AddParkingFormParams,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
   DuplicateFloorPayload,
@@ -10,6 +9,7 @@ import {
   EditChessBoardPanelType,
   EditEntrancePayload,
   EditFloorPayload,
+  NonLivingPremisesCategory,
   OpenEditApartmentModalPayload,
   OpenEditEntranceModalPayload,
   OpenEditFloorModalPayload,
@@ -23,7 +23,6 @@ export type Props = {
   closeEditChessboardPanel: () => void;
   chessboardCreateData: PremiseLocationCreateModel;
   handleAddEntrance: (payload: AddEntranceFormParams) => void;
-  handleAddParking: (payload: AddParkingFormParams) => void;
   entrances: (number | null)[];
   handleDeleteEntrance: (payload: number) => void;
   handleDuplicateEntrance: (payload: number) => void;
@@ -43,4 +42,6 @@ export type Props = {
   openEditEntranceModal: (payload: OpenEditEntranceModalPayload) => void;
   handleSaveEntranceChanges: (payload: EditEntrancePayload) => void;
   editEntranceModalState: OpenEditEntranceModalPayload | null;
+  openAddNonLivingPremisesState: NonLivingPremisesCategory | null;
+  openAddNonLivingPremisesPanel: (payload: NonLivingPremisesCategory) => void;
 };

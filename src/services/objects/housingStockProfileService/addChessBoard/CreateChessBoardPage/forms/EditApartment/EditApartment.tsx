@@ -8,6 +8,10 @@ import { FormItem } from 'ui-kit/FormItem';
 import { useFormik } from 'formik';
 import { EditApartmentSchema } from './EditApartment.constants';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
+import { Select } from 'ui-kit/Select';
+import { EPremiseCategory } from 'api/types';
+import { PremiseCategoryLookup } from 'dictionaries';
+import { EditApartmentPayload } from '../../../addChessBoardService.types';
 
 export const EditApartment: FC<Props> = ({
   handleCloseDownModal,
@@ -28,24 +32,30 @@ export const EditApartment: FC<Props> = ({
       (_, index) => index === editApartmentModalState.apartmentIndex,
     );
 
-    return { section, floor, apartment };
+    return { section, floor, apartment, type: apartment?.category };
   }, [chessboardCreateData, editApartmentModalState]);
 
-  const { values, handleChange, handleSubmit, errors } = useFormik({
-    initialValues: {
-      number: address.apartment?.number || '',
-    },
-    validationSchema: EditApartmentSchema,
-    onSubmit: (values) => {
-      handleSaveApartmentChanges({ ...values, ...editApartmentModalState });
-    },
-  });
+  const { values, handleChange, handleSubmit, errors, setFieldValue } =
+    useFormik({
+      initialValues: {
+        number: address.apartment?.number || '',
+        category: address.type || null,
+      },
+      validationSchema: EditApartmentSchema,
+      enableReinitialize: true,
+      onSubmit: (values) => {
+        handleSaveApartmentChanges({
+          ...(values as EditApartmentPayload),
+          ...editApartmentModalState,
+        });
+      },
+    });
 
   return (
     <BlueprintPanel
       title={
         <span>
-          <span>Квартира №{address.apartment?.number}</span>{' '}
+          <span>Помещение №{address.apartment?.number}</span>{' '}
           <span
             style={{
               color: 'gray',
@@ -69,7 +79,7 @@ export const EditApartment: FC<Props> = ({
       }
     >
       <Wrapper>
-        <FormItem label="Номер квартиры">
+        <FormItem label="Номер помещения">
           <Input
             small
             value={values.number}
@@ -78,6 +88,24 @@ export const EditApartment: FC<Props> = ({
             status={errors.number ? 'error' : undefined}
           />
           <ErrorMessage>{errors.number}</ErrorMessage>
+        </FormItem>
+        <FormItem label="Тип помещения">
+          <Select
+            placeholder="Выберите"
+            small
+            value={values.category}
+            onChange={(value) => setFieldValue('category', value)}
+          >
+            {[
+              EPremiseCategory.Apartment,
+              EPremiseCategory.Commercial,
+              EPremiseCategory.Technical,
+            ].map((category) => (
+              <Select.Option key={category} value={category}>
+                {PremiseCategoryLookup[category]}
+              </Select.Option>
+            ))}
+          </Select>
         </FormItem>
       </Wrapper>
     </BlueprintPanel>

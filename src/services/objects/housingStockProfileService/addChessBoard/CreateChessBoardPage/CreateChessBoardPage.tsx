@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import {
   Blueprint,
   ButtonsWrapper,
@@ -20,10 +20,14 @@ import { ChessBoardView } from './ChessBoardView';
 import { StickyPanel } from 'ui-kit/shared/StickyPanel';
 import { useUnit } from 'effector-react';
 import { layoutService } from 'App/layout/layoutService.models';
-import { AddParking } from './forms/AddParking';
 import { EditApartment } from './forms/EditApartment';
 import { EditFloor } from './forms/EditFloor';
 import { EditEntrance } from './forms/EditEntrance';
+import { EPremiseCategory } from 'api/types';
+import { omit } from 'lodash';
+import { PremiseCategoryLookup } from 'dictionaries';
+import { AddNonResidentialPremises } from './forms/AddNonResidentialPremises';
+import { NonLivingPremisesCategory } from '../addChessBoardService.types';
 
 export const CreateChessBoardPage: FC<Props> = ({
   chessboardCreateData,
@@ -34,7 +38,6 @@ export const CreateChessBoardPage: FC<Props> = ({
   closeEditChessboardPanel,
   handleEditChessboard,
   handleAddEntrance,
-  handleAddParking,
   handleDeleteEntrance,
   handleDuplicateEntrance,
   handleDeleteFloor,
@@ -53,12 +56,29 @@ export const CreateChessBoardPage: FC<Props> = ({
   openEditEntranceModal,
   editEntranceModalState,
   handleSaveEntranceChanges,
+  openAddNonLivingPremisesState,
+  openAddNonLivingPremisesPanel,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
   });
 
   const isEntranceExists = Boolean(chessboardCreateData.sections?.length);
+
+  const nonLivingPremisesMenuItems = useMemo(
+    () =>
+      Object.values(omit(EPremiseCategory, EPremiseCategory.Apartment)).map(
+        (category) => ({
+          title: PremiseCategoryLookup[category],
+          id: category.toLowerCase().replace(/\s+/g, '-'),
+          onClick: () =>
+            openAddNonLivingPremisesPanel(
+              category as NonLivingPremisesCategory,
+            ),
+        }),
+      ),
+    [],
+  );
 
   const contextMenuButton = (
     <ContextMenuButton
@@ -92,33 +112,7 @@ export const CreateChessBoardPage: FC<Props> = ({
           icon: <ParkingIcon />,
           strong: true,
           id: 'add-non-residential-placement',
-          children: [
-            {
-              title: 'Паркинг',
-              id: 'parking',
-              onClick: () => handleEditChessboard('add-parking'),
-            },
-            {
-              title: 'Техническое помещение',
-              id: 'technical-placement',
-            },
-            {
-              title: 'Тепловой пункт',
-              id: 'heating-point',
-            },
-            {
-              title: 'Коммерческое помещение',
-              id: 'commercial-placement',
-            },
-            {
-              title: 'Подвал',
-              id: 'basement',
-            },
-            {
-              title: 'Чердак',
-              id: 'attic',
-            },
-          ],
+          children: nonLivingPremisesMenuItems,
         },
       ]}
     />
@@ -142,11 +136,11 @@ export const CreateChessBoardPage: FC<Props> = ({
               building={building}
             />
           )}
-          {openPanel === 'add-parking' && (
-            <AddParking
-              closeAddEntrancePanel={closeEditChessboardPanel}
-              handleAddParking={handleAddParking}
+          {openAddNonLivingPremisesState && (
+            <AddNonResidentialPremises
+              closeEditChessboardPanel={closeEditChessboardPanel}
               entrances={entrances}
+              premiseCategory={openAddNonLivingPremisesState}
             />
           )}
           {editApartmentModalState && (

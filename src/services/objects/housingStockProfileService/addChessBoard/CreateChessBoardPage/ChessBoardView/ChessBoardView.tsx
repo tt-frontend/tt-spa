@@ -102,7 +102,7 @@ export const ChessBoardView: FC<Props> = ({
                       key={String(apartment.number) + apartmentIndex}
                       menuButtons={[
                         {
-                          title: 'Изменить номер квартиры',
+                          title: 'Редактировать помещение',
                           onClick: () =>
                             openEditApartmentModal({
                               sectionIndex: sectionIndex,

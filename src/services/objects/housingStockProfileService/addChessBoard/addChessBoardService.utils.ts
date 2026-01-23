@@ -167,14 +167,15 @@ const editEntrance = (
 
   return {
     ...prev,
-    sections: prev.sections?.map((section, sIdx) =>
-      sIdx === sectionIndex
-        ? {
-            ...section,
-            number: Number(number),
-          }
-        : section,
-    ) || [],
+    sections:
+      prev.sections?.map((section, sIdx) =>
+        sIdx === sectionIndex
+          ? {
+              ...section,
+              number: Number(number),
+            }
+          : section,
+      ) || [],
   };
 };
 
@@ -359,7 +360,8 @@ const editApartment = (
   prev: PremiseLocationCreateModel,
   payload: EditApartmentPayload,
 ) => {
-  const { sectionIndex, floorIndex, apartmentIndex, number } = payload;
+  const { sectionIndex, floorIndex, apartmentIndex, number, category } =
+    payload;
 
   return {
     ...prev,
@@ -373,7 +375,7 @@ const editApartment = (
                     ...floor,
                     premises: floor.premises?.map((premise, pIdx) =>
                       pIdx === apartmentIndex
-                        ? { ...premise, number }
+                        ? { ...premise, number, category }
                         : premise,
                     ),
                   }
