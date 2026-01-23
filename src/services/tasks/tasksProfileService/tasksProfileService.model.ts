@@ -214,6 +214,12 @@ sample({
   target: clearFilters,
 });
 
+sample({
+  clock: InitialGate.close,
+  fn: () => 'list' as TasksPageSegment,
+  target: setTasksPageSegment,
+});
+
 split({
   source: sample({ clock: InitialGate.open, fn: getAcceptableSearchParams }),
   match: {

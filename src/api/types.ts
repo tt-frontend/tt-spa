@@ -5734,6 +5734,7 @@ export interface TaskResponse {
   buildingCoordinates: PointResponse | null;
   canBeReverted: boolean;
   isApplicationTask: boolean;
+  temperatureReference: TaskTemperatureReferenceResponse | null;
   /** @format date-time */
   firstTrigger: string;
   /** @format date-time */
@@ -5776,6 +5777,21 @@ export interface TaskTargetObjectResponse {
   targetObjectInfo: ETaskTargetObjectInfo;
   title: string | null;
   model: string | null;
+}
+
+export interface TaskTemperatureReferenceResponse {
+  /** @format date-time */
+  archiveTimeFromDevice: string;
+  /** @format double */
+  deviation: number;
+  /** @format double */
+  outdoorTemperature: number;
+  /** @format double */
+  normativeTemperature: number;
+  /** @format double */
+  feedFlowPipeTemperature: number;
+  /** @format double */
+  diffTemperature: number;
 }
 
 export interface TasksPagedList {

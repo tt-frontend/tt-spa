@@ -31,15 +31,16 @@ export const TasksMapsNative: FC<TasksMapsNativeProps> = ({
     useState<boolean>(false);
   const [isCentered, setIsCentered] = useState(false);
 
-  const { coordinates } = useUnit({
+  const { coordinates, zoom } = useUnit({
     coordinates: tasksMapService.outputs.$coordinates,
+    zoom: tasksMapService.outputs.$zoom,
   });
 
   useEffect(() => {
     if (isCentered || !map) return;
 
     if (coordinates) {
-      map.setCenter(coordinates, map.getZoom());
+      map.setCenter(coordinates, zoom || map.getZoom());
       setIsCentered(true);
       return;
     }
