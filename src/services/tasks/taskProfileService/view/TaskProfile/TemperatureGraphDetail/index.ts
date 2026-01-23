@@ -1,0 +1,1 @@
+export { TemperatureGraphDetail } from './TemperatureGraphDetail';

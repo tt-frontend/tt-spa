@@ -24,7 +24,7 @@ export const TaskPipeNodeInfo: FC<TaskPipeNodeInfoProps> = ({ pipeNode }) => {
 
   return (
     <Wrapper>
-      <TitleWrapper>Статистика</TitleWrapper>
+      <TitleWrapper>Узел</TitleWrapper>
 
       <StatisticWrapper>
         <GroupWrapper>

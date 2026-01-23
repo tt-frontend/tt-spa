@@ -12,7 +12,6 @@ import {
   TasksPagedList,
 } from 'api/types';
 import {
-  $taskTypes,
   $housingManagments,
   $organizationUsers,
 } from '../taskTypesService/taskTypesService.model';
@@ -191,6 +190,8 @@ const $tasksPagedData = createStore<TasksPagedList | null>(null).on(
   (_, tasksPaged) => tasksPaged,
 );
 
+const $taskTypes = $tasksPagedData.map((tasks) => tasks?.taskTypes || null);
+
 const $tasksSummaryData = $tasksPagedData.map((data) => ({
   runningOutTasksCount: data?.runningOutTasksCount || null,
   expiredTasksCount: data?.expiredTasksCount || null,
@@ -211,6 +212,12 @@ const $isLoading = searchTasksFx.pending;
 sample({
   clock: TasksIsOpen.close,
   target: clearFilters,
+});
+
+sample({
+  clock: InitialGate.close,
+  fn: () => 'list' as TasksPageSegment,
+  target: setTasksPageSegment,
 });
 
 split({

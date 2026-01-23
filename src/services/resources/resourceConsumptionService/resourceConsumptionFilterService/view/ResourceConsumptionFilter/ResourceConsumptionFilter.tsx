@@ -59,11 +59,11 @@ export const ResourceConsumptionFilter: FC<ResourceConsumptionFilterProps> = ({
     onSubmit: (values) => {
       const { BuildingIds, AdditionalHousingStockIds } = values;
 
-      if (!BuildingIds.length) {
+      if (!BuildingIds?.length) {
         return;
       }
 
-      if (!AdditionalHousingStockIds.length) {
+      if (!AdditionalHousingStockIds?.length) {
         handleClearAdditionalAddressData();
       }
 
@@ -77,31 +77,11 @@ export const ResourceConsumptionFilter: FC<ResourceConsumptionFilterProps> = ({
 
   useEffect(
     () =>
-      resourceConsumptionFilterService.outputs.$selectedHouseManagement.watch(
-        (houseManagement) => {
-          if (houseManagement) {
-            setFieldValue('BuildingIds', []);
-            setFieldValue('AdditionalHousingStockIds', []);
-          }
-        },
-      ).unsubscribe,
-    [setFieldValue],
-  );
-
-  useEffect(
-    () =>
       resourceConsumptionFilterService.outputs.$resourceConsumptionFilter.watch(
         setValues,
       ).unsubscribe,
     [setValues],
   );
-
-  useEffect(() => {
-    if (selectedCity) {
-      setFieldValue('BuildingIds', []);
-      setFieldValue('AdditionalHousingStockIds', []);
-    }
-  }, [selectedCity, setFieldValue]);
 
   const handleReset = useCallback(() => {
     handleClearFilter();
@@ -143,7 +123,11 @@ export const ResourceConsumptionFilter: FC<ResourceConsumptionFilterProps> = ({
             <Select
               small
               disabled={!(existingCities || []).length}
-              onChange={(value) => selectCity(String(value))}
+              onChange={(value) => {
+                selectCity(String(value));
+                setFieldValue('BuildingIds', []);
+                setFieldValue('AdditionalHousingStockIds', []);
+              }}
               value={selectedCity || undefined}
               placeholder="Выберите город"
             >
@@ -161,7 +145,11 @@ export const ResourceConsumptionFilter: FC<ResourceConsumptionFilterProps> = ({
             disabled={!houseManagements.length}
             placeholder="Выберите из списка"
             value={selectedHouseManagement || undefined}
-            onChange={(id) => setHouseManagement(id ? String(id) : null)}
+            onChange={(id) => {
+              setHouseManagement(id ? String(id) : null);
+              setFieldValue('BuildingIds', []);
+              setFieldValue('AdditionalHousingStockIds', []);
+            }}
             allowClear
           >
             {houseManagements.map((management) => {
@@ -183,7 +171,7 @@ export const ResourceConsumptionFilter: FC<ResourceConsumptionFilterProps> = ({
             treeData={treeData}
             placeholder="Выберите из списка"
             onChange={(ids) => setFieldValue('BuildingIds', ids)}
-            selectedHousingStockIds={values.BuildingIds}
+            selectedHousingStockIds={values.BuildingIds || []}
             placement="topLeft"
           />
           <ErrorMessage>{errors.BuildingIds}</ErrorMessage>
@@ -205,7 +193,7 @@ export const ResourceConsumptionFilter: FC<ResourceConsumptionFilterProps> = ({
                 onChange={(ids) =>
                   setFieldValue('AdditionalHousingStockIds', ids)
                 }
-                selectedHousingStockIds={values.AdditionalHousingStockIds}
+                selectedHousingStockIds={values.AdditionalHousingStockIds || []}
                 placement="topLeft"
               />
               <TrashIconSC
