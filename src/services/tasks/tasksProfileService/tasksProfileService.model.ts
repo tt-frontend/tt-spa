@@ -12,7 +12,6 @@ import {
   TasksPagedList,
 } from 'api/types';
 import {
-  $taskTypes,
   $housingManagments,
   $organizationUsers,
 } from '../taskTypesService/taskTypesService.model';
@@ -190,6 +189,8 @@ const $tasksPagedData = createStore<TasksPagedList | null>(null).on(
   searchTasksFx.doneData,
   (_, tasksPaged) => tasksPaged,
 );
+
+const $taskTypes = $tasksPagedData.map((tasks) => tasks?.taskTypes || null);
 
 const $tasksSummaryData = $tasksPagedData.map((data) => ({
   runningOutTasksCount: data?.runningOutTasksCount || null,

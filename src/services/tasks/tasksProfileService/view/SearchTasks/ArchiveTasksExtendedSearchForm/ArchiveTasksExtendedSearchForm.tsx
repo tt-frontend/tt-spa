@@ -20,10 +20,10 @@ export const ArchiveTasksExtendedSearchForm: FC<
       return null;
     }
     return taskTypes
-      .filter((elem) => Boolean(elem.key))
-      .map(({ value, key }) => (
-        <Select.Option key={key} value={key}>
-          {value}
+      .filter((elem) => Boolean(elem.taskType))
+      .map(({ typeName, taskType }) => (
+        <Select.Option key={taskType} value={taskType}>
+          {typeName}
         </Select.Option>
       ));
   }, [taskTypes]);

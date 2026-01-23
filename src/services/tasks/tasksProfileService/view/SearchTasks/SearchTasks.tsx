@@ -16,7 +16,13 @@ import {
 import { ExtendedSearch } from 'ui-kit/ExtendedSearch';
 import { fromEnter } from 'ui-kit/shared/DatePickerNative';
 import { ArchiveTasksExtendedSearchForm } from './ArchiveTasksExtendedSearchForm';
-import { SortContainer, SortTitle, Wrapper } from './SearchTasks.styled';
+import {
+  SortContainer,
+  SortTitle,
+  TaskCount,
+  TaskTypeContainer,
+  Wrapper,
+} from './SearchTasks.styled';
 import { GetTasksListRequestPayload } from '../../tasksProfileService.types';
 import { SearchTasksProps } from './SearchTasks.types';
 import { Select } from 'ui-kit/Select';
@@ -184,9 +190,16 @@ export const SearchTasks: FC<SearchTasksProps> = ({
           }}
         >
           {taskTypes &&
-            taskTypes.map(({ value, key }) => (
-              <Select.Option key={key!} value={key || undefined}>
-                {value}
+            taskTypes.map(({ count, taskType, typeName }) => (
+              <Select.Option key={taskType} value={taskType}>
+                {taskType ? (
+                  <TaskTypeContainer>
+                    {typeName}
+                    <TaskCount>({count})</TaskCount>
+                  </TaskTypeContainer>
+                ) : (
+                  'Все'
+                )}
               </Select.Option>
             ))}
         </Select>

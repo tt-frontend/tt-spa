@@ -2,9 +2,7 @@ import React, { FC, useEffect, useMemo } from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { ToExecutionTasksExtendedSearchFormProps } from './ToExecutionTasksExtendedSearchForm.types';
 import { useSwitchInputOnEnter } from 'hooks/useSwitchInputOnEnter';
-import { taskCategories } from './ToExecutionTasksExtendedSearchForm.constants';
 import {
-  EManagingFirmTaskFilterType,
   EResourceType,
   EStageTimeStatus,
   ETaskEngineeringElement,
@@ -16,7 +14,6 @@ import { Tooltip } from 'ui-kit/shared/Tooltip';
 import { AddressSearchFieldsNameLookup } from '../SearchTasks.constants';
 import {
   ApartmentNumberWrapper,
-  OptionSC,
   OverFlowSelectSC,
   StyledContainerAdressSection,
   StyledContainerThreeItemsMainTypes,
@@ -39,34 +36,12 @@ export const ToExecutionTasksExtendedSearchForm: FC<
 
   const next = useSwitchInputOnEnter('tasksExtendedSearch', true);
 
-  const FilteredTaskTypes = useMemo(() => {
-    if (values?.EngineeringElement) {
-      return taskCategories[values?.EngineeringElement];
-    }
-    return Object.values(EManagingFirmTaskFilterType);
-  }, [values.EngineeringElement]);
-
   useEffect(() => {
     if (!values.ApartmentNumber) {
       setFieldValue('ApartmentNumber', null);
     }
     if (!values.TaskType) return;
-
-    if (!FilteredTaskTypes.includes(values.TaskType)) {
-      setFieldValue('TaskType', null);
-    }
-  }, [values, setFieldValue, FilteredTaskTypes]);
-
-  const preparedTaskTypes = useMemo(
-    () =>
-      (taskTypes || []).reduce((acc, { key, value }) => {
-        if (!key) {
-          return acc;
-        }
-        return { ...acc, [key]: value };
-      }, {} as { [key in EManagingFirmTaskFilterType]: string }),
-    [taskTypes],
-  );
+  }, [values, setFieldValue]);
 
   const housingManagementOptions = useMemo(
     () =>
@@ -80,17 +55,11 @@ export const ToExecutionTasksExtendedSearchForm: FC<
     [housingManagments],
   );
 
-  const taskTypeOptions = useMemo(
-    () =>
-      (FilteredTaskTypes || [])
-        .filter((elem) => Boolean(elem))
-        .map((key) => (
-          <Option key={key} value={key}>
-            {preparedTaskTypes[key] || ''}
-          </Option>
-        )),
-    [FilteredTaskTypes, preparedTaskTypes],
-  );
+  const taskTypeOptions = (taskTypes || []).map(({ taskType, typeName }) => (
+    <Option key={taskType} value={taskType}>
+      {typeName}
+    </Option>
+  ));
 
   return (
     <ToExecutionWrapper>
@@ -154,7 +123,10 @@ export const ToExecutionTasksExtendedSearchForm: FC<
             showAction={['focus']}
             placeholder="Элемент"
             value={values.EngineeringElement}
-            onChange={(value) => setFieldValue('EngineeringElement', value)}
+            onChange={(value) => {
+              setFieldValue('EngineeringElement', value);
+              setFieldValue('TaskType', '');
+            }}
             onKeyDown={fromEnter(() => next(1))}
           >
             <Option value={''}>Все</Option>
@@ -243,7 +215,6 @@ export const ToExecutionTasksExtendedSearchForm: FC<
             }}
             onKeyDown={fromEnter(() => next(5))}
           >
-            {<OptionSC value={null}>Все</OptionSC>}
             {taskTypeOptions}
           </OverFlowSelectSC>
         </FormItem>

@@ -25,3 +25,14 @@ export const SortTitle = styled.div`
   font-weight: 400;
   line-height: 16px;
 `;
+
+export const TaskCount = styled.div`
+  font-weight: 300;
+`;
+
+export const TaskTypeContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+`;
