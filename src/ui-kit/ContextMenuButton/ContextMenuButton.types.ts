@@ -14,6 +14,7 @@ export const ContextMenuButtonColorsLookup: {
 };
 
 export type ContextMenuButtonProps = {
+  onClickOverload?: (() => void) | null;
   menuButtons?: ContextMenuElement[];
   disabled?: boolean;
   size?: SizeType;

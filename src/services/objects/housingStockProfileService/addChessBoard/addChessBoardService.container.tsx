@@ -24,8 +24,6 @@ export const AddChessBoardContainer = () => {
     closeEditChessboardPanel,
     handleEditChessboard,
     handleAddEntrance,
-    handleAddParking,
-
     building,
     isLoadingBuilding,
     openPanel,
@@ -37,9 +35,21 @@ export const AddChessBoardContainer = () => {
     handleDuplicateFloor,
     handleDeleteApartmnet,
     handleDuplicateApartment,
-
+    openEditApartmentModal,
+    handleCloseDownModal,
     createChessboard,
     isLoadingCreate,
+    editApartmentModalState,
+    handleSaveApartmentChanges,
+    openEditFloorModal,
+    handleSaveFloorChanges,
+    editFloorModalState,
+    openEditEntranceModal,
+    handleSaveEntranceChanges,
+    editEntranceModalState,
+    openAddNonLivingPremisesState,
+    openAddNonLivingPremisesPanel,
+    handleAddNonLivingPremises,
   } = useUnit({
     ...inputs,
     building: buildingQuery.$data,
@@ -49,6 +59,10 @@ export const AddChessBoardContainer = () => {
     entrances: outputs.$entrances,
     createChessboard: createChessBoardMutation.start,
     isLoadingCreate: createChessBoardMutation.$pending,
+    editApartmentModalState: outputs.$editApartmentModalState,
+    editFloorModalState: outputs.$editFloorModalState,
+    editEntranceModalState: outputs.$editEntranceModalState,
+    openAddNonLivingPremisesState: outputs.$openAddNonLivingPremisesState,
   });
 
   function handleSaveChessboard() {
@@ -76,7 +90,6 @@ export const AddChessBoardContainer = () => {
         openPanel={openPanel}
         chessboardCreateData={chessboardCreateData}
         handleAddEntrance={handleAddEntrance}
-        handleAddParking={handleAddParking}
         entrances={entrances}
         handleDeleteEntrance={handleDeleteEntrance}
         handleDuplicateEntrance={handleDuplicateEntrance}
@@ -86,6 +99,19 @@ export const AddChessBoardContainer = () => {
         handleDuplicateApartment={handleDuplicateApartment}
         handleSaveChessboard={handleSaveChessboard}
         isLoadingCreate={isLoadingCreate}
+        editApartmentModalState={editApartmentModalState}
+        openEditApartmentModal={openEditApartmentModal}
+        handleCloseDownModal={handleCloseDownModal}
+        handleSaveApartmentChanges={handleSaveApartmentChanges}
+        openEditFloorModal={openEditFloorModal}
+        handleSaveFloorChanges={handleSaveFloorChanges}
+        editFloorModalState={editFloorModalState}
+        openEditEntranceModal={openEditEntranceModal}
+        handleSaveEntranceChanges={handleSaveEntranceChanges}
+        editEntranceModalState={editEntranceModalState}
+        openAddNonLivingPremisesState={openAddNonLivingPremisesState}
+        openAddNonLivingPremisesPanel={openAddNonLivingPremisesPanel}
+        handleAddNonLivingPremises={handleAddNonLivingPremises}
       />
     </>
   );

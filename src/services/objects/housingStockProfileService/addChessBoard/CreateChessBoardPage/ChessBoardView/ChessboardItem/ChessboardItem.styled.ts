@@ -41,6 +41,10 @@ const typeToStyle = {
   empty: emptyStyle,
 };
 
+const wideStyle = css`
+  width: 100%;
+`;
+
 export const Wrapper = styled.div<{
   type: ChessBoardItemType;
   wide?: boolean;
@@ -49,8 +53,10 @@ export const Wrapper = styled.div<{
   box-sizing: border-box;
 
   min-width: 33px;
-  width: ${({ wide }) => (wide ? '100%' : '33px')};
-  max-width: ${({ wide }) => (wide ? '100%' : '33px')};
+  /* width: ${({ wide }) => (wide ? '100%' : '33px')}; */
+  /* max-width: ${({ wide }) => (wide ? '100%' : '33px')}; */
+  ${({ wide }) => (wide ? wideStyle : '')}
+
   height: 33px;
 
   padding: 0 8px;

@@ -25,7 +25,7 @@ export const getNextEntranceNumber = (
     return lastEntrance ? lastEntrance + 1 : null;
   }
 
-  return null;
+  return 1;
 };
 
 export const validateEntranceFormValues = (

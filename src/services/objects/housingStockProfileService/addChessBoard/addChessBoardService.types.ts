@@ -1,6 +1,6 @@
-import { PremiseLocationCreateModel } from 'api/types';
+import { EPremiseCategory, PremiseLocationCreateModel } from 'api/types';
 
-export type EditChessBoardPanelType = 'add-entrance' | 'add-parking';
+export type EditChessBoardPanelType = 'add-entrance' | 'add-living-floor';
 
 export type CreateChessboardQueryParams = PremiseLocationCreateModel & {
   housingStockId: number;
@@ -14,11 +14,18 @@ export interface AddEntranceFormParams {
   apartmentsStartsFrom: number;
 }
 
-export interface AddParkingFormParams {
+export type NonLivingPremisesCategory = Exclude<
+  EPremiseCategory,
+  EPremiseCategory.Apartment
+>;
+
+export interface AddNonLivingPremisesFormParams {
   name: string;
   floor: number;
   floorsAmount: number;
   entrancesNumber: number[];
+  premisesAmount: number;
+  category: NonLivingPremisesCategory;
 }
 
 export type DeleteFloorPayload = {
@@ -44,4 +51,38 @@ export type AddAapartmentPayload = {
   sectionNumber?: number | null;
   apartmentNumber?: string | null;
   side: 'left' | 'right';
+};
+
+export type OpenEditApartmentModalPayload = {
+  floorIndex: number;
+  sectionIndex: number;
+  apartmentIndex: number;
+};
+
+export type EditApartmentPayload = {
+  number: string;
+  category: EPremiseCategory;
+  sectionIndex: number;
+  floorIndex: number;
+  apartmentIndex: number;
+};
+
+export type OpenEditFloorModalPayload = {
+  floorIndex: number;
+  sectionIndex: number;
+};
+
+export type EditFloorPayload = {
+  number: string;
+  sectionIndex: number;
+  floorIndex: number;
+};
+
+export type OpenEditEntranceModalPayload = {
+  sectionIndex: number;
+};
+
+export type EditEntrancePayload = {
+  number: string;
+  sectionIndex: number;
 };

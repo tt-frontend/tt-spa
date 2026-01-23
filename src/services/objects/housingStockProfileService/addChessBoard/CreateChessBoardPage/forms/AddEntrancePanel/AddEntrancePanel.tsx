@@ -21,13 +21,14 @@ export const AddEntrancePanel: FC<Props> = ({
   closeAddEntrancePanel,
   handleAddEntrance,
   chessboardCreateData,
+  building,
 }) => {
   const { values, handleChange, errors, handleSubmit } = useFormik<
     MayBeNull<AddEntranceFormParams>
   >({
     initialValues: {
       entranceNumber: getNextEntranceNumber(chessboardCreateData),
-      floorsAmount: null,
+      floorsAmount: building?.numberOfFloors || null,
       apartmentsPerFloorAmount: null,
       livingQuartersStartFloor: null,
       apartmentsStartsFrom: getLastApartmentNumber(chessboardCreateData),
