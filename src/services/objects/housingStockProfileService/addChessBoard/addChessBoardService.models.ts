@@ -4,6 +4,7 @@ import { buildingQuery } from './addChessBoardService.api';
 import {
   AddAapartmentPayload,
   AddEntranceFormParams,
+  AddNonLivingPremisesFormParams,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
   DuplicateFloorPayload,
@@ -46,11 +47,13 @@ const handleAddEntrance = createEvent<AddEntranceFormParams>();
 
 // non-living premises functions
 const openAddNonLivingPremisesPanel = createEvent<NonLivingPremisesCategory>();
+const handleAddNonLivingPremises =
+  createEvent<AddNonLivingPremisesFormParams>();
 
 const $openAddNonLivingPremisesState =
   createStore<NonLivingPremisesCategory | null>(null)
     .on(openAddNonLivingPremisesPanel, (_, category) => category)
-    .reset(closeEditChessboardPanel);
+    .reset(closeEditChessboardPanel, handleAddNonLivingPremises);
 
 // entrance funtions
 const handleDeleteEntrance = createEvent<number>();
@@ -80,6 +83,7 @@ const closeDownModalsList = [
   handleSaveFloorChanges,
   handleSaveEntranceChanges,
   openAddNonLivingPremisesPanel,
+  handleAddNonLivingPremises,
 ];
 
 const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
@@ -95,7 +99,8 @@ const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
   .on(handleDuplicateApartment, apartmentModel.duplicateApartment)
   .on(handleSaveApartmentChanges, apartmentModel.editApartment)
   .on(handleSaveFloorChanges, floorModel.editFloor)
-  .on(handleSaveEntranceChanges, entranceModel.editEntrance);
+  .on(handleSaveEntranceChanges, entranceModel.editEntrance)
+  .on(handleAddNonLivingPremises, entranceModel.addNonLivingPremises);
 
 // apartment state
 const $editApartmentModalState =
@@ -113,7 +118,11 @@ const $editEntranceModalState =
     .on(openEditEntranceModal, (_, payload) => payload)
     .reset(closeDownModalsList);
 
-$openPanel.reset([handleAddEntrance, openAddNonLivingPremisesPanel]);
+$openPanel.reset([
+  handleAddEntrance,
+  openAddNonLivingPremisesPanel,
+  handleAddNonLivingPremises,
+]);
 
 const $entrances = $chessboardCreateData.map(
   (data) => data.sections?.map((section) => section.number || null) || [],
@@ -138,6 +147,7 @@ export const addChessBoardService = {
     openEditEntranceModal,
     handleSaveEntranceChanges,
     openAddNonLivingPremisesPanel,
+    handleAddNonLivingPremises,
   },
   outputs: {
     $openPanel,

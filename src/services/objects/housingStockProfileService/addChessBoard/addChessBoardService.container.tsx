@@ -49,6 +49,7 @@ export const AddChessBoardContainer = () => {
     editEntranceModalState,
     openAddNonLivingPremisesState,
     openAddNonLivingPremisesPanel,
+    handleAddNonLivingPremises,
   } = useUnit({
     ...inputs,
     building: buildingQuery.$data,
@@ -110,6 +111,7 @@ export const AddChessBoardContainer = () => {
         editEntranceModalState={editEntranceModalState}
         openAddNonLivingPremisesState={openAddNonLivingPremisesState}
         openAddNonLivingPremisesPanel={openAddNonLivingPremisesPanel}
+        handleAddNonLivingPremises={handleAddNonLivingPremises}
       />
     </>
   );

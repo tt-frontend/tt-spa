@@ -23,4 +23,10 @@ export const addNonLivingPremisesSchema = yup.object({
     )
     .min(1, 'Должен быть выбран хотя бы один подъезд')
     .required('Подъезды обязательны'),
+
+  premisesAmount: yup
+    .number()
+    .required('Количество помещений обязательно')
+    .integer('Количество помещений должно быть целым числом')
+    .min(1, 'Количество помещений должно быть не меньше 1'),
 });

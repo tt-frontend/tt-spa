@@ -24,6 +24,7 @@ export interface AddNonLivingPremisesFormParams {
   floor: number;
   floorsAmount: number;
   entrancesNumber: number[];
+  premisesAmount: number;
   category: NonLivingPremisesCategory;
 }
 

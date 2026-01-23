@@ -58,6 +58,7 @@ export const CreateChessBoardPage: FC<Props> = ({
   handleSaveEntranceChanges,
   openAddNonLivingPremisesState,
   openAddNonLivingPremisesPanel,
+  handleAddNonLivingPremises,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
@@ -77,7 +78,7 @@ export const CreateChessBoardPage: FC<Props> = ({
             ),
         }),
       ),
-    [],
+    [openAddNonLivingPremisesPanel],
   );
 
   const contextMenuButton = (
@@ -141,6 +142,7 @@ export const CreateChessBoardPage: FC<Props> = ({
               closeEditChessboardPanel={closeEditChessboardPanel}
               entrances={entrances}
               premiseCategory={openAddNonLivingPremisesState}
+              handleAddNonLivingPremises={handleAddNonLivingPremises}
             />
           )}
           {editApartmentModalState && (

@@ -1,6 +1,7 @@
 import {
   AddAapartmentPayload,
   AddEntranceFormParams,
+  AddNonLivingPremisesFormParams,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
   DuplicateFloorPayload,
@@ -63,6 +64,8 @@ function toSectionCreateModel(
     floors,
   };
 }
+
+// entrance functions
 
 const addEntrance = (
   prev: PremiseLocationCreateModel,
@@ -176,6 +179,82 @@ const editEntrance = (
             }
           : section,
       ) || [],
+  };
+};
+
+const addNonLivingPremises = (
+  prev: PremiseLocationCreateModel,
+  payload: AddNonLivingPremisesFormParams,
+): PremiseLocationCreateModel => {
+  const {
+    name,
+    floor,
+    floorsAmount,
+    entrancesNumber,
+    premisesAmount,
+    category,
+  } = payload;
+
+  const updatedSections = prev.sections?.map((section) => {
+    if (section.number == null || !entrancesNumber.includes(section.number)) {
+      return section;
+    }
+
+    const existingFloors = section.floors ?? [];
+    const floorsToCreate: FloorCreateModel[] = [];
+
+    const step = floor < 0 ? -1 : 1;
+
+    for (let i = 0; i < floorsAmount; i++) {
+      const floorNum = floor + i * step;
+
+      const exists = existingFloors.some((f) => f.number === floorNum);
+
+      if (!exists) {
+        floorsToCreate.push({
+          number: floorNum,
+          premises: [],
+        });
+      }
+    }
+
+    const updatedFloors = [...existingFloors, ...floorsToCreate].map((f) => {
+      if (f.number == null) return f;
+
+      const isInRange =
+        floor < 0
+          ? f.number <= floor && f.number > floor - floorsAmount
+          : f.number >= floor && f.number < floor + floorsAmount;
+
+      if (!isInRange) return f;
+
+      const existingPremises = f.premises ?? [];
+
+      const newPremises: PremiseCreateModel[] = Array.from(
+        { length: premisesAmount },
+        () => ({
+          number: name,
+          category,
+        }),
+      );
+
+      return {
+        ...f,
+        premises: [...existingPremises, ...newPremises],
+      };
+    });
+
+    updatedFloors.sort((a, b) => (a.number ?? 0) - (b.number ?? 0));
+
+    return {
+      ...section,
+      floors: updatedFloors,
+    };
+  });
+
+  return {
+    ...prev,
+    sections: updatedSections,
   };
 };
 
@@ -398,6 +477,7 @@ export const entranceModel = {
   deleteEntrance,
   dubplicateEntrance,
   editEntrance,
+  addNonLivingPremises,
 };
 
 export const floorModel = { deleteFloor, duplicateFloor, editFloor };

@@ -11,7 +11,6 @@ import { ErrorMessage } from 'ui-kit/ErrorMessage';
 import { MayBeNull } from 'types';
 import { EnterancesSelect } from '../../EnterancesSelect';
 import { AddNonLivingPremisesFormParams } from '../../../addChessBoardService.types';
-import { EPremiseCategory } from 'api/types';
 import { addNonLivingPremisesSchema } from './AddNonResidentialPremises.constants';
 import { PremiseCategoryLookup } from 'dictionaries';
 
@@ -19,6 +18,7 @@ export const AddNonResidentialPremises: FC<Props> = ({
   closeEditChessboardPanel,
   entrances,
   premiseCategory,
+  handleAddNonLivingPremises,
 }) => {
   const { values, handleChange, errors, handleSubmit, setFieldValue } =
     useFormik<MayBeNull<AddNonLivingPremisesFormParams>>({
@@ -27,11 +27,14 @@ export const AddNonResidentialPremises: FC<Props> = ({
         floor: null,
         floorsAmount: null,
         entrancesNumber: null,
-        category: EPremiseCategory.Technical,
+        premisesAmount: 1,
+        category: premiseCategory,
       },
       validateOnChange: false,
       validationSchema: addNonLivingPremisesSchema,
-      onSubmit: () => {},
+      enableReinitialize: true,
+      onSubmit: (values) =>
+        handleAddNonLivingPremises(values as AddNonLivingPremisesFormParams),
     });
 
   return (
@@ -83,6 +86,18 @@ export const AddNonResidentialPremises: FC<Props> = ({
             status={errors.floorsAmount ? 'error' : void 0}
           />
           <ErrorMessage>{errors.floorsAmount}</ErrorMessage>
+        </FormItem>
+        <FormItem label="Количество помещений на этаже">
+          <Input
+            type="number"
+            small
+            placeholder="Введите"
+            name="premisesAmount"
+            value={values.premisesAmount ?? ''}
+            onChange={handleChange}
+            status={errors.premisesAmount ? 'error' : void 0}
+          />
+          <ErrorMessage>{errors.premisesAmount}</ErrorMessage>
         </FormItem>
         <FormItem label="Подъезды">
           {!entrances.length ? (

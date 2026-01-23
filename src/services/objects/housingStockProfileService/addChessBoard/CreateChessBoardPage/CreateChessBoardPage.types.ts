@@ -2,6 +2,7 @@ import { HousingStockResponse, PremiseLocationCreateModel } from 'api/types';
 import {
   AddAapartmentPayload,
   AddEntranceFormParams,
+  AddNonLivingPremisesFormParams,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
   DuplicateFloorPayload,
@@ -44,4 +45,5 @@ export type Props = {
   editEntranceModalState: OpenEditEntranceModalPayload | null;
   openAddNonLivingPremisesState: NonLivingPremisesCategory | null;
   openAddNonLivingPremisesPanel: (payload: NonLivingPremisesCategory) => void;
+  handleAddNonLivingPremises: (payload: AddNonLivingPremisesFormParams) => void;
 };
