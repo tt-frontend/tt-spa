@@ -1,6 +1,9 @@
 import { createEvent, createStore, sample } from 'effector';
 import { createGate } from 'effector-react';
-import { buildingQuery } from './addChessBoardService.api';
+import {
+  buildingQuery,
+  createChessBoardMutation,
+} from './addChessBoardService.api';
 import {
   AddAapartmentPayload,
   AddEntranceFormParams,
@@ -89,6 +92,7 @@ const closeDownModalsList = [
 const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
   sections: [],
 })
+  .reset(createChessBoardMutation.finished.success)
   .on(handleAddEntrance, chessboardModel.addEntrance)
   .on(resetChessBoardData, chessboardModel.resetChessboard)
   .on(handleDeleteEntrance, entranceModel.deleteEntrance)

@@ -46,6 +46,7 @@ export const PremisesView: FC<Props> = ({ apartmentPremises }) => {
                               title: 'Перейти',
                               onClick: () =>
                                 navigate(`/apartments/${apartment.id}`),
+                              hidden: !apartment.id,
                             },
                           ]}
                         >
