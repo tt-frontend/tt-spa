@@ -1,7 +1,9 @@
 import React, {
   PropsWithChildren,
   useCallback,
+  useLayoutEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import {
@@ -20,6 +22,10 @@ import { Empty, Skeleton } from 'antd';
 import { EOrderByRule } from 'api/types';
 import _ from 'lodash';
 import { Pagination } from 'ui-kit/Pagination';
+// import {
+//   restoreScroll,
+//   saveScroll,
+// } from 'services/statistics/statisticsProfileService/view/StatisticProfile/StatisticProfile.utils';
 
 export function Table<T>({
   columns,
@@ -115,9 +121,36 @@ export function Table<T>({
     [filteredColumns, isSorted],
   );
 
+  const divRef = useRef<HTMLDivElement | null>(null);
+
+  let savedScrollY = 0;
+
+  useLayoutEffect(() => {
+    const el = divRef.current;
+    if (!el) return;
+
+    // восстановление
+    el.scrollTop = savedScrollY;
+
+    const onScroll = () => {
+      savedScrollY = el.scrollTop;
+    };
+
+    el.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      savedScrollY = el.scrollTop;
+      el.removeEventListener('scroll', onScroll);
+    };
+  }, []);
   return (
     <div>
-      <Wrapper floating={floating} isSticky={isSticky} maxWidth={maxWidth}>
+      <Wrapper
+        floating={floating}
+        isSticky={isSticky}
+        maxWidth={maxWidth}
+        ref={divRef}
+      >
         <HeaderWrapper isSticky={isSticky}>
           <Header temp={temp} css={headerStyles}>
             {columnsComponent}
