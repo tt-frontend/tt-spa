@@ -7,8 +7,9 @@ import {
   Wrapper,
   WrapperValue,
 } from './TemperatureGraphDetail.styled';
+import dayjs from 'dayjs';
 
-export const TemperatureGraphDetail: FC<Props> = () => {
+export const TemperatureGraphDetail: FC<Props> = ({ temperatureReference }) => {
   return (
     <Table
       columns={[
@@ -16,47 +17,62 @@ export const TemperatureGraphDetail: FC<Props> = () => {
           label: <Wrapper>Тнв, °С</Wrapper>,
           size: '100px',
           render: (data) => (
-            <WrapperValue>{data.outdoorTemperature}</WrapperValue>
+            <WrapperValue>
+              {data?.outdoorTemperature
+                ? data.outdoorTemperature.toFixed(1)
+                : '-'}
+            </WrapperValue>
           ),
         },
         {
-          label: <Wrapper>Т2 График, °С</Wrapper>,
+          label: <Wrapper>Т1 График, °С</Wrapper>,
           size: '120px',
           render: (data) => (
-            <WrapperValue>{data.heatFeedFlowTemperature}</WrapperValue>
+            <WrapperValue>
+              {data?.normativeTemperature
+                ? data.normativeTemperature.toFixed(1)
+                : '-'}
+            </WrapperValue>
           ),
         },
         {
-          label: <Wrapper>Т2 Факт, °С</Wrapper>,
+          label: <Wrapper>Т1 Факт, °С</Wrapper>,
           size: '120px',
-          render: (data) => <WrapperValue>{data.f}</WrapperValue>,
+          render: (data) => (
+            <WrapperValue>
+              {data?.feedFlowPipeTemperature
+                ? data.feedFlowPipeTemperature.toFixed(1)
+                : '-'}
+            </WrapperValue>
+          ),
         },
         {
           label: <Wrapper>Расхождение Т2</Wrapper>,
           size: '180px',
           render: (data) => (
             <WrapperValue>
-              <PercentWrapper> {data.g} </PercentWrapper>
-              <CelsiusWrapper>{data.h}</CelsiusWrapper>
+              <PercentWrapper>
+                {data?.deviation ? data.deviation.toFixed(2) + '%' : '-'}
+              </PercentWrapper>
+              <CelsiusWrapper>
+                {data?.diffTemperature
+                  ? data.diffTemperature.toFixed(1) + ' °C'
+                  : '-'}
+              </CelsiusWrapper>
             </WrapperValue>
           ),
         },
         {
           label: <Wrapper>Дата и время </Wrapper>,
           size: '200px',
-          render: (data) => <WrapperValue>{data.dateTime}</WrapperValue>,
+          render: (data) => (
+            <WrapperValue>
+              {dayjs(data?.archiveTimeFromDevice).format('DD.MM.YYYY HH:mm')}
+            </WrapperValue>
+          ),
         },
       ]}
-      elements={[
-        {
-          outdoorTemperature: '+5',
-          heatFeedFlowTemperature: '+42.6',
-          f: '+49.4',
-          g: '13.76%',
-          h: '6.8 °С',
-          dateTime: '30.10.2025 12:00',
-        },
-      ]}
+      elements={[temperatureReference]}
     />
   );
 };

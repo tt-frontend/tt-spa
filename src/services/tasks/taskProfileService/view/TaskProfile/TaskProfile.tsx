@@ -188,7 +188,9 @@ export const TaskProfile: FC<TaskProfileProps> = ({
                   {isHeatSupplyQualityCheck && (
                     <>
                       <TaskResourceConsumption buildingId={task.buildingId} />
-                      <TemperatureGraphDetail />
+                      <TemperatureGraphDetail
+                        temperatureReference={task.temperatureReference}
+                      />
                     </>
                   )}
                 </>
