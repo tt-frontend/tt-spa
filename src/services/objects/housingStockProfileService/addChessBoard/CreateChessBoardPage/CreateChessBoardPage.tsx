@@ -58,68 +58,79 @@ export const CreateChessBoardPage: FC<Props> = ({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
   });
 
+  const isEntranceExists = Boolean(chessboardCreateData.sections?.length);
+
+  const contextMenuButton = (
+    <ContextMenuButton
+      size="small"
+      onClickOverload={
+        isEntranceExists
+          ? null
+          : () => void handleEditChessboard('add-entrance')
+      }
+      icon={<PlusIcon style={{ transform: 'scale(0.8)' }} />}
+      menuButtons={[
+        {
+          title: 'Добавить элемент подъезда',
+          icon: <ApartmentIcon />,
+          strong: true,
+          id: 'add-entrance-element',
+          children: [
+            {
+              title: 'Подъезд',
+              id: 'entrance',
+              onClick: () => handleEditChessboard('add-entrance'),
+            },
+            {
+              title: 'Жилой этаж',
+              id: 'residential-floor',
+            },
+          ],
+        },
+        {
+          title: 'Добавить нежилое помещение',
+          icon: <ParkingIcon />,
+          strong: true,
+          id: 'add-non-residential-placement',
+          children: [
+            {
+              title: 'Паркинг',
+              id: 'parking',
+              onClick: () => handleEditChessboard('add-parking'),
+            },
+            {
+              title: 'Техническое помещение',
+              id: 'technical-placement',
+            },
+            {
+              title: 'Тепловой пункт',
+              id: 'heating-point',
+            },
+            {
+              title: 'Коммерческое помещение',
+              id: 'commercial-placement',
+            },
+            {
+              title: 'Подвал',
+              id: 'basement',
+            },
+            {
+              title: 'Чердак',
+              id: 'attic',
+            },
+          ],
+        },
+      ]}
+    />
+  );
+
   return (
     <>
       <StickyPanel css={headerStyles}>
         <GoBack />
         {isLoadingBuilding && <Skeleton.Input active size="small" />}
         {!isLoadingBuilding && getBuildingAddress(building, true)}
-        <ContextMenuButton
-          size="small"
-          icon={<PlusIcon style={{ transform: 'scale(0.8)' }} />}
-          menuButtons={[
-            {
-              title: 'Добавить элемент подъезда',
-              icon: <ApartmentIcon />,
-              strong: true,
-              id: 'add-entrance-element',
-              children: [
-                {
-                  title: 'Подъезд',
-                  id: 'entrance',
-                  onClick: () => handleEditChessboard('add-entrance'),
-                },
-                {
-                  title: 'Жилой этаж',
-                  id: 'residential-floor',
-                },
-              ],
-            },
-            {
-              title: 'Добавить нежилое помещение',
-              icon: <ParkingIcon />,
-              strong: true,
-              id: 'add-non-residential-placement',
-              children: [
-                {
-                  title: 'Паркинг',
-                  id: 'parking',
-                  onClick: () => handleEditChessboard('add-parking'),
-                },
-                {
-                  title: 'Техническое помещение',
-                  id: 'technical-placement',
-                },
-                {
-                  title: 'Тепловой пункт',
-                  id: 'heating-point',
-                },
-                {
-                  title: 'Коммерческое помещение',
-                  id: 'commercial-placement',
-                },
-                {
-                  title: 'Подвал',
-                  id: 'basement',
-                },
-                {
-                  title: 'Чердак',
-                  id: 'attic',
-                },
-              ],
-            },
-          ]}
-        />
+        {contextMenuButton}
       </StickyPanel>
       <Wrapper isPanelOpen={isPanelOpen}>
         <Blueprint>
