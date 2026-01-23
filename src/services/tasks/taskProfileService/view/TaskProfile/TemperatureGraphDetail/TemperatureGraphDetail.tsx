@@ -47,7 +47,7 @@ export const TemperatureGraphDetail: FC<Props> = ({ temperatureReference }) => {
           ),
         },
         {
-          label: <Wrapper>Расхождение Т2</Wrapper>,
+          label: <Wrapper>Расхождение Т1</Wrapper>,
           size: '180px',
           render: (data) => (
             <WrapperValue>
