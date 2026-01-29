@@ -83,6 +83,10 @@ export const GraphFilterForm: React.FC<GraphFilterFormProps> = ({
   }));
 
   useEffect(() => {
+    if (currentGraphParam === 'Входящая температура, °C') {
+      return;
+    }
+
     const isCurrentFieldExist = paramsList.find(
       (field) => field === currentGraphParam,
     );
@@ -126,7 +130,6 @@ export const GraphFilterForm: React.FC<GraphFilterFormProps> = ({
             small
             placeholder="Autocomplete"
             value={currentGraphParam}
-            showArrow={true}
             options={options}
             disabled={options.length === 0}
             onChange={(selectedValue) => setGraphParam(selectedValue as string)}
