@@ -3,7 +3,6 @@ import { exportTasksListService } from './exportTasksListService.models';
 import { FormModal } from 'ui-kit/Modals/FormModal';
 import { FormItem } from 'ui-kit/FormItem';
 import { Select } from 'ui-kit/Select';
-import { tasksProfileService } from 'services/tasks/tasksProfileService';
 import {
   tasksCountQuery,
   tasksExportQuery,
@@ -12,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { EManagingFirmTaskFilterType } from 'api/types';
 import { CommonInfo } from 'ui-kit/shared/CommonInfo';
 import { Card } from './exportTasksListService.styled';
+import { $actualTaskTypes } from 'services/tasks/taskTypesService/taskTypesService.model';
 
 const { inputs, outputs } = exportTasksListService;
 
@@ -31,7 +31,7 @@ export const ExportTasksListContainer = () => {
   } = useUnit({
     isOpen: outputs.$isOpen,
     closeModal: inputs.closeModal,
-    taskTypes: tasksProfileService.outputs.$taskTypes,
+    taskTypes: $actualTaskTypes,
     tasksCountData: tasksCountQuery.$data,
     isLoadingTasksCount: tasksCountQuery.$pending,
     getTasksCountByType: tasksCountQuery.start,

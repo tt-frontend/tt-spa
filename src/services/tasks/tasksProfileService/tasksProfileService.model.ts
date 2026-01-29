@@ -190,8 +190,6 @@ const $tasksPagedData = createStore<TasksPagedList | null>(null).on(
   (_, tasksPaged) => tasksPaged,
 );
 
-const $taskTypes = $tasksPagedData.map((tasks) => tasks?.taskTypes || null);
-
 const $tasksSummaryData = $tasksPagedData.map((data) => ({
   runningOutTasksCount: data?.runningOutTasksCount || null,
   expiredTasksCount: data?.expiredTasksCount || null,
@@ -256,7 +254,6 @@ export const tasksProfileService = {
     refetchTasks,
   },
   outputs: {
-    $taskTypes,
     $isLoading,
     $searchState,
     $tasksPagedData,

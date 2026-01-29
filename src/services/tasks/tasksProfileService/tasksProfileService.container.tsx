@@ -7,7 +7,11 @@ import { getAddressObject, prepareData } from './tasksProfileService.utils';
 import { TaskType } from './view/TasksListItem/TasksListItem.types';
 import { TasksProfile } from './view/TasksProfile';
 import queryString from 'query-string';
-import { TaskTypesGate } from '../taskTypesService/taskTypesService.model';
+import {
+  $actualTaskTypes,
+  ActualTaskTypesGate,
+  TaskTypesGate,
+} from '../taskTypesService/taskTypesService.model';
 import {
   AddTaskFromDispatcherContainer,
   addTaskFromDispatcherService,
@@ -29,7 +33,7 @@ export const TasksProfileContainer = () => {
   }>() as { grouptype: TaskGroupingFilter };
 
   const {
-    taskTypes,
+    actualTaskTypes,
     housingManagments,
     perpetrators,
     pagedTasks,
@@ -57,7 +61,7 @@ export const TasksProfileContainer = () => {
     handleCloseTasks,
     handleReassignTasks,
   } = useUnit({
-    taskTypes: outputs.$taskTypes,
+    actualTaskTypes: $actualTaskTypes,
     housingManagments: outputs.$housingManagments,
     perpetrators: outputs.$organizationUsers,
     pagedTasks: outputs.$tasksPagedData,
@@ -190,6 +194,7 @@ export const TasksProfileContainer = () => {
       {isPermissionToAddTask && <AddTaskDataFetchGate />}
       <InitialGate />
       <TaskTypesGate />
+      <ActualTaskTypesGate groupType={grouptype} />
 
       <CloseTasksContainer />
       <ReassignTasksContainer />
@@ -200,7 +205,7 @@ export const TasksProfileContainer = () => {
         grouptype={grouptype}
         handleSearch={handleSearch}
         changePageNumber={changePageNumber}
-        taskTypes={taskTypes}
+        actualTaskTypes={actualTaskTypes}
         tasks={preparedTasks as TaskType[]}
         initialValues={initialValues}
         pagedTasks={pagedTasks}

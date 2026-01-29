@@ -3,14 +3,30 @@ import {
   BuildingFiltersResponse,
   EManagingFirmTaskFilterTypeNullableStringDictionaryItem,
   GuidStringDictionaryItem,
+  ManagingTaskTypeFilterWithCount,
   OrganizationUserListResponsePagedList,
+  TaskFilterActualTasksTypesResponse,
   TaskFilterResponse,
+  TaskGroupingFilter,
 } from 'api/types';
 
 export const getTaskTypes = async (): Promise<
   EManagingFirmTaskFilterTypeNullableStringDictionaryItem[] | null
 > => {
   const res: TaskFilterResponse | null = await axios.get('Tasks/filters');
+
+  return res?.taskTypes || null;
+};
+
+export const getActualTaskTypes = async (
+  groupType?: TaskGroupingFilter,
+): Promise<ManagingTaskTypeFilterWithCount[] | null> => {
+  const res: TaskFilterActualTasksTypesResponse | null = await axios.get(
+    'Tasks/filtersWithActualTaskTypes',
+    {
+      params: { groupType },
+    },
+  );
 
   return res?.taskTypes || null;
 };
