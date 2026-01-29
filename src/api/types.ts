@@ -5666,6 +5666,11 @@ export interface TaskCreationTargetObject {
   id?: number;
 }
 
+export interface TaskFilterActualTasksTypesResponse {
+  taskTypes: ManagingTaskTypeFilterWithCount[] | null;
+  closingStatuses: ETaskClosingStatusNullableStringDictionaryItem[] | null;
+}
+
 export interface TaskFilterResponse {
   taskTypes: EManagingFirmTaskFilterTypeNullableStringDictionaryItem[] | null;
   closingStatuses: ETaskClosingStatusNullableStringDictionaryItem[] | null;
@@ -5820,7 +5825,6 @@ export interface TasksPagedList {
   runningOutTasksCount: number | null;
   /** @format int32 */
   expiredTasksCount: number | null;
-  taskTypes: ManagingTaskTypeFilterWithCount[] | null;
 }
 
 export interface TemperatureNormativeDeleteRequest {
@@ -16030,6 +16034,31 @@ export class Api<
       this.request<TaskFilterResponse, ErrorApiResponse>({
         path: `/api/Tasks/filters`,
         method: 'GET',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Роли:<li>Администратор</li><li>Исполнитель УК</li><li>Старший оператор</li><li>Оператор</li><li>Наблюдатель УК</li><li>Наблюдатель УК (ограниченный доступ)</li><li>Диспетчер УК</li><li>Администратор УК без назначений задач</li><li>Контролёр</li><li>Супервайзер</li><li>Системный администратор</li>
+     *
+     * @tags Tasks
+     * @name TasksFiltersWithActualTaskTypesList
+     * @summary TasksRead
+     * @request GET:/api/Tasks/filtersWithActualTaskTypes
+     * @secure
+     */
+    tasksFiltersWithActualTaskTypesList: (
+      query?: {
+        /** @default "Executing" */
+        groupType?: TaskGroupingFilter;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<TaskFilterActualTasksTypesResponse, ErrorApiResponse>({
+        path: `/api/Tasks/filtersWithActualTaskTypes`,
+        method: 'GET',
+        query: query,
         secure: true,
         format: 'json',
         ...params,

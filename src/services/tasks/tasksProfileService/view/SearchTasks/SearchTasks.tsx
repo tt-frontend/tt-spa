@@ -35,7 +35,7 @@ const { ExistingCitiesGate, ExistingStreetsGate } = addressSearchService.gates;
 
 export const SearchTasks: FC<SearchTasksProps> = ({
   onSubmit,
-  taskTypes,
+  actualTaskTypes,
   currentFilter,
   isExtendedSearchOpen,
   openExtendedSearch,
@@ -151,14 +151,14 @@ export const SearchTasks: FC<SearchTasksProps> = ({
           {isArchived && (
             <ArchiveTasksExtendedSearchForm
               setFieldValue={setFieldValue}
-              taskTypes={taskTypes}
+              taskTypes={actualTaskTypes}
               values={values}
             />
           )}
           {!isArchived && (
             <ToExecutionTasksExtendedSearchForm
               setFieldValue={setFieldValue}
-              taskTypes={taskTypes}
+              taskTypes={actualTaskTypes}
               values={values}
               housingManagments={housingManagments}
               perpetrators={perpetrators}
@@ -189,17 +189,13 @@ export const SearchTasks: FC<SearchTasksProps> = ({
             handleSubmit();
           }}
         >
-          {taskTypes &&
-            taskTypes.map(({ count, taskType, typeName }) => (
+          {actualTaskTypes &&
+            actualTaskTypes.map(({ count, taskType, typeName }) => (
               <Select.Option key={taskType} value={taskType}>
-                {taskType ? (
-                  <TaskTypeContainer>
-                    {typeName}
-                    <TaskCount>({count})</TaskCount>
-                  </TaskTypeContainer>
-                ) : (
-                  'Все'
-                )}
+                <TaskTypeContainer>
+                  {typeName}
+                  <TaskCount>({count})</TaskCount>
+                </TaskTypeContainer>
               </Select.Option>
             ))}
         </Select>

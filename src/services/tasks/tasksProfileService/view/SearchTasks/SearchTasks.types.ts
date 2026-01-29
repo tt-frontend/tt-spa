@@ -8,7 +8,7 @@ import { GetTasksListRequestPayload } from '../../tasksProfileService.types';
 
 export type SearchTasksProps = {
   onSubmit: (formFilter: GetTasksListRequestPayload) => void;
-  taskTypes: ManagingTaskTypeFilterWithCount[] | null;
+  actualTaskTypes: ManagingTaskTypeFilterWithCount[] | null;
   currentFilter: GetTasksListRequestPayload | null;
   isExtendedSearchOpen: boolean;
   closeExtendedSearch: () => void;
