@@ -24,7 +24,6 @@ import { TaskProfileHeader } from './TaskProfileHeader';
 import { TaskStages } from './TaskStages';
 import { ApplicationInfoContainer } from '../../applicationInfoService';
 import { EManagingFirmTaskType } from 'api/types';
-import { TaskResourceConsumption } from './TaskResourceConsumption';
 import { TemperatureGraphDetail } from './TemperatureGraphDetail';
 import { useNavigate } from 'react-router-dom';
 import { EyeIcon } from 'ui-kit/icons';
@@ -181,17 +180,16 @@ export const TaskProfile: FC<TaskProfileProps> = ({
                   )}
 
                   {device && <TaskDeviceInfo device={device} />}
-                  {pipeNode && <TaskPipeNodeInfo pipeNode={pipeNode} />}
+                  {pipeNode && (
+                    <TaskPipeNodeInfo pipeNode={pipeNode} task={task} />
+                  )}
                   {relatedPipeNode && (
-                    <TaskPipeNodeInfo pipeNode={relatedPipeNode} />
+                    <TaskPipeNodeInfo pipeNode={relatedPipeNode} task={task} />
                   )}
                   {isHeatSupplyQualityCheck && (
-                    <>
-                      <TaskResourceConsumption buildingId={task.buildingId} />
-                      <TemperatureGraphDetail
-                        temperatureReference={task.temperatureReference}
-                      />
-                    </>
+                    <TemperatureGraphDetail
+                      temperatureReference={task.temperatureReference}
+                    />
                   )}
                 </>
               )}
