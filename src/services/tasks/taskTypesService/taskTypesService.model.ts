@@ -68,9 +68,10 @@ sample({
 });
 
 export const handleChangeGroupType = createEvent<TaskGroupingFilter>();
+export const handleFetchActualTaskTypes = createEvent<TaskGroupingFilter>();
 
 sample({
-  clock: handleChangeGroupType,
+  clock: [handleChangeGroupType, handleFetchActualTaskTypes],
   target: fetchActualTaskTypes,
 });
 

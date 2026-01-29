@@ -24,7 +24,7 @@ export const getActualTaskTypes = async (
   const res: TaskFilterActualTasksTypesResponse | null = await axios.get(
     'Tasks/filtersWithActualTaskTypes',
     {
-      params: { groupType },
+      params: { groupType: groupType || 'Executing' },
     },
   );
 
