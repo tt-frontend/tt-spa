@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useCallback } from 'react';
 import {
   Blueprint,
   ButtonsWrapper,
@@ -27,7 +27,11 @@ import { EPremiseCategory } from 'api/types';
 import { omit } from 'lodash';
 import { PremiseCategoryLookup } from 'dictionaries';
 import { AddNonResidentialPremises } from './forms/AddNonResidentialPremises';
-import { NonLivingPremisesCategory } from '../addChessBoardService.types';
+import {
+  Maybe,
+  NonLivingPremisesCategory,
+  OpenAddNonLivingPremisesPanelState,
+} from '../addChessBoardService.types';
 
 export const CreateChessBoardPage: FC<Props> = ({
   chessboardCreateData,
@@ -66,16 +70,19 @@ export const CreateChessBoardPage: FC<Props> = ({
 
   const isEntranceExists = Boolean(chessboardCreateData.sections?.length);
 
-  const nonLivingPremisesMenuItems = useMemo(
-    () =>
+  const nonLivingPremisesMenuItems = useCallback(
+    (params?: Maybe<OpenAddNonLivingPremisesPanelState>) =>
       Object.values(omit(EPremiseCategory, EPremiseCategory.Apartment)).map(
         (category) => ({
           title: PremiseCategoryLookup[category],
           id: category.toLowerCase().replace(/\s+/g, '-'),
           onClick: () =>
-            openAddNonLivingPremisesPanel(
-              category as NonLivingPremisesCategory,
-            ),
+            openAddNonLivingPremisesPanel({
+              category: category as NonLivingPremisesCategory,
+              entrace: 0,
+              floor: 0,
+              ...params,
+            }),
         }),
       ),
     [openAddNonLivingPremisesPanel],
@@ -113,7 +120,7 @@ export const CreateChessBoardPage: FC<Props> = ({
           icon: <ParkingIcon />,
           strong: true,
           id: 'add-non-residential-placement',
-          children: nonLivingPremisesMenuItems,
+          children: nonLivingPremisesMenuItems(),
         },
       ]}
     />
@@ -141,7 +148,7 @@ export const CreateChessBoardPage: FC<Props> = ({
             <AddNonResidentialPremises
               closeEditChessboardPanel={closeEditChessboardPanel}
               entrances={entrances}
-              premiseCategory={openAddNonLivingPremisesState}
+              premiseState={openAddNonLivingPremisesState}
               handleAddNonLivingPremises={handleAddNonLivingPremises}
             />
           )}
@@ -180,6 +187,7 @@ export const CreateChessBoardPage: FC<Props> = ({
             openEditApartmentModal={openEditApartmentModal}
             openEditFloorModal={openEditFloorModal}
             openEditEntranceModal={openEditEntranceModal}
+            nonLivingPremisesMenuItems={nonLivingPremisesMenuItems}
           />
         </Blueprint>
       </Wrapper>

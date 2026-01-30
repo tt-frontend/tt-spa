@@ -17,16 +17,18 @@ import { PremiseCategoryLookup } from 'dictionaries';
 export const AddNonResidentialPremises: FC<Props> = ({
   closeEditChessboardPanel,
   entrances,
-  premiseCategory,
+  premiseState,
   handleAddNonLivingPremises,
 }) => {
+  const premiseCategory = premiseState.category!;
+
   const { values, handleChange, errors, handleSubmit, setFieldValue } =
     useFormik<MayBeNull<AddNonLivingPremisesFormParams>>({
       initialValues: {
         name: PremiseCategoryLookup[premiseCategory],
-        floor: null,
-        floorsAmount: null,
-        entrancesNumber: null,
+        floor: premiseState.floor || null,
+        floorsAmount: 1,
+        entrancesNumber: premiseState.entrace ? [premiseState.entrace] : [],
         premisesAmount: 1,
         category: premiseCategory,
       },

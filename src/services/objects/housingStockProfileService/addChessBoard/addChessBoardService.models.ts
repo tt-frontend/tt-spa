@@ -15,7 +15,8 @@ import {
   EditChessBoardPanelType,
   EditEntrancePayload,
   EditFloorPayload,
-  NonLivingPremisesCategory,
+  Maybe,
+  OpenAddNonLivingPremisesPanelState,
   OpenEditApartmentModalPayload,
   OpenEditEntranceModalPayload,
   OpenEditFloorModalPayload,
@@ -49,13 +50,14 @@ const resetChessBoardData = createEvent();
 const handleAddEntrance = createEvent<AddEntranceFormParams>();
 
 // non-living premises functions
-const openAddNonLivingPremisesPanel = createEvent<NonLivingPremisesCategory>();
+const openAddNonLivingPremisesPanel =
+  createEvent<Maybe<OpenAddNonLivingPremisesPanelState>>();
 const handleAddNonLivingPremises =
   createEvent<AddNonLivingPremisesFormParams>();
 
 const $openAddNonLivingPremisesState =
-  createStore<NonLivingPremisesCategory | null>(null)
-    .on(openAddNonLivingPremisesPanel, (_, category) => category)
+  createStore<Maybe<OpenAddNonLivingPremisesPanelState> | null>(null)
+    .on(openAddNonLivingPremisesPanel, (_, payload) => payload)
     .reset(closeEditChessboardPanel, handleAddNonLivingPremises);
 
 // entrance funtions

@@ -24,6 +24,7 @@ export const ChessBoardView: FC<Props> = ({
   openEditApartmentModal,
   openEditFloorModal,
   openEditEntranceModal,
+  nonLivingPremisesMenuItems,
 }) => {
   useEnterToTab();
 
@@ -157,7 +158,14 @@ export const ChessBoardView: FC<Props> = ({
                     );
                   })}
                   {floor.premises?.length === 0 && (
-                    <ChessboardItem type="flat" wide>
+                    <ChessboardItem
+                      type="flat"
+                      wide
+                      menuButtons={nonLivingPremisesMenuItems({
+                        floor: floor.number,
+                        entrace: section.number,
+                      })}
+                    >
                       + Добавьте нежилое помещение
                     </ChessboardItem>
                   )}

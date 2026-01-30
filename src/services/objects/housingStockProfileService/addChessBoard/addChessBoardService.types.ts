@@ -86,3 +86,13 @@ export type EditEntrancePayload = {
   number: string;
   sectionIndex: number;
 };
+
+export type OpenAddNonLivingPremisesPanelState = {
+  category: NonLivingPremisesCategory;
+  entrace: number;
+  floor: number;
+};
+
+export type Maybe<T> = {
+  [K in keyof T]?: T[K];
+};

@@ -1,11 +1,12 @@
 import {
   AddNonLivingPremisesFormParams,
-  NonLivingPremisesCategory,
+  Maybe,
+  OpenAddNonLivingPremisesPanelState,
 } from '../../../addChessBoardService.types';
 
 export type Props = {
   closeEditChessboardPanel: () => void;
   entrances: (number | null)[];
-  premiseCategory: NonLivingPremisesCategory;
+  premiseState: Maybe<OpenAddNonLivingPremisesPanelState>;
   handleAddNonLivingPremises: (payload: AddNonLivingPremisesFormParams) => void;
 };
