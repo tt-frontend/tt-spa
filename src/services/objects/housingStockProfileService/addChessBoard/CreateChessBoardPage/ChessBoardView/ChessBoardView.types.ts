@@ -4,6 +4,8 @@ import {
   DeleteAapartmentPayload,
   DeleteFloorPayload,
   DuplicateFloorPayload,
+  Maybe,
+  OpenAddNonLivingPremisesPanelState,
   OpenEditApartmentModalPayload,
   OpenEditEntranceModalPayload,
   OpenEditFloorModalPayload,
@@ -20,4 +22,11 @@ export type Props = {
   openEditApartmentModal: (payload: OpenEditApartmentModalPayload) => void;
   openEditFloorModal: (payload: OpenEditFloorModalPayload) => void;
   openEditEntranceModal: (payload: OpenEditEntranceModalPayload) => void;
+  nonLivingPremisesMenuItems: (
+    params?: Maybe<OpenAddNonLivingPremisesPanelState>,
+  ) => {
+    title: string;
+    id: string;
+    onClick: () => void;
+  }[];
 };

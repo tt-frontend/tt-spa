@@ -10,7 +10,8 @@ import {
   EditChessBoardPanelType,
   EditEntrancePayload,
   EditFloorPayload,
-  NonLivingPremisesCategory,
+  Maybe,
+  OpenAddNonLivingPremisesPanelState,
   OpenEditApartmentModalPayload,
   OpenEditEntranceModalPayload,
   OpenEditFloorModalPayload,
@@ -43,7 +44,9 @@ export type Props = {
   openEditEntranceModal: (payload: OpenEditEntranceModalPayload) => void;
   handleSaveEntranceChanges: (payload: EditEntrancePayload) => void;
   editEntranceModalState: OpenEditEntranceModalPayload | null;
-  openAddNonLivingPremisesState: NonLivingPremisesCategory | null;
-  openAddNonLivingPremisesPanel: (payload: NonLivingPremisesCategory) => void;
+  openAddNonLivingPremisesState: Maybe<OpenAddNonLivingPremisesPanelState> | null;
+  openAddNonLivingPremisesPanel: (
+    payload: Maybe<OpenAddNonLivingPremisesPanelState>,
+  ) => void;
   handleAddNonLivingPremises: (payload: AddNonLivingPremisesFormParams) => void;
 };
