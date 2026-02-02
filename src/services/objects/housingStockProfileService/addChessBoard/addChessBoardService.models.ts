@@ -11,6 +11,7 @@ import {
   DeleteAapartmentPayload,
   DeleteFloorPayload,
   DivideApartmentModalState,
+  DivideApartmentPayload,
   DuplicateFloorPayload,
   EditApartmentPayload,
   EditChessBoardPanelType,
@@ -79,6 +80,7 @@ const handleDuplicateApartment = createEvent<AddAapartmentPayload>();
 const openEditApartmentModal = createEvent<OpenEditApartmentModalPayload>();
 const handleSaveApartmentChanges = createEvent<EditApartmentPayload>();
 const handleDivideApartment = createEvent<DivideApartmentModalState>();
+const handleSaveDivideApartment = createEvent<DivideApartmentPayload>();
 
 const handleCloseDownModal = createEvent();
 
@@ -91,6 +93,7 @@ const closeDownModalsList = [
   handleSaveEntranceChanges,
   openAddNonLivingPremisesPanel,
   handleAddNonLivingPremises,
+  handleSaveDivideApartment,
 ];
 
 const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
@@ -108,7 +111,8 @@ const $chessboardCreateData = createStore<PremiseLocationCreateModel>({
   .on(handleSaveApartmentChanges, apartmentModel.editApartment)
   .on(handleSaveFloorChanges, floorModel.editFloor)
   .on(handleSaveEntranceChanges, entranceModel.editEntrance)
-  .on(handleAddNonLivingPremises, entranceModel.addNonLivingPremises);
+  .on(handleAddNonLivingPremises, entranceModel.addNonLivingPremises)
+  .on(handleSaveDivideApartment, apartmentModel.divideApartment);
 
 // apartment state
 const $editApartmentModalState =
@@ -162,6 +166,7 @@ export const addChessBoardService = {
     openAddNonLivingPremisesPanel,
     handleAddNonLivingPremises,
     handleDivideApartment,
+    handleSaveDivideApartment,
   },
   outputs: {
     $openPanel,

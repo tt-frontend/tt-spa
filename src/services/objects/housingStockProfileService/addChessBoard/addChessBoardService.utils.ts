@@ -4,6 +4,7 @@ import {
   AddNonLivingPremisesFormParams,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
+  DivideApartmentPayload,
   DuplicateFloorPayload,
   EditApartmentPayload,
   EditEntrancePayload,
@@ -466,6 +467,66 @@ const editApartment = (
   };
 };
 
+const divideApartment = (
+  prev: PremiseLocationCreateModel,
+  payload: DivideApartmentPayload,
+): PremiseLocationCreateModel => {
+  const { sectionIndex, floorIndex, apartmentIndex, newApartmentNumbers } =
+    payload;
+
+  return {
+    ...prev,
+    sections:
+      prev.sections
+        ?.map((section, sIdx) =>
+          sIdx === sectionIndex
+            ? {
+                ...section,
+                floors: section.floors?.map((floor, fIdx) =>
+                  fIdx === floorIndex
+                    ? {
+                        ...floor,
+                        premises: floor.premises?.map((premise, pIdx) => {
+                          if (pIdx !== apartmentIndex) return premise;
+
+                          // Replace the original apartment with the first new one
+                          return {
+                            ...premise,
+                            number: newApartmentNumbers[0],
+                          };
+                        }),
+                      }
+                    : floor,
+                ),
+              }
+            : section,
+        )
+        ?.map((section, sIdx) => {
+          if (sIdx !== sectionIndex) return section;
+
+          // Insert new apartments after the divided one
+          return {
+            ...section,
+            floors: section.floors?.map((floor, fIdx) =>
+              fIdx !== floorIndex
+                ? floor
+                : {
+                    ...floor,
+                    premises: [
+                      ...(floor.premises || []).slice(0, apartmentIndex + 1),
+                      ...newApartmentNumbers.slice(1).map((number) => ({
+                        number,
+                        category: EPremiseCategory.Apartment,
+                      })),
+                      ...(floor.premises || []).slice(apartmentIndex + 1),
+                    ],
+                  },
+            ),
+          };
+        }) || [],
+  };
+};
+
 // models
 
 export const chessboardModel = {
@@ -486,4 +547,5 @@ export const apartmentModel = {
   deleteApartment,
   duplicateApartment,
   editApartment,
+  divideApartment,
 };

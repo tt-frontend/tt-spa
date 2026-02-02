@@ -11,6 +11,7 @@ import { CloseIcon } from 'ui-kit/icons';
 export const DivideApartment: FC<Props> = ({
   divideApartmnentModalState,
   handleCloseDownModal,
+  handleSaveDivideApartment,
 }) => {
   const oldNumber = divideApartmnentModalState?.apartmentNumber;
 
@@ -98,9 +99,12 @@ export const DivideApartment: FC<Props> = ({
 
     // TODO: call API to create new apartments. For now, just log and close.
     // The caller can extend this by providing a handler via props if needed.
-    // eslint-disable-next-line no-console
-    console.log('Saving new apartments:', newApartments);
-    // handleCloseDownModal();
+    handleSaveDivideApartment({
+      newApartmentNumbers: newApartments,
+      sectionIndex: divideApartmnentModalState?.sectionIndex ?? 0,
+      floorIndex: divideApartmnentModalState?.floorIndex ?? 0,
+      apartmentIndex: divideApartmnentModalState?.apartmentIndex ?? 0,
+    });
   };
 
   return (

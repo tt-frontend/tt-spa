@@ -100,6 +100,13 @@ export type DivideApartmentModalState = {
   apartmentIndex: number;
 };
 
+export type DivideApartmentPayload = {
+  newApartmentNumbers: string[];
+  sectionIndex: number;
+  floorIndex: number;
+  apartmentIndex: number;
+};
+
 export type Maybe<T> = {
   [K in keyof T]?: T[K];
 };
