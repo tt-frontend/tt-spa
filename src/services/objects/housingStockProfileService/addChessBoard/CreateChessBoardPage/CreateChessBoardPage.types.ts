@@ -5,6 +5,7 @@ import {
   AddNonLivingPremisesFormParams,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
+  DivideApartmentModalState,
   DuplicateFloorPayload,
   EditApartmentPayload,
   EditChessBoardPanelType,
@@ -49,4 +50,6 @@ export type Props = {
     payload: Maybe<OpenAddNonLivingPremisesPanelState>,
   ) => void;
   handleAddNonLivingPremises: (payload: AddNonLivingPremisesFormParams) => void;
+  divideApartmnentModalState: DivideApartmentModalState | null;
+  handleDivideApartment: (payload: DivideApartmentModalState) => void;
 };

@@ -25,6 +25,7 @@ export const ChessBoardView: FC<Props> = ({
   openEditFloorModal,
   openEditEntranceModal,
   nonLivingPremisesMenuItems,
+  handleDivideApartment,
 }) => {
   useEnterToTab();
 
@@ -139,6 +140,16 @@ export const ChessBoardView: FC<Props> = ({
                                 side: 'right',
                               }),
                             hidden: !isBasePremises,
+                          },
+                          {
+                            title: 'Разделить квартиру',
+                            onClick: () =>
+                              handleDivideApartment({
+                                floorIndex,
+                                apartmentIndex,
+                                sectionIndex,
+                                apartmentNumber: apartment.number!,
+                              }),
                           },
                           {
                             title: 'Удалить помещение',

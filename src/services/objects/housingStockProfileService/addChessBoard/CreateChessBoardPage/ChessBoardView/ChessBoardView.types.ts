@@ -3,6 +3,7 @@ import {
   AddAapartmentPayload,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
+  DivideApartmentModalState,
   DuplicateFloorPayload,
   Maybe,
   OpenAddNonLivingPremisesPanelState,
@@ -29,4 +30,5 @@ export type Props = {
     id: string;
     onClick: () => void;
   }[];
+  handleDivideApartment: (payload: DivideApartmentModalState) => void;
 };

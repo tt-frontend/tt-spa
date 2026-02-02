@@ -32,6 +32,7 @@ import {
   NonLivingPremisesCategory,
   OpenAddNonLivingPremisesPanelState,
 } from '../addChessBoardService.types';
+import { DivideApartment } from './forms/DivideApartment';
 
 export const CreateChessBoardPage: FC<Props> = ({
   chessboardCreateData,
@@ -63,6 +64,8 @@ export const CreateChessBoardPage: FC<Props> = ({
   openAddNonLivingPremisesState,
   openAddNonLivingPremisesPanel,
   handleAddNonLivingPremises,
+  divideApartmnentModalState,
+  handleDivideApartment,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
@@ -176,6 +179,10 @@ export const CreateChessBoardPage: FC<Props> = ({
               chessboardCreateData={chessboardCreateData}
             />
           )}
+          <DivideApartment
+            divideApartmnentModalState={divideApartmnentModalState}
+            handleCloseDownModal={handleCloseDownModal}
+          />
           <ChessBoardView
             chessboardCreateData={chessboardCreateData}
             handleDeleteEntrance={handleDeleteEntrance}
@@ -188,6 +195,7 @@ export const CreateChessBoardPage: FC<Props> = ({
             openEditFloorModal={openEditFloorModal}
             openEditEntranceModal={openEditEntranceModal}
             nonLivingPremisesMenuItems={nonLivingPremisesMenuItems}
+            handleDivideApartment={handleDivideApartment}
           />
         </Blueprint>
       </Wrapper>
