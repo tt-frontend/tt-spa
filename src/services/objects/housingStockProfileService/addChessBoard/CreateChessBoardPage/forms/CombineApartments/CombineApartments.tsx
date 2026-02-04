@@ -7,21 +7,40 @@ import { Select } from 'ui-kit/Select';
 import { SelectMultiple } from 'ui-kit/SelectMultiple';
 import { useFormik } from 'formik';
 import { Input } from 'ui-kit/Input';
+import { combineApartmentsValidationSchema } from './CombineApartments..constants';
+import { ErrorMessage } from 'ui-kit/ErrorMessage';
 
 export const CombineApartments: FC<Props> = ({
   combineApartmentModalState,
   handleCloseDownModal,
   chessboardCreateData,
+  handleSaveCombineApartments,
 }) => {
-  const { values, setFieldValue, resetForm, handleChange } = useFormik({
+  const {
+    values,
+    setFieldValue,
+    resetForm,
+    handleChange,
+    errors,
+    handleSubmit,
+  } = useFormik({
     initialValues: {
       selectedApartmentIndexes: combineApartmentModalState?.apartmentIndex
         ? [combineApartmentModalState?.apartmentIndex]
         : ([] as number[]),
       newApartmentNumber: '',
     },
+    validationSchema: combineApartmentsValidationSchema,
+    validateOnChange: false,
     enableReinitialize: true,
-    onSubmit: () => {},
+    onSubmit: (values) => {
+      if (!combineApartmentModalState) return;
+
+      handleSaveCombineApartments({
+        ...values,
+        context: combineApartmentModalState,
+      });
+    },
   });
 
   const address = useMemo(() => {
@@ -86,12 +105,21 @@ export const CombineApartments: FC<Props> = ({
     return [baseApartmentIndex - 1, baseApartmentIndex, baseApartmentIndex + 1];
   }, [baseApartmentIndex]);
 
+  const middleIndex = useMemo(() => {
+    if (values.selectedApartmentIndexes.length <= 2) return null;
+
+    const sorted = [...values.selectedApartmentIndexes].sort((a, b) => a - b);
+
+    return sorted.slice(1, -1)[0];
+  }, [values.selectedApartmentIndexes]);
+
   return (
     <FormModal
       title="Объединить квартиры"
       visible={Boolean(combineApartmentModalState)}
       formId="combine-apartments-chessboard"
       onCancel={handleCloseDownModal}
+      onSubmit={handleSubmit}
       form={
         <Wrapper>
           <FormWrapper>
@@ -103,6 +131,7 @@ export const CombineApartments: FC<Props> = ({
                   setFieldValue('selectedApartmentIndexes', value as number[]);
                 }}
                 placeholder="Выберите квартиры"
+                status={errors.selectedApartmentIndexes ? 'error' : undefined}
               >
                 {address?.floor?.premises
                   ?.map((apartment, index) => ({ apartment, index }))
@@ -111,14 +140,16 @@ export const CombineApartments: FC<Props> = ({
                       key={index}
                       value={index}
                       disabled={
-                        values.selectedApartmentIndexes.length > 0 &&
-                        !allowedApartmentIndexes?.includes(index)
+                        (values.selectedApartmentIndexes.length > 0 &&
+                          !allowedApartmentIndexes?.includes(index)) ||
+                        middleIndex === index
                       }
                     >
                       №{apartment.number}
                     </Select.Option>
                   ))}
               </SelectMultiple>
+              <ErrorMessage>{errors.selectedApartmentIndexes}</ErrorMessage>
             </FormItem>
             <FormItem label="Новый № квартиры">
               <Input
@@ -126,20 +157,25 @@ export const CombineApartments: FC<Props> = ({
                 value={values.newApartmentNumber}
                 name="newApartmentNumber"
                 onChange={handleChange}
+                status={errors.newApartmentNumber ? 'error' : undefined}
               />
+              <ErrorMessage>{errors.newApartmentNumber}</ErrorMessage>
             </FormItem>
           </FormWrapper>
+          {values.selectedApartmentIndexes.length > 0 && (
+            <div>
+              Вы объединяете квартиры:{' '}
+              <strong>
+                {values.selectedApartmentIndexes
+                  .map((index) => address?.floor?.premises?.[index]?.number)
+                  .join(', ')}{' '}
+              </strong>
+              {/* {values.newApartmentNumber}.</strong> */}
+            </div>
+          )}
           <div>
-            Вы объединяете квартиры:{' '}
-            <strong>
-              {values.selectedApartmentIndexes
-                .map((index) => address?.floor?.premises?.[index]?.number)
-                .join(', ')}{' '}
-            </strong>
-            {/* {values.newApartmentNumber}.</strong> */}
-          </div>
-          <div>
-            Будет создана новая квартира ({values.newApartmentNumber}), а
+            Будет создана новая квартира
+            {values.newApartmentNumber && ` (${values.newApartmentNumber})`}, а
             выбранные квартиры станут частью объединённой.
           </div>
         </Wrapper>

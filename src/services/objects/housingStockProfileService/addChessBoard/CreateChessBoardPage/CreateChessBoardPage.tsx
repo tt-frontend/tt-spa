@@ -70,6 +70,7 @@ export const CreateChessBoardPage: FC<Props> = ({
   handleSaveDivideApartment,
   handleCombineApartments,
   combineApartmentModalState,
+  handleSaveCombineApartments,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
@@ -192,6 +193,7 @@ export const CreateChessBoardPage: FC<Props> = ({
             combineApartmentModalState={combineApartmentModalState}
             handleCloseDownModal={handleCloseDownModal}
             chessboardCreateData={chessboardCreateData}
+            handleSaveCombineApartments={handleSaveCombineApartments}
           />
 
           <ChessBoardView

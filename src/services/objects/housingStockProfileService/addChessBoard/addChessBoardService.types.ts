@@ -113,6 +113,12 @@ export type CombineApartmentsModalState = {
   apartmentIndex?: number | null;
 };
 
+export type CombineApartmentsPayload = {
+  selectedApartmentIndexes: number[];
+  newApartmentNumber: string;
+  context: CombineApartmentsModalState;
+};
+
 export type Maybe<T> = {
   [K in keyof T]?: T[K];
 };

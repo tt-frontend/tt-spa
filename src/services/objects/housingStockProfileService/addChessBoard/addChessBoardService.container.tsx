@@ -55,6 +55,7 @@ export const AddChessBoardContainer = () => {
     handleSaveDivideApartment,
     handleCombineApartments,
     combineApartmentModalState,
+    handleSaveCombineApartments,
   } = useUnit({
     ...inputs,
     building: buildingQuery.$data,
@@ -124,6 +125,7 @@ export const AddChessBoardContainer = () => {
         handleSaveDivideApartment={handleSaveDivideApartment}
         handleCombineApartments={handleCombineApartments}
         combineApartmentModalState={combineApartmentModalState}
+        handleSaveCombineApartments={handleSaveCombineApartments}
       />
     </>
   );

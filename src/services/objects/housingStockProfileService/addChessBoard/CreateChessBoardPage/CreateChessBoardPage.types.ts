@@ -4,6 +4,7 @@ import {
   AddEntranceFormParams,
   AddNonLivingPremisesFormParams,
   CombineApartmentsModalState,
+  CombineApartmentsPayload,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
   DivideApartmentModalState,
@@ -57,4 +58,5 @@ export type Props = {
   handleSaveDivideApartment: (payload: DivideApartmentPayload) => void;
   handleCombineApartments: (payload: CombineApartmentsModalState) => void;
   combineApartmentModalState: CombineApartmentsModalState | null;
+  handleSaveCombineApartments: (payload: CombineApartmentsPayload) => void;
 };
