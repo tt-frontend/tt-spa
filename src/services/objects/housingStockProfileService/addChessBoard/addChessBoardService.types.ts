@@ -107,6 +107,12 @@ export type DivideApartmentPayload = {
   apartmentIndex: number;
 };
 
+export type CombineApartmentsModalState = {
+  sectionIndex: number;
+  floorIndex: number;
+  apartmentIndex?: number | null;
+};
+
 export type Maybe<T> = {
   [K in keyof T]?: T[K];
 };

@@ -26,6 +26,7 @@ export const ChessBoardView: FC<Props> = ({
   openEditEntranceModal,
   nonLivingPremisesMenuItems,
   handleDivideApartment,
+  handleCombineApartments,
 }) => {
   useEnterToTab();
 
@@ -83,6 +84,14 @@ export const ChessBoardView: FC<Props> = ({
                           handleDuplicateFloor({
                             floorNumber: floor.number,
                             sectionNumber: section.number,
+                          }),
+                      },
+                      {
+                        title: 'Объединить квартиры',
+                        onClick: () =>
+                          handleCombineApartments({
+                            floorIndex,
+                            sectionIndex,
                           }),
                       },
                       {
@@ -149,6 +158,15 @@ export const ChessBoardView: FC<Props> = ({
                                 apartmentIndex,
                                 sectionIndex,
                                 apartmentNumber: apartment.number!,
+                              }),
+                          },
+                          {
+                            title: 'Объединить квартиры',
+                            onClick: () =>
+                              handleCombineApartments({
+                                floorIndex,
+                                apartmentIndex,
+                                sectionIndex,
                               }),
                           },
                           {
