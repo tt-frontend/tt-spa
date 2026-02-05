@@ -1,11 +1,11 @@
 import { createMutation, createQuery } from '@farfetched/core';
 import { axios } from 'api/axios';
-import { BuildingShortResponse } from 'api/types';
+import { HousingStockResponse } from 'api/types';
 import { createEffect } from 'effector';
 import { CreateChessboardQueryParams } from './addChessBoardService.types';
 
-export const buildingQuery = createQuery<[number], BuildingShortResponse>({
-  handler: (buildingId) => axios.get(`Buildings/${buildingId}`),
+export const buildingQuery = createQuery<[number], HousingStockResponse>({
+  handler: (buildingId) => axios.get(`HousingStocks/${buildingId}`),
 });
 
 export const createChessBoardMutation = createMutation({

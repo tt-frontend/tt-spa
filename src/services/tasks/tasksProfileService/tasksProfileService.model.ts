@@ -14,6 +14,7 @@ import {
 import {
   $housingManagments,
   $organizationUsers,
+  handleFetchActualTaskTypes,
 } from '../taskTypesService/taskTypesService.model';
 import {
   fetchApartment,
@@ -182,15 +183,24 @@ sample({
 sample({
   clock: refetchTasks,
   source: $searchState,
+  fn: (state) => state,
   target: searchTasksFx,
+});
+
+sample({
+  clock: searchTasksTrigger,
+  source: $searchState,
+  filter: (state) => {
+    return Boolean(state.GroupType);
+  },
+  fn: (state) => state.GroupType!,
+  target: handleFetchActualTaskTypes,
 });
 
 const $tasksPagedData = createStore<TasksPagedList | null>(null).on(
   searchTasksFx.doneData,
   (_, tasksPaged) => tasksPaged,
 );
-
-const $taskTypes = $tasksPagedData.map((tasks) => tasks?.taskTypes || null);
 
 const $tasksSummaryData = $tasksPagedData.map((data) => ({
   runningOutTasksCount: data?.runningOutTasksCount || null,
@@ -256,7 +266,6 @@ export const tasksProfileService = {
     refetchTasks,
   },
   outputs: {
-    $taskTypes,
     $isLoading,
     $searchState,
     $tasksPagedData,

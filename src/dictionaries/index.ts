@@ -5,6 +5,7 @@ import {
   EMagistralType,
   ENodeCommercialAccountStatus,
   ENodeRegistrationType,
+  EPremiseCategory,
   EResourceType,
   ESwitchingReason,
   ETaskEngineeringElement,
@@ -238,4 +239,12 @@ export const MalfunctionTypeDictionary: {
   [ManagingFirmTaskType.RiserNoReadings]: '',
   [ManagingFirmTaskType.TemperatureNormativeDeviation]: '',
   [ManagingFirmTaskType.HeatSupplyQualityCheck]: '',
+};
+
+export const PremiseCategoryLookup: Record<EPremiseCategory, string> = {
+  [EPremiseCategory.Apartment]: 'Квартира',
+  [EPremiseCategory.Parking]: 'Паркинг',
+  [EPremiseCategory.Technical]: 'Техническое помещение',
+  [EPremiseCategory.Commercial]: 'Коммерческое помещение',
+  [EPremiseCategory.Basement]: 'Подвал',
 };

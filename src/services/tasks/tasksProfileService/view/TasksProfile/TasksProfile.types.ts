@@ -14,7 +14,7 @@ import { TaskType } from '../TasksListItem/TasksListItem.types';
 export type TasksProfileProps = {
   handleExportTasksList: () => void;
   grouptype: string;
-  taskTypes: ManagingTaskTypeFilterWithCount[] | null;
+  actualTaskTypes: ManagingTaskTypeFilterWithCount[] | null;
   handleSearch: (formFilter: GetTasksListRequestPayload) => void;
   changePageNumber: (PageNumber: number) => void;
   tasks: TaskType[];

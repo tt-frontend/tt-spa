@@ -1,9 +1,13 @@
 import {
   AddAapartmentPayload,
   AddEntranceFormParams,
+  AddNonLivingPremisesFormParams,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
   DuplicateFloorPayload,
+  EditApartmentPayload,
+  EditEntrancePayload,
+  EditFloorPayload,
 } from './addChessBoardService.types';
 import { insertAfter } from 'utils/insertAfter';
 import {
@@ -60,6 +64,8 @@ function toSectionCreateModel(
     floors,
   };
 }
+
+// entrance functions
 
 const addEntrance = (
   prev: PremiseLocationCreateModel,
@@ -156,6 +162,104 @@ const dubplicateEntrance = (
   };
 };
 
+const editEntrance = (
+  prev: PremiseLocationCreateModel,
+  payload: EditEntrancePayload,
+): PremiseLocationCreateModel => {
+  const { sectionIndex, number } = payload;
+
+  return {
+    ...prev,
+    sections:
+      prev.sections?.map((section, sIdx) =>
+        sIdx === sectionIndex
+          ? {
+              ...section,
+              number: Number(number),
+            }
+          : section,
+      ) || [],
+  };
+};
+
+const addNonLivingPremises = (
+  prev: PremiseLocationCreateModel,
+  payload: AddNonLivingPremisesFormParams,
+): PremiseLocationCreateModel => {
+  const {
+    name,
+    floor,
+    floorsAmount,
+    entrancesNumber,
+    premisesAmount,
+    category,
+  } = payload;
+
+  const updatedSections = prev.sections?.map((section) => {
+    if (section.number == null || !entrancesNumber.includes(section.number)) {
+      return section;
+    }
+
+    const existingFloors = section.floors ?? [];
+    const floorsToCreate: FloorCreateModel[] = [];
+
+    const step = floor < 0 ? -1 : 1;
+
+    for (let i = 0; i < floorsAmount; i++) {
+      const floorNum = floor + i * step;
+
+      const exists = existingFloors.some((f) => f.number === floorNum);
+
+      if (!exists) {
+        floorsToCreate.push({
+          number: floorNum,
+          premises: [],
+        });
+      }
+    }
+
+    const updatedFloors = [...existingFloors, ...floorsToCreate].map((f) => {
+      if (f.number == null) return f;
+
+      const isInRange =
+        floor < 0
+          ? f.number <= floor && f.number > floor - floorsAmount
+          : f.number >= floor && f.number < floor + floorsAmount;
+
+      if (!isInRange) return f;
+
+      const existingPremises = f.premises ?? [];
+
+      const newPremises: PremiseCreateModel[] = Array.from(
+        { length: premisesAmount },
+        () => ({
+          number: name,
+          category,
+        }),
+      );
+
+      return {
+        ...f,
+        premises: [...existingPremises, ...newPremises],
+      };
+    });
+
+    updatedFloors.sort((a, b) => (a.number ?? 0) - (b.number ?? 0));
+
+    return {
+      ...section,
+      floors: updatedFloors,
+    };
+  });
+
+  return {
+    ...prev,
+    sections: updatedSections,
+  };
+};
+
+// floor functions
+
 const deleteFloor = (
   prev: PremiseLocationCreateModel,
   payload: DeleteFloorPayload,
@@ -211,6 +315,31 @@ const duplicateFloor = (
     sections: updatedSections,
   };
 };
+
+const editFloor = (
+  prev: PremiseLocationCreateModel,
+  payload: EditFloorPayload,
+) => {
+  const { sectionIndex, floorIndex, number } = payload;
+
+  return {
+    ...prev,
+    sections: prev.sections?.map((section, sIdx) =>
+      sIdx === sectionIndex
+        ? {
+            ...section,
+            floors: section.floors?.map((floor, fIdx) =>
+              fIdx === floorIndex
+                ? { ...floor, number: Number(number) }
+                : floor,
+            ),
+          }
+        : section,
+    ),
+  };
+};
+
+// apartment functions
 
 const deleteApartment = (
   prev: PremiseLocationCreateModel,
@@ -306,6 +435,37 @@ const duplicateApartment = (
   };
 };
 
+const editApartment = (
+  prev: PremiseLocationCreateModel,
+  payload: EditApartmentPayload,
+) => {
+  const { sectionIndex, floorIndex, apartmentIndex, number, category } =
+    payload;
+
+  return {
+    ...prev,
+    sections: prev.sections?.map((section, sIdx) =>
+      sIdx === sectionIndex
+        ? {
+            ...section,
+            floors: section.floors?.map((floor, fIdx) =>
+              fIdx === floorIndex
+                ? {
+                    ...floor,
+                    premises: floor.premises?.map((premise, pIdx) =>
+                      pIdx === apartmentIndex
+                        ? { ...premise, number, category }
+                        : premise,
+                    ),
+                  }
+                : floor,
+            ),
+          }
+        : section,
+    ),
+  };
+};
+
 // models
 
 export const chessboardModel = {
@@ -316,8 +476,14 @@ export const chessboardModel = {
 export const entranceModel = {
   deleteEntrance,
   dubplicateEntrance,
+  editEntrance,
+  addNonLivingPremises,
 };
 
-export const floorModel = { deleteFloor, duplicateFloor };
+export const floorModel = { deleteFloor, duplicateFloor, editFloor };
 
-export const apartmentModel = { deleteApartment, duplicateApartment };
+export const apartmentModel = {
+  deleteApartment,
+  duplicateApartment,
+  editApartment,
+};

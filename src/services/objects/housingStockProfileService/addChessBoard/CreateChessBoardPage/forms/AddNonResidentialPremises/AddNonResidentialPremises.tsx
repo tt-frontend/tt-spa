@@ -1,42 +1,50 @@
 import { FC } from 'react';
-import { Wrapper } from './AddParking.styled';
-import { Props } from './AddParking.types';
+import { Wrapper } from './AddNonResidentialPremises.styled';
+import { Props } from './AddNonResidentialPremises.types';
+
 import { useFormik } from 'formik';
 import { BlueprintPanel } from '../../BlueprintPanel';
 import { Button } from 'ui-kit/Button';
 import { FormItem } from 'ui-kit/FormItem';
 import { Input } from 'ui-kit/Input';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
-import { AddParkingFormParams } from '../../../addChessBoardService.types';
 import { MayBeNull } from 'types';
 import { EnterancesSelect } from '../../EnterancesSelect';
+import { AddNonLivingPremisesFormParams } from '../../../addChessBoardService.types';
+import { addNonLivingPremisesSchema } from './AddNonResidentialPremises.constants';
+import { PremiseCategoryLookup } from 'dictionaries';
 
-export const AddParking: FC<Props> = ({
-  closeAddEntrancePanel,
-  handleAddParking,
+export const AddNonResidentialPremises: FC<Props> = ({
+  closeEditChessboardPanel,
   entrances,
+  premiseState,
+  handleAddNonLivingPremises,
 }) => {
+  const premiseCategory = premiseState.category!;
+
   const { values, handleChange, errors, handleSubmit, setFieldValue } =
-    useFormik<MayBeNull<AddParkingFormParams>>({
+    useFormik<MayBeNull<AddNonLivingPremisesFormParams>>({
       initialValues: {
-        name: null,
-        floor: null,
-        floorsAmount: null,
-        entrancesNumber: null,
+        name: PremiseCategoryLookup[premiseCategory],
+        floor: premiseState.floor || null,
+        floorsAmount: 1,
+        entrancesNumber: premiseState.entrace ? [premiseState.entrace] : [],
+        premisesAmount: 1,
+        category: premiseCategory,
       },
       validateOnChange: false,
-      // validationSchema: AddEntranceFormSchema,
-      onSubmit: (values) => {
-        handleAddParking(values as AddParkingFormParams);
-      },
+      validationSchema: addNonLivingPremisesSchema,
+      enableReinitialize: true,
+      onSubmit: (values) =>
+        handleAddNonLivingPremises(values as AddNonLivingPremisesFormParams),
     });
 
   return (
     <BlueprintPanel
-      title="Добавить паркинг"
+      title={`Добавить ${PremiseCategoryLookup[premiseCategory].toLowerCase()}`}
       footer={
         <>
-          <Button type="ghost" size="s" onClick={closeAddEntrancePanel}>
+          <Button type="ghost" size="s" onClick={closeEditChessboardPanel}>
             Отмена
           </Button>
           <Button wide size="s" onClick={() => handleSubmit()}>
@@ -69,7 +77,7 @@ export const AddParking: FC<Props> = ({
           />
           <ErrorMessage>{errors.floor}</ErrorMessage>
         </FormItem>
-        <FormItem label="Количество этажей паркинга">
+        <FormItem label="Количество этажей">
           <Input
             type="number"
             small
@@ -80,6 +88,18 @@ export const AddParking: FC<Props> = ({
             status={errors.floorsAmount ? 'error' : void 0}
           />
           <ErrorMessage>{errors.floorsAmount}</ErrorMessage>
+        </FormItem>
+        <FormItem label="Количество помещений на этаже">
+          <Input
+            type="number"
+            small
+            placeholder="Введите"
+            name="premisesAmount"
+            value={values.premisesAmount ?? ''}
+            onChange={handleChange}
+            status={errors.premisesAmount ? 'error' : void 0}
+          />
+          <ErrorMessage>{errors.premisesAmount}</ErrorMessage>
         </FormItem>
         <FormItem label="Подъезды">
           {!entrances.length ? (

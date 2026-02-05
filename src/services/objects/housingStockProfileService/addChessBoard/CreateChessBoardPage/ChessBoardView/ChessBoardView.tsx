@@ -11,6 +11,7 @@ import { Props } from './ChessBoardView.types';
 import { ChessboardItem } from './ChessboardItem';
 import { ContextMenuButtonColor } from 'ui-kit/ContextMenuButton/ContextMenuButton.types';
 import { useEnterToTab } from 'hooks/useEnterAsTab';
+import { EPremiseCategory } from 'api/types';
 
 export const ChessBoardView: FC<Props> = ({
   chessboardCreateData,
@@ -20,6 +21,10 @@ export const ChessBoardView: FC<Props> = ({
   handleDuplicateFloor,
   handleDeleteApartmnet,
   handleDuplicateApartment,
+  openEditApartmentModal,
+  openEditFloorModal,
+  openEditEntranceModal,
+  nonLivingPremisesMenuItems,
 }) => {
   useEnterToTab();
 
@@ -27,15 +32,21 @@ export const ChessBoardView: FC<Props> = ({
     <Scroll>
       <Inner>
         <Wrapper>
-          {chessboardCreateData.sections?.map((section, index) => (
-            <EntranceWrapper key={String(section.number) + index}>
+          {chessboardCreateData.sections?.map((section, sectionIndex) => (
+            <EntranceWrapper key={String(section.number) + sectionIndex}>
               <FloorWrapper hideHover>
                 <FloorIndex />
                 <ChessboardItem
                   wide
                   type="outline"
                   menuButtons={[
-                    { title: 'Изменить номер подъезда' },
+                    {
+                      title: 'Изменить номер подъезда',
+                      onClick: () =>
+                        openEditEntranceModal({
+                          sectionIndex: sectionIndex,
+                        }),
+                    },
                     {
                       title: 'Дублировать подъезд',
                       onClick: () =>
@@ -45,7 +56,7 @@ export const ChessBoardView: FC<Props> = ({
                     {
                       title: 'Удалить подъезд',
                       onClick: () =>
-                        section.number && handleDeleteEntrance(index),
+                        section.number && handleDeleteEntrance(sectionIndex),
                       color: ContextMenuButtonColor.danger,
                     },
                   ]}
@@ -53,11 +64,18 @@ export const ChessBoardView: FC<Props> = ({
                   {section.number} Подъезд
                 </ChessboardItem>
               </FloorWrapper>
-              {section.floors?.map((floor, index) => (
-                <FloorWrapper key={String(floor.number) + index}>
+              {section.floors?.map((floor, floorIndex) => (
+                <FloorWrapper key={String(floor.number) + floorIndex}>
                   <ChessboardItem
                     menuButtons={[
-                      { title: 'Изменить номер этажа' },
+                      {
+                        title: 'Изменить номер этажа',
+                        onClick: () =>
+                          openEditFloorModal({
+                            sectionIndex: sectionIndex,
+                            floorIndex: floorIndex,
+                          }),
+                      },
                       {
                         title: 'Дублировать этаж',
                         onClick: () =>
@@ -72,7 +90,7 @@ export const ChessBoardView: FC<Props> = ({
                           handleDeleteFloor({
                             floorNumber: floor.number,
                             sectionNumber: section.number,
-                            index,
+                            index: floorIndex,
                           }),
                         color: ContextMenuButtonColor.danger,
                       },
@@ -81,49 +99,73 @@ export const ChessBoardView: FC<Props> = ({
                   >
                     {floor.number}
                   </ChessboardItem>
-                  {floor.premises?.map((apartment, index) => (
-                    <ChessboardItem
-                      key={String(apartment.number) + index}
-                      menuButtons={[
-                        { title: 'Изменить номер квартиры' },
-                        {
-                          title: 'Добавить квартиру слева',
-                          onClick: () =>
-                            handleDuplicateApartment({
-                              floorNumber: floor.number,
-                              sectionNumber: section.number,
-                              apartmentNumber: apartment.number,
-                              side: 'left',
-                            }),
-                        },
-                        {
-                          title: 'Добавить квартиру справа',
-                          onClick: () =>
-                            handleDuplicateApartment({
-                              floorNumber: floor.number,
-                              sectionNumber: section.number,
-                              apartmentNumber: apartment.number,
-                              side: 'right',
-                            }),
-                        },
-                        {
-                          title: 'Удалить квартиру',
-                          color: ContextMenuButtonColor.danger,
-                          onClick: () =>
-                            handleDeleteApartmnet({
-                              sectionNumber: section.number,
-                              floorNumber: floor.number,
-                              apartmentNumber: apartment.number,
-                              index,
-                            }),
-                        },
-                      ]}
-                    >
-                      {apartment.number}
-                    </ChessboardItem>
-                  ))}
+                  {floor.premises?.map((apartment, apartmentIndex) => {
+                    const isBasePremises = [
+                      EPremiseCategory.Apartment,
+                    ].includes(apartment.category as EPremiseCategory);
+
+                    return (
+                      <ChessboardItem
+                        key={String(apartment.number) + apartmentIndex}
+                        wide={!isBasePremises}
+                        menuButtons={[
+                          {
+                            title: 'Редактировать помещение',
+                            onClick: () =>
+                              openEditApartmentModal({
+                                sectionIndex: sectionIndex,
+                                floorIndex: floorIndex,
+                                apartmentIndex: apartmentIndex,
+                              }),
+                          },
+                          {
+                            title: 'Добавить квартиру слева',
+                            onClick: () =>
+                              handleDuplicateApartment({
+                                floorNumber: floor.number,
+                                sectionNumber: section.number,
+                                apartmentNumber: apartment.number,
+                                side: 'left',
+                              }),
+                            hidden: !isBasePremises,
+                          },
+                          {
+                            title: 'Добавить квартиру справа',
+                            onClick: () =>
+                              handleDuplicateApartment({
+                                floorNumber: floor.number,
+                                sectionNumber: section.number,
+                                apartmentNumber: apartment.number,
+                                side: 'right',
+                              }),
+                            hidden: !isBasePremises,
+                          },
+                          {
+                            title: 'Удалить помещение',
+                            color: ContextMenuButtonColor.danger,
+                            onClick: () =>
+                              handleDeleteApartmnet({
+                                sectionNumber: section.number,
+                                floorNumber: floor.number,
+                                apartmentNumber: apartment.number,
+                                index: apartmentIndex,
+                              }),
+                          },
+                        ]}
+                      >
+                        {apartment.number}
+                      </ChessboardItem>
+                    );
+                  })}
                   {floor.premises?.length === 0 && (
-                    <ChessboardItem type="flat" wide>
+                    <ChessboardItem
+                      type="flat"
+                      wide
+                      menuButtons={nonLivingPremisesMenuItems({
+                        floor: floor.number,
+                        entrace: section.number,
+                      })}
+                    >
                       + Добавьте нежилое помещение
                     </ChessboardItem>
                   )}

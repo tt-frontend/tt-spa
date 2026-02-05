@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import {
   Blueprint,
   ButtonsWrapper,
@@ -20,18 +20,28 @@ import { ChessBoardView } from './ChessBoardView';
 import { StickyPanel } from 'ui-kit/shared/StickyPanel';
 import { useUnit } from 'effector-react';
 import { layoutService } from 'App/layout/layoutService.models';
-import { AddParking } from './forms/AddParking';
+import { EditApartment } from './forms/EditApartment';
+import { EditFloor } from './forms/EditFloor';
+import { EditEntrance } from './forms/EditEntrance';
+import { EPremiseCategory } from 'api/types';
+import { omit } from 'lodash';
+import { PremiseCategoryLookup } from 'dictionaries';
+import { AddNonResidentialPremises } from './forms/AddNonResidentialPremises';
+import {
+  Maybe,
+  NonLivingPremisesCategory,
+  OpenAddNonLivingPremisesPanelState,
+} from '../addChessBoardService.types';
 
 export const CreateChessBoardPage: FC<Props> = ({
+  chessboardCreateData,
   building,
   entrances,
   isLoadingBuilding,
   openPanel,
   closeEditChessboardPanel,
   handleEditChessboard,
-  chessboardCreateData,
   handleAddEntrance,
-  handleAddParking,
   handleDeleteEntrance,
   handleDuplicateEntrance,
   handleDeleteFloor,
@@ -40,10 +50,81 @@ export const CreateChessBoardPage: FC<Props> = ({
   handleDuplicateApartment,
   handleSaveChessboard,
   isLoadingCreate,
+  openEditApartmentModal,
+  editApartmentModalState,
+  handleCloseDownModal,
+  handleSaveApartmentChanges,
+  openEditFloorModal,
+  handleSaveFloorChanges,
+  editFloorModalState,
+  openEditEntranceModal,
+  editEntranceModalState,
+  handleSaveEntranceChanges,
+  openAddNonLivingPremisesState,
+  openAddNonLivingPremisesPanel,
+  handleAddNonLivingPremises,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
   });
+
+  const isEntranceExists = Boolean(chessboardCreateData.sections?.length);
+
+  const nonLivingPremisesMenuItems = useCallback(
+    (params?: Maybe<OpenAddNonLivingPremisesPanelState>) =>
+      Object.values(omit(EPremiseCategory, EPremiseCategory.Apartment)).map(
+        (category) => ({
+          title: PremiseCategoryLookup[category],
+          id: category.toLowerCase().replace(/\s+/g, '-'),
+          onClick: () =>
+            openAddNonLivingPremisesPanel({
+              category: category as NonLivingPremisesCategory,
+              entrace: 0,
+              floor: 0,
+              ...params,
+            }),
+        }),
+      ),
+    [openAddNonLivingPremisesPanel],
+  );
+
+  const contextMenuButton = (
+    <ContextMenuButton
+      size="small"
+      onClickOverload={
+        isEntranceExists
+          ? null
+          : () => void handleEditChessboard('add-entrance')
+      }
+      icon={<PlusIcon style={{ transform: 'scale(0.8)' }} />}
+      menuButtons={[
+        {
+          title: 'Добавить элемент подъезда',
+          icon: <ApartmentIcon />,
+          strong: true,
+          id: 'add-entrance-element',
+          children: [
+            {
+              title: 'Подъезд',
+              id: 'entrance',
+              onClick: () => handleEditChessboard('add-entrance'),
+            },
+            {
+              title: 'Жилой этаж',
+              id: 'residential-floor',
+            },
+          ],
+        },
+        {
+          title: 'Добавить нежилое помещение',
+          icon: <ParkingIcon />,
+          strong: true,
+          id: 'add-non-residential-placement',
+          children: nonLivingPremisesMenuItems(),
+        },
+      ]}
+    />
+  );
 
   return (
     <>
@@ -51,62 +132,7 @@ export const CreateChessBoardPage: FC<Props> = ({
         <GoBack />
         {isLoadingBuilding && <Skeleton.Input active size="small" />}
         {!isLoadingBuilding && getBuildingAddress(building, true)}
-        <ContextMenuButton
-          size="small"
-          icon={<PlusIcon style={{ transform: 'scale(0.8)' }} />}
-          menuButtons={[
-            {
-              title: 'Добавить элемент подъезда',
-              icon: <ApartmentIcon />,
-              strong: true,
-              id: 'add-entrance-element',
-              children: [
-                {
-                  title: 'Подъезд',
-                  id: 'entrance',
-                  onClick: () => handleEditChessboard('add-entrance'),
-                },
-                {
-                  title: 'Жилой этаж',
-                  id: 'residential-floor',
-                },
-              ],
-            },
-            {
-              title: 'Добавить нежилое помещение',
-              icon: <ParkingIcon />,
-              strong: true,
-              id: 'add-non-residential-placement',
-              children: [
-                {
-                  title: 'Паркинг',
-                  id: 'parking',
-                  onClick: () => handleEditChessboard('add-parking'),
-                },
-                {
-                  title: 'Техническое помещение',
-                  id: 'technical-placement',
-                },
-                {
-                  title: 'Тепловой пункт',
-                  id: 'heating-point',
-                },
-                {
-                  title: 'Коммерческое помещение',
-                  id: 'commercial-placement',
-                },
-                {
-                  title: 'Подвал',
-                  id: 'basement',
-                },
-                {
-                  title: 'Чердак',
-                  id: 'attic',
-                },
-              ],
-            },
-          ]}
-        />
+        {contextMenuButton}
       </StickyPanel>
       <Wrapper isPanelOpen={isPanelOpen}>
         <Blueprint>
@@ -115,13 +141,39 @@ export const CreateChessBoardPage: FC<Props> = ({
               closeAddEntrancePanel={closeEditChessboardPanel}
               handleAddEntrance={handleAddEntrance}
               chessboardCreateData={chessboardCreateData}
+              building={building}
             />
           )}
-          {openPanel === 'add-parking' && (
-            <AddParking
-              closeAddEntrancePanel={closeEditChessboardPanel}
-              handleAddParking={handleAddParking}
+          {openAddNonLivingPremisesState && (
+            <AddNonResidentialPremises
+              closeEditChessboardPanel={closeEditChessboardPanel}
               entrances={entrances}
+              premiseState={openAddNonLivingPremisesState}
+              handleAddNonLivingPremises={handleAddNonLivingPremises}
+            />
+          )}
+          {editApartmentModalState && (
+            <EditApartment
+              editApartmentModalState={editApartmentModalState}
+              handleCloseDownModal={handleCloseDownModal}
+              handleSaveApartmentChanges={handleSaveApartmentChanges}
+              chessboardCreateData={chessboardCreateData}
+            />
+          )}
+          {editFloorModalState && (
+            <EditFloor
+              editFloorModalState={editFloorModalState}
+              handleCloseDownModal={handleCloseDownModal}
+              handleSaveFloorChanges={handleSaveFloorChanges}
+              chessboardCreateData={chessboardCreateData}
+            />
+          )}
+          {editEntranceModalState && (
+            <EditEntrance
+              editEntranceModalState={editEntranceModalState}
+              handleCloseDownModal={handleCloseDownModal}
+              handleSaveEntranceChanges={handleSaveEntranceChanges}
+              chessboardCreateData={chessboardCreateData}
             />
           )}
           <ChessBoardView
@@ -132,6 +184,10 @@ export const CreateChessBoardPage: FC<Props> = ({
             handleDuplicateFloor={handleDuplicateFloor}
             handleDeleteApartmnet={handleDeleteApartmnet}
             handleDuplicateApartment={handleDuplicateApartment}
+            openEditApartmentModal={openEditApartmentModal}
+            openEditFloorModal={openEditFloorModal}
+            openEditEntranceModal={openEditEntranceModal}
+            nonLivingPremisesMenuItems={nonLivingPremisesMenuItems}
           />
         </Blueprint>
       </Wrapper>

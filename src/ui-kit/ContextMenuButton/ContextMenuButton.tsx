@@ -1,5 +1,5 @@
 import { Menu, Dropdown } from 'antd';
-import React, { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { MoreIcon } from 'ui-kit/icons';
 import {
   ContextMenuButtonProps,
@@ -63,29 +63,27 @@ const getMenuButtons = (props: {
   });
 };
 
-export const ContextMenuButton: FC<ContextMenuButtonProps> = (props) => {
-  const {
-    menuButtons,
-    disabled,
-    size,
-    children = null,
-    icon = null,
-    wide,
-  } = props;
-
+export const ContextMenuButton: FC<ContextMenuButtonProps> = ({
+  menuButtons,
+  disabled,
+  size,
+  children = null,
+  icon = null,
+  wide,
+  onClickOverload,
+}) => {
   const [isVisible, setIsVisible] = useState(false);
-
   const [openedButtons, setOpenedButtons] = useState<string[]>([]);
 
   const menuButtonsFiltered = menuButtons?.filter(({ hidden }) => !hidden);
 
   const menu = () => (
     <Menu
-      onClick={(e) => {
+      onClick={(e) =>
         (
           e.domEvent as unknown as { stopImmediatePropagation(): void }
-        ).stopImmediatePropagation();
-      }}
+        ).stopImmediatePropagation()
+      }
     >
       {menuButtonsFiltered &&
         getMenuButtons({
@@ -94,53 +92,53 @@ export const ContextMenuButton: FC<ContextMenuButtonProps> = (props) => {
           handleClose: () => setIsVisible(false),
           openedButtons,
           toggle: (id: string) => {
-            setOpenedButtons((prev) => {
-              if (prev.includes(id)) {
-                return prev.filter((elem) => elem !== id);
-              }
-
-              return [...prev, id];
-            });
+            setOpenedButtons((prev) =>
+              prev.includes(id)
+                ? prev.filter((elem) => elem !== id)
+                : [...prev, id],
+            );
           },
         })}
     </Menu>
   );
 
-  return (
-    <div
-      onClick={(e) => e.stopPropagation()}
-      style={{ width: wide ? '100%' : '' }}
-    >
-      <Dropdown
-        dropdownRender={menu}
-        disabled={disabled}
-        open={isVisible}
-        trigger={['click']}
-        onOpenChange={(visible) => setIsVisible(visible)}
-      >
-        <>
-          {Boolean(children) && (
-            <div
-              style={{ width: wide ? '100%' : '' }}
-              onClick={() => setIsVisible((prev) => !prev)}
-            >
-              {children?.(isVisible)}
-            </div>
-          )}
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onClickOverload) {
+      onClickOverload();
+    } else {
+      setIsVisible((prev) => !prev);
+    }
+  };
 
-          {!children && (
-            <StyledMenuButton
-              size={size}
-              onClick={(e) => {
-                e.preventDefault();
-                setIsVisible(true);
-              }}
-            >
-              {icon ?? <MoreIcon />}
-            </StyledMenuButton>
-          )}
-        </>
-      </Dropdown>
-    </div>
+  const content = (
+    <>
+      {children ? (
+        <div style={{ width: wide ? '100%' : undefined }} onClick={handleClick}>
+          {children(isVisible)}
+        </div>
+      ) : (
+        <StyledMenuButton size={size} onClick={handleClick}>
+          {icon ?? <MoreIcon />}
+        </StyledMenuButton>
+      )}
+    </>
+  );
+
+  // Если есть onClickOverload, не используем Dropdown, просто рендерим контент
+  if (onClickOverload) {
+    return <div style={{ width: wide ? '100%' : undefined }}>{content}</div>;
+  }
+
+  return (
+    <Dropdown
+      dropdownRender={menu}
+      disabled={disabled}
+      open={isVisible}
+      trigger={['click']}
+      onOpenChange={(visible) => setIsVisible(visible)}
+    >
+      {content}
+    </Dropdown>
   );
 };

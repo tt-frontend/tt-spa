@@ -27,13 +27,14 @@ import { TasksSummary } from '../TasksSummary';
 import { TasksControls } from './TasksControls';
 import { ExportTasksListContainer } from './exportTasksList';
 import { exportTasksListService } from './exportTasksList/exportTasksListService.models';
+import { handleChangeGroupType } from 'services/tasks/taskTypesService/taskTypesService.model';
 
 export const TasksProfile: FC<TasksProfileProps> = ({
   // handleExportTasksList,
   tasks,
   grouptype,
   handleSearch,
-  taskTypes,
+  actualTaskTypes,
   initialValues,
   changePageNumber,
   pagedTasks,
@@ -172,12 +173,15 @@ export const TasksProfile: FC<TasksProfileProps> = ({
             <ContentWrapper>
               <TabsSC
                 activeKey={grouptype}
-                onChange={(activeKey) => navigate(`/tasks/list/${activeKey}`)}
+                onChange={(activeKey) => {
+                  navigate(`/tasks/list/${activeKey}`);
+                  handleChangeGroupType(activeKey as TaskGroupingFilter);
+                }}
                 items={tabItems}
               />
               <SearchTasks
                 onSubmit={handleSearch}
-                taskTypes={taskTypes}
+                actualTaskTypes={actualTaskTypes}
                 currentFilter={initialValues}
                 isExtendedSearchOpen={isExtendedSearchOpen}
                 closeExtendedSearch={closeExtendedSearch}
