@@ -8,9 +8,16 @@ import { SearchIconSc } from 'services/tasks/addTaskFromDispatcherService/view/A
 import { Input } from 'ui-kit/Input';
 import { autocompleteAddress } from 'services/tasks/addTaskFromDispatcherService/view/AddTaskModal/AddTaskForm/AddTaskForm.utils';
 import { useFormik } from 'formik';
-import { AddressContainer } from './UploadArchiveModal.styled';
+import {
+  AddressContainer,
+  OptionContainer,
+  ResourceContainer,
+  CalculatorСontainer,
+} from './UploadArchiveModal.styled';
 import * as yup from 'yup';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
+import { CalculatorIcon } from 'ui-kit/icons';
+import { ResourceIconLookup } from 'ui-kit/shared/ResourceIconLookup';
 
 const formId = 'upload-archive-modal-form';
 
@@ -21,8 +28,8 @@ export const UploadArchiveModal: FC<Props> = ({
   isModalOpen,
   existingCities,
   handleSelectHousingAddress,
-  calculators,
-  handleGetCalculator,
+  calculatorsWithResource,
+  handleNextStage,
   isCalculatorLoading,
   handleResetForm,
 }) => {
@@ -39,7 +46,7 @@ export const UploadArchiveModal: FC<Props> = ({
 
     enableReinitialize: true,
     onSubmit: (data) => {
-      handleGetCalculator(Number(data.calculatorId));
+      handleNextStage(Number(data.calculatorId));
     },
   });
 
@@ -53,20 +60,27 @@ export const UploadArchiveModal: FC<Props> = ({
     })) || [];
 
   const preparedCalculators = useMemo(() => {
-    if (!calculators) {
+    if (!calculatorsWithResource) {
       return [];
     }
 
-    return calculators.map((calculator) => ({
+    return calculatorsWithResource.map((calculator) => ({
       label: (
-        <>
-          {calculator.model} ({calculator.serialNumber})
-        </>
+        <OptionContainer>
+          <CalculatorСontainer>
+            <CalculatorIcon /> {calculator.model} ({calculator.serialNumber})
+          </CalculatorСontainer>
+          <ResourceContainer>
+            {calculator.resource.map((res, idx) => (
+              <ResourceIconLookup resource={res} key={String(res) + idx} />
+            ))}
+          </ResourceContainer>
+        </OptionContainer>
       ),
       value: calculator.id,
       key: calculator.id,
     }));
-  }, [calculators]);
+  }, [calculatorsWithResource]);
 
   const preparedAddressOptions = useMemo(
     () =>
@@ -131,7 +145,6 @@ export const UploadArchiveModal: FC<Props> = ({
               <Select
                 onChange={(value) => {
                   setFieldValue('calculatorId', value);
-                  handleChangeCity(value as string);
                 }}
                 value={values.calculatorId || undefined}
                 placeholder="Выберите из списка"

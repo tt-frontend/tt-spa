@@ -1,4 +1,4 @@
-import { createEvent, createStore, sample } from 'effector';
+import { combine, createEvent, createStore, sample } from 'effector';
 import { PreparedAddress } from 'services/tasks/addTaskFromDispatcherService/addTaskFromDispatcherService.types';
 import {
   getCalculatorQuery,
@@ -8,16 +8,51 @@ import {
 import { prepareAddressesForTreeSelect } from 'services/tasks/addTaskFromDispatcherService/addTaskFromDispatcherService.utils';
 import { consumptionReportCalculatorService } from 'services/calculators/consumptionReportCalculatorService';
 import { message } from 'antd';
+import { CalculatorResponse, EResourceType } from 'api/types';
+import { LightCalculatorWithResource } from './uploadArchiveService.types';
 
 const handleChangeCity = createEvent<string>();
 const handleSelectHousingAddress = createEvent<string>();
 const handleOpen = createEvent();
 const handleClose = createEvent();
-const handleGetCalculator = createEvent<number>();
+const handleNextStage = createEvent<number>();
 
 const $preparedForOptionsAddresses = createStore<PreparedAddress[]>([]).on(
   searchBuildingQuery.$data,
   (_, data) => prepareAddressesForTreeSelect(data?.items || null),
+);
+
+const $heavyСalculatorsList = createStore<CalculatorResponse[]>([])
+  .on(getCalculatorQuery.finished.success, (state, { result }) => [
+    ...state,
+    result,
+  ])
+  .reset(handleSelectHousingAddress, handleClose);
+
+const $lightСalculatorsList = createStore<LightCalculatorWithResource[]>([]).on(
+  getBuildingCalculatorsLiteQuery.$data,
+  (_, data) => data?.map((item) => ({ ...item, resource: [] })) || [],
+);
+
+const $lightCalculatorsWithResource = combine(
+  $lightСalculatorsList,
+  $heavyСalculatorsList,
+  (light, heavy): LightCalculatorWithResource[] => {
+    // индексируем heavy по id для O(1)
+    const heavyById = new Map(heavy.map((c) => [c.id, c]));
+
+    return light.map((calc) => {
+      const heavyCalc = heavyById.get(calc.id);
+
+      const resource: EResourceType[] =
+        heavyCalc?.nodes?.map((node) => node.resource).filter(Boolean) ?? [];
+
+      return {
+        ...calc,
+        resource,
+      };
+    });
+  },
 );
 
 const $isModalOpen = createStore<boolean>(false)
@@ -42,18 +77,33 @@ sample({
   target: getBuildingCalculatorsLiteQuery.start,
 });
 
+const fetchCalculatorById = createEvent<number>();
+const fetchCalculatorIds = createEvent<number[]>();
+
+sample({
+  clock: getBuildingCalculatorsLiteQuery.finished.success,
+  fn: (calculators) => calculators.result.map((calculator) => calculator.id),
+  target: fetchCalculatorIds,
+});
+
+fetchCalculatorIds.watch((ids) => {
+  ids.forEach((id) => {
+    fetchCalculatorById(id);
+  });
+});
+
+sample({
+  clock: fetchCalculatorById,
+  target: getCalculatorQuery.start,
+});
+
 sample({
   clock: handleClose,
   target: [getBuildingCalculatorsLiteQuery.reset, searchBuildingQuery.reset],
 });
 
 sample({
-  clock: handleGetCalculator,
-  target: getCalculatorQuery.start,
-});
-
-sample({
-  clock: getCalculatorQuery.finished.success,
+  clock: handleNextStage,
   target: [
     consumptionReportCalculatorService.inputs.handleModalOpen,
     handleClose,
@@ -70,7 +120,11 @@ export const uploadArchiveService = {
     handleOpen,
     handleClose,
     handleSelectHousingAddress,
-    handleGetCalculator,
+    handleNextStage,
   },
-  outputs: { $preparedForOptionsAddresses, $isModalOpen },
+  outputs: {
+    $preparedForOptionsAddresses,
+    $isModalOpen,
+    $lightCalculatorsWithResource,
+  },
 };
