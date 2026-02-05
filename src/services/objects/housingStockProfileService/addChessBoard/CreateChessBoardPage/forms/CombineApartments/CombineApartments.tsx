@@ -36,12 +36,30 @@ export const CombineApartments: FC<Props> = ({
     onSubmit: (values) => {
       if (!combineApartmentModalState) return;
 
+      const middleIndex = (() => {
+        if (values.selectedApartmentIndexes.length <= 2) return null;
+
+        const sorted = [...values.selectedApartmentIndexes].sort(
+          (a, b) => a - b,
+        );
+
+        return sorted.slice(1, -1)[0];
+      })();
+
       handleSaveCombineApartments({
         ...values,
-        context: combineApartmentModalState,
+        context: { ...combineApartmentModalState, apartmentIndex: middleIndex },
       });
     },
   });
+
+  const middleIndex = useMemo(() => {
+    if (values.selectedApartmentIndexes.length <= 2) return null;
+
+    const sorted = [...values.selectedApartmentIndexes].sort((a, b) => a - b);
+
+    return sorted.slice(1, -1)[0];
+  }, [values.selectedApartmentIndexes]);
 
   const address = useMemo(() => {
     if (!combineApartmentModalState) return null;
@@ -104,14 +122,6 @@ export const CombineApartments: FC<Props> = ({
 
     return [baseApartmentIndex - 1, baseApartmentIndex, baseApartmentIndex + 1];
   }, [baseApartmentIndex]);
-
-  const middleIndex = useMemo(() => {
-    if (values.selectedApartmentIndexes.length <= 2) return null;
-
-    const sorted = [...values.selectedApartmentIndexes].sort((a, b) => a - b);
-
-    return sorted.slice(1, -1)[0];
-  }, [values.selectedApartmentIndexes]);
 
   return (
     <FormModal
