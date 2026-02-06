@@ -11,7 +11,6 @@ export const SelectMultiple = styled(AntSelect).attrs({ mode: 'multiple' })`
   .ant-select-selection-item {
     min-height: 24px;
     height: auto;
-    border: none;
     background: rgba(24, 158, 233, 0.16);
   }
 
@@ -40,11 +39,10 @@ export const SelectMultiple = styled(AntSelect).attrs({ mode: 'multiple' })`
     min-height: 48px;
     padding: 8px 16px !important;
     border-radius: 4px !important;
-    padding: 5px 16px !important;
   }
 
   .ant-select-arrow {
-    padding: 0 28px !important;
+    padding: 0 18px !important;
   }
 
   .ant-select-clear {
