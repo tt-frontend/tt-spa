@@ -15,7 +15,6 @@ import {
 } from 'api/types';
 import { ExtendedSearch } from 'ui-kit/ExtendedSearch';
 import { fromEnter } from 'ui-kit/shared/DatePickerNative';
-import { ArchiveTasksExtendedSearchForm } from './ArchiveTasksExtendedSearchForm';
 import {
   SortContainer,
   SortTitle,
@@ -125,7 +124,7 @@ export const SearchTasks: FC<SearchTasksProps> = ({
     lastGroupTypeRef.current = currentFilter?.GroupType;
   }, [currentFilter?.GroupType, lastGroupTypeRef, clearInput]);
 
-  const isArchived = currentFilter?.GroupType === 'Archived';
+  // const isArchived = currentFilter?.GroupType === 'Archived';
 
   const handleSortChange = () => {
     let order = EOrderByRule.Descending;
@@ -148,22 +147,13 @@ export const SearchTasks: FC<SearchTasksProps> = ({
       isPaddingSearch={!isControlMode}
       extendedSearchContent={
         <>
-          {isArchived && (
-            <ArchiveTasksExtendedSearchForm
-              setFieldValue={setFieldValue}
-              taskTypes={actualTaskTypes}
-              values={values}
-            />
-          )}
-          {!isArchived && (
-            <ToExecutionTasksExtendedSearchForm
-              setFieldValue={setFieldValue}
-              taskTypes={actualTaskTypes}
-              values={values}
-              housingManagments={housingManagments}
-              perpetrators={perpetrators}
-            />
-          )}
+          <ToExecutionTasksExtendedSearchForm
+            setFieldValue={setFieldValue}
+            taskTypes={actualTaskTypes}
+            values={values}
+            housingManagments={housingManagments}
+            perpetrators={perpetrators}
+          />
         </>
       }
     >
