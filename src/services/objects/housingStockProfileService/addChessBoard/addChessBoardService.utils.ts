@@ -533,8 +533,7 @@ const combineApartments = (
   payload: CombineApartmentsPayload,
 ): PremiseLocationCreateModel => {
   const { selectedApartmentIndexes, newApartmentNumber, context } = payload;
-
-  const { sectionIndex, floorIndex, apartmentIndex } = context;
+  const { sectionIndex, floorIndex } = context;
 
   if (
     !Array.isArray(selectedApartmentIndexes) ||
@@ -554,43 +553,40 @@ const combineApartments = (
               floors: section.floors?.map((floor, fIdx) => {
                 if (fIdx !== floorIndex) return floor;
 
-                const existing = floor.premises || [];
+                const existing = floor.premises ?? [];
 
-                // build set of indexes to remove
                 const toRemove = new Set(selectedApartmentIndexes);
+                const baseIndex = Math.min(...selectedApartmentIndexes);
 
-                // filter out selected apartments
+                // оставшиеся помещения
                 const filtered = existing.filter(
                   (_, idx) => !toRemove.has(idx),
                 );
 
-                // determine insertion position: prefer explicit apartmentIndex from context, else min selected index
-                const insertPos =
-                  typeof apartmentIndex === 'number'
-                    ? apartmentIndex
-                    : Math.min(...selectedApartmentIndexes);
+                // корректная позиция вставки — место первого объединяемого
+                const insertPos = existing.reduce((acc, _, idx) => {
+                  if (idx < baseIndex && !toRemove.has(idx)) {
+                    acc++;
+                  }
+                  return acc;
+                }, 0);
 
                 const newPremise: PremiseCreateModel = {
                   number: newApartmentNumber,
                   category: EPremiseCategory.Apartment,
                 };
 
-                // clamp insert position
-                const pos = Math.max(0, Math.min(filtered.length, insertPos));
-
-                const newPremises = [
-                  ...filtered.slice(0, pos),
-                  newPremise,
-                  ...filtered.slice(pos),
-                ];
-
                 return {
                   ...floor,
-                  premises: newPremises,
+                  premises: [
+                    ...filtered.slice(0, insertPos),
+                    newPremise,
+                    ...filtered.slice(insertPos),
+                  ],
                 };
               }),
             },
-      ) || [],
+      ) ?? [],
   };
 };
 
