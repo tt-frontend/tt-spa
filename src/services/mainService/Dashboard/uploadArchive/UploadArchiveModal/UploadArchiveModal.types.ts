@@ -13,4 +13,5 @@ export type Props = {
   handleNextStage: (payload: number) => void;
   isCalculatorLoading: boolean;
   handleResetForm: EventCallable<void>;
+  initialCity: string | null;
 };

@@ -10,6 +10,8 @@ import { consumptionReportCalculatorService } from 'services/calculators/consump
 import { message } from 'antd';
 import { CalculatorResponse, EResourceType } from 'api/types';
 import { LightCalculatorWithResource } from './uploadArchiveService.types';
+import { currentOrganizationService } from 'services/currentOrganizationService';
+import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
 
 const handleChangeCity = createEvent<string>();
 const handleSelectHousingAddress = createEvent<string>();
@@ -29,6 +31,8 @@ const $heavyСalculatorsList = createStore<CalculatorResponse[]>([])
   ])
   .reset(handleSelectHousingAddress, handleClose);
 
+const $chosenCalculator = createStore<CalculatorResponse | null>(null);
+
 const $lightСalculatorsList = createStore<LightCalculatorWithResource[]>([]).on(
   getBuildingCalculatorsLiteQuery.$data,
   (_, data) => data?.map((item) => ({ ...item, resource: [] })) || [],
@@ -38,7 +42,6 @@ const $lightCalculatorsWithResource = combine(
   $lightСalculatorsList,
   $heavyСalculatorsList,
   (light, heavy): LightCalculatorWithResource[] => {
-    // индексируем heavy по id для O(1)
     const heavyById = new Map(heavy.map((c) => [c.id, c]));
 
     return light.map((calc) => {
@@ -99,15 +102,44 @@ sample({
 
 sample({
   clock: handleClose,
-  target: [getBuildingCalculatorsLiteQuery.reset, searchBuildingQuery.reset],
+  target: [getBuildingCalculatorsLiteQuery.reset],
+});
+
+sample({
+  clock: handleNextStage,
+  source: $heavyСalculatorsList,
+  fn: (calculators, calculatorId) =>
+    calculators.find((calculator) => calculator.id === calculatorId) || null,
+  target: $chosenCalculator,
 });
 
 sample({
   clock: handleNextStage,
   target: [
-    consumptionReportCalculatorService.inputs.handleModalOpen,
     handleClose,
+    consumptionReportCalculatorService.inputs.handleModalOpen,
   ],
+});
+
+const $initialCity = combine(
+  currentOrganizationService.outputs.$defaultCity,
+  addressSearchService.outputs.$existingCities,
+  (defaultCity, existingCities) => {
+    if (existingCities?.length === 1) {
+      return existingCities[0];
+    }
+    if (defaultCity) {
+      return defaultCity;
+    }
+    return null;
+  },
+);
+
+sample({
+  clock: handleOpen,
+  source: $initialCity,
+  filter: Boolean,
+  target: handleChangeCity,
 });
 
 getCalculatorQuery.finished.failure.watch(() => {
@@ -126,5 +158,7 @@ export const uploadArchiveService = {
     $preparedForOptionsAddresses,
     $isModalOpen,
     $lightCalculatorsWithResource,
+    $initialCity,
+    $chosenCalculator,
   },
 };
