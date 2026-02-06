@@ -11,6 +11,7 @@ export const RadioGroupSC = styled(Group)`
     color: #272f5ae5;
     font-size: 16px;
   }
+  margin-bottom: 8px;
 `;
 
 export const DatePickerWrapper = styled.div`
@@ -21,6 +22,6 @@ export const DatePickerWrapper = styled.div`
     color: #272f5ab2;
   }
 
-  margin-top: 8px;
+  /* margin-top: 8px; */
   margin-left: 24px;
 `;
