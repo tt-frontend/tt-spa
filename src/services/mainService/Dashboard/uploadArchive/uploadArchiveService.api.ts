@@ -26,3 +26,5 @@ export const getBuildingCalculatorsLiteQuery = createQuery<
 export const getCalculatorQuery = createQuery<[number], CalculatorResponse>({
   handler: (deviceId) => axios.get(`/Calculators/${deviceId}`),
 });
+
+// Buildings/${buildingId}/Nodes
