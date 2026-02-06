@@ -3,8 +3,12 @@ import {
   AddAapartmentPayload,
   AddEntranceFormParams,
   AddNonLivingPremisesFormParams,
+  CombineApartmentsModalState,
+  CombineApartmentsPayload,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
+  DivideApartmentModalState,
+  DivideApartmentPayload,
   DuplicateFloorPayload,
   EditApartmentPayload,
   EditChessBoardPanelType,
@@ -49,4 +53,10 @@ export type Props = {
     payload: Maybe<OpenAddNonLivingPremisesPanelState>,
   ) => void;
   handleAddNonLivingPremises: (payload: AddNonLivingPremisesFormParams) => void;
+  divideApartmnentModalState: DivideApartmentModalState | null;
+  handleDivideApartment: (payload: DivideApartmentModalState) => void;
+  handleSaveDivideApartment: (payload: DivideApartmentPayload) => void;
+  handleCombineApartments: (payload: CombineApartmentsModalState) => void;
+  combineApartmentModalState: CombineApartmentsModalState | null;
+  handleSaveCombineApartments: (payload: CombineApartmentsPayload) => void;
 };

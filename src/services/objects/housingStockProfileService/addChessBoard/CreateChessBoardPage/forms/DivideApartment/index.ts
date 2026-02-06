@@ -1,0 +1,1 @@
+export { DivideApartment } from './DivideApartment';

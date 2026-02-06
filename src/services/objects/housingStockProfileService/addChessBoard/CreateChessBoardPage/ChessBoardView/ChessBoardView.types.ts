@@ -1,8 +1,10 @@
 import { PremiseLocationCreateModel } from 'api/types';
 import {
   AddAapartmentPayload,
+  CombineApartmentsModalState,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
+  DivideApartmentModalState,
   DuplicateFloorPayload,
   Maybe,
   OpenAddNonLivingPremisesPanelState,
@@ -29,4 +31,6 @@ export type Props = {
     id: string;
     onClick: () => void;
   }[];
+  handleDivideApartment: (payload: DivideApartmentModalState) => void;
+  handleCombineApartments: (payload: CombineApartmentsModalState) => void;
 };
