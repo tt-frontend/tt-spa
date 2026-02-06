@@ -25,11 +25,11 @@ export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
 
     setPocketData([
       { y: data.successCount || 0 },
+      { y: data.errorCount || 0 },
+      { y: data.noArchiveCount || 0 },
       {
         y: data.notPollingCount || 0,
       },
-      { y: data.errorCount || 0 },
-      { y: data.noArchiveCount || 0 },
     ]);
 
     return () => setPocketData(startValues);
@@ -115,7 +115,7 @@ export const DeviceConnectionAnalysis: FC<Props> = ({ data, isLoading }) => {
                 labelRadius={150}
                 cornerRadius={4}
                 theme={VictoryTheme.clean}
-                colorScale={['#17B45A', '#E7EAEC', '#E2B104', '#ED3B45']}
+                colorScale={['#17B45A', '#E2B104', '#ED3B45', '#E7EAEC']}
                 animate={{
                   duration: 1000,
                   easing: 'exp',
