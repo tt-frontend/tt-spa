@@ -13,6 +13,7 @@ import {
 } from './tasksMapService.types';
 import { getHousingStocksWithTasksRequestPayload } from './tasksMapService.utils';
 import { currentOrganizationService } from 'services/currentOrganizationService';
+import { interval } from 'patronum';
 
 const applyFilters = createEvent<HousingStocksWithTasksFiltrationValues>();
 
@@ -78,9 +79,16 @@ sample({
   target: fetchHousingStocksWithTasksFx,
 });
 
+const { tick: refetchTasks } = interval({
+  timeout: 40000,
+  start: TaskTypesGate.open,
+  stop: TaskTypesGate.close,
+  leading: false,
+});
+
 sample({
   source: $filtrationValues,
-  clock: TaskTypesGate.open,
+  clock: [TaskTypesGate.open, refetchTasks],
   fn: getHousingStocksWithTasksRequestPayload,
   target: fetchHousingStocksWithTasksFx,
 });
