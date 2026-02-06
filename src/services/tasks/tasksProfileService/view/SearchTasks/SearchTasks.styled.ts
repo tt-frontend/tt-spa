@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 2fr 4fr 4fr;
+  grid-template-columns: 2fr 4fr 2.2fr;
   gap: 16px;
 `;
 
@@ -14,7 +14,7 @@ export const StyledFormThreeRows = styled.div`
 
 export const SortContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.5fr 0.5fr;
+  grid-template-columns: 1fr auto;
   gap: 6px;
   align-items: center;
 `;

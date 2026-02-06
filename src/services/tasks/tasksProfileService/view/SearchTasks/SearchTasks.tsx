@@ -17,7 +17,6 @@ import { ExtendedSearch } from 'ui-kit/ExtendedSearch';
 import { fromEnter } from 'ui-kit/shared/DatePickerNative';
 import {
   SortContainer,
-  SortTitle,
   TaskCount,
   TaskTypeContainer,
   Wrapper,
@@ -27,7 +26,7 @@ import { SearchTasksProps } from './SearchTasks.types';
 import { Select } from 'ui-kit/Select';
 import { Input } from 'ui-kit/Input';
 import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
-import { ToExecutionTasksExtendedSearchForm } from './ToExecutionTasksExtendedSearchForm';
+import { TasksExtendedSearchForm } from './TasksExtendedSearchForm';
 import { Sort } from 'ui-kit/Sort';
 
 const { ExistingCitiesGate, ExistingStreetsGate } = addressSearchService.gates;
@@ -124,8 +123,6 @@ export const SearchTasks: FC<SearchTasksProps> = ({
     lastGroupTypeRef.current = currentFilter?.GroupType;
   }, [currentFilter?.GroupType, lastGroupTypeRef, clearInput]);
 
-  // const isArchived = currentFilter?.GroupType === 'Archived';
-
   const handleSortChange = () => {
     let order = EOrderByRule.Descending;
 
@@ -146,15 +143,13 @@ export const SearchTasks: FC<SearchTasksProps> = ({
       handleOpen={openExtendedSearch}
       isPaddingSearch={!isControlMode}
       extendedSearchContent={
-        <>
-          <ToExecutionTasksExtendedSearchForm
-            setFieldValue={setFieldValue}
-            taskTypes={actualTaskTypes}
-            values={values}
-            housingManagments={housingManagments}
-            perpetrators={perpetrators}
-          />
-        </>
+        <TasksExtendedSearchForm
+          setFieldValue={setFieldValue}
+          taskTypes={actualTaskTypes}
+          values={values}
+          housingManagments={housingManagments}
+          perpetrators={perpetrators}
+        />
       }
     >
       <ExistingCitiesGate />
@@ -191,10 +186,11 @@ export const SearchTasks: FC<SearchTasksProps> = ({
         </Select>
 
         <SortContainer>
-          <SortTitle>Сортировать по:</SortTitle>
+          {/* <SortTitle>Сортировать по:</SortTitle> */}
           <Select
+            style={{ width: '100%' }}
             small
-            placeholder={'Выберите'}
+            placeholder="Сортировать по"
             onChange={(value) => {
               setFieldValue('OrderRule', value);
               handleSubmit();
@@ -205,15 +201,15 @@ export const SearchTasks: FC<SearchTasksProps> = ({
               small
               value={TaskPaginationOrderRule.ConfirmationTime}
             >
-              Дате подтверждения
+              Дата подтверждения
             </Select.Option>
 
             <Select.Option small value={TaskPaginationOrderRule.CreationTime}>
-              Дате создания
+              Дата создания
             </Select.Option>
 
             <Select.Option small value={TaskPaginationOrderRule.TimeStatus}>
-              Статусу выполнения
+              Статус выполнения
             </Select.Option>
           </Select>
 
