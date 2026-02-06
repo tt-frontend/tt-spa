@@ -1,5 +1,5 @@
 import dayjs from 'api/dayjs';
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { GroupReportRangeOptions } from './GroupReportDatesSelect.constants';
 import {
   DatePickerWrapper,
@@ -18,6 +18,14 @@ export const GroupReportDatesSelect: FC<GroupReportDatesSelectProps> = ({
   const [currentRange, setCurrentRange] = useState<GroupReportRangeOptions>(
     GroupReportRangeOptions.ThisMonth,
   );
+
+  useEffect(() => {
+    if (isSono) {
+      setCurrentRange(GroupReportRangeOptions.LastMonth);
+      handleRangeTypeChange(GroupReportRangeOptions.LastMonth);
+      return;
+    }
+  }, [isSono]);
 
   const handleRangeTypeChange = useCallback(
     (range: GroupReportRangeOptions) => {
@@ -42,7 +50,7 @@ export const GroupReportDatesSelect: FC<GroupReportDatesSelectProps> = ({
   return (
     <>
       {!isSono && (
-        <div>
+        <>
           <RadioGroupSC
             value={currentRange}
             onChange={(e) => {
@@ -94,7 +102,7 @@ export const GroupReportDatesSelect: FC<GroupReportDatesSelectProps> = ({
               }}
             />
           </DatePickerWrapper>
-        </div>
+        </>
       )}
 
       {isSono && (
