@@ -34,8 +34,6 @@ export const UploadArchiveContainer = () => {
     chosenCalculator: outputs.$chosenCalculator,
   });
 
-  console.log(chosenCalculator);
-
   return (
     <>
       <ConsumptionReportCalculatorContainer calculator={chosenCalculator} />
