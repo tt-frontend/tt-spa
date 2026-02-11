@@ -31,4 +31,5 @@ export const validationSchema = Yup.object().shape({
 export const ReportFormatRadioOptions = [
   { value: EReportType.Hourly, label: 'Часовая' },
   { value: EReportType.Daily, label: 'Суточная' },
+  { value: EReportType.Monthly, label: 'Месячная (Sonosafe)' },
 ];

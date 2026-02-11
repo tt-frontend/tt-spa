@@ -294,6 +294,7 @@ export const GroupReportForm: FC<GroupReportFormProps> = ({
               setFieldValue('To', To);
             }}
             isDisabled={values.isRegular}
+            isSono={values.ReportType === EReportType.Monthly}
           />
         </FormItem>
         <FormItem label="Детализация отчёта">
