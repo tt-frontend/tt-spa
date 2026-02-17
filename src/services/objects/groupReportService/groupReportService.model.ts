@@ -93,14 +93,18 @@ sample({
         payload.NodeResourceTypes &&
         payload.ReportType,
     ),
+
   target: $downloadReportPayload,
 });
 
 sample({
   clock: $downloadReportPayload,
   filter: (payload): payload is GroupReportRequestPayload => {
-    const isExist = Boolean(payload);
     const { From, To, ReportType } = payload || {};
+    const isExist = Boolean(payload);
+
+    if (ReportType === EReportType.Monthly) return isExist;
+
     const isNotTooLongDaily =
       ReportType === EReportType.Daily &&
       dayjs(To).diff(dayjs(From), 'day') < MAX_DAILY_TYPE_DAYS;
