@@ -1230,6 +1230,7 @@ export interface ArchivesDataGroupValue {
   /** @format double */
   value?: number;
   hasFault?: boolean;
+  isCorrect?: boolean;
 }
 
 export interface ArchivesDataModel {
