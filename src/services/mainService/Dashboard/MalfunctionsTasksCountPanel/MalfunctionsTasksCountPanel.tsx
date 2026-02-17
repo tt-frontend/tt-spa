@@ -22,7 +22,7 @@ export const MalfunctionsTasksCountPanel: FC<Props> = ({
     <Panel
       title="Задачи"
       padding="0 16px 16px 16px"
-      link="/tasks/list/Observing"
+      link="/tasks/list/Executing"
     >
       <Wrapper>
         {isLoading &&
