@@ -8,9 +8,17 @@ import { SearchIconSc } from 'services/tasks/addTaskFromDispatcherService/view/A
 import { Input } from 'ui-kit/Input';
 import { autocompleteAddress } from 'services/tasks/addTaskFromDispatcherService/view/AddTaskModal/AddTaskForm/AddTaskForm.utils';
 import { useFormik } from 'formik';
-import { AddressContainer } from './UploadArchiveModal.styled';
+import {
+  AddressContainer,
+  OptionContainer,
+  ResourceContainer,
+  CalculatorСontainer,
+} from './UploadArchiveModal.styled';
 import * as yup from 'yup';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
+import { CalculatorIcon } from 'ui-kit/icons';
+import { ResourceIconLookup } from 'ui-kit/shared/ResourceIconLookup';
+import { uniq } from 'lodash';
 
 const formId = 'upload-archive-modal-form';
 
@@ -21,25 +29,26 @@ export const UploadArchiveModal: FC<Props> = ({
   isModalOpen,
   existingCities,
   handleSelectHousingAddress,
-  calculators,
-  handleGetCalculator,
+  calculatorsWithResource,
+  handleNextStage,
   isCalculatorLoading,
   handleResetForm,
+  initialCity,
 }) => {
   const { values, setFieldValue, resetForm, errors, handleSubmit } = useFormik({
     initialValues: {
-      city: '',
+      city: initialCity,
       addressSearch: '',
-      calculatorId: '',
+      calculatorId: null as null | number,
     },
     validateOnChange: false,
     validationSchema: yup.object().shape({
-      calculatorId: yup.string().required('Это поле обязательно'),
+      calculatorId: yup.number().nullable().required('Это поле обязательно'),
     }),
 
     enableReinitialize: true,
     onSubmit: (data) => {
-      handleGetCalculator(Number(data.calculatorId));
+      handleNextStage(data.calculatorId as number);
     },
   });
 
@@ -53,20 +62,27 @@ export const UploadArchiveModal: FC<Props> = ({
     })) || [];
 
   const preparedCalculators = useMemo(() => {
-    if (!calculators) {
+    if (!calculatorsWithResource) {
       return [];
     }
 
-    return calculators.map((calculator) => ({
+    return calculatorsWithResource.map((calculator) => ({
       label: (
-        <>
-          {calculator.model} ({calculator.serialNumber})
-        </>
+        <OptionContainer>
+          <CalculatorСontainer>
+            <CalculatorIcon /> {calculator.model} ({calculator.serialNumber})
+          </CalculatorСontainer>
+          <ResourceContainer>
+            {uniq(calculator.resource).map((res, idx) => (
+              <ResourceIconLookup resource={res} key={String(res) + idx} />
+            ))}
+          </ResourceContainer>
+        </OptionContainer>
       ),
       value: calculator.id,
       key: calculator.id,
     }));
-  }, [calculators]);
+  }, [calculatorsWithResource]);
 
   const preparedAddressOptions = useMemo(
     () =>
@@ -92,6 +108,7 @@ export const UploadArchiveModal: FC<Props> = ({
               <Select
                 onChange={(value) => {
                   setFieldValue('city', value);
+                  setFieldValue('addressSearch', null);
                   handleChangeCity(value as string);
                 }}
                 value={values.city || undefined}
@@ -109,7 +126,6 @@ export const UploadArchiveModal: FC<Props> = ({
                   setFieldValue('addressSearch', value);
                 }}
                 onSelect={(value) => {
-                  setFieldValue('selectedObjectAddress', value);
                   setFieldValue('calculatorId', null);
 
                   handleSelectHousingAddress(value);
@@ -131,7 +147,6 @@ export const UploadArchiveModal: FC<Props> = ({
               <Select
                 onChange={(value) => {
                   setFieldValue('calculatorId', value);
-                  handleChangeCity(value as string);
                 }}
                 value={values.calculatorId || undefined}
                 placeholder="Выберите из списка"

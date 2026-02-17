@@ -17,8 +17,6 @@ import { GroupReportContainer } from 'services/objects/groupReportService';
 import { SoiReportContainer } from 'services/objects/objectsProfileService/soiReportService';
 import { UploadArchiveContainer } from './Dashboard/uploadArchive';
 import { addressSearchService } from 'services/addressSearchService/addressSearchService.models';
-import { getCalculatorQuery } from './Dashboard/uploadArchive/uploadArchiveService.api';
-import { ConsumptionReportCalculatorContainer } from 'services/calculators/consumptionReportCalculatorService';
 
 const {
   inputs,
@@ -48,7 +46,6 @@ export const MainServiceContainer = () => {
     currentManagingFirm,
     housingMeteringDevices,
     isHousingMeteringDevicesLoading,
-    calculator,
   } = useUnit({
     filter: outputs.$filter,
     setFilter: inputs.setFilter,
@@ -69,7 +66,6 @@ export const MainServiceContainer = () => {
       currentOrganizationService.outputs.$currentManagingFirm,
     housingMeteringDevices: fetchHousingMeteringDevicesQuery.$data,
     isHousingMeteringDevicesLoading: fetchHousingMeteringDevicesQuery.$pending,
-    calculator: getCalculatorQuery.$data,
   });
 
   const isHousingMeteringDevices = useMemo(
@@ -88,8 +84,6 @@ export const MainServiceContainer = () => {
       <GroupReportContainer />
       <SoiReportContainer />
       <UploadArchiveContainer />
-
-      <ConsumptionReportCalculatorContainer calculator={calculator} />
 
       <Filter
         filter={filter}
