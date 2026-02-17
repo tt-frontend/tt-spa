@@ -15,10 +15,13 @@ export type GraphViewProps = {
   withFault: boolean;
 };
 
-export type PreparedArchiveValues = {
-  value: number;
+export type PreparedArchiveValues = Omit<
+  ArchivesDataGroupValue,
+  'value' | 'time'
+> & {
+  value: number | null;
   time: string;
-} & ArchivesDataGroupValue;
+};
 
 export type GetTaskXPosPayload = {
   minDate: string;

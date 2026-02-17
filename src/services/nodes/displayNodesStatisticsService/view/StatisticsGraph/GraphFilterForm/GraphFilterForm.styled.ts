@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 export const GraphFilter = styled.div`
   margin-top: 16px;
-  margin-bottom: 16px;
   width: 730px;
 
   form {

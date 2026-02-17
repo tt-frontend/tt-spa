@@ -8,12 +8,14 @@ import {
 } from './NodeStatisticsTable.constant';
 import {
   PaginationSC,
+  RowWrapper,
   TableWrapper,
   Wrapper,
 } from './NodeStatisticsTable.styled';
 import { NodeStatisticsTableProps } from './NodeStatisticsTable.types';
-import { NodeStatisticsTableColumn } from './NodeStatisticsTableColumn';
 import { ToggleWithText } from './ToggleWithText';
+import { Table } from 'ui-kit/Table';
+import { ArchivesDataGroupValue } from 'api/types';
 
 export const NodeStatisticsTable: FC<NodeStatisticsTableProps> = ({
   archiveData,
@@ -29,6 +31,7 @@ export const NodeStatisticsTable: FC<NodeStatisticsTableProps> = ({
         .utc(false)
         .startOf(ReportTimeType[reportType])
         .format(ReportStartTimeFormat[reportType]);
+
       const endDateStr = dayjs(date)
         .utc(false)
         .endOf(ReportTimeType[reportType])
@@ -60,8 +63,14 @@ export const NodeStatisticsTable: FC<NodeStatisticsTableProps> = ({
     start + NODE_STATISTICS_PAGE_SIZE,
   );
 
-  const dates = pagedReadings.map((reading) => reading.time);
-  const values = pagedReadings.map((reading) => reading.value);
+  const valueConstructor = (reading: ArchivesDataGroupValue) => {
+    const { value, isCorrect } = reading;
+    if (value === null || !isCorrect) {
+      return 'Нет данных';
+    }
+
+    return String(value);
+  };
 
   return (
     <Wrapper>
@@ -75,15 +84,24 @@ export const NodeStatisticsTable: FC<NodeStatisticsTableProps> = ({
       {isOpen && (
         <>
           <TableWrapper>
-            <NodeStatisticsTableColumn
-              title="Дата и время"
-              values={dates}
-              valueConstructor={timeConstructor}
-            />
-            <NodeStatisticsTableColumn
-              title={graphType}
-              values={values}
-              valueConstructor={(value) => String(value)}
+            <Table
+              elements={pagedReadings}
+              columns={[
+                {
+                  label: 'Дата и время',
+                  size: '340px',
+                  render: (reading) => <>{timeConstructor(reading.time!)}</>,
+                },
+                {
+                  label: graphType,
+                  size: '340px',
+                  render: (reading) => (
+                    <RowWrapper isCorrect={reading.isCorrect}>
+                      {valueConstructor(reading)}
+                    </RowWrapper>
+                  ),
+                },
+              ]}
             />
           </TableWrapper>
           <PaginationSC

@@ -10,7 +10,7 @@ export function prepareDataForNodeStatistic(
   unsortedData: PreparedArchiveValues[],
   reportType: ReportType,
   withFault: boolean,
-) {
+): PreparedArchiveValues[] {
   const data = sortArchiveArray(unsortedData);
 
   const minTimeDayJs = dayjs(data[0].time).utcOffset(0);
@@ -31,6 +31,10 @@ export function prepareDataForNodeStatistic(
       ...data[index],
       time: dayjs(data[index].time).utcOffset(0).format(),
     };
+
+    if (!elem.isCorrect) {
+      elem.value = null;
+    }
 
     if (elem.hasFault && !withFault) {
       elem.value = 0;

@@ -3,10 +3,6 @@ import styled from 'styled-components';
 
 export const TableWrapper = styled.div`
   margin-top: 16px;
-  display: flex;
-  align-items: center;
-
-  width: 100%;
 `;
 
 export const Wrapper = styled.div`
@@ -21,4 +17,8 @@ export const Wrapper = styled.div`
 export const PaginationSC = styled(Pagination)`
   margin-top: 16px;
   align-self: flex-end;
+`;
+
+export const RowWrapper = styled.div<{ isCorrect?: boolean }>`
+  color: ${(props) => (props.isCorrect ? '#272f5a' : '#e93030')};
 `;
