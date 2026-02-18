@@ -1,6 +1,6 @@
-import { MainDashboardMalfunctionModel } from 'api/types';
+import { MainDashboardTaskModel } from 'api/types';
 
 export type Props = {
-  malfunctions: MainDashboardMalfunctionModel[] | null;
+  tasks: MainDashboardTaskModel[] | null;
   isLoading: boolean;
 };

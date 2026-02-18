@@ -5,7 +5,7 @@ import { ChevronIcon } from 'ui-kit/icons';
 export const Wrapper = styled.div`
   display: grid;
   gap: 16px;
-
+  min-width: 540px;
   grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
   align-items: stretch;
 `;
