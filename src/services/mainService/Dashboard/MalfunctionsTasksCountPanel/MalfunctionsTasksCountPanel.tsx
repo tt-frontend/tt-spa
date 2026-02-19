@@ -10,6 +10,7 @@ import {
   Wrapper,
 } from './MalfunctionsTasksCountPanel.styled';
 import { CountUp } from 'ui-kit/CountUp';
+import { Skeleton } from 'antd';
 
 export const MalfunctionsTasksCountPanel: FC<Props> = ({
   tasks,
@@ -43,7 +44,46 @@ export const MalfunctionsTasksCountPanel: FC<Props> = ({
               </AdditionTasksCountWrapper>
             </MalfunctionPanel>
           ))}
+        {isLoading &&
+          new Array(4)
+            .fill(0)
+            .map((_, index) => <StatCardSkeleton key={index} />)}
       </Wrapper>
     </Panel>
+  );
+};
+
+export const StatCardSkeleton = () => {
+  return (
+    <div
+      style={{
+        padding: 8,
+        background: '#f5f5f5',
+        borderRadius: 6,
+      }}
+    >
+      {/* Число */}
+      <Skeleton.Button
+        active
+        block
+        size="small"
+        style={{ width: '50px', height: 12, marginBottom: 6 }}
+      />
+      {/* Заголовок */}
+      <Skeleton.Button
+        active
+        size="small"
+        block
+        style={{ width: '90px', height: 22, marginBottom: 6 }}
+      />
+
+      {/* Просроченные */}
+      <Skeleton.Button
+        active
+        block
+        size="small"
+        style={{ width: '45px', height: 12 }}
+      />
+    </div>
   );
 };
