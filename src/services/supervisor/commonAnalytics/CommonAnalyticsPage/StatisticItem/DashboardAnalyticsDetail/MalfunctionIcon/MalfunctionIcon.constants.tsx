@@ -77,11 +77,38 @@ export const MalfunctionWhiteIcons: {
   [ManagingFirmTaskType.HeatSupplyQualityCheck]: <CalculatorIconSC />,
 };
 
-export const MalfunctionDescription: { [key: string]: string } = {
+export const ManageingFirmTaskDescription: {
+  [key in ManagingFirmTaskType]: string;
+} = {
   [ManagingFirmTaskType.CalculatorLackOfConnection]:
-    'Отсутствие подключения с прибором',
+    'Отсутствие подключения к прибору',
   [ManagingFirmTaskType.CalculatorMalfunction]: 'Неполадки с вычислителем',
+  [ManagingFirmTaskType.CalculatorMalfunctionNonCommercial]:
+    'Неполадки с вычислителем (некоммерческий)',
+  [ManagingFirmTaskType.CurrentApplication]: 'Текущая заявка',
+  [ManagingFirmTaskType.CurrentApplicationUnassigned]:
+    'Текущая заявка (не назначена)',
+  [ManagingFirmTaskType.EmergencyApplication]: 'Аварийная заявка',
+  [ManagingFirmTaskType.EmergencyApplicationUnassigned]:
+    'Аварийная заявка (не назначена)',
   [ManagingFirmTaskType.HousingDeviceMalfunction]: 'Неполадки с ОДПУ',
+  [ManagingFirmTaskType.HousingDeviceMalfunctionNonCommercial]:
+    'Неполадки с ОДПУ (некоммерческий)',
+  [ManagingFirmTaskType.IndividualDeviceCheck]:
+    'Проверка индивидуального прибора',
+  [ManagingFirmTaskType.IndividualDeviceCheckNoReadings]:
+    'Проверка индивидуального прибора (нет показаний)',
+  [ManagingFirmTaskType.IndividualDeviceReadingsCheck]:
+    'Проверка показаний индивидуального прибора',
   [ManagingFirmTaskType.MeasurementErrorCommercial]:
     'Превышение погрешности измерения',
+  [ManagingFirmTaskType.MeasurementErrorNonCommercial]:
+    'Превышение погрешности измерения (некоммерческий)',
+  [ManagingFirmTaskType.PipeRupture]: 'Прорыв трубы',
+  [ManagingFirmTaskType.ResourceDisconnecting]: 'Отключение ресурса',
+  [ManagingFirmTaskType.RiserNoReadings]: 'Отсутствуют показания по стояку',
+  [ManagingFirmTaskType.TemperatureNormativeDeviation]:
+    'Отклонение температуры от нормы',
+  [ManagingFirmTaskType.HeatSupplyQualityCheck]:
+    'Проверка качества теплоснабжения',
 };

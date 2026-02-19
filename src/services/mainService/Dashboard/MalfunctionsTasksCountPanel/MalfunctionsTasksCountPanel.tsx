@@ -9,15 +9,16 @@ import {
   Title,
   Wrapper,
 } from './MalfunctionsTasksCountPanel.styled';
-import { MalfunctionDescription } from 'services/supervisor/commonAnalytics/CommonAnalyticsPage/StatisticItem/DashboardAnalyticsDetail/MalfunctionIcon/MalfunctionIcon.constants';
 import { CountUp } from 'ui-kit/CountUp';
-import { Skeleton } from 'antd';
-import { malfunctionsMock } from './MalfunctionsTasksCountPanel.constatnts';
 
 export const MalfunctionsTasksCountPanel: FC<Props> = ({
-  malfunctions,
+  tasks,
   isLoading,
 }) => {
+  const sortedTasks = [...(tasks || [])]?.sort(
+    (a, b) => (b.totalTasksCount || 0) - (a.totalTasksCount || 0),
+  );
+
   return (
     <Panel
       title="Задачи"
@@ -25,27 +26,10 @@ export const MalfunctionsTasksCountPanel: FC<Props> = ({
       link="/tasks/list/Executing"
     >
       <Wrapper>
-        {isLoading &&
-          malfunctionsMock?.map((item) => (
-            <MalfunctionPanel key={item.malfunctionType}>
-              <Title>
-                {MalfunctionDescription[item.malfunctionType as string]}
-              </Title>
-              <TasksCount>
-                <Skeleton.Button size="large" active />
-              </TasksCount>
-              <AdditionTasksCountWrapper>
-                Просроченные <ExpiredTasksCount>--</ExpiredTasksCount>
-              </AdditionTasksCountWrapper>
-            </MalfunctionPanel>
-          ))}
-
         {!isLoading &&
-          malfunctions?.map((item) => (
-            <MalfunctionPanel key={item.malfunctionType}>
-              <Title>
-                {MalfunctionDescription[item.malfunctionType as string]}
-              </Title>
+          sortedTasks.map((item) => (
+            <MalfunctionPanel key={item.taskType}>
+              <Title>{item.title}</Title>
               <TasksCount>
                 <CountUp
                   duration={0.5}

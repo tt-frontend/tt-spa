@@ -63,7 +63,7 @@ export const Dashboard: FC<Props> = ({
         />
 
         <MalfunctionsTasksCountPanel
-          malfunctions={data?.malfunctions || null}
+          tasks={data?.tasks || null}
           isLoading={isLoading}
         />
 

@@ -10,7 +10,7 @@ import {
   DeviationTypeIconLookup,
 } from '../DashboardPanel/ResourceStatistic/TaskQualityDetail';
 import { X } from 'react-bootstrap-icons';
-import { MalfunctionDescription } from 'services/supervisor/commonAnalytics/CommonAnalyticsPage/StatisticItem/DashboardAnalyticsDetail/MalfunctionIcon/MalfunctionIcon.constants';
+import { ManageingFirmTaskDescription } from 'services/supervisor/commonAnalytics/CommonAnalyticsPage/StatisticItem/DashboardAnalyticsDetail/MalfunctionIcon/MalfunctionIcon.constants';
 
 export const FilterStatus: FC<Props> = ({
   dashboardFilters,
@@ -38,7 +38,7 @@ export const FilterStatus: FC<Props> = ({
         value: dashboardFilters.MalfunctionType && (
           <>
             <MalfunctionIcon type={dashboardFilters.MalfunctionType} />{' '}
-            {MalfunctionDescription[dashboardFilters.MalfunctionType] ||
+            {ManageingFirmTaskDescription[dashboardFilters.MalfunctionType] ||
               dashboardFilters.MalfunctionType}
           </>
         ),
