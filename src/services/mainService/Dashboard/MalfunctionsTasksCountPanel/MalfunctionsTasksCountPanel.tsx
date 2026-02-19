@@ -10,7 +10,6 @@ import {
   Wrapper,
 } from './MalfunctionsTasksCountPanel.styled';
 import { CountUp } from 'ui-kit/CountUp';
-import { ManageingFirmTaskDescription } from 'services/supervisor/commonAnalytics/CommonAnalyticsPage/StatisticItem/DashboardAnalyticsDetail/MalfunctionIcon/MalfunctionIcon.constants';
 
 export const MalfunctionsTasksCountPanel: FC<Props> = ({
   tasks,
@@ -30,9 +29,7 @@ export const MalfunctionsTasksCountPanel: FC<Props> = ({
         {!isLoading &&
           sortedTasks.map((item) => (
             <MalfunctionPanel key={item.taskType}>
-              <Title>
-                {item.taskType && ManageingFirmTaskDescription[item.taskType]}
-              </Title>
+              <Title>{item.title}</Title>
               <TasksCount>
                 <CountUp
                   duration={0.5}

@@ -4109,6 +4109,7 @@ export interface MainDashboardSummaryModel {
 
 export interface MainDashboardTaskModel {
   taskType?: ManagingFirmTaskType;
+  title?: string | null;
   /** @format int32 */
   totalTasksCount?: number;
   /** @format int32 */
