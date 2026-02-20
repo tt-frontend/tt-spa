@@ -15,13 +15,13 @@ export const AddChessBoardPanel: FC<Props> = ({ buildingId }) => {
     <Layout>
       <Wrapper>
         <ApartmentLargeIcon />
-        <Title>Шахматка дома пока не создана</Title>
+        <Title>Схема дома пока не создана</Title>
         <Description>
-          Построить шахматку дома можно вручную, задав параметры квартир и
+          Построить схему дома можно вручную, задав параметры квартир и
           подъездов
         </Description>
         <Link to={`/buildings/${buildingId}/addChessBoard`}>
-          <Button size="m">Создать шахматку</Button>
+          <Button size="m">Создать схему дома</Button>
         </Link>
       </Wrapper>
     </Layout>

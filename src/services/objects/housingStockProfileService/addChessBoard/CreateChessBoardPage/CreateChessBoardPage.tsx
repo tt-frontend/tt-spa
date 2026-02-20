@@ -107,7 +107,7 @@ export const CreateChessBoardPage: FC<Props> = ({
       icon={<PlusIcon style={{ transform: 'scale(0.8)' }} />}
       menuButtons={[
         {
-          title: 'Добавить элемент подъезда',
+          title: 'Добавить элемент',
           icon: <ApartmentIcon />,
           strong: true,
           id: 'add-entrance-element',
@@ -117,10 +117,10 @@ export const CreateChessBoardPage: FC<Props> = ({
               id: 'entrance',
               onClick: () => handleEditChessboard('add-entrance'),
             },
-            {
-              title: 'Жилой этаж',
-              id: 'residential-floor',
-            },
+            // {
+            //   title: 'Жилой этаж',
+            //   id: 'residential-floor',
+            // },
           ],
         },
         {

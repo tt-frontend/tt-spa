@@ -16,7 +16,7 @@ import { EPremiseCategory } from 'api/types';
 export const ChessBoardView: FC<Props> = ({
   chessboardCreateData,
   handleDeleteEntrance,
-  handleDuplicateEntrance,
+  // handleDuplicateEntrance,
   handleDeleteFloor,
   handleDuplicateFloor,
   handleDeleteApartmnet,
@@ -49,12 +49,12 @@ export const ChessBoardView: FC<Props> = ({
                           sectionIndex: sectionIndex,
                         }),
                     },
-                    {
-                      title: 'Дублировать подъезд',
-                      onClick: () =>
-                        section.number &&
-                        handleDuplicateEntrance(section.number),
-                    },
+                    // {
+                    //   title: 'Дублировать подъезд',
+                    //   onClick: () =>
+                    //     section.number &&
+                    //     handleDuplicateEntrance(section.number),
+                    // },
                     {
                       title: 'Удалить подъезд',
                       onClick: () =>
