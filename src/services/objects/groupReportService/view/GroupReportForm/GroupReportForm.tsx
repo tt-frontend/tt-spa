@@ -92,7 +92,7 @@ export const GroupReportForm: FC<GroupReportFormProps> = ({
     }
 
     if (values.exportType === ExportReportType.HouseManagement) {
-      if (values.HouseManagementId === 'null') {
+      if (values.HouseManagementId === null) {
         scopeName = 'Без домоуправления';
       } else {
         const hm = houseManagements?.find(
@@ -284,7 +284,7 @@ export const GroupReportForm: FC<GroupReportFormProps> = ({
               }}
               allowClear
             >
-              <Select.Option key={withoutHouseMagement} value={'null'}>
+              <Select.Option key={withoutHouseMagement} value={null}>
                 Без домоуправления
               </Select.Option>
               {houseManagements?.map((houseManagement) => (
