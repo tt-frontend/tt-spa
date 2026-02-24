@@ -38,7 +38,7 @@ export const CalculatorInfo: FC<Props> = ({ device, handlePing }) => {
       </DeviceTitleWrapper>
 
       <StatusIconWrapper>
-        <Tooltip title={device.connectionInfo?.statusDescription}>
+        <Tooltip title={<div>{device.connectionInfo?.statusDescription}</div>}>
           {device.connectionInfo?.status &&
             ConnectionStatusToIcon[device.connectionInfo?.status]}
         </Tooltip>
