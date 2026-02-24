@@ -3398,6 +3398,8 @@ export interface HousingStockCreateRequest {
   constructionYear?: number | null;
   /** @format int32 */
   numberOfApartments?: number | null;
+  /** @format int32 */
+  numberOfFloors?: number | null;
   /** @format double */
   totalLivingArea?: number | null;
   /** @format double */
