@@ -11,7 +11,6 @@ sample({
   clock: sample({
     source: resourceConsumptionService.outputs.$summaryConsumption,
     clock: resourceConsumptionFilterService.outputs.$addressesList,
-    filter: (summary) => !summary,
     fn: (_, addresses) => addresses,
   }),
   fn: (oldFilter, addresses) => {
@@ -48,14 +47,24 @@ sample({
     resourceConsumptionFilterService.outputs.$houseManagements,
     resourceConsumptionService.gates.ResourceConsumptionGate.open,
   ],
-  source: resourceConsumptionFilterService.outputs.$houseManagements,
-  fn: (houseManagements) => {
+  source: {
+    houseManagements:
+      resourceConsumptionFilterService.outputs.$houseManagements,
+    selectedHouseManagement:
+      resourceConsumptionFilterService.outputs.$selectedHouseManagement,
+  },
+  fn: ({ houseManagements, selectedHouseManagement }) => {
     const isHasGoldHouseManagement = Boolean(
       houseManagements.find(
         (houseManagement) =>
           houseManagement.id === 'c5760f48-6ea0-4267-a643-e84cfc78d9d0',
       )?.id,
     );
+
+    if (selectedHouseManagement) {
+      return selectedHouseManagement;
+    }
+
     if (isHasGoldHouseManagement) {
       return 'c5760f48-6ea0-4267-a643-e84cfc78d9d0';
     } else {

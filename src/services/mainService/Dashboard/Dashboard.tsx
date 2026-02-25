@@ -22,6 +22,7 @@ import { heatIndividualDevicesReportService } from 'services/objects/objectsProf
 import { groupReportService } from 'services/objects/groupReportService';
 import { soiReportService } from 'services/objects/objectsProfileService/soiReportService';
 import { uploadArchiveService } from './uploadArchive/uploadArchiveService.models';
+import { resourceConsumptionFilterService } from 'services/resources/resourceConsumptionService/resourceConsumptionFilterService';
 
 export const Dashboard: FC<Props> = ({
   data,
@@ -40,6 +41,7 @@ export const Dashboard: FC<Props> = ({
     openGroupReportModal,
     openSoiReportModal,
     handleOpenArchive,
+    selectHouseManagememt,
   } = useUnit({
     openConsolidatedReportModal:
       consolidatedReportService.inputs.openConsolidatedReportModal,
@@ -48,6 +50,8 @@ export const Dashboard: FC<Props> = ({
     openGroupReportModal: groupReportService.inputs.openModal,
     openSoiReportModal: soiReportService.inputs.openSoiReportModal,
     handleOpenArchive: uploadArchiveService.inputs.handleOpen,
+    selectHouseManagememt:
+      resourceConsumptionFilterService.inputs.selectHouseManagememt,
   });
 
   return (
@@ -70,6 +74,7 @@ export const Dashboard: FC<Props> = ({
         <Panel
           title="Анализ потребления ресурсов"
           link="/statistics/resourceConsumption"
+          onClick={() => selectHouseManagememt('-1')}
         >
           <SelectResource
             selectedResource={selectedResource}

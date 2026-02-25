@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import dayjs from 'api/dayjs';
 import {
   DateTimeDoubleDictionaryItem,
@@ -25,11 +24,14 @@ export const prepareDataForConsumptionGraph = (
   const startOfMonth = dayjs(dataArr[0].key).startOf('month');
   const emptyArray = getFilledArray(31, (index) => index + 1);
 
-  const objectOfData = dataArr.reduce((acc, elem) => {
-    const diff = String(dayjs(elem.key).diff(startOfMonth, 'day') + 1);
+  const objectOfData = dataArr.reduce(
+    (acc, elem) => {
+      const diff = String(dayjs(elem.key).diff(startOfMonth, 'day') + 1);
 
-    return { ...acc, [diff]: { ...elem, key: diff } };
-  }, {} as { [key: string]: DateTimeDoubleDictionaryItem });
+      return { ...acc, [diff]: { ...elem, key: diff } };
+    },
+    {} as { [key: string]: DateTimeDoubleDictionaryItem },
+  );
 
   return [
     { key: '0', value: 0 },
@@ -47,17 +49,13 @@ export const prepareDataForConsumptionGraph = (
 export const getAddressSearchData = (
   data: StreetWithBuildingNumbersResponse[] | null,
 ) =>
-  _.uniqBy(
-    (data || []).reduce((acc, elem) => {
-      const addresses =
-        elem.addresses?.map((address) => ({
-          id: address.buildingId,
-          addressString: `ул. ${elem.street}, д. ${address.number}`,
-        })) || [];
-
-      return [...acc, ...addresses];
-    }, [] as { id: number; addressString: string }[]),
-    'addressString',
+  (data ?? []).flatMap((elem) =>
+    (elem.addresses ?? []).map((address) => ({
+      id: address.buildingId,
+      addressString: `ул. ${elem.street ?? ''}, д. ${address.number ?? ''}${
+        address.corpus ? `, корп. ${address.corpus}` : ''
+      }`,
+    })),
   );
 
 export const getConsumptionData = (
