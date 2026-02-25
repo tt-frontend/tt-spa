@@ -1230,6 +1230,7 @@ export interface ArchivesDataGroupValue {
   /** @format double */
   value?: number;
   hasFault?: boolean;
+  isCorrect?: boolean;
 }
 
 export interface ArchivesDataModel {
@@ -4064,14 +4065,6 @@ export interface MainDashboardHousingConsumptionResponse {
   resourceConsumptionPrevious: DataForHousingConsumptionPlotServiceModel | null;
 }
 
-export interface MainDashboardMalfunctionModel {
-  malfunctionType?: ManagingFirmTaskType;
-  /** @format int32 */
-  totalTasksCount?: number;
-  /** @format int32 */
-  expiredTasksCount?: number;
-}
-
 export interface MainDashboardResourceDisconnectingModel {
   resourceType?: ResourceType;
   /** @format date-time */
@@ -4085,7 +4078,7 @@ export interface MainDashboardResourceDisconnectingModel {
 export interface MainDashboardResponse {
   calculatorsStatistics: MainDashboardCalculatorStatisticsModel | null;
   resourceDisconnecting: MainDashboardResourceDisconnectingModel[] | null;
-  malfunctions: MainDashboardMalfunctionModel[] | null;
+  tasks: MainDashboardTaskModel[] | null;
   summaryData: MainDashboardSummaryModel | null;
 }
 
@@ -4112,6 +4105,15 @@ export interface MainDashboardSummaryModel {
     /** @format int32 */
     Electricity?: number;
   } | null;
+}
+
+export interface MainDashboardTaskModel {
+  taskType?: ManagingFirmTaskType;
+  title?: string | null;
+  /** @format int32 */
+  totalTasksCount?: number;
+  /** @format int32 */
+  expiredTasksCount?: number;
 }
 
 export interface ManagementFirmCompetenceResponse {

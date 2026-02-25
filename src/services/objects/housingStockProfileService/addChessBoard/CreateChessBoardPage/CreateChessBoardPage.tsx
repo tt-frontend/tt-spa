@@ -32,6 +32,8 @@ import {
   NonLivingPremisesCategory,
   OpenAddNonLivingPremisesPanelState,
 } from '../addChessBoardService.types';
+import { DivideApartment } from './forms/DivideApartment';
+import { CombineApartments } from './forms/CombineApartments';
 
 export const CreateChessBoardPage: FC<Props> = ({
   chessboardCreateData,
@@ -63,6 +65,12 @@ export const CreateChessBoardPage: FC<Props> = ({
   openAddNonLivingPremisesState,
   openAddNonLivingPremisesPanel,
   handleAddNonLivingPremises,
+  divideApartmnentModalState,
+  handleDivideApartment,
+  handleSaveDivideApartment,
+  handleCombineApartments,
+  combineApartmentModalState,
+  handleSaveCombineApartments,
 }) => {
   const { isPanelOpen } = useUnit({
     isPanelOpen: layoutService.outputs.$isSidePanelOpen,
@@ -99,7 +107,7 @@ export const CreateChessBoardPage: FC<Props> = ({
       icon={<PlusIcon style={{ transform: 'scale(0.8)' }} />}
       menuButtons={[
         {
-          title: 'Добавить элемент подъезда',
+          title: 'Добавить элемент',
           icon: <ApartmentIcon />,
           strong: true,
           id: 'add-entrance-element',
@@ -109,10 +117,10 @@ export const CreateChessBoardPage: FC<Props> = ({
               id: 'entrance',
               onClick: () => handleEditChessboard('add-entrance'),
             },
-            {
-              title: 'Жилой этаж',
-              id: 'residential-floor',
-            },
+            // {
+            //   title: 'Жилой этаж',
+            //   id: 'residential-floor',
+            // },
           ],
         },
         {
@@ -176,6 +184,18 @@ export const CreateChessBoardPage: FC<Props> = ({
               chessboardCreateData={chessboardCreateData}
             />
           )}
+          <DivideApartment
+            divideApartmnentModalState={divideApartmnentModalState}
+            handleCloseDownModal={handleCloseDownModal}
+            handleSaveDivideApartment={handleSaveDivideApartment}
+          />
+          <CombineApartments
+            combineApartmentModalState={combineApartmentModalState}
+            handleCloseDownModal={handleCloseDownModal}
+            chessboardCreateData={chessboardCreateData}
+            handleSaveCombineApartments={handleSaveCombineApartments}
+          />
+
           <ChessBoardView
             chessboardCreateData={chessboardCreateData}
             handleDeleteEntrance={handleDeleteEntrance}
@@ -188,6 +208,8 @@ export const CreateChessBoardPage: FC<Props> = ({
             openEditFloorModal={openEditFloorModal}
             openEditEntranceModal={openEditEntranceModal}
             nonLivingPremisesMenuItems={nonLivingPremisesMenuItems}
+            handleDivideApartment={handleDivideApartment}
+            handleCombineApartments={handleCombineApartments}
           />
         </Blueprint>
       </Wrapper>

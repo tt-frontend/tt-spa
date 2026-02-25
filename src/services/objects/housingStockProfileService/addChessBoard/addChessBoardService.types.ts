@@ -93,6 +93,32 @@ export type OpenAddNonLivingPremisesPanelState = {
   floor: number;
 };
 
+export type DivideApartmentModalState = {
+  apartmentNumber: string;
+  sectionIndex: number;
+  floorIndex: number;
+  apartmentIndex: number;
+};
+
+export type DivideApartmentPayload = {
+  newApartmentNumbers: string[];
+  sectionIndex: number;
+  floorIndex: number;
+  apartmentIndex: number;
+};
+
+export type CombineApartmentsModalState = {
+  sectionIndex: number;
+  floorIndex: number;
+  apartmentIndex?: number | null;
+};
+
+export type CombineApartmentsPayload = {
+  selectedApartmentIndexes: number[];
+  newApartmentNumber: string;
+  context: CombineApartmentsModalState;
+};
+
 export type Maybe<T> = {
   [K in keyof T]?: T[K];
 };

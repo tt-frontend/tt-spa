@@ -50,6 +50,12 @@ export const AddChessBoardContainer = () => {
     openAddNonLivingPremisesState,
     openAddNonLivingPremisesPanel,
     handleAddNonLivingPremises,
+    handleDivideApartment,
+    divideApartmnentModalState,
+    handleSaveDivideApartment,
+    handleCombineApartments,
+    combineApartmentModalState,
+    handleSaveCombineApartments,
   } = useUnit({
     ...inputs,
     building: buildingQuery.$data,
@@ -63,6 +69,8 @@ export const AddChessBoardContainer = () => {
     editFloorModalState: outputs.$editFloorModalState,
     editEntranceModalState: outputs.$editEntranceModalState,
     openAddNonLivingPremisesState: outputs.$openAddNonLivingPremisesState,
+    divideApartmnentModalState: outputs.$divideApartmnentModalState,
+    combineApartmentModalState: outputs.$combineApartmentModalState,
   });
 
   function handleSaveChessboard() {
@@ -112,6 +120,12 @@ export const AddChessBoardContainer = () => {
         openAddNonLivingPremisesState={openAddNonLivingPremisesState}
         openAddNonLivingPremisesPanel={openAddNonLivingPremisesPanel}
         handleAddNonLivingPremises={handleAddNonLivingPremises}
+        divideApartmnentModalState={divideApartmnentModalState}
+        handleDivideApartment={handleDivideApartment}
+        handleSaveDivideApartment={handleSaveDivideApartment}
+        handleCombineApartments={handleCombineApartments}
+        combineApartmentModalState={combineApartmentModalState}
+        handleSaveCombineApartments={handleSaveCombineApartments}
       />
     </>
   );

@@ -201,6 +201,9 @@ export const TasksProfile: FC<TasksProfileProps> = ({
                   handleReassignTasks={handleReassignTasks}
                 />
               )}
+              {!isControlMode && isExtendedSearchOpen && (
+                <div style={{ marginTop: 12 }} />
+              )}
             </ContentWrapper>
           </FiltrationWrapper>
           <ContentWrapper>

@@ -33,14 +33,17 @@ import {
 } from './ConsumptionReportCalculatorForm.utils';
 import { ErrorMessage } from 'ui-kit/ErrorMessage';
 import { GetCalculatorReportParams } from 'services/calculators/consumptionReportCalculatorService/consumptionReportCalculatorService.types';
-import { ResourceNamesDictionary } from 'dictionaries';
+import {
+  ReportTypeDictionary,
+  ResourceNamesDictionary,
+  ResourcesNameDictionary,
+} from 'dictionaries';
+import { getBuildingAddress } from 'utils/getBuildingAddress';
+import dayjs from 'dayjs';
 
 export const ConsumptionReportCalculatorForm: FC<
   ConsumptionReportCalculatorFormProps
 > = ({ formId, calculator, handleSubmitForm, isSono }) => {
-  const address = calculator?.address?.address?.mainAddress;
-  const reportName = `${calculator?.model}_${address?.street}_${address?.number}`;
-
   const nodesList = calculator?.nodes || [];
   const nodeGroups = _.groupBy(nodesList, 'resource');
 
@@ -71,7 +74,7 @@ export const ConsumptionReportCalculatorForm: FC<
       withNS: false,
       isUndersupply: false,
       currentResourceType: resourcesSortedByOrder[0],
-      reportName: reportName,
+      reportName: '',
     },
     validateOnChange: false,
     validationSchema: yup.object({
@@ -125,6 +128,18 @@ export const ConsumptionReportCalculatorForm: FC<
 
     return { value: id, label };
   });
+
+  const addressStr = getBuildingAddress(calculator?.address || null);
+  const period = getDatePeriod(values.archiveType, values.period, isSono);
+  const from = period?.From ? dayjs(period.From).format('DD.MM.YYYY') : '';
+  const to = period?.To ? dayjs(period.To).format('DD.MM.YYYY') : '';
+
+  const reportName = `${addressStr} (${calculator?.serialNumber}) - ${
+    ResourcesNameDictionary[values.currentResourceType as EResourceType]
+  } с ${from} по ${to}, ${ReportTypeDictionary[values.detail]}`;
+  useEffect(() => {
+    setFieldValue('reportName', reportName);
+  }, [reportName, setFieldValue]);
 
   const tabItems = useMemo(() => {
     if (!resourcesSortedByOrder?.length) {

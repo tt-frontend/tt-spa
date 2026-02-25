@@ -181,7 +181,9 @@ export const GraphView: React.FC<GraphViewProps> = ({
                 left: 16,
               }}
               height={height}
-              flyoutComponent={<GraphTooltip measure={measure || ''} />}
+              flyoutComponent={
+                <GraphTooltip measure={measure || ''} reportType={reportType} />
+              }
               minValue={minValue}
               maxValue={maxValue}
             />

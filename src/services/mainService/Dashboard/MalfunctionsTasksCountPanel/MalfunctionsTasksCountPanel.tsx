@@ -9,43 +9,28 @@ import {
   Title,
   Wrapper,
 } from './MalfunctionsTasksCountPanel.styled';
-import { MalfunctionDescription } from 'services/supervisor/commonAnalytics/CommonAnalyticsPage/StatisticItem/DashboardAnalyticsDetail/MalfunctionIcon/MalfunctionIcon.constants';
 import { CountUp } from 'ui-kit/CountUp';
 import { Skeleton } from 'antd';
-import { malfunctionsMock } from './MalfunctionsTasksCountPanel.constatnts';
 
 export const MalfunctionsTasksCountPanel: FC<Props> = ({
-  malfunctions,
+  tasks,
   isLoading,
 }) => {
+  const sortedTasks = [...(tasks || [])]?.sort(
+    (a, b) => (b.totalTasksCount || 0) - (a.totalTasksCount || 0),
+  );
+
   return (
     <Panel
       title="Задачи"
       padding="0 16px 16px 16px"
-      link="/tasks/list/Observing"
+      link="/tasks/list/Executing"
     >
       <Wrapper>
-        {isLoading &&
-          malfunctionsMock?.map((item) => (
-            <MalfunctionPanel key={item.malfunctionType}>
-              <Title>
-                {MalfunctionDescription[item.malfunctionType as string]}
-              </Title>
-              <TasksCount>
-                <Skeleton.Button size="large" active />
-              </TasksCount>
-              <AdditionTasksCountWrapper>
-                Просроченные <ExpiredTasksCount>--</ExpiredTasksCount>
-              </AdditionTasksCountWrapper>
-            </MalfunctionPanel>
-          ))}
-
         {!isLoading &&
-          malfunctions?.map((item) => (
-            <MalfunctionPanel key={item.malfunctionType}>
-              <Title>
-                {MalfunctionDescription[item.malfunctionType as string]}
-              </Title>
+          sortedTasks.map((item) => (
+            <MalfunctionPanel key={item.taskType}>
+              <Title>{item.title}</Title>
               <TasksCount>
                 <CountUp
                   duration={0.5}
@@ -59,7 +44,46 @@ export const MalfunctionsTasksCountPanel: FC<Props> = ({
               </AdditionTasksCountWrapper>
             </MalfunctionPanel>
           ))}
+        {isLoading &&
+          new Array(4)
+            .fill(0)
+            .map((_, index) => <StatCardSkeleton key={index} />)}
       </Wrapper>
     </Panel>
+  );
+};
+
+export const StatCardSkeleton = () => {
+  return (
+    <div
+      style={{
+        padding: 8,
+        background: '#f5f5f5',
+        borderRadius: 6,
+      }}
+    >
+      {/* Число */}
+      <Skeleton.Button
+        active
+        block
+        size="small"
+        style={{ width: '50px', height: 12, marginBottom: 6 }}
+      />
+      {/* Заголовок */}
+      <Skeleton.Button
+        active
+        size="small"
+        block
+        style={{ width: '90px', height: 22, marginBottom: 6 }}
+      />
+
+      {/* Просроченные */}
+      <Skeleton.Button
+        active
+        block
+        size="small"
+        style={{ width: '45px', height: 12 }}
+      />
+    </div>
   );
 };

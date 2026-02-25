@@ -16,7 +16,7 @@ import { EPremiseCategory } from 'api/types';
 export const ChessBoardView: FC<Props> = ({
   chessboardCreateData,
   handleDeleteEntrance,
-  handleDuplicateEntrance,
+  // handleDuplicateEntrance,
   handleDeleteFloor,
   handleDuplicateFloor,
   handleDeleteApartmnet,
@@ -25,6 +25,8 @@ export const ChessBoardView: FC<Props> = ({
   openEditFloorModal,
   openEditEntranceModal,
   nonLivingPremisesMenuItems,
+  handleDivideApartment,
+  handleCombineApartments,
 }) => {
   useEnterToTab();
 
@@ -47,12 +49,12 @@ export const ChessBoardView: FC<Props> = ({
                           sectionIndex: sectionIndex,
                         }),
                     },
-                    {
-                      title: 'Дублировать подъезд',
-                      onClick: () =>
-                        section.number &&
-                        handleDuplicateEntrance(section.number),
-                    },
+                    // {
+                    //   title: 'Дублировать подъезд',
+                    //   onClick: () =>
+                    //     section.number &&
+                    //     handleDuplicateEntrance(section.number),
+                    // },
                     {
                       title: 'Удалить подъезд',
                       onClick: () =>
@@ -82,6 +84,14 @@ export const ChessBoardView: FC<Props> = ({
                           handleDuplicateFloor({
                             floorNumber: floor.number,
                             sectionNumber: section.number,
+                          }),
+                      },
+                      {
+                        title: 'Объединить квартиры',
+                        onClick: () =>
+                          handleCombineApartments({
+                            floorIndex,
+                            sectionIndex,
                           }),
                       },
                       {
@@ -139,6 +149,25 @@ export const ChessBoardView: FC<Props> = ({
                                 side: 'right',
                               }),
                             hidden: !isBasePremises,
+                          },
+                          {
+                            title: 'Разделить квартиру',
+                            onClick: () =>
+                              handleDivideApartment({
+                                floorIndex,
+                                apartmentIndex,
+                                sectionIndex,
+                                apartmentNumber: apartment.number!,
+                              }),
+                          },
+                          {
+                            title: 'Объединить квартиры',
+                            onClick: () =>
+                              handleCombineApartments({
+                                floorIndex,
+                                apartmentIndex,
+                                sectionIndex,
+                              }),
                           },
                           {
                             title: 'Удалить помещение',

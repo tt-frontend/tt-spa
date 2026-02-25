@@ -27,7 +27,14 @@ export const fetchGroupReport = (
 ): Promise<string> =>
   axios.get('Reports/GroupReport', {
     params,
-    paramsSerializer: (params) => queryString.stringify(params),
+    paramsSerializer: (p) => {
+      const filtered = Object.fromEntries(
+        Object.entries(p).filter(([, value]) => value !== '' && value !== 0),
+      );
+      return queryString.stringify(filtered, {
+        skipNull: true,
+      });
+    },
     responseType: 'blob',
   });
 

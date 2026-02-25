@@ -4,10 +4,12 @@ import {
   AddNonLivingPremisesFormParams,
   DeleteAapartmentPayload,
   DeleteFloorPayload,
+  DivideApartmentPayload,
   DuplicateFloorPayload,
   EditApartmentPayload,
   EditEntrancePayload,
   EditFloorPayload,
+  CombineApartmentsPayload,
 } from './addChessBoardService.types';
 import { insertAfter } from 'utils/insertAfter';
 import {
@@ -466,6 +468,128 @@ const editApartment = (
   };
 };
 
+const divideApartment = (
+  prev: PremiseLocationCreateModel,
+  payload: DivideApartmentPayload,
+): PremiseLocationCreateModel => {
+  const { sectionIndex, floorIndex, apartmentIndex, newApartmentNumbers } =
+    payload;
+
+  return {
+    ...prev,
+    sections:
+      prev.sections
+        ?.map((section, sIdx) =>
+          sIdx === sectionIndex
+            ? {
+                ...section,
+                floors: section.floors?.map((floor, fIdx) =>
+                  fIdx === floorIndex
+                    ? {
+                        ...floor,
+                        premises: floor.premises?.map((premise, pIdx) => {
+                          if (pIdx !== apartmentIndex) return premise;
+
+                          // Replace the original apartment with the first new one
+                          return {
+                            ...premise,
+                            number: newApartmentNumbers[0],
+                          };
+                        }),
+                      }
+                    : floor,
+                ),
+              }
+            : section,
+        )
+        ?.map((section, sIdx) => {
+          if (sIdx !== sectionIndex) return section;
+
+          // Insert new apartments after the divided one
+          return {
+            ...section,
+            floors: section.floors?.map((floor, fIdx) =>
+              fIdx !== floorIndex
+                ? floor
+                : {
+                    ...floor,
+                    premises: [
+                      ...(floor.premises || []).slice(0, apartmentIndex + 1),
+                      ...newApartmentNumbers.slice(1).map((number) => ({
+                        number,
+                        category: EPremiseCategory.Apartment,
+                      })),
+                      ...(floor.premises || []).slice(apartmentIndex + 1),
+                    ],
+                  },
+            ),
+          };
+        }) || [],
+  };
+};
+
+const combineApartments = (
+  prev: PremiseLocationCreateModel,
+  payload: CombineApartmentsPayload,
+): PremiseLocationCreateModel => {
+  const { selectedApartmentIndexes, newApartmentNumber, context } = payload;
+  const { sectionIndex, floorIndex } = context;
+
+  if (
+    !Array.isArray(selectedApartmentIndexes) ||
+    selectedApartmentIndexes.length === 0
+  ) {
+    return prev;
+  }
+
+  return {
+    ...prev,
+    sections:
+      prev.sections?.map((section, sIdx) =>
+        sIdx !== sectionIndex
+          ? section
+          : {
+              ...section,
+              floors: section.floors?.map((floor, fIdx) => {
+                if (fIdx !== floorIndex) return floor;
+
+                const existing = floor.premises ?? [];
+
+                const toRemove = new Set(selectedApartmentIndexes);
+                const baseIndex = Math.min(...selectedApartmentIndexes);
+
+                // оставшиеся помещения
+                const filtered = existing.filter(
+                  (_, idx) => !toRemove.has(idx),
+                );
+
+                // корректная позиция вставки — место первого объединяемого
+                const insertPos = existing.reduce((acc, _, idx) => {
+                  if (idx < baseIndex && !toRemove.has(idx)) {
+                    acc++;
+                  }
+                  return acc;
+                }, 0);
+
+                const newPremise: PremiseCreateModel = {
+                  number: newApartmentNumber,
+                  category: EPremiseCategory.Apartment,
+                };
+
+                return {
+                  ...floor,
+                  premises: [
+                    ...filtered.slice(0, insertPos),
+                    newPremise,
+                    ...filtered.slice(insertPos),
+                  ],
+                };
+              }),
+            },
+      ) ?? [],
+  };
+};
+
 // models
 
 export const chessboardModel = {
@@ -486,4 +610,6 @@ export const apartmentModel = {
   deleteApartment,
   duplicateApartment,
   editApartment,
+  divideApartment,
+  combineApartments,
 };

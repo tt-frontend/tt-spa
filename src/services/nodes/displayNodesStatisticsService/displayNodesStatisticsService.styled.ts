@@ -2,9 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   position: relative;
-  margin-top: 32px;
-  padding-bottom: 100px;
-
+  margin-bottom: 40px;
   width: 100%;
   max-width: 1280px;
 `;

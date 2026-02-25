@@ -33,6 +33,7 @@ import { ExportReportTypeTranslatesLookup } from 'services/reportsService/report
 import { prepareAddressesTreeData } from 'services/reportsService/reportViewService/view/ReportViewPage/ReportFiltrationForm/ReportFiltrationForm.utils';
 import { RegularUnloading } from './RegularUnloading';
 import { omit } from 'lodash';
+import { ReportTypeDictionary, ResourcesNameDictionary } from 'dictionaries';
 
 const withoutHouseMagement = 'withoutHouseMagement';
 
@@ -76,6 +77,82 @@ export const GroupReportForm: FC<GroupReportFormProps> = ({
       });
     },
   });
+
+  const reportName = useMemo(() => {
+    const from = values.From ? dayjs(values.From).format('DD.MM.YYYY') : '';
+    const to = values.To ? dayjs(values.To).format('DD.MM.YYYY') : '';
+
+    let scopeName = 'Выберите адрес';
+
+    if (values.exportType === ExportReportType.ManagementFirm) {
+      const firm = organizations?.items?.find(
+        (o) => o.id === values.ManagementFirmId,
+      );
+      scopeName = firm?.name || 'Выберите УК';
+    }
+
+    if (values.exportType === ExportReportType.HouseManagement) {
+      if (values.HouseManagementId === null) {
+        scopeName = 'Без домоуправления';
+      } else {
+        const hm = houseManagements?.find(
+          (h) => h.id === values.HouseManagementId,
+        );
+        scopeName = hm?.name || 'Выберите домоуправление';
+      }
+    }
+
+    if (values.exportType === ExportReportType.Address) {
+      if (values.BuildingIds?.length) {
+        const selectedAddresses: string[] = [];
+
+        addressesWithHouseManagements?.forEach((hm) => {
+          hm.streets?.forEach((streetItem) => {
+            streetItem.addresses?.forEach((address) => {
+              if (values.BuildingIds!.includes(address.buildingId)) {
+                const street = streetItem.street || '';
+                const number = address.number || '';
+                const corpus = address.corpus ? `к${address.corpus}` : '';
+                selectedAddresses.push(`${street} ${number}${corpus}`.trim());
+              }
+            });
+          });
+        });
+
+        scopeName = selectedAddresses.length
+          ? selectedAddresses.join(', ')
+          : 'Выберите адрес';
+      } else {
+        scopeName = 'Выберите адрес';
+      }
+    }
+
+    const detail = ReportTypeDictionary[values.ReportType!];
+
+    const resource = values.NodeResourceTypes?.length
+      ? values.NodeResourceTypes.map(
+          (type) => ResourcesNameDictionary[type],
+        ).join(', ')
+      : 'выберите ресурс';
+
+    return `${scopeName} - ${resource} с ${from} по ${to}, ${detail}`;
+  }, [
+    values.exportType,
+    values.ManagementFirmId,
+    values.HouseManagementId,
+    values.BuildingIds,
+    values.NodeResourceTypes,
+    values.From,
+    values.To,
+    values.ReportType,
+    organizations,
+    houseManagements,
+    addressesWithHouseManagements,
+  ]);
+
+  useEffect(() => {
+    setFieldValue('FileName', reportName);
+  }, [reportName, setFieldValue]);
 
   const addressesTreeData = prepareAddressesTreeData(
     addressesWithHouseManagements,
@@ -207,7 +284,7 @@ export const GroupReportForm: FC<GroupReportFormProps> = ({
               }}
               allowClear
             >
-              <Select.Option key={withoutHouseMagement} value={'null'}>
+              <Select.Option key={withoutHouseMagement} value={null}>
                 Без домоуправления
               </Select.Option>
               {houseManagements?.map((houseManagement) => (
@@ -294,6 +371,7 @@ export const GroupReportForm: FC<GroupReportFormProps> = ({
               setFieldValue('To', To);
             }}
             isDisabled={values.isRegular}
+            isSono={values.ReportType === EReportType.Monthly}
           />
         </FormItem>
         <FormItem label="Детализация отчёта">

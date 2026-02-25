@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useMemo } from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { ToExecutionTasksExtendedSearchFormProps } from './ToExecutionTasksExtendedSearchForm.types';
+import { ToExecutionTasksExtendedSearchFormProps } from './TasksExtendedSearchForm.types';
 import { useSwitchInputOnEnter } from 'hooks/useSwitchInputOnEnter';
 import {
   EResourceType,
@@ -19,7 +19,7 @@ import {
   StyledContainerThreeItemsMainTypes,
   StyledTooltiContainer,
   ToExecutionWrapper,
-} from './ToExecutionTasksExtendedSearchForm.styled';
+} from './TasksExtendedSearchForm.styled';
 import { SearchFieldType } from 'services/addressSearchService/view/AddressSearch/AddressSearch.types';
 import { AddressSearchContainer } from 'services/addressSearchService';
 import { Input } from 'ui-kit/Input';
@@ -29,7 +29,7 @@ import { TimeStatusesLookUp } from 'services/tasks/tasksProfileService/tasksProf
 
 const { Option } = Select;
 
-export const ToExecutionTasksExtendedSearchForm: FC<
+export const TasksExtendedSearchForm: FC<
   ToExecutionTasksExtendedSearchFormProps
 > = ({ setFieldValue, taskTypes, values, housingManagments, perpetrators }) => {
   const isIndividualDevice = values.EngineeringElement === 'IndividualDevice';
