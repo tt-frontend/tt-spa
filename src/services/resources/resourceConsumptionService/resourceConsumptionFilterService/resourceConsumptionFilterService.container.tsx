@@ -39,11 +39,13 @@ export const ResourceConsumptionFilterContainer = () => {
   });
 
   const preparedHouseManagements = useMemo(
-    () =>
-      houseManagements.map((houseManagement) => ({
+    () => [
+      { id: '-1', name: 'Все домоуправления' },
+      ...houseManagements.map((houseManagement) => ({
         id: houseManagement.id,
         name: houseManagement.name,
       })),
+    ],
     [houseManagements],
   );
 

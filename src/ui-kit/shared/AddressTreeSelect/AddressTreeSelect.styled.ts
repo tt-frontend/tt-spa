@@ -16,10 +16,6 @@ const TreeSelectSmallStyles = css`
     padding: 0px;
   }
 
-  .ant-select-selection-search {
-    transform: translateY(-6px);
-  }
-
   .ant-select-arrow {
     margin-right: 0px;
   }

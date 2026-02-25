@@ -33,9 +33,10 @@ const $selectedCity = createStore<string | null>(null)
   .reset(resourceConsumptionService.gates.ResourceConsumptionGate.close);
 
 const selectHouseManagememt = createEvent<string | null>();
-const $selectedHouseManagement = createStore<string | null>(null)
-  .on(selectHouseManagememt, (_, id) => id)
-  .reset(clearFilter);
+const $selectedHouseManagement = createStore<string | null>(null).on(
+  selectHouseManagememt,
+  (_, id) => id,
+);
 
 const $houseManagements = createStore<HouseManagementWithStreetsResponse[]>([])
   .on(getAddressesFx.doneData, (_, houseManagements) => houseManagements)
@@ -89,7 +90,7 @@ const $addressesList = combine(
   $houseManagements,
   $selectedHouseManagement,
   (houseManagements, selectedHouseManagement) => {
-    if (!selectedHouseManagement) {
+    if (!selectedHouseManagement || selectedHouseManagement === '-1') {
       const streets = houseManagements.reduce(
         (acc, houseManagement) => [...acc, ...(houseManagement.streets || [])],
         [] as StreetWithBuildingNumbersResponse[],
@@ -110,7 +111,7 @@ const $treeData = combine(
   $houseManagements,
   $selectedHouseManagement,
   (houseManagements, selectedHouseManagement) => {
-    if (!selectedHouseManagement) {
+    if (!selectedHouseManagement || selectedHouseManagement === '-1') {
       return prepareAddressesWithParentsForTreeSelect(houseManagements);
     }
     const requiredHouseManagements = houseManagements.find(
