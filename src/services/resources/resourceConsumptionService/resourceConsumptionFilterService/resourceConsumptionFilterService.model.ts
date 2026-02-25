@@ -89,12 +89,16 @@ const $addressesList = combine(
   $houseManagements,
   $selectedHouseManagement,
   (houseManagements, selectedHouseManagement) => {
-    if (!selectedHouseManagement) {
+    console.log('houseManagements', houseManagements);
+    console.log('selectedHouseManagement', selectedHouseManagement);
+
+    if (!selectedHouseManagement || selectedHouseManagement === '-1') {
       const streets = houseManagements.reduce(
         (acc, houseManagement) => [...acc, ...(houseManagement.streets || [])],
         [] as StreetWithBuildingNumbersResponse[],
       );
 
+      console.log(streets);
       return getAddressSearchData(streets);
     }
 
@@ -110,7 +114,7 @@ const $treeData = combine(
   $houseManagements,
   $selectedHouseManagement,
   (houseManagements, selectedHouseManagement) => {
-    if (!selectedHouseManagement) {
+    if (!selectedHouseManagement || selectedHouseManagement === '-1') {
       return prepareAddressesWithParentsForTreeSelect(houseManagements);
     }
     const requiredHouseManagements = houseManagements.find(
