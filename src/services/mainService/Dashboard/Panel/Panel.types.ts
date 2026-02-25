@@ -3,4 +3,5 @@ export type Props = {
   padding?: number | string;
   link?: string;
   children?: React.ReactNode;
+  onClick?: () => void;
 };
