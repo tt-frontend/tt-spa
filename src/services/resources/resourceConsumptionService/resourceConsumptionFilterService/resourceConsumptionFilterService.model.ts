@@ -89,16 +89,12 @@ const $addressesList = combine(
   $houseManagements,
   $selectedHouseManagement,
   (houseManagements, selectedHouseManagement) => {
-    console.log('houseManagements', houseManagements);
-    console.log('selectedHouseManagement', selectedHouseManagement);
-
     if (!selectedHouseManagement || selectedHouseManagement === '-1') {
       const streets = houseManagements.reduce(
         (acc, houseManagement) => [...acc, ...(houseManagement.streets || [])],
         [] as StreetWithBuildingNumbersResponse[],
       );
 
-      console.log(streets);
       return getAddressSearchData(streets);
     }
 
