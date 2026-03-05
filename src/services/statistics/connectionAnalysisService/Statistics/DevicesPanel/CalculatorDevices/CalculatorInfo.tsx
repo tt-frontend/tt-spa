@@ -4,6 +4,7 @@ import {
   DeviceTitleWrapper,
   Model,
   SerialNumber,
+  StatusIconWrapper,
   StatusWrapper,
   Wrapper,
 } from './CalculatorInfo.styled';
@@ -14,12 +15,14 @@ import { StatusBar } from 'ui-kit/shared/IndividualDeviceInfo/DeviceStatus/Devic
 import { getBuildingAddress } from 'utils/getBuildingAddress';
 import dayjs from 'api/dayjs';
 import { ContextMenuButton } from 'ui-kit/ContextMenuButton';
+import { ConnectionStatusToIcon } from './CalculatorInfo.constants';
+import { Tooltip } from 'ui-kit/shared/Tooltip';
 
 export const CalculatorInfo: FC<Props> = ({ device, handlePing }) => {
   const deviceInfo = (
     <DeviceInfoWrapper>
       <Model>{device.model}</Model>
-      <SerialNumber>({device.serialNumber})</SerialNumber>
+      <SerialNumber>({device.serialNumber}) </SerialNumber>
     </DeviceInfoWrapper>
   );
 
@@ -33,6 +36,13 @@ export const CalculatorInfo: FC<Props> = ({ device, handlePing }) => {
         )}
         {!device.id && deviceInfo}
       </DeviceTitleWrapper>
+
+      <StatusIconWrapper>
+        <Tooltip title={<div>{device.connectionInfo?.statusDescription}</div>}>
+          {device.connectionInfo?.status &&
+            ConnectionStatusToIcon[device.connectionInfo?.status]}
+        </Tooltip>
+      </StatusIconWrapper>
 
       <div>
         {(device.connectionInfo?.lastHourlyArchiveTime ||

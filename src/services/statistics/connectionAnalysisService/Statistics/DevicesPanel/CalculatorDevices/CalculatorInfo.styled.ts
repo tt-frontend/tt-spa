@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   height: 52px;
   padding: 0 16px;
   display: grid;
-  grid-template-columns: 1.2fr 0.7fr 0.8fr 1fr 35px;
+  grid-template-columns: 1fr 0.2fr 0.5fr 0.8fr 1fr 35px;
   border-top: 1px solid #e1e1e1;
   color: #272f5ab2;
   font-weight: 500;
@@ -70,4 +70,8 @@ export const StatusWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+`;
+
+export const StatusIconWrapper = styled.div`
+  cursor: pointer;
 `;

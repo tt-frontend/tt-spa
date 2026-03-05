@@ -128,6 +128,9 @@ import MainIcon from './svg/mainIcon.svg?react';
 import ChevronRightIcon from './svg/chevronRight.svg?react';
 import ApartmentLargeIcon from './svg/apartmentLarge.svg?react';
 import DotIcon from './svg/dotIcon.svg?react';
+import UnstableConnectionIcon from './svg/unstableConnection.svg?react';
+import NoConnectionNetIcon from './svg/noConnectionNet.svg?react';
+import DeviceMalfunctionIcon from './svg/deviceMalfunction.svg?react';
 
 export {
   FinishIcon,
@@ -245,6 +248,9 @@ export {
   MeasurementSmallIcon,
   CurrentAnalyticsIcon,
   MagnifierIcon,
+  UnstableConnectionIcon,
+  NoConnectionNetIcon,
+  DeviceMalfunctionIcon,
   StopOrangeIcon,
   OtherSourceIcon,
   ChevronActiveIcon,
