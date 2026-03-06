@@ -167,3 +167,11 @@ export const TextAreaSC = styled(TextArea)`
     font-family: monospace !important;
   }
 `;
+
+export const SwitchWrapper = styled.div<{ isActive: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: ${({ isActive }) => (isActive ? 'var(--primary-100)' : '#3a3a3a')};
+  font-weight: 500;
+`;
