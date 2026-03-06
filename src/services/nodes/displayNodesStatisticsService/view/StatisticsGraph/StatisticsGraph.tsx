@@ -9,6 +9,7 @@ import {
   VictoryScatter,
 } from 'victory';
 import React, { useEffect, useMemo, useState } from 'react';
+import dayjs from 'api/dayjs';
 import 'antd/es/date-picker/style/index';
 import { GraphViewProps } from './StatisticsGraph.types';
 import {
@@ -104,7 +105,28 @@ export const GraphView: React.FC<GraphViewProps> = ({
     return prepareArchiveIncorrectValues(base, reportType, maxValue);
   }, [rawArchive, reportType, maxValue]);
 
-  console.log(preparedArchiveIncorrectValues)
+  const incorrectTooltipPeriod = useMemo(() => {
+    if (!preparedArchiveIncorrectValues.length) {
+      return { from: '', to: '' };
+    }
+
+    const unit = reportType === 'daily' ? 'day' : 'hour';
+    const firstIndex = preparedArchiveIncorrectValues.length > 2 ? 1 : 0;
+    const lastIndex =
+      preparedArchiveIncorrectValues.length > 2
+        ? preparedArchiveIncorrectValues.length - 2
+        : preparedArchiveIncorrectValues.length - 1;
+
+    const from = dayjs(preparedArchiveIncorrectValues[firstIndex].time)
+      .utcOffset(0)
+      .format('DD.MM.YYYY HH:mm');
+    const to = dayjs(preparedArchiveIncorrectValues[lastIndex].time)
+      .utcOffset(0)
+      .add(1, unit)
+      .format('DD.MM.YYYY HH:mm');
+
+    return { from, to };
+  }, [preparedArchiveIncorrectValues, reportType]);
 
   if (preparedArchiveValues.length === 0) {
     return <GraphEmptyData />;
@@ -230,7 +252,6 @@ export const GraphView: React.FC<GraphViewProps> = ({
           data={preparedArchiveIncorrectValues}
           x="time"
           y="value"
-
           labelComponent={
             <CustomTooltip
               flyoutStyle={{ fill: 'var(--main-100)' }}
@@ -243,7 +264,10 @@ export const GraphView: React.FC<GraphViewProps> = ({
               }}
               height={height}
               flyoutComponent={
-                <IncorrectArchTooltip from='1' to='2' value={0} />
+                <IncorrectArchTooltip
+                  from={incorrectTooltipPeriod.from}
+                  to={incorrectTooltipPeriod.to}
+                />
               }
               minValue={minValue}
               maxValue={maxValue}
