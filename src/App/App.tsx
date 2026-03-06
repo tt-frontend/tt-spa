@@ -7,10 +7,13 @@ import 'css/index.scss';
 import 'css/styles.css';
 import { useRoutes } from './router/router';
 import { currentUserService } from 'services/currentUser/currentUserService';
+import { useMobileCheck } from 'mobile/mobileService.utils';
 
 const { outputs } = currentUserService;
 
 export const App: FC = () => {
+  useMobileCheck();
+
   const roles = useUnit(outputs.$currentUserRoles);
 
   const routesList = useRoutes(roles);

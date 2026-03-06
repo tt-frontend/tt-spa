@@ -11,7 +11,7 @@ export const Wrapper = styled.div<{ isOpen: boolean }>`
   position: fixed;
   height: 100vh;
   background: #f3f5f6;
-  z-index: 5;
+  z-index: 50;
 `;
 
 export const MenuWrapper = styled.div`
