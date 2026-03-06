@@ -117,7 +117,7 @@ export const ChessBoardView: FC<Props> = ({
                     return (
                       <ChessboardItem
                         key={String(apartment.number) + apartmentIndex}
-                        wide={!isBasePremises}
+                        wide
                         menuButtons={[
                           {
                             title: 'Редактировать помещение',
