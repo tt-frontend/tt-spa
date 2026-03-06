@@ -18,4 +18,6 @@ export type DevelopmentSettingsModalProps = {
   handleLogin: (payload: LoginRequest) => void;
   removeCred: (email: string) => void;
   setCredsList: (payload: ICredItem[]) => void;
+  isMobile: boolean;
+  setIsMobile: (isMobile: boolean) => void;
 };

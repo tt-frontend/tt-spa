@@ -16,6 +16,7 @@ import {
   FeatureToggle,
   FeatureTogglesWrapper,
   RemoveCredIconWrapper,
+  SwitchWrapper,
   TextAreaSC,
   UserName,
   Wrapper,
@@ -36,6 +37,8 @@ import {
   Clipboard,
   ClipboardCheck,
   InputCursorText,
+  PcDisplay,
+  PhoneFill,
   X,
 } from 'react-bootstrap-icons';
 import { generateColorsFromString } from 'utils/generateGradient';
@@ -59,6 +62,8 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
   handleLogin,
   removeCred,
   setCredsList,
+  isMobile,
+  setIsMobile,
 }) => {
   const [inputCredsOpen, setInputCredsOpen] = React.useState(false);
 
@@ -258,6 +263,32 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
               </FeatureTogglesWrapper>
             </FormItem>
           )}
+          <FormItem label="Mobile">
+            <Segmented
+              value={isMobile ? 'mobile' : 'desktop'}
+              onChange={(value) => setIsMobile(value === 'mobile')}
+              options={[
+                {
+                  value: 'desktop',
+                  label: (
+                    <SwitchWrapper isActive={!isMobile}>
+                      Desktop
+                      <PcDisplay />
+                    </SwitchWrapper>
+                  ),
+                },
+                {
+                  value: 'mobile',
+                  label: (
+                    <SwitchWrapper isActive={isMobile}>
+                      Mobile phone
+                      <PhoneFill />
+                    </SwitchWrapper>
+                  ),
+                },
+              ]}
+            />
+          </FormItem>
           <Badge>
             TT frontend team {dayjs().format('YYYY')} [ds: 2.2.0] [app:{' '}
             {APP_VERSION}]
