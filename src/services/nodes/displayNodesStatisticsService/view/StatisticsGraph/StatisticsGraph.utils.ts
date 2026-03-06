@@ -58,7 +58,69 @@ export function prepareDataForNodeStatistic(
       });
     }
   }
+
   return result;
+}
+
+export function prepareArchiveIncorrectValues(
+  unsortedData: PreparedArchiveValues[],
+  reportType: ReportType,
+  maxValue: number,
+): PreparedArchiveValues[] {
+  const data = sortArchiveArray(unsortedData);
+
+  if (!data.length) return [];
+
+  const unit = reportType === 'daily' ? 'day' : 'hour';
+
+  const start = dayjs(data[0].time).utcOffset(0);
+  const end = dayjs(data[data.length - 1].time).utcOffset(0);
+
+  const steps = end.diff(start, unit) + 1;
+
+  const result: PreparedArchiveValues[] = [];
+
+  let index = 0;
+
+  for (let step = 0; step < steps; step++) {
+    const time = start.add(step, unit);
+    const current = data[index];
+
+    const elem = {
+      ...current,
+      time: time.format(),
+    };
+
+    if (elem.isCorrect) {
+      elem.value = null;
+    }
+
+    if (!elem.isCorrect) {
+      elem.value = maxValue;
+    }
+
+    result.push(elem);
+    index++;
+  }
+
+  const firstTime = dayjs(result[0].time).utcOffset(0).subtract(1, unit);
+  const lastTime = dayjs(result[result.length - 1].time)
+    .utcOffset(0)
+    .add(1, unit);
+
+  return [
+    {
+      ...result[0],
+      time: firstTime.format(),
+      value: maxValue,
+    },
+    ...result,
+    {
+      ...result[result.length - 1],
+      time: lastTime.format(),
+      value: maxValue,
+    },
+  ];
 }
 
 const getTaskXPos = (payload: GetTaskXPosPayload) => {

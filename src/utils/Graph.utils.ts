@@ -28,17 +28,13 @@ export function getMinAndMax<T>(
 
   return { minValue, maxValue };
 }
-
-export function prepareData<T>(data: (T & { value?: number | null })[]) {
-  if (!data) return [];
-  return data.reduce((acc, reading) => {
-    if (reading === undefined || reading.value === undefined) {
-      return acc;
-    }
-    return [...acc, reading as T & PreparedArchiveValues];
-  }, [] as (T & PreparedArchiveValues)[]);
+export function prepareData<T extends { value?: number | null }>(data?: T[]) {
+  if (!Array.isArray(data)) return [];
+  return data.filter((r): r is T & PreparedArchiveValues => {
+    const v = r?.value;
+    return r !== undefined && v !== undefined;
+  }) as (T & PreparedArchiveValues)[];
 }
-
 export const GraphColorLookup: { [key in EResourceType]: string } = {
   [EResourceType.HotWaterSupply]: '#ff8c68',
   [EResourceType.ColdWaterSupply]: '#79afff',
