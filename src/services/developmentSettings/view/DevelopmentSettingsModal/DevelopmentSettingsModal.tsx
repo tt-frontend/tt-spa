@@ -290,7 +290,7 @@ export const DevelopmentSettingsModal: FC<DevelopmentSettingsModalProps> = ({
             />
           </FormItem>
           <Badge>
-            TT frontend team {dayjs().format('YYYY')} [ds: 2.2.0] [app:{' '}
+            TT frontend team {dayjs().format('YYYY')} [ds: 2.2.1] [app:{' '}
             {APP_VERSION}]
           </Badge>
         </Wrapper>
