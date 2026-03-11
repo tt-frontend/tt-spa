@@ -166,7 +166,7 @@ export const TaskProfile: FC<TaskProfileProps> = ({
                     />
                   )}
 
-                  {latitude && longitude && (
+                  {latitude && longitude ? (
                     <MapLinkWrapper
                       onClick={() => {
                         navigate('/tasks/list/Executing');
@@ -177,7 +177,7 @@ export const TaskProfile: FC<TaskProfileProps> = ({
                     >
                       <EyeIcon /> Показать задачу на карте
                     </MapLinkWrapper>
-                  )}
+                  ) : null}
 
                   {device && <TaskDeviceInfo device={device} />}
                   {pipeNode && (

@@ -72,18 +72,18 @@ export const TaskBaseInfo: FC<TaskBaseInfoProps> = ({ task }) => {
           <div>Адрес</div>
           <Address onClick={() => navigate(linkPath)}>{address}</Address>
         </RowWrapper>
-        {apartment && (
+        {apartment ? (
           <RowWrapper>
             <div>Комментарии к квартире</div>
             <div>{apartmentComment}</div>
           </RowWrapper>
-        )}
-        {perpetrator && (
+        ) : null}
+        {perpetrator ? (
           <RowWrapper>
             <div>Исполнитель</div>
             <div>{perpetrator.name}</div>
           </RowWrapper>
-        )}
+        ) : null}
       </InfoWrapper>
     </TaskBaseInfoWrapper>
   );
