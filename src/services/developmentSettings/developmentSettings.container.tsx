@@ -5,6 +5,7 @@ import { DevelopmentSettingsModal } from './view/DevelopmentSettingsModal';
 import { DevelopmentSettingsContainerProps } from './developmentSettings.types';
 import { currentOrganizationService } from 'services/currentOrganizationService';
 import { loginService } from 'services/authorizations/loginService';
+import { mobileService } from 'mobile';
 
 const { inputs, outputs } = developmentSettingsService;
 
@@ -24,6 +25,8 @@ export const DevelopmentSettingsContainer: FC<
     handleLogin,
     removeCred,
     setCredsList,
+    isMobile,
+    setIsMobile,
   } = useUnit({
     visible: outputs.$isDevSettingsModalOpen,
     devUrl: currentOrganizationService.outputs.$devUrl,
@@ -37,6 +40,8 @@ export const DevelopmentSettingsContainer: FC<
     handleLogin: loginService.inputs.handlePostLogin,
     removeCred: inputs.removeCred,
     setCredsList: inputs.setCredsList,
+    isMobile: mobileService.outputs.$isMobile,
+    setIsMobile: mobileService.inputs.setIsMobile,
   });
 
   return (
@@ -54,6 +59,8 @@ export const DevelopmentSettingsContainer: FC<
       handleLogin={handleLogin}
       removeCred={removeCred}
       setCredsList={setCredsList}
+      isMobile={isMobile}
+      setIsMobile={setIsMobile}
     />
   );
 };
