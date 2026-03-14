@@ -39,6 +39,10 @@ export const useMobileRoutes = (
       element: <MobileLayoutContainer />,
       children: [
         {
+          path: '/login',
+          element: <Navigate replace to={initialTasksPath} />,
+        },
+        {
           path: '/tasks',
           element: <Navigate replace to={initialTasksPath} />,
         },
