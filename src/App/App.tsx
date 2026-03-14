@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { Bootstrap } from './Bootstrap';
 import { useNavigate, useRoutes as useRouter } from 'react-router-dom';
 import { useUnit } from 'effector-react';
@@ -28,9 +28,13 @@ export const App: FC = () => {
   const router = useRouter(routesList);
   const navigate = useNavigate();
   const { isAuth, initialTasksPath } = useRouterContext(roles);
+  const wasMobileRef = useRef(isMobile);
 
   useEffect(() => {
-    if (!isMobile) return;
+    const wasMobile = wasMobileRef.current;
+    wasMobileRef.current = isMobile;
+
+    if (wasMobile || !isMobile) return;
 
     navigate(isAuth ? initialTasksPath : '/login', { replace: true });
   }, [isMobile, isAuth, initialTasksPath, navigate]);
