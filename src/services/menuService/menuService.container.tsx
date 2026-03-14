@@ -14,7 +14,10 @@ import { MenuContainerProps } from './menuService.types';
 const { outputs, gates } = menuService;
 const { UserRolesGate } = gates;
 
-export const MenuContainer: FC<MenuContainerProps> = ({ isOpen }) => {
+export const MenuContainer: FC<MenuContainerProps> = ({
+  isOpen,
+  allowedMenuTypes,
+}) => {
   const {
     currentUser,
     isCurrentUserLoading,
@@ -35,13 +38,19 @@ export const MenuContainer: FC<MenuContainerProps> = ({ isOpen }) => {
   const filteredMenuItems = useMemo(() => {
     if (!userRoles) return [];
 
-    return filterMenuItems(
+    const items = filterMenuItems(
       menuItems,
       privates,
       hidden,
       userRoles.map((elem) => elem.key!),
     );
-  }, [menuItems, userRoles]);
+
+    if (!allowedMenuTypes?.length) {
+      return items;
+    }
+
+    return items.filter((item) => allowedMenuTypes.includes(item.type));
+  }, [menuItems, userRoles, allowedMenuTypes]);
 
   return (
     <>

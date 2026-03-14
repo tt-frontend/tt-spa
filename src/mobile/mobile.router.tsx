@@ -4,10 +4,11 @@ import {
   Navigate,
   RegistrationContainer,
   TaskProfileContainer,
-  TasksProfileContainer,
 } from 'App/router/router.imports';
 import { useRouterContext } from 'App/router/router.hooks';
 import { TasksRouterWrapper } from 'App/router/router.components';
+import { MobileLayoutContainer } from 'App/layout/mobileLayout.container';
+import { TasksListContainer } from './services/tasksList';
 
 export const useMobileRoutes = (
   currentUserRoles: ESecuredIdentityRoleNameStringDictionaryItem[],
@@ -34,20 +35,26 @@ export const useMobileRoutes = (
 
   return [
     {
-      path: '/tasks',
-      element: <Navigate replace to={initialTasksPath} />,
-    },
-    {
-      path: '/tasks',
-      element: <TasksRouterWrapper />,
+      path: '/',
+      element: <MobileLayoutContainer />,
       children: [
         {
-          path: '/tasks/profile/:taskId',
-          element: <TaskProfileContainer />,
+          path: '/tasks',
+          element: <Navigate replace to={initialTasksPath} />,
         },
         {
-          path: '/tasks/list/:grouptype',
-          element: <TasksProfileContainer />,
+          path: '/tasks',
+          element: <TasksRouterWrapper />,
+          children: [
+            {
+              path: '/tasks/profile/:taskId',
+              element: <TaskProfileContainer />,
+            },
+            {
+              path: '/tasks/list/:grouptype',
+              element: <TasksListContainer />,
+            },
+          ],
         },
       ],
     },

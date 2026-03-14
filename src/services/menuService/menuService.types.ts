@@ -2,6 +2,7 @@ import { ESecuredIdentityRoleName } from 'api/types';
 
 export type MenuContainerProps = {
   isOpen: boolean;
+  allowedMenuTypes?: MenuType[];
 };
 
 export enum MenuType {
