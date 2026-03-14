@@ -26,5 +26,4 @@ export type Props = {
   isSpectator: boolean;
   changePageNumber: (page: number) => void;
   selectedTasks: number[];
-  toggleTaskCheckbox: (id: number) => void;
 };

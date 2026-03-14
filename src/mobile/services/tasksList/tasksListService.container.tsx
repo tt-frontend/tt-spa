@@ -43,7 +43,6 @@ export const TasksListContainer = () => {
     clearFilters,
     clearAddress,
     selectedTasks,
-    toggleTaskCheckbox,
     setSelectedTasks,
   } = useUnit({
     actualTaskTypes: $actualTaskTypes,
@@ -64,7 +63,6 @@ export const TasksListContainer = () => {
     clearFilters: inputs.clearFilters,
     clearAddress: inputs.clearAddress,
     selectedTasks: outputs.$selectedTasks,
-    toggleTaskCheckbox: inputs.toggleTaskCheckbox,
     setSelectedTasks: inputs.setSelectedTasks,
   });
 
@@ -171,7 +169,6 @@ export const TasksListContainer = () => {
         isSpectator={isSpectator}
         changePageNumber={changePageNumber}
         selectedTasks={selectedTasks}
-        toggleTaskCheckbox={toggleTaskCheckbox}
       />
     </>
   );

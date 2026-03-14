@@ -1,16 +1,6 @@
 import React, { FC, useCallback, useEffect, useMemo, useRef } from 'react';
 import {
-  ActionsRow,
-  ActionButton,
-  DrawerBody,
-  DrawerHeader,
-  DrawerHeaderTitle,
-  DrawerHeaderClose,
-  DrawerSC,
   FilterIconButton,
-  FiltersFooter,
-  FiltersSection,
-  FiltersTitle,
   HeaderRow,
   HeaderTitle,
   PaginationSC,
@@ -24,30 +14,17 @@ import { useFormik } from 'formik';
 import { fromEnter } from 'ui-kit/shared/DatePickerNative';
 import { useNavigate } from 'react-router-dom';
 import { TaskGroupingFilter } from 'api/types';
-import { TasksList } from 'services/tasks/tasksProfileService/view/TasksList';
 import { Empty } from 'antd';
 import { WithLoader } from 'ui-kit/shared/WithLoader';
 import { ContextMenuButton } from 'ui-kit/ContextMenuButton/ContextMenuButton';
 import { exportTasksListService } from 'services/tasks/tasksProfileService/view/TasksProfile/exportTasksList/exportTasksListService.models';
 import { useUnit } from 'effector-react';
-import { MagnifierIcon, FilterIcon, CloseIcon } from 'ui-kit/icons';
-import { Select } from 'ui-kit/Select';
-import { FormItem } from 'ui-kit/FormItem';
-import { AddressSearchContainer } from 'services/addressSearchService';
-import { SearchFieldType } from 'services/addressSearchService/view/AddressSearch/AddressSearch.types';
-import { AddressSearchFieldsNameLookup } from 'services/tasks/tasksProfileService/view/SearchTasks/SearchTasks.constants';
+import { MagnifierIcon, FilterIcon } from 'ui-kit/icons';
 import { handleChangeGroupType } from 'services/tasks/taskTypesService/taskTypesService.model';
-import {
-  EResourceType,
-  EStageTimeStatus,
-  ETaskEngineeringElement,
-} from 'api/types';
-import { EngineeringElementLookUp } from 'dictionaries';
-import { actResourceNamesLookup } from 'utils/actResourceNamesLookup';
-import { TimeStatusesLookUp } from 'services/tasks/tasksProfileService/tasksProfileService.types';
 import { ExportTasksListContainer } from 'services/tasks/tasksProfileService/view/TasksProfile/exportTasksList';
-
-const { Option } = Select;
+import { TaskItem } from './TaskItem';
+import { TaskFilter } from './TaskFilter';
+import { AddressSearchFieldsNameLookup } from 'services/tasks/tasksProfileService/view/SearchTasks/SearchTasks.constants';
 
 export const TasksListPage: FC<Props> = ({
   tasks,
@@ -67,7 +44,6 @@ export const TasksListPage: FC<Props> = ({
   isSpectator,
   changePageNumber,
   selectedTasks,
-  toggleTaskCheckbox,
 }) => {
   const { handleExportTasks } = useUnit({
     handleExportTasks: exportTasksListService.inputs.openModal,
@@ -182,35 +158,9 @@ export const TasksListPage: FC<Props> = ({
     }
   }, [isSpectator, grouptype, navigate]);
 
-  const housingManagementOptions = useMemo(
-    () =>
-      (housingManagments || [])
-        .filter((elem) => Boolean(elem.key))
-        .map(({ value, key }) => (
-          <Option key={key} value={key}>
-            {value}
-          </Option>
-        )),
-    [housingManagments],
-  );
-
-  const taskTypeOptions = (actualTaskTypes || []).map(
-    ({ taskType, typeName }) => (
-      <Option key={taskType} value={taskType}>
-        {typeName}
-      </Option>
-    ),
-  );
-
   const tasksList = useMemo(
-    () => (
-      <TasksList
-        tasks={tasks}
-        selectedTasks={selectedTasks}
-        toggleTaskCheckbox={toggleTaskCheckbox}
-      />
-    ),
-    [tasks, selectedTasks, toggleTaskCheckbox],
+    () => tasks.map((task) => <TaskItem key={task.id} task={task} />),
+    [tasks],
   );
 
   return (
@@ -275,170 +225,26 @@ export const TasksListPage: FC<Props> = ({
         />
       )}
 
-      <DrawerSC
-        open={isExtendedSearchOpen}
-        title={<></>}
-        closable={false}
-        maskClosable={true}
+      <TaskFilter
+        isOpen={isExtendedSearchOpen}
+        values={values}
+        actualTaskTypes={actualTaskTypes}
+        housingManagments={housingManagments}
+        perpetrators={perpetrators}
         onClose={closeExtendedSearch}
-        placement="right"
-        width="100%"
-        style={{ padding: 0 }}
-        headerStyle={{ display: 'none' }}
-      >
-        <DrawerHeader>
-          <FiltersTitle>Фильтры</FiltersTitle>
-          <DrawerHeaderClose onClick={closeExtendedSearch}>
-            <CloseIcon />
-          </DrawerHeaderClose>
-        </DrawerHeader>
-        <DrawerBody>
-          <FiltersSection>
-            <DrawerHeaderTitle>Адрес</DrawerHeaderTitle>
-            <AddressSearchContainer
-              isCityPreselected={false}
-              onChange={(key, value) =>
-                setFieldValue(AddressSearchFieldsNameLookup[key], value)
-              }
-              fields={[
-                SearchFieldType.City,
-                SearchFieldType.Street,
-                SearchFieldType.House,
-                SearchFieldType.Corpus,
-              ]}
-              showLabels
-              className="mobile-address-search"
-              initialValues={{
-                city: values.City,
-                street: values.Street,
-                house: values.HousingStockNumber,
-                corpus: values.Corpus,
-              }}
-            />
-            <FormItem label="Кв">
-              <SearchInput
-                name="ApartmentNumber"
-                value={values.ApartmentNumber}
-                onChange={(e) =>
-                  setFieldValue('ApartmentNumber', e.target.value)
-                }
-                placeholder="Квартира"
-              />
-            </FormItem>
-          </FiltersSection>
-
-          <FiltersSection>
-            <FormItem label="Элемент инженерной сети">
-              <Select
-                showAction={['focus']}
-                placeholder="Элемент"
-                value={values.EngineeringElement}
-                onChange={(value) => {
-                  setFieldValue('EngineeringElement', value);
-                  setFieldValue('TaskType', '');
-                }}
-              >
-                <Option value={''}>Все</Option>
-                {Object.keys(ETaskEngineeringElement).map((el) => (
-                  <Option value={el} key={el}>
-                    {EngineeringElementLookUp[el as ETaskEngineeringElement]}
-                  </Option>
-                ))}
-              </Select>
-            </FormItem>
-            <FormItem label="Тип ресурса">
-              <Select
-                showAction={['focus']}
-                placeholder="Тип ресурса"
-                value={values.Resource}
-                onChange={(value) => {
-                  setFieldValue('Resource', value);
-                }}
-              >
-                <Option value={''}>Все</Option>
-                {Object.keys(EResourceType).map((el) => (
-                  <Option value={el} key={el}>
-                    {actResourceNamesLookup[el as EResourceType]}
-                  </Option>
-                ))}
-              </Select>
-            </FormItem>
-            <FormItem label="Домоуправление">
-              <Select
-                showAction={['focus']}
-                placeholder="Домоуправление"
-                value={values?.HouseManagementId}
-                onChange={(value) => {
-                  setFieldValue('HouseManagementId', value);
-                }}
-              >
-                <Option value={''}>Все</Option>
-                {housingManagementOptions}
-              </Select>
-            </FormItem>
-          </FiltersSection>
-
-          <FiltersSection>
-            <FormItem label="Статус">
-              <Select
-                showAction={['focus']}
-                placeholder="Статус"
-                value={values.TimeStatus}
-                onChange={(value) => {
-                  setFieldValue('TimeStatus', value);
-                }}
-              >
-                <Option value={''}>Все</Option>
-                {Object.keys(EStageTimeStatus).map((el) => (
-                  <Option value={el} key={el}>
-                    {TimeStatusesLookUp[el as EStageTimeStatus]}
-                  </Option>
-                ))}
-              </Select>
-            </FormItem>
-            <FormItem label="Тип задачи">
-              <Select
-                id="TaskType"
-                placeholder="Тип задачи"
-                value={values.TaskType || undefined}
-                onChange={(value) => {
-                  setFieldValue('TaskType', value);
-                }}
-              >
-                {taskTypeOptions}
-              </Select>
-            </FormItem>
-            <FormItem label="Исполнитель">
-              <Select
-                showAction={['focus']}
-                placeholder="Исполнитель"
-                value={values.PerpetratorId}
-                onChange={(value) => {
-                  setFieldValue('PerpetratorId', value);
-                }}
-              >
-                <Option value={''}>Все</Option>
-                {perpetrators &&
-                  perpetrators.map(({ id, firstName, lastName }) => (
-                    <Option key={id} value={id}>
-                      {lastName} {firstName}
-                    </Option>
-                  ))}
-              </Select>
-            </FormItem>
-          </FiltersSection>
-        </DrawerBody>
-        <FiltersFooter>
-          <ActionsRow>
-            <ActionButton onClick={handleApplyFilters} type="primary">
-              Применить фильтр
-            </ActionButton>
-            <ActionButton onClick={clearAllFilters} type="ghost">
-              Очистить
-            </ActionButton>
-          </ActionsRow>
-        </FiltersFooter>
-      </DrawerSC>
+        onApply={handleApplyFilters}
+        onClear={clearAllFilters}
+        onChange={(name, value) => setFieldValue(name, value)}
+        onAddressChange={(key, value) =>
+          setFieldValue(AddressSearchFieldsNameLookup[key], value)
+        }
+        addressInitialValues={{
+          city: values.City,
+          street: values.Street,
+          house: values.HousingStockNumber,
+          corpus: values.Corpus,
+        }}
+      />
     </Wrapper>
   );
 };
