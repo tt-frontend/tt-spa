@@ -11,6 +11,14 @@ export const PageWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
+
+  @media (max-width: 900px) {
+    height: auto;
+    min-height: 100vh;
+    padding: 24px 16px 32px;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
 `;
 
 export const Form = styled.div`
@@ -20,6 +28,10 @@ export const Form = styled.div`
   max-width: 400px;
   height: fit-content;
   grid-gap: 14px;
+
+  @media (max-width: 900px) {
+    max-width: 100%;
+  }
 `;
 
 export const LeftBlockWrapper = styled.div`
@@ -29,11 +41,27 @@ export const LeftBlockWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding-top: 48px;
+
+  @media (max-width: 900px) {
+    justify-self: stretch;
+    align-items: flex-start;
+    padding-top: 0;
+    margin-bottom: 24px;
+
+    & > svg {
+      display: none;
+    }
+  }
 `;
 
 export const RightBlockWrapper = styled.div`
   margin-left: 48px;
   max-width: 400px;
+
+  @media (max-width: 900px) {
+    margin-left: 0;
+    max-width: 100%;
+  }
 `;
 
 export const TopHeader = styled.div`
@@ -42,6 +70,12 @@ export const TopHeader = styled.div`
   align-items: center;
   gap: 18px;
   padding-left: 30px;
+
+  @media (max-width: 900px) {
+    position: static;
+    padding-left: 0;
+    gap: 12px;
+  }
 `;
 
 export const Logo = styled.span`
@@ -49,6 +83,11 @@ export const Logo = styled.span`
   color: #ffffff;
   font-size: 24px;
   line-height: 32px;
+
+  @media (max-width: 900px) {
+    font-size: 20px;
+    line-height: 28px;
+  }
 `;
 
 export const Title = styled.span`
@@ -57,6 +96,12 @@ export const Title = styled.span`
   font-size: 40px;
   line-height: 48px;
   padding-bottom: 32px;
+
+  @media (max-width: 900px) {
+    font-size: 28px;
+    line-height: 34px;
+    padding-bottom: 20px;
+  }
 `;
 
 export const Label = styled.div`
