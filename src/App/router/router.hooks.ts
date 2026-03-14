@@ -6,12 +6,16 @@ import {
 } from 'api/types';
 import { useUnit } from 'effector-react';
 import { usePermission } from 'hooks/usePermission';
+import { mobileService } from 'mobile';
 import { useMemo } from 'react';
 
 export function useRouterContext(
   currentUserRoles: ESecuredIdentityRoleNameStringDictionaryItem[],
 ) {
-  const { isAuth } = useUnit({ isAuth: tokensService.outputs.$isAuth });
+  const { isAuth, isMobile } = useUnit({
+    isAuth: tokensService.outputs.$isAuth,
+    isMobile: mobileService.outputs.$isMobile,
+  });
 
   const roles = useMemo(() => {
     return (
@@ -70,6 +74,8 @@ export function useRouterContext(
 
     if (!roles.length) return '/';
 
+    if (isMobile) return initialTasksPath;
+
     if (isSupervisor) {
       return '/supervisor/currentAnalytics';
     }
@@ -79,7 +85,14 @@ export function useRouterContext(
     }
 
     return initialTasksPath;
-  }, [roles.length, isSupervisor, isOperator, initialTasksPath, isAuth]);
+  }, [
+    roles.length,
+    isSupervisor,
+    isOperator,
+    initialTasksPath,
+    isAuth,
+    isMobile,
+  ]);
 
   const isShowNodeArchivePage =
     isAdministrator ||
